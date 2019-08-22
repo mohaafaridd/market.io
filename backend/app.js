@@ -4,6 +4,8 @@ const path = require('path');
 
 require('dotenv').config();
 
+const database = require('./db/mongoose');
+
 const PORT = process.env.PORT || 3000;
 const DEFAULT_PATH = path.join(__dirname, '..', 'build');
 
