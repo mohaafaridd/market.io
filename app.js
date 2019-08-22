@@ -7,6 +7,7 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 
 require('dotenv').config();
+require('./db/mongoose');
 
 const DEFAULT_PATH = path.join(__dirname, 'public');
 
