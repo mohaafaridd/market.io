@@ -8,7 +8,7 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/
+    match: /^[a-zA-Z]+$/,
   },
 
   lastname: {
@@ -17,13 +17,13 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/
+    match: /^[a-zA-Z]+$/,
   },
 
   phone: {
     type: String,
     required: true,
-    match: /^01(\d{9})$/
+    match: /^01(\d{9})$/,
   },
 
   email: {
@@ -35,15 +35,15 @@ const schema = new Schema({
       if (!isEmail(value)) {
         throw new Error('Invalid Email');
       }
-    }
+    },
   },
 
   password: {
     type: String,
     required: true,
     minlength: 6,
-    maxlength: 100
-  }
+    maxlength: 100,
+  },
 });
 
 const User = model('User', schema);

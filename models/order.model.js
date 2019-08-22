@@ -1,22 +1,23 @@
 const { Schema, model } = require('mongoose');
+
 const { ObjectId } = Schema.Types;
 
 const schema = new Schema({
   delivered: {
     type: Boolean,
-    required: true
+    required: true,
   },
 
   customer: {
     type: ObjectId,
-    required: true
+    required: true,
   },
 
   products: [
     {
-      type: ObjectId
-    }
-  ]
+      type: ObjectId,
+    },
+  ],
 });
 
 const Order = model('Order', schema);
