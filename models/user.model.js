@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 const { isEmail } = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -6,11 +7,11 @@ const jwt = require('jsonwebtoken');
 const schema = new Schema({
   firstname: {
     type: String,
-    required: [true, 'Firstname is required'],
+    required: true,
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: [/^[a-zA-Z]+$/, 'match'],
+    match: /^[a-zA-Z]+$/,
   },
 
   lastname: {
@@ -19,13 +20,13 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: [/^[a-zA-Z]+$/, 'match'],
+    match: /^[a-zA-Z]+$/,
   },
 
   phone: {
     type: String,
-    required: [true, 'Phone number is required'],
-    match: [/^01(\d{9})$/, 'match'],
+    required: true,
+    match: /^01(\d{9})$/,
     unique: true,
   },
 
@@ -57,6 +58,8 @@ const schema = new Schema({
     },
   ],
 });
+
+schema.plugin(uniqueValidator);
 
 // Getting user orders
 schema.virtual('orders', {
@@ -106,18 +109,6 @@ schema.statics.findByCredentials = async (email, password) => {
 
   return user;
 };
-
-schema.post('save', function(error, doc, next) {
-  if (!error.errmsg) {
-    next(error);
-  }
-  const cause = error.errmsg.search('email') !== -1 ? 'email' : 'phone';
-  if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error(`${cause} must be unique`));
-  } else {
-    next(error);
-  }
-});
 
 const User = model('User', schema);
 

@@ -8,7 +8,7 @@ const postRegister = async (req, res) => {
     const token = await user.generateAuthToken();
     res.status(201).json({ user, token });
   } catch (error) {
-    res.status(400).json({ error: error.message || error });
+    res.status(400).json({ error });
   }
 };
 
