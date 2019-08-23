@@ -45,12 +45,10 @@ const schema = new Schema({
     maxlength: 36,
   },
 
-  sellers: [
-    {
-      type: ObjectId,
-      required: true,
-    },
-  ],
+  shop: {
+    type: ObjectId,
+    required: true,
+  },
 });
 
 const Product = model('Product', schema);
