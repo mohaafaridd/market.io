@@ -21,6 +21,8 @@ I build this app after a long time spent on confusing websites. Market.io is eas
 - Add the following environment variable using dotenv
   - `PORT`
   - `MONGODB_URL`
+  - `SECRET_KEY`
+  - `MAX_AGE`
   - more to add later
 - run in root folder `npm start` or `npm run dev` using [nodemon](https://github.com/remy/nodemon)
 

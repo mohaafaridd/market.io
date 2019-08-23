@@ -1,18 +1,6 @@
 module.exports = {
-  extends: ['prettier'],
-  plugins: ['prettier'],
+  extends: 'airbnb-base',
   rules: {
-    'prettier/prettier': 'error',
-    'max-len': ['error', 80],
-  },
-  parserOptions: {
-    ecmaVersion: 7,
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-    },
-  },
-
-  env: {
-    es6: true,
-  },
+    'no-underscore-dangle': 0
+  }
 };
