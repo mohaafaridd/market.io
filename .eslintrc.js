@@ -6,7 +6,10 @@ module.exports = {
     'max-len': ['error', 80],
   },
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 7,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+    },
   },
 
   env: {
