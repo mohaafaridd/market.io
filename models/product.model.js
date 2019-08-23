@@ -45,7 +45,7 @@ const schema = new Schema({
     maxlength: 36,
   },
 
-  shop: {
+  store: {
     type: ObjectId,
     required: true,
   },

@@ -51,9 +51,9 @@ const schema = new Schema({
 schema.virtual('products', {
   ref: 'Product',
   localField: '_id',
-  foreignField: 'shop',
+  foreignField: 'store',
 });
 
-const Shop = model('Shop', schema);
+const Store = model('store', schema);
 
-module.exports = Shop;
+module.exports = store;
