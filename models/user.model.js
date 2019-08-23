@@ -6,11 +6,11 @@ const jwt = require('jsonwebtoken');
 const schema = new Schema({
   firstname: {
     type: String,
-    required: true,
+    required: [true, 'Firstname is required'],
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/,
+    match: [/^[a-zA-Z]+$/, 'match'],
   },
 
   lastname: {
@@ -19,13 +19,13 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/,
+    match: [/^[a-zA-Z]+$/, 'match'],
   },
 
   phone: {
     type: String,
-    required: true,
-    match: /^01(\d{9})$/,
+    required: [true, 'Phone number is required'],
+    match: [/^01(\d{9})$/, 'match'],
     unique: true,
   },
 
@@ -106,6 +106,18 @@ schema.statics.findByCredentials = async (email, password) => {
 
   return user;
 };
+
+schema.post('save', function(error, doc, next) {
+  if (!error.errmsg) {
+    next(error);
+  }
+  const cause = error.errmsg.search('email') !== -1 ? 'email' : 'phone';
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error(`${cause} must be unique`));
+  } else {
+    next(error);
+  }
+});
 
 const User = model('User', schema);
 
