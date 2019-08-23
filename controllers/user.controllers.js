@@ -1,20 +1,10 @@
 const User = require('../models/user.model');
 
 const postRegister = async (req, res) => {
+  const user = new User(req.body.user);
+
   try {
-    const { user } = req.body;
-
-    const isDuplicated = await User.findOne({
-      $or: [{ email: user.email }, { phone: user.phone }],
-    });
-
-    if (isDuplicated) {
-      throw new Error('Email or phone is already used');
-    }
-
-    const newUser = new User(user);
-
-    await newUser.save();
+    await user.save();
 
     res.status(201).json({ user: newUser });
   } catch (error) {

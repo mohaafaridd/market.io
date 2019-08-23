@@ -11,6 +11,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -19,6 +20,7 @@
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
     "jest": "^24.9.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.10",
     "morgan": "~1.9.0",
     "node-sass-middleware": "0.11.0",

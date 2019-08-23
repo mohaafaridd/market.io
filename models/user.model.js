@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { isEmail } = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const schema = new Schema({
   firstname: {
@@ -45,7 +47,65 @@ const schema = new Schema({
     minlength: 6,
     maxlength: 100,
   },
+
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
+
+// Getting user orders
+schema.virtual('orders', {
+  ref: 'Order',
+  localField: '_id',
+  foreignField: 'customer',
+});
+
+// Hashing plain text password
+schema.pre('save', async function(next) {
+  const user = this;
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+  next();
+});
+
+schema.methods.generateAuthToken = async function() {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY);
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+  return token;
+};
+
+// removing password and tokens from response
+schema.methods.toJSON = function() {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
+
+schema.statics.findByCredentials = async (email, password) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error('Unable to login!');
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error('Unable to login!');
+  }
+
+  return user;
+};
 
 const User = model('User', schema);
 
