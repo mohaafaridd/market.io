@@ -16,9 +16,9 @@ const postRegister = async (req, res) => {
 
     await newUser.save();
 
-    res.json(newUser);
+    res.status(201).json({ user: newUser });
   } catch (error) {
-    res.json(error.message || error);
+    res.status(400).json(error.message || error);
   }
 };
 
