@@ -49,6 +49,11 @@ const schema = new Schema({
     type: ObjectId,
     required: true,
   },
+
+  amount: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Product = model('Product', schema);

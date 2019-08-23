@@ -48,6 +48,12 @@ const schema = new Schema({
   },
 });
 
+schema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'shop',
+});
+
 const Shop = model('Shop', schema);
 
 module.exports = Shop;
