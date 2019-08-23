@@ -42,7 +42,7 @@ const postLogout = async (req, res) => {
       .clearCookie('authentication')
       .json({ message: 'user logged out successfully' });
   } catch (error) {
-    res.status(200);
+    res.status(200).json({ message: 'user logging out failed' });
   }
 };
 
