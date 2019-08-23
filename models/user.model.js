@@ -24,6 +24,7 @@ const schema = new Schema({
     type: String,
     required: true,
     match: /^01(\d{9})$/,
+    unique: true,
   },
 
   email: {

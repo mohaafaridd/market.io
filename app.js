@@ -9,9 +9,9 @@ const sassMiddleware = require('node-sass-middleware');
 require('dotenv').config();
 require('./db/mongoose');
 
-const DEFAULT_PATH = path.join(__dirname, 'public');
+const { connectRoutes } = require('./routes/routes');
 
-const indexRouter = require('./routes/index');
+const DEFAULT_PATH = path.join(__dirname, 'public');
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use(
 );
 app.use(express.static(DEFAULT_PATH));
 
-app.use('/', indexRouter);
+app.use(connectRoutes());
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
