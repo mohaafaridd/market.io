@@ -16,7 +16,7 @@ const getProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      throw new Error('No product was found');
+      throw { status: 404, message: 'No product was found' };
     }
 
     res.json({
@@ -25,7 +25,7 @@ const getProduct = async (req, res) => {
       product,
     });
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(error.status || 400).json({ error: error.message });
   }
 };
 
@@ -73,7 +73,26 @@ const patchProduct = async (req, res) => {
       product,
     });
   } catch (error) {
-    res.json('Failed');
+    res.json({ error: error.message });
+  }
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findOneAndDelete({
+      _id: req.params.id,
+      store: req.store._id,
+    });
+
+    if (!product) {
+      throw new Error('deleting failed');
+    }
+
+    res
+      .status(400)
+      .json({ success: true, message: 'product was deleted', product });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -81,4 +100,5 @@ module.exports = {
   postProduct,
   getProduct,
   patchProduct,
+  deleteProduct,
 };
