@@ -54,6 +54,10 @@ const schema = new Schema({
     type: Number,
     required: true,
   },
+
+  discount: {
+    type: Number,
+  },
 });
 
 const Product = model('Product', schema);
