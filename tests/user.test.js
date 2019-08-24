@@ -12,15 +12,15 @@ const {
 
 beforeEach(setupDatabase);
 
-test('Should register a user', async () => {
-  const defaultUser = {
-    firstname: 'Mohammed',
-    lastname: 'Adel',
-    email: 'adel@gmail.com',
-    phone: '01124597562',
-    password: '5791355',
-  };
+const defaultUser = {
+  firstname: 'Mohammed',
+  lastname: 'Adel',
+  email: 'adel@gmail.com',
+  phone: '01124597562',
+  password: '5791355',
+};
 
+test('Should register a user', async () => {
   const response = await request(app)
     .post('/user/register')
     .send({
@@ -45,14 +45,6 @@ test('Should register a user', async () => {
 });
 
 test('Should not register a user', async () => {
-  const defaultUser = {
-    firstname: 'Mohammed',
-    lastname: 'Adel',
-    email: 'adel@gmail.com',
-    phone: '01124597562',
-    password: '5791355',
-  };
-
   //   Invalid first name and last name
   await request(app)
     .post('/user/register')

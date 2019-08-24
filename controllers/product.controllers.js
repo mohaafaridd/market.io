@@ -5,7 +5,7 @@ const postProduct = async (req, res) => {
 
   try {
     await product.save();
-    res.status(201).json({ success: true, message: 'product added', product });
+    res.status(201).json({ message: 'product added', product });
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -16,16 +16,15 @@ const getProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      throw { status: 404, message: 'No product was found' };
+      return res.status(404).json({ message: 'No product was found' });
     }
 
     res.json({
-      success: true,
       message: 'Product was found',
       product,
     });
   } catch (error) {
-    res.status(error.status || 400).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -58,7 +57,7 @@ const patchProduct = async (req, res) => {
     });
 
     if (!product) {
-      throw new Error('No product was found');
+      return res.status(404).json({ message: 'No product was found' });
     }
 
     updates.forEach(update => {
@@ -68,12 +67,11 @@ const patchProduct = async (req, res) => {
     await product.save();
 
     res.json({
-      success: true,
       message: 'Product was updated',
       product,
     });
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -85,14 +83,12 @@ const deleteProduct = async (req, res) => {
     });
 
     if (!product) {
-      throw new Error('deleting failed');
+      return res.status(404).json({ message: 'No product was found' });
     }
 
-    res
-      .status(400)
-      .json({ success: true, message: 'product was deleted', product });
+    res.status(400).json({ message: 'product was deleted', product });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 

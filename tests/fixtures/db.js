@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/user.model');
+const Store = require('../../models/store.model');
 
 const userOneId = new mongoose.Types.ObjectId();
 const userOne = {
@@ -32,10 +33,27 @@ const userTwo = {
   ],
 };
 
+const storeId = new mongoose.Types.ObjectId();
+const storeOne = {
+  _id: storeId,
+  name: 'Sigma',
+  username: 'sigma',
+  phones: ['01012227424'],
+  emails: ['sigma@gmail.com'],
+  password: '123456',
+  tokens: [
+    {
+      token: jwt.sign({ _id: storeId }, process.env.SECRET_KEY),
+    },
+  ],
+};
+
 const setupDatabase = async () => {
   await User.deleteMany();
+  await Store.deleteMany();
   await new User(userOne).save();
   await new User(userTwo).save();
+  await new Store(storeOne).save();
 };
 
 module.exports = {
@@ -43,5 +61,7 @@ module.exports = {
   userOne,
   userTwoId,
   userTwo,
+  storeId,
+  storeOne,
   setupDatabase,
 };
