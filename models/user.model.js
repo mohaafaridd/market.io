@@ -49,6 +49,12 @@ const schema = new Schema({
     maxlength: 100,
   },
 
+  cart: [
+    {
+      type: String,
+    },
+  ],
+
   tokens: [
     {
       token: {

@@ -96,9 +96,39 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const postToCart = async (req, res) => {
+  try {
+    const inCart = req.user.cart.filter(item => item === req.body.product._id);
+    if (inCart.length > 0) {
+      throw new Error('Product is in cart');
+    }
+    req.user.cart = req.user.cart.concat(req.body.product._id);
+    await req.user.save();
+    res.json({ message: 'Added to cart' });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+
+const deleteFromCart = async (req, res) => {
+  try {
+    const inCart = req.user.cart.filter(item => item === req.body.product._id);
+    if (!inCart) {
+      throw new Error('Product is not in cart');
+    }
+    req.user.cart = req.user.cart.filter(item => item !== req.body.product._id);
+    await req.user.save();
+    res.json({ message: 'Removed from cart' });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+
 module.exports = {
   postProduct,
   getProduct,
   patchProduct,
   deleteProduct,
+  postToCart,
+  deleteFromCart,
 };
