@@ -3,7 +3,7 @@ const Store = require('../models/store.model');
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.cookies.authentication;
+    const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const store = await Store.findOne({
       _id: decoded._id,
