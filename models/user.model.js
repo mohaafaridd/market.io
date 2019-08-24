@@ -69,7 +69,7 @@ schema.virtual('orders', {
 });
 
 // Hashing plain text password
-schema.pre('save', async function(next) {
+schema.pre('save', async function preSave(next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 10);
@@ -77,7 +77,7 @@ schema.pre('save', async function(next) {
   next();
 });
 
-schema.methods.generateAuthToken = async function() {
+schema.methods.generateAuthToken = async function generateAuthToken() {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY);
   user.tokens = user.tokens.concat({ token });
@@ -86,7 +86,7 @@ schema.methods.generateAuthToken = async function() {
 };
 
 // removing password and tokens from response
-schema.methods.toJSON = function() {
+schema.methods.toJSON = function toJSON() {
   const user = this;
   const userObject = user.toObject();
 

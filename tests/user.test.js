@@ -94,7 +94,7 @@ test('Should login a user', async () => {
 });
 
 test('Should not login a user', async () => {
-  const response = await request(app)
+  await request(app)
     .post('/user/login')
     .send({
       user: {
