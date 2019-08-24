@@ -4,9 +4,11 @@ const router = express.Router();
 
 const indexRoutes = require('./index');
 const userRoutes = require('./user.routes');
+const storeRoutes = require('./store.routes');
 
 const connectRoutes = () => {
   router.use('/user', userRoutes);
+  router.use('/store', storeRoutes);
   router.use('/', indexRoutes);
   return router;
 };

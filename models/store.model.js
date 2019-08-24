@@ -24,26 +24,19 @@ const schema = new Schema({
 
   phones: [
     {
-      phone: {
-        type: String,
-        required: true,
-        match: /^01(\d{9})$/,
-      },
+      type: String,
+      match: /^01(\d{9})$/,
     },
   ],
 
   emails: [
     {
-      email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        validate(value) {
-          if (!isEmail(value)) {
-            throw new Error('Invalid Email');
-          }
-        },
+      type: String,
+      lowercase: true,
+      validate(value) {
+        if (!isEmail(value)) {
+          throw new Error('Invalid Email');
+        }
       },
     },
   ],
@@ -95,8 +88,8 @@ schema.methods.toJSON = function toJSON() {
   return storeObject;
 };
 
-schema.statics.findByCredentials = async (email, password) => {
-  const store = await Store.findOne({ email });
+schema.statics.findByCredentials = async (username, password) => {
+  const store = await Store.findOne({ username });
   if (!store) {
     throw new Error('Unable to login!');
   }
