@@ -20,7 +20,7 @@ const postLogin = async (req, res) => {
   try {
     const store = await Store.findByCredentials(
       req.body.store.username,
-      req.body.store.password,
+      req.body.store.password
     );
 
     const token = await store.generateAuthToken();
@@ -35,7 +35,7 @@ const postLogin = async (req, res) => {
 const postLogout = async (req, res) => {
   try {
     req.store.tokens = req.store.tokens.filter(
-      (token) => token.token !== req.token,
+      token => token.token !== req.token
     );
     await req.store.save();
     res

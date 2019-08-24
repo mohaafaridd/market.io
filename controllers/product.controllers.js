@@ -44,7 +44,9 @@ const patchProduct = async (req, res) => {
       'discount',
     ];
 
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update),);
+    const isValidOperation = updates.every(update =>
+      allowedUpdates.includes(update)
+    );
 
     if (!isValidOperation) {
       throw new Error('Invalid key to update');
@@ -59,7 +61,7 @@ const patchProduct = async (req, res) => {
       throw new Error('No product was found');
     }
 
-    updates.forEach((update) => {
+    updates.forEach(update => {
       product[update] = req.body.updates[update];
     });
 

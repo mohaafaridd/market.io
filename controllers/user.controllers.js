@@ -20,7 +20,7 @@ const postLogin = async (req, res) => {
   try {
     const user = await User.findByCredentials(
       req.body.user.email,
-      req.body.user.password,
+      req.body.user.password
     );
 
     const token = await user.generateAuthToken();
@@ -35,7 +35,7 @@ const postLogin = async (req, res) => {
 const postLogout = async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter(
-      (token) => token.token !== req.token,
+      token => token.token !== req.token
     );
     await req.user.save();
     res

@@ -29,9 +29,5 @@
     "supertest": "^4.0.2",
     "validator": "^11.1.0"
   },
-  "devDependencies": {
-    "eslint": "^6.2.2",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
-  }
+  "devDependencies": {}
 }
