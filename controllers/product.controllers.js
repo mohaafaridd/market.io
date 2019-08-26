@@ -19,7 +19,7 @@ const getProduct = async (req, res) => {
       return res.status(404).json({ message: 'No product was found' });
     }
 
-    res.json({
+    res.status(200).json({
       message: 'Product was found',
       product,
     });

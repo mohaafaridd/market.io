@@ -55,7 +55,6 @@ const getStore = async (req, res) => {
     }
 
     await store.populate('products').execPopulate();
-
     res.json({ store, products: store.products });
   } catch (error) {
     res.json({ error: error.message });

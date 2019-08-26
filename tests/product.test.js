@@ -2,7 +2,13 @@ const request = require('supertest');
 const app = require('../app');
 const Product = require('../models/product.model');
 
-const { setupDatabase, storeOne } = require('./fixtures/db');
+const {
+  setupDatabase,
+  storeOne,
+  storeId,
+  productOne,
+  productOneId,
+} = require('./fixtures/db');
 
 beforeEach(setupDatabase);
 
@@ -28,4 +34,18 @@ test('Should create product for store', async () => {
 
   const product = await Product.findById(response.body.product._id);
   expect(product).not.toBeNull();
+});
+
+test('Should get product from store', async () => {
+  const response = await request(app)
+    .get(`/product/${productOneId}`)
+    .expect(200);
+
+  expect(response.body).toMatchObject({
+    product: {
+      ...productOne,
+      _id: productOneId.toHexString(),
+      store: storeId.toHexString(),
+    },
+  });
 });

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/user.model');
 const Store = require('../../models/store.model');
+const Product = require('../../models/product.model');
 
 const userOneId = new mongoose.Types.ObjectId();
 const userOne = {
@@ -48,12 +49,28 @@ const storeOne = {
   ],
 };
 
+const productOneId = new mongoose.Types.ObjectId();
+const productOne = {
+  _id: productOneId,
+  category: 'Mobile Phone',
+  manufacturer: 'Samsung',
+  name: 'Note 10',
+  description: 'Cool ass phone',
+  model: 'note-10',
+  color: 'glue',
+  amount: 100,
+  discount: 0,
+  store: storeId,
+};
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Store.deleteMany();
+  await Product.deleteMany();
   await new User(userOne).save();
   await new User(userTwo).save();
   await new Store(storeOne).save();
+  await new Product(productOne).save();
 };
 
 module.exports = {
@@ -63,5 +80,7 @@ module.exports = {
   userTwo,
   storeId,
   storeOne,
+  productOneId,
+  productOne,
   setupDatabase,
 };
