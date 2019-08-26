@@ -99,23 +99,21 @@ test('Should add a product to user cart', async () => {
 });
 
 test('Should remove a product from user cart', async () => {
-  const userBefore = await User.findById(userOneId);
-  expect(userBefore.cart).toHaveLength(0);
   // User before saving to cart
-  // const userBefore = await User.findById(userTwoId);
-  // expect(userBefore.cart).toHaveLength(1);
+  const userBefore = await User.findById(userTwoId);
+  expect(userBefore.cart).toHaveLength(1);
 
-  // const response = await request(app)
-  //   .delete('/product/cart')
-  //   .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
-  //   .send({
-  //     product: { ...productOne },
-  //   })
-  //   .expect(200);
+  const response = await request(app)
+    .delete('/product/cart')
+    .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+    .send({
+      product: { ...productOne },
+    })
+    .expect(200);
 
-  // // User before saving to cart
-  // const userAfter = await User.findById(userTwoId);
-  // expect(userAfter.cart).toHaveLength(0);
+  // User before saving to cart
+  const userAfter = await User.findById(userTwoId);
+  expect(userAfter.cart).toHaveLength(0);
 });
 
 test('Should delete a product', async () => {
