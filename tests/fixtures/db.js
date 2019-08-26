@@ -4,37 +4,6 @@ const User = require('../../models/user.model');
 const Store = require('../../models/store.model');
 const Product = require('../../models/product.model');
 
-const userOneId = new mongoose.Types.ObjectId();
-const userOne = {
-  _id: userOneId,
-  firstname: 'Mohammed',
-  lastname: 'Farid',
-  email: 'mohammed@gmail.com',
-  phone: '01012227424',
-  password: '123456',
-  cart: [],
-  tokens: [
-    {
-      token: jwt.sign({ _id: userOneId }, process.env.SECRET_KEY),
-    },
-  ],
-};
-
-const userTwoId = new mongoose.Types.ObjectId();
-const userTwo = {
-  _id: userTwoId,
-  firstname: 'Sherif',
-  lastname: 'Ashraf',
-  email: 'sherif@gmail.com',
-  phone: '01252186752',
-  password: '654321',
-  tokens: [
-    {
-      token: jwt.sign({ _id: userTwoId }, process.env.SECRET_KEY),
-    },
-  ],
-};
-
 const storeId = new mongoose.Types.ObjectId();
 const storeOne = {
   _id: storeId,
@@ -62,6 +31,38 @@ const productOne = {
   amount: 100,
   discount: 0,
   store: storeId,
+};
+
+const userOneId = new mongoose.Types.ObjectId();
+const userOne = {
+  _id: userOneId,
+  firstname: 'Mohammed',
+  lastname: 'Farid',
+  email: 'mohammed@gmail.com',
+  phone: '01012227424',
+  password: '123456',
+  cart: [],
+  tokens: [
+    {
+      token: jwt.sign({ _id: userOneId }, process.env.SECRET_KEY),
+    },
+  ],
+};
+
+const userTwoId = new mongoose.Types.ObjectId();
+const userTwo = {
+  _id: userTwoId,
+  firstname: 'Sherif',
+  lastname: 'Ashraf',
+  email: 'sherif@gmail.com',
+  phone: '01252186752',
+  password: '654321',
+  cart: [productOneId.toHexString()],
+  tokens: [
+    {
+      token: jwt.sign({ _id: userTwoId }, process.env.SECRET_KEY),
+    },
+  ],
 };
 
 const setupDatabase = async () => {

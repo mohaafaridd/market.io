@@ -121,8 +121,10 @@ const deleteFromCart = async (req, res) => {
       throw new Error('Product is not in cart');
     }
     req.user.cart = req.user.cart.filter(item => item !== req.body.product._id);
+    await req.user.updateOne(req.user.cart);
     await req.user.save();
-    res.json({ message: 'Removed from cart' });
+
+    res.status(200).json({ message: 'Removed from cart' });
   } catch (error) {
     res.json({ error: error.message });
   }
