@@ -49,3 +49,28 @@ test('Should get product from store', async () => {
     },
   });
 });
+
+test('Should edit a product from store', async () => {
+  const response = await request(app)
+    .patch(`/product/${productOneId}`)
+    .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
+    .send({
+      updates: {
+        name: 'S10+',
+        amount: 20,
+        discount: 10,
+      },
+    })
+    .expect(200);
+
+  expect(response.body).toMatchObject({
+    product: {
+      ...productOne,
+      name: 'S10+',
+      amount: 20,
+      discount: 10,
+      _id: productOneId.toHexString(),
+      store: storeId.toHexString(),
+    },
+  });
+});
