@@ -74,3 +74,13 @@ test('Should edit a product from store', async () => {
     },
   });
 });
+
+test('Should delete a product', async () => {
+  await request(app)
+    .delete(`/product/${productOneId}`)
+    .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
+    .expect(200);
+
+  const product = await Product.findById(productOneId);
+  expect(product).toBeNull();
+});
