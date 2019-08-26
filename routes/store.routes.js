@@ -2,11 +2,11 @@ const express = require('express');
 const authentication = require('../middlewares/storeAuthentication');
 
 const router = express.Router();
-const controllers = require('../controllers/store.controllers');
+const controller = require('../controllers/store.controller');
 
-router.post('/register', controllers.postRegister);
-router.post('/login', controllers.postLogin);
-router.post('/logout', authentication, controllers.postLogout);
-router.get('/:username', controllers.getStore);
+router.post('/register', controller.postRegister);
+router.post('/login', controller.postLogin);
+router.post('/logout', authentication, controller.postLogout);
+router.get('/:username', controller.getStore);
 
 module.exports = router;

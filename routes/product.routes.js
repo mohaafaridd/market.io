@@ -3,13 +3,13 @@ const storeAuthentication = require('../middlewares/storeAuthentication');
 const userAuthentication = require('../middlewares/userAuthentication');
 
 const router = express.Router();
-const controllers = require('../controllers/product.controllers');
+const controller = require('../controllers/product.controller');
 
-router.post('/', storeAuthentication, controllers.postProduct);
-router.post('/cart', userAuthentication, controllers.postToCart);
-router.delete('/cart', userAuthentication, controllers.deleteFromCart);
-router.get('/:id', controllers.getProduct);
-router.patch('/:id', storeAuthentication, controllers.patchProduct);
-router.delete('/:id', storeAuthentication, controllers.deleteProduct);
+router.post('/', storeAuthentication, controller.postProduct);
+router.post('/cart', userAuthentication, controller.postToCart);
+router.delete('/cart', userAuthentication, controller.deleteFromCart);
+router.get('/:id', controller.getProduct);
+router.patch('/:id', storeAuthentication, controller.patchProduct);
+router.delete('/:id', storeAuthentication, controller.deleteProduct);
 
 module.exports = router;

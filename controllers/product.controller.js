@@ -1,5 +1,4 @@
 const Product = require('../models/product.model');
-const User = require('../models/user.model');
 
 const postProduct = async (req, res) => {
   const product = new Product({ ...req.body.product, store: req.store._id });
