@@ -94,13 +94,22 @@ const deleteProduct = async (req, res) => {
 
 const postToCart = async (req, res) => {
   try {
-    const inCart = req.user.cart.filter(item => item === req.body.product._id);
+    const { product } = req.body;
+    if (!product) {
+      throw new Error('No product is provided');
+    }
+    const inCart = req.user.cart.filter(item => item === product._id);
     if (inCart.length > 0) {
       throw new Error('Product is in cart');
     }
-    req.user.cart = req.user.cart.concat(req.body.product._id);
-    await req.user.save();
-    res.json({ message: 'Added to cart' });
+    req.user.cart.push(product._id);
+    await req.user.update(function(err) {
+      if (err) {
+        throw new Error(err);
+      }
+    });
+
+    res.status(200).json({ message: 'Added to cart', cart: req.user.cart });
   } catch (error) {
     res.json({ error: error.message });
   }

@@ -1,9 +1,12 @@
 const request = require('supertest');
 const app = require('../app');
 const Product = require('../models/product.model');
+const User = require('../models/user.model');
 
 const {
   setupDatabase,
+  userOne,
+  userOneId,
   storeOne,
   storeId,
   productOne,
@@ -73,6 +76,26 @@ test('Should edit a product from store', async () => {
       store: storeId.toHexString(),
     },
   });
+});
+
+test('Should add a product to user cart', async () => {
+  // User before saving to cart
+  const userBefore = await User.findById(userOneId);
+  expect(userBefore.cart).toHaveLength(0);
+
+  const response = await request(app)
+    .post('/product/cart')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      product: {
+        ...productOne,
+      },
+    })
+    .expect(200);
+
+  // User before saving to cart
+  const userAfter = await User.findById(userOneId);
+  expect(userAfter.cart).toHaveLength(1);
 });
 
 test('Should delete a product', async () => {

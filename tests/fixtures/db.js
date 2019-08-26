@@ -12,6 +12,7 @@ const userOne = {
   email: 'mohammed@gmail.com',
   phone: '01012227424',
   password: '123456',
+  cart: [],
   tokens: [
     {
       token: jwt.sign({ _id: userOneId }, process.env.SECRET_KEY),
