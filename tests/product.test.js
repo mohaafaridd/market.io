@@ -95,6 +95,7 @@ test('Should add a product to user cart', async () => {
 
   // User before saving to cart
   const userAfter = await User.findById(userOneId);
+  console.log(userAfter);
   expect(userAfter.cart).toHaveLength(1);
 });
 

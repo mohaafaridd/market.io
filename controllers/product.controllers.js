@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const User = require('../models/user.model');
 
 const postProduct = async (req, res) => {
   const product = new Product({ ...req.body.product, store: req.store._id });
@@ -102,12 +103,10 @@ const postToCart = async (req, res) => {
     if (inCart.length > 0) {
       throw new Error('Product is in cart');
     }
-    req.user.cart.push(product._id);
-    await req.user.update(function(err) {
-      if (err) {
-        throw new Error(err);
-      }
-    });
+
+    req.user.cart = req.user.cart.concat(product._id);
+    await req.user.updateOne(req.user.cart);
+    await req.user.save();
 
     res.status(200).json({ message: 'Added to cart', cart: req.user.cart });
   } catch (error) {
