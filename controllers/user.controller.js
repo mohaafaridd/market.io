@@ -1,16 +1,19 @@
 const ms = require('ms');
 const User = require('../models/user.model');
+const Cart = require('../models/cart.model');
 
 const postRegister = async (req, res) => {
-  const user = new User(req.body.user);
   try {
+    const user = new User(req.body.user);
     await user.save();
+    const cart = new Cart({ owner: user._id });
+    await cart.save();
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('authentication', token, { maxAge })
       .status(201)
-      .json({ user, token });
+      .json({ user, token, cart });
   } catch (error) {
     res.status(400).json({ error });
   }

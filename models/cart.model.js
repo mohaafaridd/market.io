@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { ObjectId } = Schema.Types;
 
-const Schema = new Schema({
+const schema = new Schema({
   owner: {
     type: ObjectId,
     required: true,
