@@ -7,13 +7,14 @@ const {
   userOneId,
   userOne,
   productOneId,
+  productTwoId,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
 
 test('Should add a valid amount of a product to the cart', async () => {
   const cartBefore = await Cart.findOne({ owner: userOneId });
-  expect(cartBefore.products).toHaveLength(0);
+  expect(cartBefore.products).toHaveLength(1);
 
   const resposne = await request(app)
     .post('/cart')
@@ -27,12 +28,12 @@ test('Should add a valid amount of a product to the cart', async () => {
     .expect(200);
 
   const cartAfter = await Cart.findOne({ owner: userOneId });
-  expect(cartAfter.products).toHaveLength(1);
+  expect(cartAfter.products).toHaveLength(2);
 });
 
 test('Should not add an invalid amount of a product to the cart', async () => {
   const cartBefore = await Cart.findOne({ owner: userOneId });
-  expect(cartBefore.products).toHaveLength(0);
+  expect(cartBefore.products).toHaveLength(1);
 
   const resposne = await request(app)
     .post('/cart')
@@ -44,6 +45,26 @@ test('Should not add an invalid amount of a product to the cart', async () => {
       },
     })
     .expect(400);
+
+  const cartAfter = await Cart.findOne({ owner: userOneId });
+  expect(cartAfter.products).toHaveLength(1);
+});
+
+test('Should delete product from cart', async () => {
+  const cartBefore = await Cart.findOne({ owner: userOneId });
+  expect(cartBefore.products).toHaveLength(1);
+
+  const resposne = await request(app)
+    .delete('/cart')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      products: [
+        {
+          id: productTwoId,
+        },
+      ],
+    })
+    .expect(200);
 
   const cartAfter = await Cart.findOne({ owner: userOneId });
   expect(cartAfter.products).toHaveLength(0);

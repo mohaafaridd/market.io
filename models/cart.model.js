@@ -7,16 +7,14 @@ const schema = new Schema({
     required: true,
   },
 
-  products: [
-    {
-      id: {
-        type: ObjectId,
-      },
-      amount: {
-        type: Number,
-      },
-    },
-  ],
+  id: {
+    type: ObjectId,
+  },
+
+  amount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Cart = model('Cart', schema);

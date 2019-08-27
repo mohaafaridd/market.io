@@ -84,7 +84,12 @@ const cartOneId = new mongoose.Types.ObjectId();
 const cartOne = {
   _id: cartOneId,
   owner: userOneId,
-  products: [],
+  products: [
+    {
+      id: productTwoId,
+      amount: 1,
+    },
+  ],
 };
 
 const setupDatabase = async () => {

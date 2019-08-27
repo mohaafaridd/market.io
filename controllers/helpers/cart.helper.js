@@ -19,22 +19,6 @@ const inStockCheck = async (product, cart) => {
   return stock.amount - total > -1 ? true : false;
 };
 
-const addToCart = (product, cart) => {
-  const index = cart.products.findIndex(item => {
-    return item.id.toHexString() === product.id;
-  });
-
-  //   product not found? no problem let's add it!
-  if (index === -1) {
-    cart.products = cart.products.concat({
-      id: product.id,
-      amount: product.amount,
-    });
-  } else {
-    cart.products[index].amount += product.amount;
-  }
-};
-
 const getMatchedProducts = (products, cart) => {
   return products.filter(item =>
     cart.products.find(cartItem => item === cartItem.id.toHexString())
@@ -50,7 +34,6 @@ const removeFromCart = (matches, cart) => {
 
 module.exports = {
   inStockCheck,
-  addToCart,
   getMatchedProducts,
   removeFromCart,
 };
