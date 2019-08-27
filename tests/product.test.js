@@ -5,35 +5,21 @@ const User = require('../models/user.model');
 
 const {
   setupDatabase,
-  userOne,
-  userOneId,
-  userTwo,
-  userTwoId,
   storeOne,
   storeId,
   productOne,
   productOneId,
+  productTwo,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
-
-const deafaultProduct = {
-  category: 'Mobile Phone',
-  manufacturer: 'Honor',
-  name: 'Honor 8x',
-  description: 'Cool ass phone',
-  model: '8x',
-  color: 'blue',
-  amount: 10,
-  discount: 5,
-};
 
 test('Should create product for store', async () => {
   const response = await request(app)
     .post('/product')
     .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
     .send({
-      product: deafaultProduct,
+      product: productTwo,
     })
     .expect(201);
 

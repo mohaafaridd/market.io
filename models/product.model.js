@@ -57,6 +57,12 @@ const schema = new Schema({
 
   discount: {
     type: Number,
+    required: true,
+  },
+
+  booked: {
+    type: Number,
+    required: true,
   },
 });
 

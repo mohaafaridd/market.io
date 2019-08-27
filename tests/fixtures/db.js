@@ -32,6 +32,22 @@ const productOne = {
   amount: 100,
   discount: 0,
   store: storeId,
+  booked: 0,
+};
+
+const productTwoId = new mongoose.Types.ObjectId();
+const productTwo = {
+  _id: productTwoId,
+  category: 'Mobile Phone',
+  manufacturer: 'Honor',
+  name: 'Honor 8x',
+  description: 'Cool ass phone',
+  model: 'honor-8x',
+  color: 'blue',
+  amount: 100,
+  discount: 0,
+  store: storeId,
+  booked: 0,
 };
 
 const userOneId = new mongoose.Types.ObjectId();
@@ -92,5 +108,7 @@ module.exports = {
   storeOne,
   productOneId,
   productOne,
+  productTwoId,
+  productTwo,
   setupDatabase,
 };
