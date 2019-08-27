@@ -49,12 +49,6 @@ const schema = new Schema({
     maxlength: 100,
   },
 
-  cart: [
-    {
-      type: String,
-    },
-  ],
-
   tokens: [
     {
       token: {
@@ -66,6 +60,13 @@ const schema = new Schema({
 });
 
 schema.plugin(uniqueValidator);
+
+// Getting user orders
+schema.virtual('cart', {
+  ref: 'Cart',
+  localField: '_id',
+  foreignField: 'owner',
+});
 
 // Getting user orders
 schema.virtual('orders', {

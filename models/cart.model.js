@@ -1,14 +1,8 @@
 const { Schema, model } = require('mongoose');
-
 const { ObjectId } = Schema.Types;
 
-const schema = new Schema({
-  delivered: {
-    type: Boolean,
-    required: true,
-  },
-
-  customer: {
+const Schema = new Schema({
+  owner: {
     type: ObjectId,
     required: true,
   },
@@ -25,6 +19,6 @@ const schema = new Schema({
   ],
 });
 
-const Order = model('Order', schema);
+const Cart = model('Cart', schema);
 
-module.exports = Order;
+module.exports = Cart;
