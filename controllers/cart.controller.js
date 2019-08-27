@@ -13,12 +13,13 @@ const postCart = async (req, res) => {
       throw new Error('The amount you ordered is out of our capabilities');
     }
 
+    // Adds product to cart or edit it's amount
     const modifiedCart = modifyCart(product, cart);
     await cart.save();
 
-    res.json({ message: 'Product was added to cart', cart });
+    res.status(200).json({ message: 'Product was added to cart', cart });
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 

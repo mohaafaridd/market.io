@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user.model');
 const Store = require('../../models/store.model');
 const Product = require('../../models/product.model');
+const Cart = require('../../models/cart.model');
 
 const storeId = new mongoose.Types.ObjectId();
 const storeOne = {
@@ -41,7 +42,6 @@ const userOne = {
   email: 'mohammed@gmail.com',
   phone: '01012227424',
   password: '123456',
-  cart: [],
   tokens: [
     {
       token: jwt.sign({ _id: userOneId }, process.env.SECRET_KEY),
@@ -57,7 +57,6 @@ const userTwo = {
   email: 'sherif@gmail.com',
   phone: '01252186752',
   password: '654321',
-  cart: [productOneId.toHexString()],
   tokens: [
     {
       token: jwt.sign({ _id: userTwoId }, process.env.SECRET_KEY),
@@ -65,14 +64,23 @@ const userTwo = {
   ],
 };
 
+const cartOneId = new mongoose.Types.ObjectId();
+const cartOne = {
+  _id: cartOneId,
+  owner: userOneId,
+  products: [],
+};
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Store.deleteMany();
   await Product.deleteMany();
+  await Cart.deleteMany();
   await new User(userOne).save();
   await new User(userTwo).save();
   await new Store(storeOne).save();
   await new Product(productOne).save();
+  await new Cart(cartOne).save();
 };
 
 module.exports = {
