@@ -11,10 +11,10 @@ const postCart = async (req, res) => {
     const { product } = req.body;
 
     // checks for total amount ordered if available in stock
-    // const inStock = await inStockCheck(product, cart);
-    // if (!inStock) {
-    //   throw new Error('The amount you ordered is out of our capabilities');
-    // }
+    const inStock = await inStockCheck(product, user);
+    if (!inStock) {
+      throw new Error('The amount you ordered is out of our capabilities');
+    }
 
     const cart = await Cart.findOneAndUpdate(
       { owner: user._id, id: product.id },

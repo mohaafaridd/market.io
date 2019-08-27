@@ -1,6 +1,7 @@
 const Product = require('../../models/product.model');
+const Cart = require('../../models/cart.model');
 
-const inStockCheck = async (product, cart) => {
+const inStockCheck = async (product, user) => {
   // current stock
   const stock = await Product.findById(product.id);
   if (!stock) {
@@ -9,13 +10,11 @@ const inStockCheck = async (product, cart) => {
 
   //   amount wanted
   const incoming = product.amount;
+  const inCart = await Cart.findOne({ owner: user._id, id: product.id });
+  console.log(inCart);
+  const inCartAmount = inCart ? inCart.amount : 0;
 
-  const index = cart.products.findIndex(item => {
-    return item.id.toHexString() === product.id;
-  });
-
-  const total =
-    index === -1 ? incoming : cart.products[index].amount + incoming;
+  const total = inCartAmount + incoming;
   return stock.amount - total > -1 ? true : false;
 };
 
