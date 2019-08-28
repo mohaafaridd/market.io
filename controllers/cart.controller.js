@@ -19,7 +19,7 @@ const postCart = async (req, res) => {
 
     const cart = await Cart.findOneAndUpdate(
       { owner: user._id, id: product.id },
-      { $set: { id: product.id }, $inc: { amount: 1 } },
+      { $set: { id: product.id }, $inc: { amount: product.amount } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
