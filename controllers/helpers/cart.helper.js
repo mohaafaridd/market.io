@@ -17,6 +17,29 @@ const inStockCheck = async (product, user) => {
   return stock.amount - total > -1 ? true : false;
 };
 
+const increaseBooking = async ({ id }) => {
+  await Product.findByIdAndUpdate(id, { $inc: { booked: 1 } });
+};
+
+const decreaseBooking = async products => {
+  const requests = products.map(id =>
+    Product.findByIdAndUpdate(
+      id,
+      { $inc: { booked: -1 } },
+      { runValidators: true },
+      (err, product) => {
+        if (product.booked < 0) {
+          product.booked = 0;
+          product.save();
+        }
+      }
+    )
+  );
+  const responses = await Promise.all(requests);
+};
+
 module.exports = {
   inStockCheck,
+  increaseBooking,
+  decreaseBooking,
 };

@@ -1,5 +1,10 @@
 const Cart = require('../models/cart.model');
-const { inStockCheck } = require('./helpers/cart.helper');
+
+const {
+  inStockCheck,
+  increaseBooking,
+  decreaseBooking,
+} = require('./helpers/cart.helper');
 
 const postCart = async (req, res) => {
   try {
@@ -17,6 +22,8 @@ const postCart = async (req, res) => {
       { $set: { id: product.id }, $inc: { amount: 1 } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    await increaseBooking(product);
 
     res.status(200).json({ message: 'Product was added to cart', cart });
   } catch (error) {
@@ -37,6 +44,8 @@ const deleteCart = async (req, res) => {
     );
 
     const responses = await Promise.all(requests);
+
+    await decreaseBooking(products);
 
     res.json({ cart: responses });
   } catch (error) {

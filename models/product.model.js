@@ -63,6 +63,8 @@ const schema = new Schema({
   booked: {
     type: Number,
     required: true,
+    min: 0,
+    default: 0,
   },
 });
 
