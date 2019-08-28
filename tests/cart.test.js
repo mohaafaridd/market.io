@@ -7,6 +7,7 @@ const {
   userOneId,
   userOne,
   productOneId,
+  productTwoId,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
@@ -49,7 +50,7 @@ test('Should not add an invalid amount of a product to the cart', async () => {
   expect(cartAfter.amount).toBe(1);
 });
 
-test('Should delete product from cart', async () => {
+test('Should delete product from cart with valid data', async () => {
   const cartBefore = await Cart.findOne({ owner: userOneId, id: productOneId });
   expect(cartBefore.amount).toBe(1);
 
@@ -60,6 +61,7 @@ test('Should delete product from cart', async () => {
       products: [productOneId],
     })
     .expect(200);
+
   const cartAfter = await Cart.findOne({ owner: userOneId, id: productOneId });
   expect(cartAfter).toBeNull();
 });

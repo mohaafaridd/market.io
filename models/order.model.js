@@ -8,7 +8,7 @@ const schema = new Schema({
     required: true,
   },
 
-  customer: {
+  owner: {
     type: ObjectId,
     required: true,
   },
