@@ -80,7 +80,10 @@ schema.pre('save', async function preSave(next) {
 
 schema.methods.generateAuthToken = async function generateAuthToken() {
   const store = this;
-  const token = jwt.sign({ _id: store._id.toString() }, process.env.SECRET_KEY);
+  const token = jwt.sign(
+    { id: store.id.toString(), role: Role.Store },
+    process.env.SECRET_KEY
+  );
   store.tokens = store.tokens.concat({ token });
   await store.save();
   return token;
