@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const { isEmail } = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const role = require('../middlewares/role');
 
 const schema = new Schema({
   firstname: {
@@ -57,6 +58,11 @@ const schema = new Schema({
       },
     },
   ],
+
+  role: {
+    type: String,
+    default: role.User,
+  },
 });
 
 schema.plugin(uniqueValidator);
