@@ -33,10 +33,18 @@ const postLogin = async (req, res) => {
 
 const postLogout = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    console.log('here', user);
+    const user = await User.findOne({
+      _id: req.user.id,
+      'tokens.token': req.token,
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     user.tokens = user.tokens.filter(token => token.token !== req.token);
     await user.save();
+
     res
       .clearCookie('authentication')
       .json({ message: 'user logged out successfully' });
