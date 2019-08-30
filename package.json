@@ -17,6 +17,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.1.0",
     "express": "~4.16.0",
+    "express-jwt": "^5.3.1",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
     "jest": "^24.9.0",
