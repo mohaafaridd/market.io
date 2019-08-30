@@ -1,4 +1,5 @@
 const expressJwt = require('express-jwt');
+const Store = require('../models/store.model');
 
 function authorization(roles = []) {
   if (typeof roles === 'string') {

@@ -1,8 +1,16 @@
 const Product = require('../models/product.model');
+const Store = require('../models/store.model');
 
 const postProduct = async (req, res) => {
-  const product = new Product({ ...req.body.product, store: req.store._id });
+  const store = await Store.findOne({
+    _id: req.store.id,
+    'tokens.token': req.token,
+  });
+  if (!store) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
+  const product = new Product({ ...req.body.product, store: req.store.id });
   try {
     await product.save();
     res.status(201).json({ message: 'product added', product });
