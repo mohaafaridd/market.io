@@ -92,48 +92,9 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const postToCart = async (req, res) => {
-  try {
-    const { product } = req.body;
-    if (!product) {
-      throw new Error('No product is provided');
-    }
-    const inCart = req.user.cart.filter(item => item === product._id);
-    if (inCart.length > 0) {
-      throw new Error('Product is in cart');
-    }
-
-    req.user.cart = req.user.cart.concat(product._id);
-    await req.user.updateOne(req.user.cart);
-    await req.user.save();
-
-    res.status(200).json({ message: 'Added to cart', cart: req.user.cart });
-  } catch (error) {
-    res.json({ error: error.message });
-  }
-};
-
-const deleteFromCart = async (req, res) => {
-  try {
-    const inCart = req.user.cart.filter(item => item === req.body.product._id);
-    if (!inCart) {
-      throw new Error('Product is not in cart');
-    }
-    req.user.cart = req.user.cart.filter(item => item !== req.body.product._id);
-    await req.user.updateOne(req.user.cart);
-    await req.user.save();
-
-    res.status(200).json({ message: 'Removed from cart' });
-  } catch (error) {
-    res.json({ error: error.message });
-  }
-};
-
 module.exports = {
   postProduct,
   getProduct,
   patchProduct,
   deleteProduct,
-  postToCart,
-  deleteFromCart,
 };

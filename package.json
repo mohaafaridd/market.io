@@ -21,6 +21,7 @@
     "http-errors": "~1.6.2",
     "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.6.10",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.0",
