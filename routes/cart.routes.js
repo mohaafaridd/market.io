@@ -1,9 +1,10 @@
 const express = require('express');
-const userAuthentication = require('../middlewares/userAuthentication');
+const authorization = require('../middlewares/user.authorization');
 const controller = require('../controllers/cart.controller');
+const Role = require('../middlewares/role');
 
 const router = express.Router();
 
-router.post('/', userAuthentication, controller.postCart);
-router.delete('/', userAuthentication, controller.deleteCart);
+router.post('/', authorization(Role.User), controller.postCart);
+router.delete('/', authorization(Role.User), controller.deleteCart);
 module.exports = router;
