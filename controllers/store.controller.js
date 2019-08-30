@@ -34,17 +34,10 @@ const postLogin = async (req, res) => {
 
 const postLogout = async (req, res) => {
   try {
-    const store = await Store.findOne({
-      _id: req.store.id,
-      'tokens.token': req.token,
-    });
-
-    if (!store) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    store.tokens = store.tokens.filter(token => token.token !== req.token);
-    await store.save();
+    req.store.tokens = req.store.tokens.filter(
+      token => token.token !== req.token
+    );
+    await req.store.save();
     res
       .clearCookie('authentication')
       .json({ message: 'store logged out successfully' });
