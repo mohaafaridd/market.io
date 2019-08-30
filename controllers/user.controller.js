@@ -37,11 +37,12 @@ const postLogout = async (req, res) => {
       token => token.token !== req.token
     );
     await req.user.save();
+
     res
       .clearCookie('authentication')
       .json({ message: 'user logged out successfully' });
   } catch (error) {
-    res.status(200).json({ message: 'user logging out failed' });
+    res.status(400).json({ message: 'user logging out failed' });
   }
 };
 

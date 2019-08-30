@@ -38,7 +38,7 @@ const deleteCart = async (req, res) => {
 
     const requests = products.map(product =>
       Cart.findOneAndDelete({
-        owner: user._id,
+        owner: user.id,
         id: product,
       })
     );

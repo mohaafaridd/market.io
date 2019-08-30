@@ -1,13 +1,29 @@
 const express = require('express');
-const storeAuthentication = require('../middlewares/storeAuthentication');
-const userAuthentication = require('../middlewares/userAuthentication');
+const authorization = require('../middlewares/store.authorization');
+const authentication = require('../middlewares/store.authentication');
+const controller = require('../controllers/product.controller');
+const Role = require('../middlewares/role');
 
 const router = express.Router();
-const controller = require('../controllers/product.controller');
 
-router.post('/', storeAuthentication, controller.postProduct);
+router.post(
+  '/',
+  authorization(Role.Store),
+  authentication,
+  controller.postProduct
+);
 router.get('/:id', controller.getProduct);
-router.patch('/:id', storeAuthentication, controller.patchProduct);
-router.delete('/:id', storeAuthentication, controller.deleteProduct);
+router.patch(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  controller.patchProduct
+);
+router.delete(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  controller.deleteProduct
+);
 
 module.exports = router;
