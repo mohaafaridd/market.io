@@ -1,15 +1,6 @@
 const Product = require('../models/product.model');
-const Store = require('../models/store.model');
 
 const postProduct = async (req, res) => {
-  const store = await Store.findOne({
-    _id: req.store.id,
-    'tokens.token': req.token,
-  });
-  if (!store) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
   const product = new Product({ ...req.body.product, store: req.store.id });
   try {
     await product.save();
@@ -61,7 +52,7 @@ const patchProduct = async (req, res) => {
 
     const product = await Product.findOne({
       _id: req.params.id,
-      store: req.store._id,
+      store: req.store.id,
     });
 
     if (!product) {
@@ -87,7 +78,7 @@ const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findOneAndDelete({
       _id: req.params.id,
-      store: req.store._id,
+      store: req.store.id,
     });
 
     if (!product) {
