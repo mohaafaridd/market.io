@@ -13,6 +13,10 @@ const postOrder = async (req, res) => {
       .filter(cart => cart !== null)
       .map(product => ({ id: product.id, amount: product.amount }));
 
+    if (!products.length) {
+      return res.status(400).json({ message: 'No products in cart' });
+    }
+
     const order = new Order({
       owner: req.user.id,
       products,

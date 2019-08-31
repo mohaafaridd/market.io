@@ -12,10 +12,12 @@ router.post(
   authentication,
   controller.postOrder
 );
+
 router.patch(
   '/:id',
   authorization(Role.Delivery),
   authentication,
   controller.updateOrder
 );
+
 module.exports = router;
