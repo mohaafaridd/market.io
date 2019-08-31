@@ -4,6 +4,7 @@ const User = require('../../models/user.model');
 const Store = require('../../models/store.model');
 const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
+const Role = require('../../middlewares/role');
 
 const storeId = new mongoose.Types.ObjectId();
 const storeOne = {
@@ -13,9 +14,13 @@ const storeOne = {
   phones: ['01012227424'],
   emails: ['sigma@gmail.com'],
   password: '123456',
+  role: Role.Store,
   tokens: [
     {
-      token: jwt.sign({ _id: storeId }, process.env.SECRET_KEY),
+      token: jwt.sign(
+        { id: storeId, role: Role.Store },
+        process.env.SECRET_KEY
+      ),
     },
   ],
 };
@@ -58,9 +63,13 @@ const userOne = {
   email: 'mohammed@gmail.com',
   phone: '01012227424',
   password: '123456',
+  role: Role.User,
   tokens: [
     {
-      token: jwt.sign({ _id: userOneId }, process.env.SECRET_KEY),
+      token: jwt.sign(
+        { id: userOneId, role: Role.User },
+        process.env.SECRET_KEY
+      ),
     },
   ],
 };
@@ -73,9 +82,13 @@ const userTwo = {
   email: 'sherif@gmail.com',
   phone: '01252186752',
   password: '654321',
+  role: Role.User,
   tokens: [
     {
-      token: jwt.sign({ _id: userTwoId }, process.env.SECRET_KEY),
+      token: jwt.sign(
+        { id: userTwoId, role: Role.User },
+        process.env.SECRET_KEY
+      ),
     },
   ],
 };

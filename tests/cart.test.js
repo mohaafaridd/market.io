@@ -22,7 +22,7 @@ test('Should add a valid amount of a product to the cart', async () => {
     .send({
       product: {
         id: productOneId,
-        amount: 10,
+        amount: 1,
       },
     })
     .expect(200);
