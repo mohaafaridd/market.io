@@ -66,6 +66,10 @@ const schema = new Schema({
     min: 0,
     default: 0,
   },
+
+  picture: {
+    type: Buffer,
+  },
 });
 
 const Product = model('Product', schema);

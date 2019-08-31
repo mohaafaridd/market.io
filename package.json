@@ -27,7 +27,9 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.0",
     "ms": "^2.1.2",
+    "multer": "^1.4.2",
     "node-sass-middleware": "0.11.0",
+    "sharp": "^0.23.0",
     "supertest": "^4.0.2",
     "validator": "^11.1.0"
   },

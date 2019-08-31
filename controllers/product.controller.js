@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const sharp = require('sharp');
 
 const postProduct = async (req, res) => {
   const product = new Product({ ...req.body.product, store: req.store.id });
@@ -7,6 +8,26 @@ const postProduct = async (req, res) => {
     res.status(201).json({ message: 'product added', product });
   } catch (error) {
     res.status(400).json({ error });
+  }
+};
+
+const postProductPicture = async (req, res) => {
+  try {
+    const buffer = await sharp(req.file.buffer)
+      .png()
+      .resize({ width: 300, height: 300 })
+      .toBuffer();
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        picture: buffer,
+      },
+      { new: true }
+    );
+
+    res.json({ product });
+  } catch (error) {
+    res.json({ message: 'Upload failed' });
   }
 };
 
@@ -93,6 +114,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   postProduct,
+  postProductPicture,
   getProduct,
   patchProduct,
   deleteProduct,
