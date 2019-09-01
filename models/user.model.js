@@ -24,6 +24,14 @@ const schema = new Schema({
     match: /^[a-zA-Z]+$/,
   },
 
+  username: {
+    type: String,
+    unique: true,
+    minlength: 2,
+    maxlength: 15,
+    match: /^[a-zA-Z]+$/,
+  },
+
   phone: {
     type: String,
     required: true,
@@ -61,7 +69,7 @@ const schema = new Schema({
 
   role: {
     type: String,
-    default: role.User,
+    required: true,
   },
 });
 
@@ -81,6 +89,12 @@ schema.virtual('orders', {
   foreignField: 'customer',
 });
 
+// Getting user products if role is store
+schema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'store',
+});
 // Hashing plain text password
 schema.pre('save', async function preSave(next) {
   const user = this;
