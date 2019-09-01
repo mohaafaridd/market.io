@@ -15,7 +15,7 @@ router.post(
 
 router.patch(
   '/:id',
-  authorization(Role.Delivery),
+  authorization(Role.Courier),
   authentication,
   controller.updateOrder
 );

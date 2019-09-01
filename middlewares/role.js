@@ -1,6 +1,6 @@
 module.exports = {
   Administrator: 'Administrator',
-  Delivery: 'Delivery',
+  Courier: 'Courier',
   Store: 'Store',
   User: 'User',
 };
