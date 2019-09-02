@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const role = require('../middlewares/role');
 
 const schema = new Schema({
+  // User
   firstname: {
     type: String,
     minlength: 2,
@@ -22,6 +23,14 @@ const schema = new Schema({
     match: /^[a-zA-Z]+$/,
   },
 
+  // Store
+  name: {
+    type: String,
+    minlength: 2,
+    maxlength: 15,
+    match: /^[a-zA-Z]+$/,
+  },
+
   username: {
     type: String,
     minlength: 2,
@@ -29,6 +38,7 @@ const schema = new Schema({
     match: /^[a-zA-Z]+$/,
   },
 
+  // General
   phone: {
     type: String,
     required: true,
