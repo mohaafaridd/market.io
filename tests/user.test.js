@@ -8,7 +8,7 @@ beforeEach(setupDatabase);
 
 test('Should register a user', async () => {
   const response = await request(app)
-    .post('/user/register')
+    .post('/users/api/register')
     .send({
       user: userTwo,
     })
@@ -34,7 +34,7 @@ test('Should register a user', async () => {
 test('Should not register a user', async () => {
   //   Invalid first name and last name
   await request(app)
-    .post('/user/register')
+    .post('/users/api/register')
     .send({
       user: { ...userTwo, firstname: '', lastname: '' },
     })
@@ -42,7 +42,7 @@ test('Should not register a user', async () => {
 
   // Invalid email
   await request(app)
-    .post('/user/register')
+    .post('/users/api/register')
     .send({
       user: { ...userTwo, email: 'mohammedemail' },
     })
@@ -50,7 +50,7 @@ test('Should not register a user', async () => {
 
   // Invalid password
   await request(app)
-    .post('/user/register')
+    .post('/users/api/register')
     .send({
       user: { ...userTwo, password: '' },
     })
@@ -59,7 +59,7 @@ test('Should not register a user', async () => {
 
 test('Should login a user', async () => {
   const response = await request(app)
-    .post('/user/login')
+    .post('/users/api/login')
     .send({
       user: {
         email: userOne.email,
@@ -74,7 +74,7 @@ test('Should login a user', async () => {
 
 test('Should not login a user', async () => {
   await request(app)
-    .post('/user/login')
+    .post('/users/api/login')
     .send({
       user: {
         email: 'thiEmailIsFake@gmail.com',
