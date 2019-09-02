@@ -42,6 +42,13 @@ const schema = new Schema({
     },
   },
 
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
+    maxlength: 100,
+  },
+
   workplace: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -107,7 +114,7 @@ schema.methods.toJSON = function toJSON() {
   return courierObject;
 };
 
-schema.statics.findByCredentials = async (email, password) => {
+schema.statics.findByCredentials = async ({ email, password }) => {
   const courier = await Courier.findOne({ email });
   if (!courier) {
     throw new Error('Unable to login!');

@@ -1,9 +1,10 @@
+const ms = require('ms');
 const Role = require('../middlewares/role');
 const Courier = require('../models/courier.model');
 
 const postRegister = async (req, res) => {
   try {
-    const courier = new Courier(req.body.courier);
+    const courier = new Courier({ ...req.body.courier, role: Role.Courier });
     await courier.save();
     const token = await courier.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
@@ -12,16 +13,13 @@ const postRegister = async (req, res) => {
       .status(201)
       .json({ courier, token });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: error.message });
   }
 };
 
 const postLogin = async (req, res) => {
   try {
-    const courier = await Courier.findByCredentials(
-      req.body.courier.email,
-      req.body.courier.password
-    );
+    const courier = await Courier.findByCredentials(req.body.courier);
 
     const token = await courier.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
@@ -49,7 +47,7 @@ const postLogout = async (req, res) => {
 
 const postResign = async (req, res) => {
   const courier = await Courier.findOneAndUpdate(
-    { _id: req.courier._id, role: Role.Courier },
+    { _id: req.courier.id, role: Role.Courier },
     { role: Role.Courier },
     { new: true }
   );
