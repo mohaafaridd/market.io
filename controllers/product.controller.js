@@ -13,6 +13,7 @@ const postProduct = async (req, res) => {
 
 const postProductPicture = async (req, res) => {
   try {
+    console.log('here');
     const buffer = await sharp(req.file.buffer)
       .png()
       .resize({ width: 300, height: 300 })

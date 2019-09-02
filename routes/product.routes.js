@@ -15,7 +15,7 @@ router.post(
 );
 
 router.patch(
-  '/picture/:id',
+  '/:id/picture',
   authorization(Role.Store),
   authentication,
   upload.single('picture'),

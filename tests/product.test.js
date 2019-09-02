@@ -27,6 +27,17 @@ test('Should create product for store', async () => {
   expect(product).not.toBeNull();
 });
 
+test('Should add image to product in store', async () => {
+  await request(app)
+    .patch(`/product/${productOneId}/picture`)
+    .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
+    .attach('picture', 'tests/fixtures/img.png')
+    .expect(200);
+
+  const product = await Product.findById(productOneId);
+  expect(product.picture).toEqual(expect.any(Buffer));
+});
+
 test('Should get product from store', async () => {
   const response = await request(app)
     .get(`/product/${productOneId}`)
