@@ -13,7 +13,7 @@ beforeEach(setupDatabase);
 
 test('Should create an order', async () => {
   const response = await request(app)
-    .post(`/order`)
+    .post(`/orders/api`)
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       products: [productOneId],

@@ -14,7 +14,7 @@ const connectRoutes = () => {
   router.use('/users', userRoutes);
   router.use('/stores', storeRoutes);
   router.use('/products', productRoutes);
-  router.use('/order', orderRoutes);
+  router.use('/orders', orderRoutes);
   router.use('/cart', cartRoutes);
   router.use('/courier', courierRoutes);
   router.use('/', indexRoutes);
