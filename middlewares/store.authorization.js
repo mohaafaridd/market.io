@@ -6,13 +6,13 @@ function authorization(roles = []) {
   }
 
   return [
-    // authenticate JWT token and attach courier to request object (req.courier)
-    expressJwt({ secret: process.env.SECRET_KEY, requestProperty: 'courier' }),
+    // authenticate JWT token and attach store to request object (req.store)
+    expressJwt({ secret: process.env.SECRET_KEY, requestProperty: 'store' }),
 
-    // authorize based on courier role
+    // authorize based on store role
     (req, res, next) => {
-      if (roles.length && !roles.includes(req.courier.role)) {
-        // courier's role is not authorized
+      if (roles.length && !roles.includes(req.store.role)) {
+        // store's role is not authorized
         return res.status(401).json({ message: 'Unauthorized' });
       }
 
