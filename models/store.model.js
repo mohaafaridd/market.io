@@ -5,22 +5,18 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const schema = new Schema({
-  firstname: {
+  name: {
     type: String,
     minlength: 2,
     maxlength: 15,
-    trim: true,
     match: /^[a-zA-Z]+$/,
-    required: true,
   },
 
-  lastname: {
+  username: {
     type: String,
     minlength: 2,
     maxlength: 15,
-    trim: true,
     match: /^[a-zA-Z]+$/,
-    required: true,
   },
 
   phone: {
@@ -49,12 +45,6 @@ const schema = new Schema({
     maxlength: 100,
   },
 
-  workplace: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    default: null,
-  },
-
   role: {
     type: String,
     required: true,
@@ -78,57 +68,65 @@ const schema = new Schema({
 
 schema.plugin(uniqueValidator);
 
-schema.virtual('orders', {
-  ref: 'Order',
+// Getting store products if role is store
+schema.virtual('products', {
+  ref: 'Product',
   localField: '_id',
-  foreignField: 'courier',
+  foreignField: 'store',
+});
+
+// Getting store couriers
+schema.virtual('couriers', {
+  ref: 'Courier',
+  localField: '_id',
+  foreignField: 'workplace',
 });
 
 // Hashing plain text password
 schema.pre('save', async function preSave(next) {
-  const courier = this;
-  if (courier.isModified('password')) {
-    courier.password = await bcrypt.hash(courier.password, 10);
+  const store = this;
+  if (store.isModified('password')) {
+    store.password = await bcrypt.hash(store.password, 10);
   }
   next();
 });
 
 schema.methods.generateAuthToken = async function generateAuthToken() {
-  const courier = this;
+  const store = this;
   const token = jwt.sign(
-    { id: courier.id.toString(), role: courier.role },
+    { id: store.id.toString(), role: store.role },
     process.env.SECRET_KEY
   );
-  courier.tokens = courier.tokens.concat({ token });
-  await courier.save();
+  store.tokens = store.tokens.concat({ token });
+  await store.save();
   return token;
 };
 
 // removing password and tokens from response
 schema.methods.toJSON = function toJSON() {
-  const courier = this;
-  const courierObject = courier.toObject();
+  const store = this;
+  const storeObject = store.toObject();
 
-  delete courierObject.password;
-  delete courierObject.tokens;
+  delete storeObject.password;
+  delete storeObject.tokens;
 
-  return courierObject;
+  return storeObject;
 };
 
 schema.statics.findByCredentials = async ({ email, password }) => {
-  const courier = await Courier.findOne({ email });
-  if (!courier) {
+  const store = await Store.findOne({ email });
+  if (!store) {
     throw new Error('Unable to login!');
   }
 
-  const isMatch = await bcrypt.compare(password, courier.password);
+  const isMatch = await bcrypt.compare(password, store.password);
   if (!isMatch) {
     throw new Error('Unable to login!');
   }
 
-  return courier;
+  return store;
 };
 
-const Courier = model('Courier', schema);
+const Store = model('Store', schema);
 
-module.exports = Courier;
+module.exports = Store;
