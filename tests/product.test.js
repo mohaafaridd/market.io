@@ -15,7 +15,7 @@ beforeEach(setupDatabase);
 
 test('Should create product for store', async () => {
   const response = await request(app)
-    .post('/product')
+    .post('/products/api')
     .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
     .send({
       product: productTwo,
@@ -28,7 +28,7 @@ test('Should create product for store', async () => {
 
 test('Should add image to product in store', async () => {
   await request(app)
-    .patch(`/product/${productOneId}/picture`)
+    .patch(`/products/api/${productOneId}/picture`)
     .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
     .attach('picture', 'tests/fixtures/img.png')
     .expect(200);
@@ -39,7 +39,7 @@ test('Should add image to product in store', async () => {
 
 test('Should get product from store', async () => {
   const response = await request(app)
-    .get(`/product/${productOneId}`)
+    .get(`/products/api/${productOneId}`)
     .expect(200);
 
   expect(response.body).toMatchObject({
@@ -53,7 +53,7 @@ test('Should get product from store', async () => {
 
 test('Should edit a product from store', async () => {
   const response = await request(app)
-    .patch(`/product/${productOneId}`)
+    .patch(`/products/api/${productOneId}`)
     .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
     .send({
       updates: {
@@ -78,7 +78,7 @@ test('Should edit a product from store', async () => {
 
 test('Should delete a product', async () => {
   await request(app)
-    .delete(`/product/${productOneId}`)
+    .delete(`/products/api/${productOneId}`)
     .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
     .expect(200);
 
