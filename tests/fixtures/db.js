@@ -25,6 +25,25 @@ const storeOne = {
   ],
 };
 
+const courierOneId = new Types.ObjectId();
+const courierOne = {
+  _id: courierOne,
+  firstname: 'John',
+  lastname: 'Doe',
+  email: 'jd@sigma.com',
+  role: Role.Courier,
+  password: '123456',
+  workplace: storeOneId,
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: courierOneId, role: Role.Courier },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
+
 const productOneId = new Types.ObjectId();
 const productOne = {
   _id: productOneId,
@@ -107,6 +126,7 @@ const setupDatabase = async () => {
   await Cart.deleteMany();
   await new User(userOne).save();
   await new User(storeOne).save();
+  await new User(courierOne).save();
   await new Product(productOne).save();
   await new Cart(cartOne).save();
 };
@@ -122,6 +142,8 @@ module.exports = {
   userOne,
   userTwoId,
   userTwo,
+  courierOneId,
+  courierOne,
   cartOneId,
   cartOne,
   setupDatabase,
