@@ -63,7 +63,7 @@ const schema = new Schema({
   rating: {
     type: Number,
     required: true,
-    default: 10,
+    default: 0,
   },
 
   tokens: [

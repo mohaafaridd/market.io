@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const { isEmail } = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Role = require('../middlewares/role');
 
 const schema = new Schema({
   name: {
@@ -10,6 +11,7 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     match: /^[a-zA-Z]+$/,
+    required: true,
   },
 
   username: {
@@ -17,6 +19,8 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     match: /^[a-zA-Z]+$/,
+    required: true,
+    unique: true,
   },
 
   phone: {
@@ -48,12 +52,13 @@ const schema = new Schema({
   role: {
     type: String,
     required: true,
+    default: Role.Store,
   },
 
   rating: {
     type: Number,
     required: true,
-    default: 10,
+    default: 0,
   },
 
   tokens: [
