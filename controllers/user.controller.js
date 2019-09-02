@@ -1,5 +1,6 @@
 const ms = require('ms');
 const User = require('../models/user.model');
+
 const postRegister = async (req, res) => {
   try {
     const user = new User(req.body.user);

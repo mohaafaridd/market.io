@@ -15,6 +15,11 @@ const schema = new Schema(
       ref: 'User',
     },
 
+    courier: {
+      type: ObjectId,
+      ref: 'User',
+    },
+
     products: [
       {
         id: {
