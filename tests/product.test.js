@@ -5,10 +5,10 @@ const User = require('../models/user.model');
 
 const {
   setupDatabase,
+  storeOneId,
   storeOne,
-  storeId,
-  productOne,
   productOneId,
+  productOne,
   productTwo,
 } = require('./fixtures/db');
 
@@ -36,7 +36,7 @@ test('Should get product from store', async () => {
     product: {
       ...productOne,
       _id: productOneId.toHexString(),
-      store: storeId.toHexString(),
+      store: storeOneId.toHexString(),
     },
   });
 });
@@ -61,7 +61,7 @@ test('Should edit a product from store', async () => {
       amount: 20,
       discount: 10,
       _id: productOneId.toHexString(),
-      store: storeId.toHexString(),
+      store: storeOneId.toHexString(),
     },
   });
 });

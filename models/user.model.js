@@ -8,7 +8,6 @@ const role = require('../middlewares/role');
 const schema = new Schema({
   firstname: {
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 15,
     trim: true,
@@ -17,7 +16,6 @@ const schema = new Schema({
 
   lastname: {
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 15,
     trim: true,
@@ -26,7 +24,6 @@ const schema = new Schema({
 
   username: {
     type: String,
-    unique: true,
     minlength: 2,
     maxlength: 15,
     match: /^[a-zA-Z]+$/,

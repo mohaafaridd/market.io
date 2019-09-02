@@ -2,7 +2,8 @@ const Product = require('../models/product.model');
 const sharp = require('sharp');
 
 const postProduct = async (req, res) => {
-  const product = new Product({ ...req.body.product, store: req.store.id });
+  console.log(req);
+  const product = new Product({ ...req.body.product, store: req.user.id });
   try {
     await product.save();
     res.status(201).json({ message: 'product added', product });
@@ -73,7 +74,7 @@ const patchProduct = async (req, res) => {
 
     const product = await Product.findOne({
       _id: req.params.id,
-      store: req.store.id,
+      store: req.user.id,
     });
 
     if (!product) {
@@ -99,7 +100,7 @@ const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findOneAndDelete({
       _id: req.params.id,
-      store: req.store.id,
+      store: req.user.id,
     });
 
     if (!product) {
