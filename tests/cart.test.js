@@ -7,7 +7,6 @@ const {
   userOneId,
   userOne,
   productOneId,
-  productTwoId,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);

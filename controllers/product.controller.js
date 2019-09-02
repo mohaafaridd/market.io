@@ -2,7 +2,6 @@ const Product = require('../models/product.model');
 const sharp = require('sharp');
 
 const postProduct = async (req, res) => {
-  console.log(req);
   const product = new Product({ ...req.body.product, store: req.user.id });
   try {
     await product.save();
