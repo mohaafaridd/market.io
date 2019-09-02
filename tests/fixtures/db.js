@@ -27,10 +27,11 @@ const storeOne = {
 
 const courierOneId = new Types.ObjectId();
 const courierOne = {
-  _id: courierOne,
+  _id: courierOneId,
   firstname: 'John',
   lastname: 'Doe',
   email: 'jd@sigma.com',
+  phone: '01012227422',
   role: Role.Courier,
   password: '123456',
   workplace: storeOneId,
