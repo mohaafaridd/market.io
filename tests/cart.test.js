@@ -16,7 +16,7 @@ test('Should add a valid amount of a product to the cart', async () => {
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
-    .post('/cart')
+    .post('/carts/api')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       product: {
@@ -35,7 +35,7 @@ test('Should not add an invalid amount of a product to the cart', async () => {
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
-    .post('/cart')
+    .post('/carts/api')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       product: {
@@ -54,7 +54,7 @@ test('Should delete product from cart with valid data', async () => {
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
-    .delete('/cart')
+    .delete('/carts/api')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       products: [productOneId],

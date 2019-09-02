@@ -11,12 +11,12 @@ const cartRoutes = require('./cart.routes');
 const courierRoutes = require('./courier.routes');
 
 const connectRoutes = () => {
-  router.use('/user', userRoutes);
-  router.use('/store', storeRoutes);
-  router.use('/product', productRoutes);
-  router.use('/order', orderRoutes);
-  router.use('/cart', cartRoutes);
-  router.use('/courier', courierRoutes);
+  router.use('/carts', cartRoutes);
+  router.use('/couriers', courierRoutes);
+  router.use('/orders', orderRoutes);
+  router.use('/products', productRoutes);
+  router.use('/stores', storeRoutes);
+  router.use('/users', userRoutes);
   router.use('/', indexRoutes);
   return router;
 };

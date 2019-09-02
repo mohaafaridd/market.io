@@ -12,7 +12,7 @@ beforeEach(setupDatabase);
 
 test('gets a store data', async () => {
   const response = await request(app)
-    .get(`/store/${storeOne.username}`)
+    .get(`/stores/api/${storeOne.username}`)
     .expect(200);
 
   expect(response.body).toMatchObject({
