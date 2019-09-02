@@ -5,6 +5,7 @@ const schema = new Schema({
   owner: {
     type: ObjectId,
     required: true,
+    ref: 'User',
   },
 
   id: {

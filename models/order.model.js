@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const moment = require('moment');
 const { ObjectId } = Schema.Types;
 
 const schema = new Schema(
@@ -13,6 +12,7 @@ const schema = new Schema(
     owner: {
       type: ObjectId,
       required: true,
+      ref: 'User',
     },
 
     products: [
