@@ -7,7 +7,7 @@ const authentication = async (req, res, next) => {
   });
 
   if (!store) {
-    return res.status(401).json({ message: 'You are not authenticated' });
+    return res.status(403).json({ message: 'No access' });
   } else {
     req.store = store;
     next();

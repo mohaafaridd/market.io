@@ -18,10 +18,7 @@ const postRegister = async (req, res) => {
 
 const postLogin = async (req, res) => {
   try {
-    const user = await User.findByCredentials(
-      req.body.user.email,
-      req.body.user.password
-    );
+    const user = await User.findByCredentials(req.body.user);
 
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);

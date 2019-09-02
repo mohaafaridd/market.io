@@ -23,28 +23,6 @@ const schema = new Schema({
     match: /^[a-zA-Z]+$/,
   },
 
-  // Store
-  name: {
-    type: String,
-    minlength: 2,
-    maxlength: 15,
-    match: /^[a-zA-Z]+$/,
-  },
-
-  username: {
-    type: String,
-    minlength: 2,
-    maxlength: 15,
-    match: /^[a-zA-Z]+$/,
-  },
-
-  // Courier
-  workplace: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-
-  // General
   phone: {
     type: String,
     required: true,
@@ -74,6 +52,7 @@ const schema = new Schema({
   role: {
     type: String,
     required: true,
+    default: role.User,
   },
 
   tokens: [
@@ -102,12 +81,6 @@ schema.virtual('orders', {
   foreignField: 'customer',
 });
 
-// Getting user products if role is store
-schema.virtual('products', {
-  ref: 'Product',
-  localField: '_id',
-  foreignField: 'store',
-});
 // Hashing plain text password
 schema.pre('save', async function preSave(next) {
   const user = this;
@@ -139,7 +112,7 @@ schema.methods.toJSON = function toJSON() {
   return userObject;
 };
 
-schema.statics.findByCredentials = async (email, password) => {
+schema.statics.findByCredentials = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new Error('Unable to login!');
