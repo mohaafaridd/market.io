@@ -1,6 +1,12 @@
 const express = require('express');
-const authorization = require('../middlewares/user.authorization');
-const authentication = require('../middlewares/user.authentication');
+// user auth
+const userAuthorization = require('../middlewares/user.authorization');
+const userAuthentication = require('../middlewares/user.authentication');
+
+// courier auth
+const courierAuthorization = require('../middlewares/courier.authorization');
+const courierAuthentication = require('../middlewares/courier.authentication');
+
 const controller = require('../controllers/order.controller');
 const Role = require('../middlewares/role');
 
@@ -8,15 +14,15 @@ const router = express.Router();
 
 router.post(
   '/',
-  authorization(Role.User),
-  authentication,
+  userAuthorization(Role.User),
+  userAuthentication,
   controller.postOrder
 );
 
 router.patch(
   '/:id',
-  authorization(Role.Courier),
-  authentication,
+  courierAuthorization(Role.Courier),
+  courierAuthentication,
   controller.updateOrder
 );
 
