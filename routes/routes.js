@@ -12,7 +12,7 @@ const courierRoutes = require('./courier.routes');
 
 const connectRoutes = () => {
   router.use('/users', userRoutes);
-  router.use('/store', storeRoutes);
+  router.use('/stores', storeRoutes);
   router.use('/product', productRoutes);
   router.use('/order', orderRoutes);
   router.use('/cart', cartRoutes);
