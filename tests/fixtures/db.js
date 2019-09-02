@@ -2,6 +2,8 @@ const { Types } = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user.model');
+const Store = require('../../models/store.model');
+const Courier = require('../../models/courier.model');
 const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
 const Role = require('../../middlewares/role');
@@ -123,11 +125,13 @@ const cartOne = {
 
 const setupDatabase = async () => {
   await User.deleteMany();
+  await Store.deleteMany();
+  await Courier.deleteMany();
   await Product.deleteMany();
   await Cart.deleteMany();
   await new User(userOne).save();
-  await new User(storeOne).save();
-  await new User(courierOne).save();
+  await new Store(storeOne).save();
+  await new Courier(courierOne).save();
   await new Product(productOne).save();
   await new Cart(cartOne).save();
 };
