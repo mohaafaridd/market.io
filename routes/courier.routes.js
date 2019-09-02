@@ -1,6 +1,6 @@
 const express = require('express');
-const authorization = require('../middlewares/user.authorization');
-const authentication = require('../middlewares/user.authentication');
+const authorization = require('../middlewares/courier.authorization');
+const authentication = require('../middlewares/courier.authentication');
 const controller = require('../controllers/courier.controller');
 const Role = require('../middlewares/role');
 

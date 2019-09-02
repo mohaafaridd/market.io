@@ -4,7 +4,7 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const Schema = new Schema({
+const schema = new Schema({
   firstname: {
     type: String,
     minlength: 2,
