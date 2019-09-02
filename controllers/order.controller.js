@@ -24,7 +24,7 @@ const postOrder = async (req, res) => {
 
     await order.save();
 
-    res.json({ order });
+    res.status(201).json({ order });
   } catch (error) {
     res.json({ error: { ...error }, message: error.message });
   }

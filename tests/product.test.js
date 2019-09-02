@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
 const Product = require('../models/product.model');
-const User = require('../models/user.model');
 
 const {
   setupDatabase,
