@@ -11,7 +11,7 @@ const cartRoutes = require('./cart.routes');
 const courierRoutes = require('./courier.routes');
 
 const connectRoutes = () => {
-  router.use('/cart', cartRoutes);
+  router.use('/carts', cartRoutes);
   router.use('/couriers', courierRoutes);
   router.use('/orders', orderRoutes);
   router.use('/products', productRoutes);
