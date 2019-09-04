@@ -1,14 +1,42 @@
 const request = require('supertest');
 const app = require('../app');
+const Store = require('../models/store.model');
 const Role = require('../middlewares/role');
 const {
-  setupDatabase,
-  storeOneId,
-  storeOne,
   productOne,
+  setupDatabase,
+  storeOne,
+  storeOneId,
+  storeTwo,
+  storeTwoId,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
+
+test('Should register a store', async () => {
+  const response = await request(app)
+    .post('/stores/api/register')
+    .send({
+      store: storeTwo,
+    })
+    .expect(201);
+
+  const store = await Store.findById(storeTwoId);
+
+  expect(store).not.toBeNull();
+  expect(response.body).toMatchObject({
+    store: {
+      name: store.name,
+      username: store.username,
+      email: store.email,
+      phone: store.phone,
+    },
+
+    token: store.tokens[1].token,
+  });
+
+  expect(store.password).not.toBe(storeTwo.password);
+});
 
 test('gets a store data', async () => {
   const response = await request(app)

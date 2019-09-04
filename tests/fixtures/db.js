@@ -16,6 +16,7 @@ const orderOneId = new Types.ObjectId();
 const productOneId = new Types.ObjectId();
 const productTwoId = new Types.ObjectId();
 const storeOneId = new Types.ObjectId();
+const storeTwoId = new Types.ObjectId();
 const userOneId = new Types.ObjectId();
 const userTwoId = new Types.ObjectId();
 
@@ -118,6 +119,24 @@ const storeOne = {
   ],
 };
 
+const storeTwo = {
+  _id: storeTwoId,
+  name: 'Beta',
+  username: 'beta',
+  phone: '01012227422',
+  email: 'beta@gmail.com',
+  password: '123456',
+  role: Role.Store,
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: storeTwoId, role: Role.Store },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
+
 const userOne = {
   _id: userOneId,
   firstname: 'Mohammed',
@@ -185,6 +204,8 @@ module.exports = {
   setupDatabase,
   storeOne,
   storeOneId,
+  storeTwo,
+  storeTwoId,
   userOne,
   userOneId,
   userTwo,
