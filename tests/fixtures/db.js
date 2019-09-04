@@ -1,33 +1,31 @@
 const { Types } = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const User = require('../../models/user.model');
-const Store = require('../../models/store.model');
-const Courier = require('../../models/courier.model');
-const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
+const Courier = require('../../models/courier.model');
+const Order = require('../../models/order.model');
+const Product = require('../../models/product.model');
+const Store = require('../../models/store.model');
+const User = require('../../models/user.model');
 const Role = require('../../middlewares/role');
 
+const cartOneId = new Types.ObjectId();
+const courierOneId = new Types.ObjectId();
+const courierTwoId = new Types.ObjectId();
+const orderOneId = new Types.ObjectId();
+const productOneId = new Types.ObjectId();
+const productTwoId = new Types.ObjectId();
 const storeOneId = new Types.ObjectId();
-const storeOne = {
-  _id: storeOneId,
-  name: 'Sigma',
-  username: 'sigma',
-  phone: '01012227421',
-  email: 'sigma@gmail.com',
-  password: '123456',
-  role: Role.Store,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: storeOneId, role: Role.Store },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
+const userOneId = new Types.ObjectId();
+const userTwoId = new Types.ObjectId();
+
+const cartOne = {
+  _id: cartOneId,
+  owner: userOneId,
+  id: productOneId,
+  amount: 1,
 };
 
-const courierOneId = new Types.ObjectId();
 const courierOne = {
   _id: courierOneId,
   firstname: 'John',
@@ -47,7 +45,6 @@ const courierOne = {
   ],
 };
 
-const courierTwoId = new Types.ObjectId();
 const courierTwo = {
   _id: courierTwoId,
   firstname: 'Jane',
@@ -67,7 +64,14 @@ const courierTwo = {
   ],
 };
 
-const productOneId = new Types.ObjectId();
+const orderOne = {
+  _id: orderOneId,
+  delivered: false,
+  owner: userOneId,
+  courier: null,
+  products: [{ id: productOneId, amount: 1 }],
+};
+
 const productOne = {
   _id: productOneId,
   category: 'Mobile Phone',
@@ -82,7 +86,6 @@ const productOne = {
   booked: 0,
 };
 
-const productTwoId = new Types.ObjectId();
 const productTwo = {
   _id: productTwoId,
   category: 'Mobile Phone',
@@ -97,7 +100,24 @@ const productTwo = {
   booked: 0,
 };
 
-const userOneId = new Types.ObjectId();
+const storeOne = {
+  _id: storeOneId,
+  name: 'Sigma',
+  username: 'sigma',
+  phone: '01012227421',
+  email: 'sigma@gmail.com',
+  password: '123456',
+  role: Role.Store,
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: storeOneId, role: Role.Store },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
+
 const userOne = {
   _id: userOneId,
   firstname: 'Mohammed',
@@ -116,7 +136,6 @@ const userOne = {
   ],
 };
 
-const userTwoId = new Types.ObjectId();
 const userTwo = {
   _id: userTwoId,
   firstname: 'Sherif',
@@ -135,25 +154,19 @@ const userTwo = {
   ],
 };
 
-const cartOneId = new Types.ObjectId();
-const cartOne = {
-  _id: cartOneId,
-  owner: userOneId,
-  id: productOneId,
-  amount: 1,
-};
-
 const setupDatabase = async () => {
-  await User.deleteMany();
-  await Store.deleteMany();
-  await Courier.deleteMany();
-  await Product.deleteMany();
   await Cart.deleteMany();
-  await new User(userOne).save();
-  await new Store(storeOne).save();
-  await new Courier(courierOne).save();
-  await new Product(productOne).save();
+  await Courier.deleteMany();
+  await Order.deleteMany();
+  await Product.deleteMany();
+  await Store.deleteMany();
+  await User.deleteMany();
   await new Cart(cartOne).save();
+  await new Courier(courierOne).save();
+  await new Order(orderOne).save();
+  await new Product(productOne).save();
+  await new Store(storeOne).save();
+  await new User(userOne).save();
 };
 
 module.exports = {
