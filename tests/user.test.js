@@ -83,3 +83,16 @@ test('Should not login a user', async () => {
     })
     .expect(400);
 });
+
+test('Should logout a user', async () => {
+  const userBefore = await User.findById(userOneId);
+  expect(userBefore.tokens).toHaveLength(1);
+
+  const response = await request(app)
+    .post('/users/api/logout')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .expect(200);
+
+  const userAfter = await User.findById(userOneId);
+  expect(userAfter.tokens).toHaveLength(0);
+});
