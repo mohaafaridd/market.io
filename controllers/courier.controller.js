@@ -48,7 +48,7 @@ const postLogout = async (req, res) => {
 const postResign = async (req, res) => {
   const courier = await Courier.findOneAndUpdate(
     { _id: req.courier.id, role: Role.Courier },
-    { role: Role.Courier },
+    { workplace: null },
     { new: true }
   );
 

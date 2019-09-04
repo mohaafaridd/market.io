@@ -15,7 +15,7 @@ router.post(
   controller.postLogout
 );
 
-router.post(
+router.patch(
   '/resign',
   authorization(Role.Courier),
   authentication,

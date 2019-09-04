@@ -47,6 +47,26 @@ const courierOne = {
   ],
 };
 
+const courierTwoId = new Types.ObjectId();
+const courierTwo = {
+  _id: courierTwoId,
+  firstname: 'Jane',
+  lastname: 'Doe',
+  email: 'jd@badr.com',
+  phone: '01012227425',
+  role: Role.Courier,
+  password: '123456',
+  workplace: storeOneId,
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: courierTwoId, role: Role.Courier },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
+
 const productOneId = new Types.ObjectId();
 const productOne = {
   _id: productOneId,
@@ -149,6 +169,8 @@ module.exports = {
   userTwo,
   courierOneId,
   courierOne,
+  courierTwoId,
+  courierTwo,
   cartOneId,
   cartOne,
   setupDatabase,
