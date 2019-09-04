@@ -5,7 +5,6 @@ const Store = require('../models/store.model');
 const postRegister = async (req, res) => {
   try {
     const store = new Store({ ...req.body.store, role: Role.store });
-    console.log('store :', store);
     await store.save();
     const token = await store.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
@@ -14,7 +13,6 @@ const postRegister = async (req, res) => {
       .status(201)
       .json({ store, token });
   } catch (error) {
-    console.log('error ', error.message);
     res.status(400).json({ error: error.message });
   }
 };

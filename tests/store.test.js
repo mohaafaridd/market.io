@@ -38,6 +38,34 @@ test('Should register a store', async () => {
   expect(store.password).not.toBe(storeTwo.password);
 });
 
+test('Should login a store', async () => {
+  const response = await request(app)
+    .post('/stores/api/login')
+    .send({
+      store: {
+        email: storeOne.email,
+        password: storeOne.password,
+      },
+    })
+    .expect(200);
+
+  const store = await Store.findById(storeOneId);
+  expect(response.body.token).toBe(store.tokens[1].token);
+});
+
+test('Should logout a store', async () => {
+  const storeBefore = await Store.findById(storeOneId);
+  expect(storeBefore.tokens).toHaveLength(1);
+
+  const response = await request(app)
+    .post('/stores/api/logout')
+    .set('Authorization', `Bearer ${storeOne.tokens[0].token}`)
+    .expect(200);
+
+  const storeAfter = await Store.findById(storeOneId);
+  expect(storeAfter.tokens).toHaveLength(0);
+});
+
 test('gets a store data', async () => {
   const response = await request(app)
     .get(`/stores/api/${storeOne.username}`)
