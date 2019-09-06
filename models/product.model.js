@@ -56,6 +56,11 @@ const schema = new Schema({
     required: true,
   },
 
+  price: {
+    type: Number,
+    required: true,
+  },
+
   discount: {
     type: Number,
     required: true,

@@ -75,30 +75,32 @@ const orderOne = {
 
 const productOne = {
   _id: productOneId,
-  category: 'Mobile Phone',
-  manufacturer: 'Samsung',
-  name: 'Note 10',
-  description: 'A flagship phone made by Samsung',
-  model: 'note-10',
-  color: 'glue',
   amount: 100,
-  discount: 0,
-  store: storeOneId,
   booked: 0,
+  category: 'Mobile Phone',
+  color: 'glue',
+  description: 'A flagship phone made by Samsung',
+  discount: 0,
+  manufacturer: 'Samsung',
+  model: 'note-10',
+  name: 'Note 10',
+  price: 1000,
+  store: storeOneId,
 };
 
 const productTwo = {
   _id: productTwoId,
-  category: 'Mobile Phone',
-  manufacturer: 'Honor',
-  name: 'Honor 8x',
-  description: 'A midrange phone made by Honor',
-  model: 'honor-8x',
-  color: 'blue',
   amount: 100,
-  discount: 0,
-  store: storeOneId,
   booked: 0,
+  category: 'Mobile Phone',
+  color: 'blue',
+  description: 'A midrange phone made by Honor',
+  discount: 0,
+  manufacturer: 'Honor',
+  model: 'honor-8x',
+  name: 'Honor 8x',
+  price: 300,
+  store: storeOneId,
 };
 
 const storeOne = {
