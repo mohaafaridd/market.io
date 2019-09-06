@@ -1,22 +1,17 @@
 const Product = require('../models/product.model');
 
-const search = async (req, res) => {
-  const { name, minimum, maximum, category } = req.query;
+const getProducts = async (req, res) => {
+  const { name, minimum = 0, maximum = 1000000 } = req.query;
 
-  const query = {
-    $and: [
-      { $text: { $search: name } },
-      { category: category ? category : { $exists: true } },
-      { price: { $gte: minimum < maximum ? minimum : 0 } },
-      { price: { $lte: maximum } },
-    ],
-  };
-
-  const products = await Product.find(query, {
-    score: { $meta: 'textScore' },
-  }).sort({ score: { $meta: 'textScore' } });
+  const products = await Product.find(
+    {
+      $text: { $search: name },
+      price: { $gte: minimum, $lte: maximum },
+    },
+    { score: { $meta: 'textScore' } }
+  ).sort({ score: { $meta: 'textScore' } });
 
   res.json({ products });
 };
 
-module.exports = { search };
+module.exports = { getProducts };
