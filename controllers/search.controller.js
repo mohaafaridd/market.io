@@ -3,12 +3,14 @@ const Product = require('../models/product.model');
 const getProducts = async (req, res) => {
   const {
     category,
-    name,
-    minimum = 0,
+    color,
+    manufacturer,
     maximum = 1000000,
-    page,
-    minRating = 0,
     maxRating = 5,
+    minimum = 0,
+    minRating = 0,
+    name,
+    page,
   } = req.query;
 
   if (minimum > maximum) {
@@ -32,14 +34,15 @@ const getProducts = async (req, res) => {
       // if a name is passed as a query param it will be used for search
       // if not the query will just check for name availability in the document
       name ? { $text: { $search: name } } : { name: { $exists: true } },
+      { color: color ? color : { $exists: true } },
+      { manufacturer: manufacturer ? manufacturer : { $exists: true } },
+      { category: category ? category : { $exists: true } },
       {
         price: {
           $gte: parseFloat(minimum),
           $lte: parseFloat(maximum),
         },
       },
-      { category: category ? category : { $exists: true } },
-
       {
         rating: {
           $gte: parseFloat(minRating),
