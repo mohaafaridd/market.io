@@ -51,7 +51,7 @@ const schema = new Schema({
 
   workplace: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Store',
     default: null,
   },
 
