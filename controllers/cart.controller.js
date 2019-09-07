@@ -18,8 +18,8 @@ const postCart = async (req, res) => {
     }
 
     const cart = await Cart.findOneAndUpdate(
-      { owner: user._id, id: product.id },
-      { $set: { id: product.id }, $inc: { amount: product.amount } },
+      { owner: user.id, product: product.id },
+      { $set: { product: product.id }, $inc: { amount: product.amount } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
@@ -39,7 +39,7 @@ const deleteCart = async (req, res) => {
     const requests = products.map(product =>
       Cart.findOneAndDelete({
         owner: user.id,
-        id: product,
+        product: product,
       })
     );
 

@@ -23,7 +23,7 @@ const userTwoId = new Types.ObjectId();
 const cartOne = {
   _id: cartOneId,
   owner: userOneId,
-  id: productOneId,
+  product: productOneId,
   amount: 1,
 };
 

@@ -12,7 +12,10 @@ const {
 beforeEach(setupDatabase);
 
 test('Should add a valid amount of a product to the cart', async () => {
-  const cartBefore = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartBefore = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
@@ -26,12 +29,18 @@ test('Should add a valid amount of a product to the cart', async () => {
     })
     .expect(200);
 
-  const cartAfter = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartAfter = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartAfter.amount).toBe(2);
 });
 
 test('Should not add an invalid amount of a product to the cart', async () => {
-  const cartBefore = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartBefore = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
@@ -45,12 +54,18 @@ test('Should not add an invalid amount of a product to the cart', async () => {
     })
     .expect(400);
 
-  const cartAfter = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartAfter = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartAfter.amount).toBe(1);
 });
 
 test('Should delete product from cart with valid data', async () => {
-  const cartBefore = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartBefore = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartBefore.amount).toBe(1);
 
   const resposne = await request(app)
@@ -61,6 +76,9 @@ test('Should delete product from cart with valid data', async () => {
     })
     .expect(200);
 
-  const cartAfter = await Cart.findOne({ owner: userOneId, id: productOneId });
+  const cartAfter = await Cart.findOne({
+    owner: userOneId,
+    product: productOneId,
+  });
   expect(cartAfter).toBeNull();
 });

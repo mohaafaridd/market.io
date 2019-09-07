@@ -8,8 +8,10 @@ const schema = new Schema({
     ref: 'User',
   },
 
-  id: {
+  product: {
     type: ObjectId,
+    required: true,
+    ref: 'Product',
   },
 
   amount: {
