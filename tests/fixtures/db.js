@@ -85,6 +85,7 @@ const productOne = {
   model: 'note-10',
   name: 'Note 10',
   price: 1000,
+  rating: 0,
   store: storeOneId,
 };
 
@@ -100,6 +101,7 @@ const productTwo = {
   model: 'honor-8x',
   name: 'Honor 8x',
   price: 300,
+  rating: 0,
   store: storeOneId,
 };
 

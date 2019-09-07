@@ -61,6 +61,13 @@ const schema = new Schema({
     required: true,
   },
 
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0,
+  },
+
   discount: {
     type: Number,
     required: true,

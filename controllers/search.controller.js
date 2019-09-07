@@ -1,7 +1,15 @@
 const Product = require('../models/product.model');
 
 const getProducts = async (req, res) => {
-  const { category, name, minimum = 0, maximum = 1000000, page } = req.query;
+  const {
+    category,
+    name,
+    minimum = 0,
+    maximum = 1000000,
+    page,
+    minRating = 0,
+    maxRating = 5,
+  } = req.query;
 
   if (minimum > maximum) {
     return res
@@ -9,8 +17,20 @@ const getProducts = async (req, res) => {
       .json({ message: "minimum can't be more than maximum" });
   }
 
+  if (minRating > maxRating) {
+    return res
+      .status(400)
+      .json({ message: "minimum rating can't be more than maximum" });
+  }
+
+  if (minRating < 0 || minRating > 5 || maxRating < 0 || maxRating > 5) {
+    return res.status(400).json({ message: 'bad rating value' });
+  }
+
   const matchQuery = {
     $and: [
+      // if a name is passed as a query param it will be used for search
+      // if not the query will just check for name availability in the document
       name ? { $text: { $search: name } } : { name: { $exists: true } },
       {
         price: {
@@ -19,6 +39,13 @@ const getProducts = async (req, res) => {
         },
       },
       { category: category ? category : { $exists: true } },
+
+      {
+        rating: {
+          $gte: parseFloat(minRating),
+          $lte: parseFloat(maxRating),
+        },
+      },
     ],
   };
 
