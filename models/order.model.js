@@ -17,7 +17,7 @@ const schema = new Schema(
 
     courier: {
       type: ObjectId,
-      ref: 'User',
+      ref: 'Courier',
     },
 
     products: [
