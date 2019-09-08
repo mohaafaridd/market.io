@@ -96,3 +96,15 @@ test('Should logout a user', async () => {
   const userAfter = await User.findById(userOneId);
   expect(userAfter.tokens).toHaveLength(0);
 });
+
+test('Should let the user change his password', async () => {
+  const response = await request(app)
+    .patch('/users/api')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      updates: {
+        phone: '01012227424',
+      },
+    })
+    .expect(200);
+});

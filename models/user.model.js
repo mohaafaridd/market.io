@@ -84,9 +84,11 @@ schema.virtual('orders', {
 // Hashing plain text password
 schema.pre('save', async function preSave(next) {
   const user = this;
+
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 10);
   }
+
   next();
 });
 

@@ -1,4 +1,5 @@
 const ms = require('ms');
+const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const postRegister = async (req, res) => {
   try {
@@ -46,14 +47,17 @@ const postLogout = async (req, res) => {
 const patchInformation = async (req, res) => {
   try {
     const { updates } = req.body;
-    // const user = await User.findOneAndUpdate({ _id: req.user.id }, updates, {
-    //   runValidators: true,
-    // });
-    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 10);
+    }
+
+    const user = await User.findOneAndUpdate({ _id: req.user.id }, updates, {
       new: true,
       runValidators: true,
       context: 'query',
     });
+
     res.json({ message: 'success', user });
   } catch (error) {
     res.json({ message: 'failed', error: error.message });
