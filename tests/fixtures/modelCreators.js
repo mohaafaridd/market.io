@@ -5,14 +5,20 @@ const Role = require('../../middlewares/role');
 const { phones } = require('./products');
 
 const createUser = (id, role) => {
+  const firstname = faker.name.firstName();
+  const lastname = faker.name.lastName();
+  const email = faker.internet.email(firstname, lastname);
+  const phone = faker.phone.phoneNumber('010########');
+  const password = faker.internet.password(10);
+
   return {
     _id: id,
     role,
-    firstname: faker.name.firstName(),
-    lastname: faker.name.firstName(),
-    email: faker.internet.email(),
-    phone: faker.phone.phoneNumber('01#########'),
-    password: faker.internet.password(10),
+    firstname,
+    lastname,
+    email,
+    phone,
+    password,
     tokens: [
       {
         token: jwt.sign({ id, role }, process.env.SECRET_KEY),
@@ -38,12 +44,15 @@ const createProduct = (id, storeId) => {
 };
 
 const createStore = id => {
+  const name = faker.company.companyName(0);
+  const regex = /(\s|[',.])/g;
+  const username = name.toLowerCase().replace(regex, '-');
   return {
     _id: id,
-    name: faker.company.companyName(),
-    username: faker.name.firstName(),
+    name,
+    username,
     phone: faker.phone.phoneNumber('01#########'),
-    email: faker.internet.email().toLowerCase(),
+    email: faker.internet.email(name).toLowerCase(),
     password: faker.internet.password(),
     role: Role.Store,
     tokens: [

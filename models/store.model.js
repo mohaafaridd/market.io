@@ -9,15 +9,15 @@ const schema = new Schema({
   name: {
     type: String,
     minlength: 2,
-    maxlength: 36,
+    maxlength: 40,
     required: true,
   },
 
   username: {
     type: String,
     minlength: 2,
-    maxlength: 15,
-    match: /^[a-zA-Z]+$/,
+    maxlength: 40,
+    match: /^[a-zA-Z-]+$/,
     required: true,
     unique: true,
   },

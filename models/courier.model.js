@@ -10,7 +10,7 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/,
+    match: /^[a-zA-Z,.'-]+$/,
     required: true,
   },
 
@@ -19,7 +19,7 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 15,
     trim: true,
-    match: /^[a-zA-Z]+$/,
+    match: /^[a-zA-Z,.'-]+$/,
     required: true,
   },
 
