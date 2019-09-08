@@ -35,7 +35,6 @@ const courierOne = {
   phone: '01012227422',
   role: Role.Courier,
   password: '123456',
-  workplace: storeOneId,
   tokens: [
     {
       token: jwt.sign(
@@ -54,7 +53,6 @@ const courierTwo = {
   phone: '01012227425',
   role: Role.Courier,
   password: '123456',
-  workplace: storeOneId,
   tokens: [
     {
       token: jwt.sign(

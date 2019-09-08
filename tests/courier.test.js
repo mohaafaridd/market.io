@@ -60,16 +60,3 @@ test('Should logout a courier', async () => {
   const courier = await Courier.findById(courierOneId);
   expect(courier.tokens).toHaveLength(0);
 });
-
-test('Should resign a courier', async () => {
-  const courierBefore = await Courier.findById(courierOneId);
-  expect(courierBefore.workplace).not.toBeNull();
-
-  const response = await request(app)
-    .patch('/couriers/api/resign')
-    .set('Authorization', `Bearer ${courierOne.tokens[0].token}`)
-    .expect(200);
-
-  const courierAfter = await Courier.findById(courierOneId);
-  expect(courierAfter.workplace).toBeNull();
-});

@@ -45,19 +45,8 @@ const postLogout = async (req, res) => {
   }
 };
 
-const postResign = async (req, res) => {
-  const courier = await Courier.findOneAndUpdate(
-    { _id: req.courier.id, role: Role.Courier },
-    { workplace: null },
-    { new: true }
-  );
-
-  res.json({ courier });
-};
-
 module.exports = {
   postRegister,
   postLogin,
   postLogout,
-  postResign,
 };

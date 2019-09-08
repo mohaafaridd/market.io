@@ -15,11 +15,4 @@ router.post(
   controller.postLogout
 );
 
-router.patch(
-  '/resign',
-  authorization(Role.Courier),
-  authentication,
-  controller.postResign
-);
-
 module.exports = router;

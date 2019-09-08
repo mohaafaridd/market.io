@@ -49,12 +49,6 @@ const schema = new Schema({
     maxlength: 100,
   },
 
-  workplace: {
-    type: Schema.Types.ObjectId,
-    ref: 'Store',
-    default: null,
-  },
-
   role: {
     type: String,
     required: true,
