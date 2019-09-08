@@ -57,6 +57,23 @@ const createProduct = (id, storeId) => {
   };
 };
 
+const createStore = id => {
+  return {
+    _id: id,
+    name: faker.company.companyName(),
+    username: faker.name.firstName(),
+    phone: faker.phone.phoneNumber('01#########'),
+    email: faker.internet.email().toLowerCase(),
+    password: faker.internet.password(),
+    role: Role.Store,
+    tokens: [
+      {
+        token: jwt.sign({ id: id, role: Role.Store }, process.env.SECRET_KEY),
+      },
+    ],
+  };
+};
+
 const adminOne = createUser(adminOneId, Role.Administrator);
 
 const cartOne = {
@@ -81,41 +98,8 @@ const orderOne = {
 const productOne = createProduct(productOneId, storeOneId);
 const productTwo = createProduct(productTwoId, storeOneId);
 
-const storeOne = {
-  _id: storeOneId,
-  name: 'Sigma',
-  username: 'sigma',
-  phone: '01012227421',
-  email: 'sigma@gmail.com',
-  password: '123456',
-  role: Role.Store,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: storeOneId, role: Role.Store },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
-
-const storeTwo = {
-  _id: storeTwoId,
-  name: 'Beta',
-  username: 'beta',
-  phone: '01012227422',
-  email: 'beta@gmail.com',
-  password: '123456',
-  role: Role.Store,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: storeTwoId, role: Role.Store },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
+const storeOne = createStore(storeOneId);
+const storeTwo = createStore(storeTwoId);
 
 const userOne = createUser(userOneId, Role.User);
 

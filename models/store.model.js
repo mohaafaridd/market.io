@@ -9,8 +9,7 @@ const schema = new Schema({
   name: {
     type: String,
     minlength: 2,
-    maxlength: 15,
-    match: /^[a-zA-Z]+$/,
+    maxlength: 36,
     required: true,
   },
 
