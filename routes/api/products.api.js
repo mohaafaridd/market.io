@@ -33,7 +33,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  authorization(Role.Store),
+  authorization([Role.Store, Role.Administrator]),
   authentication,
   controller.deleteProduct
 );

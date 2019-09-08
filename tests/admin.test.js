@@ -38,3 +38,13 @@ test('Should edit product as an administrator', async () => {
     },
   });
 });
+
+test('Should delete a product as an admin', async () => {
+  await request(app)
+    .delete(`/products/api/${productOneId}`)
+    .set('Authorization', `Bearer ${adminOne.tokens[0].token}`)
+    .expect(200);
+
+  const product = await Product.findById(productOneId);
+  expect(product).toBeNull();
+});

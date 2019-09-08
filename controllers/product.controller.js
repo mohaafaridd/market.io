@@ -97,10 +97,7 @@ const patchProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findOneAndDelete({
-      _id: req.params.id,
-      store: req.store.id,
-    });
+    const product = await Product.findByIdAndDelete(req.params.id);
 
     if (!product) {
       return res.status(404).json({ message: 'No product was found' });
