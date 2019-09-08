@@ -15,4 +15,11 @@ router.post(
   controller.postLogout
 );
 
+router.patch(
+  '/',
+  authorization([Role.User, Role.Administrator]),
+  authentication,
+  controller.patchInformation
+);
+
 module.exports = router;

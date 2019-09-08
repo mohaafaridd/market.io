@@ -6,6 +6,18 @@ const phones = [
   },
 
   {
+    manufacturer: 'Samsung',
+    model: 's-10',
+    name: 'S10',
+  },
+
+  {
+    manufacturer: 'Samsung',
+    model: 's-10-plus',
+    name: 'S10+',
+  },
+
+  {
     manufacturer: 'Apple',
     model: 'xs-max',
     name: 'XS Max',
