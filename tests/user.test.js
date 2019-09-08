@@ -1,4 +1,5 @@
 const request = require('supertest');
+const faker = require('faker');
 const app = require('../app');
 const User = require('../models/user.model');
 
@@ -98,12 +99,27 @@ test('Should logout a user', async () => {
 });
 
 test('Should let the user change his password', async () => {
-  const response = await request(app)
+  const newPassword = faker.internet.password(10);
+  const newEmail = faker.internet.email();
+
+  await request(app)
     .patch('/users/api')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       updates: {
         phone: '01012227424',
+        password: newPassword,
+        email: newEmail,
+      },
+    })
+    .expect(200);
+
+  await request(app)
+    .post('/users/api/login')
+    .send({
+      user: {
+        email: newEmail,
+        password: newPassword,
       },
     })
     .expect(200);
