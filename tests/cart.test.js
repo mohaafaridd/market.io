@@ -49,7 +49,7 @@ test('Should not add an invalid amount of a product to the cart', async () => {
     .send({
       product: {
         id: productOneId,
-        amount: 200,
+        amount: 2000,
       },
     })
     .expect(400);

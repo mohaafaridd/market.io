@@ -1,5 +1,8 @@
 const { Types } = require('mongoose');
 const jwt = require('jsonwebtoken');
+const faker = require('faker');
+
+const { phones } = require('./products');
 
 const Cart = require('../../models/cart.model');
 const Courier = require('../../models/courier.model');
@@ -21,23 +24,40 @@ const storeTwoId = new Types.ObjectId();
 const userOneId = new Types.ObjectId();
 const userTwoId = new Types.ObjectId();
 
-const adminOne = {
-  _id: adminOneId,
-  firstname: 'Douglas',
-  lastname: 'Lyphe',
-  email: 'douglas@gmail.com',
-  phone: '01012227499',
-  password: '123456',
-  role: Role.Administrator,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: adminOneId, role: Role.Administrator },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
+const createUser = (id, role) => {
+  return {
+    _id: id,
+    role,
+    firstname: faker.name.firstName(),
+    lastname: faker.name.firstName(),
+    email: faker.internet.email(),
+    phone: faker.phone.phoneNumber('01#########'),
+    password: faker.internet.password(10),
+    tokens: [
+      {
+        token: jwt.sign({ id, role }, process.env.SECRET_KEY),
+      },
+    ],
+  };
 };
+
+const createProduct = (id, storeId) => {
+  return {
+    _id: id,
+    amount: faker.random.number({ min: 800, max: 1000 }),
+    booked: faker.random.number({ min: 100, max: 800 }),
+    category: 'Mobile Phone',
+    color: faker.commerce.color(),
+    description: faker.lorem.slug(10),
+    discount: faker.random.number({ min: 0, max: 50 }),
+    ...faker.random.arrayElement(phones),
+    price: 1000,
+    rating: 0,
+    store: storeId,
+  };
+};
+
+const adminOne = createUser(adminOneId, Role.Administrator);
 
 const cartOne = {
   _id: cartOneId,
@@ -46,41 +66,9 @@ const cartOne = {
   amount: 1,
 };
 
-const courierOne = {
-  _id: courierOneId,
-  firstname: 'John',
-  lastname: 'Doe',
-  email: 'jd@sigma.com',
-  phone: '01012227422',
-  role: Role.Courier,
-  password: '123456',
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: courierOneId, role: Role.Courier },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
+const courierOne = createUser(courierOneId, Role.Courier);
 
-const courierTwo = {
-  _id: courierTwoId,
-  firstname: 'Jane',
-  lastname: 'Doe',
-  email: 'jd@badr.com',
-  phone: '01012227425',
-  role: Role.Courier,
-  password: '123456',
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: courierTwoId, role: Role.Courier },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
+const courierTwo = createUser(courierTwoId, Role.Courier);
 
 const orderOne = {
   _id: orderOneId,
@@ -90,37 +78,8 @@ const orderOne = {
   products: [{ id: productOneId, amount: 1 }],
 };
 
-const productOne = {
-  _id: productOneId,
-  amount: 100,
-  booked: 0,
-  category: 'Mobile Phone',
-  color: 'glue',
-  description: 'A flagship phone made by Samsung',
-  discount: 0,
-  manufacturer: 'Samsung',
-  model: 'note-10',
-  name: 'Note 10',
-  price: 1000,
-  rating: 0,
-  store: storeOneId,
-};
-
-const productTwo = {
-  _id: productTwoId,
-  amount: 100,
-  booked: 0,
-  category: 'Mobile Phone',
-  color: 'blue',
-  description: 'A midrange phone made by Honor',
-  discount: 0,
-  manufacturer: 'Honor',
-  model: 'honor-8x',
-  name: 'Honor 8x',
-  price: 300,
-  rating: 0,
-  store: storeOneId,
-};
+const productOne = createProduct(productOneId, storeOneId);
+const productTwo = createProduct(productTwoId, storeOneId);
 
 const storeOne = {
   _id: storeOneId,
@@ -158,41 +117,9 @@ const storeTwo = {
   ],
 };
 
-const userOne = {
-  _id: userOneId,
-  firstname: 'Mohammed',
-  lastname: 'Farid',
-  email: 'mohammed@gmail.com',
-  phone: '01012227424',
-  password: '123456',
-  role: Role.User,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: userOneId, role: Role.User },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
+const userOne = createUser(userOneId, Role.User);
 
-const userTwo = {
-  _id: userTwoId,
-  firstname: 'Sherif',
-  lastname: 'Ashraf',
-  email: 'sherif@gmail.com',
-  phone: '01252186752',
-  password: '654321',
-  role: Role.User,
-  tokens: [
-    {
-      token: jwt.sign(
-        { id: userTwoId, role: Role.User },
-        process.env.SECRET_KEY
-      ),
-    },
-  ],
-};
+const userTwo = createUser(userTwoId, Role.User);
 
 const setupDatabase = async () => {
   await Cart.deleteMany();

@@ -28,7 +28,7 @@ const schema = new Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 36,
+    maxlength: 300,
   },
 
   model: {
