@@ -26,7 +26,7 @@ router.get('/:id', controller.getProduct);
 
 router.patch(
   '/:id',
-  authorization(Role.Store),
+  authorization([Role.Store, Role.Administrator]),
   authentication,
   controller.patchProduct
 );

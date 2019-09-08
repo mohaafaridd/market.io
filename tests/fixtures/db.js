@@ -9,6 +9,7 @@ const Store = require('../../models/store.model');
 const User = require('../../models/user.model');
 const Role = require('../../middlewares/role');
 
+const adminOneId = new Types.ObjectId();
 const cartOneId = new Types.ObjectId();
 const courierOneId = new Types.ObjectId();
 const courierTwoId = new Types.ObjectId();
@@ -19,6 +20,24 @@ const storeOneId = new Types.ObjectId();
 const storeTwoId = new Types.ObjectId();
 const userOneId = new Types.ObjectId();
 const userTwoId = new Types.ObjectId();
+
+const adminOne = {
+  _id: adminOneId,
+  firstname: 'Douglas',
+  lastname: 'Lyphe',
+  email: 'douglas@gmail.com',
+  phone: '01012227499',
+  password: '123456',
+  role: Role.Administrator,
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: adminOneId, role: Role.Administrator },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
 
 const cartOne = {
   _id: cartOneId,
@@ -187,10 +206,13 @@ const setupDatabase = async () => {
   await new Order(orderOne).save();
   await new Product(productOne).save();
   await new Store(storeOne).save();
+  await new User(adminOne).save();
   await new User(userOne).save();
 };
 
 module.exports = {
+  adminOne,
+  adminOneId,
   cartOne,
   cartOneId,
   courierOne,

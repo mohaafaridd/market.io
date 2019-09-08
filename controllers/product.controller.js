@@ -74,7 +74,6 @@ const patchProduct = async (req, res) => {
 
     const product = await Product.findOne({
       _id: req.params.id,
-      store: req.store.id,
     });
 
     if (!product) {
