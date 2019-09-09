@@ -26,13 +26,7 @@ const decreaseBooking = async products => {
     Product.findByIdAndUpdate(
       id,
       { $inc: { booked: -1 } },
-      { runValidators: true },
-      (err, product) => {
-        if (product.booked < 0) {
-          product.booked = 0;
-          product.save();
-        }
-      }
+      { runValidators: true, context: 'query' }
     )
   );
   const responses = await Promise.all(requests);

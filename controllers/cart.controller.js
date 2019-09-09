@@ -53,7 +53,17 @@ const deleteCart = async (req, res) => {
   }
 };
 
+const deleteFullCart = async (req, res) => {
+  const { user } = req;
+  const products = await Cart.find({ owner: user.id });
+  const mappedProducts = products.map(product => product.product);
+  await Cart.deleteMany({ owner: user.id });
+  await decreaseBooking(mappedProducts);
+  res.json({ mappedProducts });
+};
+
 module.exports = {
   postCart,
   deleteCart,
+  deleteFullCart,
 };

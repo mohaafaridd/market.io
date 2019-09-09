@@ -13,4 +13,10 @@ router.delete(
   authentication,
   controller.deleteCart
 );
+router.delete(
+  '/all',
+  authorization(Role.User),
+  authentication,
+  controller.deleteFullCart
+);
 module.exports = router;

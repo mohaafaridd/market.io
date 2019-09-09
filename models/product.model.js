@@ -54,11 +54,13 @@ const schema = new Schema({
   amount: {
     type: Number,
     required: true,
+    min: 0,
   },
 
   price: {
     type: Number,
     required: true,
+    min: 0,
   },
 
   rating: {

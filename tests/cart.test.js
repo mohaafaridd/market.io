@@ -7,6 +7,7 @@ const {
   userOneId,
   userOne,
   productOneId,
+  productOne,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
@@ -81,4 +82,17 @@ test('Should delete product from cart with valid data', async () => {
     product: productOneId,
   });
   expect(cartAfter).toBeNull();
+});
+
+test('Should delete all items in user cart', async () => {
+  const { booked } = productOne;
+
+  await request(app)
+    .delete('/carts/api/all')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .expect(200);
+
+  const response = await request(app).get(`/products/api/${productOneId}`);
+
+  expect(response.body.product.booked).toBe(booked - 1);
 });
