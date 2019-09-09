@@ -73,6 +73,10 @@ const schema = new Schema({
   discount: {
     type: Number,
     required: true,
+    default: 0,
+    min: 0,
+    // Free gifts
+    max: 100,
   },
 
   booked: {

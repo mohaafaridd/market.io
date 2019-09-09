@@ -58,6 +58,8 @@ const schema = new Schema({
     type: Number,
     required: true,
     default: 0,
+    min: 0,
+    max: 5,
   },
 
   tokens: [

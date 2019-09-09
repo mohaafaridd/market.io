@@ -27,6 +27,7 @@ const schema = new Schema(
         },
         amount: {
           type: Number,
+          min: 0,
         },
       },
     ],
