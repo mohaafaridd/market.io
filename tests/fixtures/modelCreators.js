@@ -37,7 +37,6 @@ const createProduct = (id, storeId) => {
     description: faker.lorem.slug(10),
     discount: faker.random.number({ min: 0, max: 50 }),
     ...faker.random.arrayElement(phones),
-    price: 1000,
     rating: 0,
     store: storeId,
   };
