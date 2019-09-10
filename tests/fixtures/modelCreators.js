@@ -27,7 +27,7 @@ const createUser = (id, role) => {
   };
 };
 
-const createProduct = (id, storeId) => {
+const createProduct = (id, storeId, ratings = []) => {
   return {
     _id: id,
     amount: faker.random.number({ min: 800, max: 1000 }),
@@ -37,7 +37,7 @@ const createProduct = (id, storeId) => {
     description: faker.lorem.slug(10),
     discount: faker.random.number({ min: 0, max: 50 }),
     ...faker.random.arrayElement(phones),
-    rating: 0,
+    ratings,
     store: storeId,
   };
 };

@@ -16,6 +16,7 @@ const courierTwoId = new Types.ObjectId();
 const orderOneId = new Types.ObjectId();
 const productOneId = new Types.ObjectId();
 const productTwoId = new Types.ObjectId();
+const productThreeId = new Types.ObjectId();
 const storeOneId = new Types.ObjectId();
 const storeTwoId = new Types.ObjectId();
 const userOneId = new Types.ObjectId();
@@ -43,6 +44,9 @@ const orderOne = {
 
 const productOne = createProduct(productOneId, storeOneId);
 const productTwo = createProduct(productTwoId, storeOneId);
+const productThree = createProduct(productThreeId, storeTwoId, [
+  { owner: userOneId, rating: 5 },
+]);
 
 const storeOne = createStore(storeOneId);
 const storeTwo = createStore(storeTwoId);
@@ -61,6 +65,7 @@ const setupDatabase = async () => {
   await new Courier(courierOne).save();
   await new Order(orderOne).save();
   await new Product(productOne).save();
+  await new Product(productThree).save();
   await new Store(storeOne).save();
   await new User(adminOne).save();
   await new User(userOne).save();
@@ -79,6 +84,8 @@ module.exports = {
   orderOneId,
   productOne,
   productOneId,
+  productThree,
+  productThreeId,
   productTwo,
   productTwoId,
   setupDatabase,

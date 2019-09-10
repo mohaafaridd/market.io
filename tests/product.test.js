@@ -3,12 +3,14 @@ const app = require('../app');
 const Product = require('../models/product.model');
 
 const {
-  setupDatabase,
-  storeOneId,
-  storeOne,
-  productOneId,
   productOne,
+  productOneId,
+  productThreeId,
   productTwo,
+  setupDatabase,
+  storeOne,
+  storeOneId,
+  userOne,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
@@ -24,6 +26,40 @@ test('Should create product for store', async () => {
 
   const product = await Product.findById(response.body.product._id);
   expect(product).not.toBeNull();
+});
+
+test('Should rate a product', async () => {
+  const rateBefore = await Product.findById(productOneId);
+  expect(rateBefore.ratings).toHaveLength(0);
+
+  await request(app)
+    .patch('/products/api/rate')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      product: productOneId,
+      rating: 5,
+    })
+    .expect(200);
+
+  const rateAfter = await Product.findById(productOneId);
+  expect(rateAfter.ratings).toHaveLength(1);
+});
+
+test('Should change rate a product', async () => {
+  const rateBefore = await Product.findById(productThreeId);
+  expect(rateBefore.ratings[0].rating).toBe(5);
+
+  await request(app)
+    .patch('/products/api/rate')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      product: productThreeId,
+      rating: 2,
+    })
+    .expect(200);
+
+  const rateAfter = await Product.findById(productThreeId);
+  expect(rateAfter.ratings[0].rating).toBe(2);
 });
 
 test('Should add image to product in store', async () => {
