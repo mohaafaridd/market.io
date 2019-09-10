@@ -63,12 +63,19 @@ const schema = new Schema({
     min: 0,
   },
 
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    default: 0,
-  },
+  ratings: [
+    {
+      owner: {
+        type: ObjectId,
+      },
+      rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        default: 0,
+      },
+    },
+  ],
 
   discount: {
     type: Number,

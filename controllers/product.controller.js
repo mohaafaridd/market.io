@@ -11,6 +11,34 @@ const postProduct = async (req, res) => {
   }
 };
 
+const patchRate = async (req, res) => {
+  const { product: productId, rating } = req.body;
+  const { user } = req;
+
+  // This code is bad, don't copy it
+  // don't ever think it is sufficient
+  // I did it when I was young just to escape
+  // MongoDB Docs
+
+  await Product.findByIdAndUpdate(
+    productId,
+    {
+      $pull: { ratings: { owner: user.id } },
+    },
+    { new: true, upsert: true }
+  );
+
+  const product = await Product.findByIdAndUpdate(
+    productId,
+    {
+      $addToSet: { ratings: { owner: user.id, rating } },
+    },
+    { new: true, upsert: true }
+  );
+
+  res.json({ product });
+};
+
 const postProductPicture = async (req, res) => {
   try {
     console.log('here');
@@ -109,6 +137,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   postProduct,
+  patchRate,
   postProductPicture,
   getProduct,
   patchProduct,
