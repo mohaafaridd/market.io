@@ -6,8 +6,8 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "jest --watch --runInBand",
-    "build": "browserify public/javascripts/test.js -o build/bundle.js",
-    "watch": "watchify public/javascripts/test.js -o build/bundle.js -v"
+    "build": "browserify public/javascripts/imports.js -o build/bundle.js",
+    "watch": "watchify public/javascripts/imports.js -o build/bundle.js -v"
   },
   "engines": {
     "node": "10.3.0"
@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.6.0",
+    "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
+    "axios": "^0.19.0",
     "babelify": "^10.0.0",
     "bcryptjs": "^2.4.3",
     "browserify": "^16.5.0",
