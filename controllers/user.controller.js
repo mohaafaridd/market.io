@@ -11,7 +11,7 @@ const postRegister = async (req, res) => {
       .status(201)
       .json({ user, token });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ success: false, error });
   }
 };
 
