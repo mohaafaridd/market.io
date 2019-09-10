@@ -30,9 +30,10 @@ app.use(
     dest: DEFAULT_PATH,
     indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true,
-  }),
+  })
 );
 app.use(express.static(DEFAULT_PATH));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(connectRoutes());
 
