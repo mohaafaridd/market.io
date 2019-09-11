@@ -7,28 +7,16 @@
     "dev": "nodemon ./bin/www",
     "test": "jest --watch --runInBand",
     "build": "browserify public/javascripts/imports.js -o build/bundle.js",
-    "watch": "watchify public/javascripts/imports.js -o build/bundle.js -v"
+    "watch": "watchify public/javascripts/imports.js -o build/bundle.js -v",
+    "gulp": "gulp"
   },
   "engines": {
     "node": "10.3.0"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "@babel/preset-env"
-          ]
-        }
-      ]
-    ]
   },
   "jest": {
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@babel/core": "^7.6.0",
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "axios": "^0.19.0",
@@ -42,12 +30,16 @@
     "express": "~4.16.0",
     "express-jwt": "^5.3.1",
     "faker": "^4.1.0",
+    "gulp": "^4.0.2",
+    "gulp-buffer": "0.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-tap": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulplog": "^1.0.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
     "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
     "mongoose": "^5.6.10",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.0",
