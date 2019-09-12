@@ -1,4 +1,6 @@
 import { isEmail } from 'validator';
+import kinds from '../constants/error.kind';
+import { getErrorMessage } from '../messages/register';
 
 export const clearErrors = () => {
   const fields = document.querySelectorAll('.error');
@@ -9,7 +11,7 @@ export const displayError = error => {
   const className = '.' + error.path;
   const field = document.querySelector('.error' + className);
   if (field) {
-    field.innerHTML = error.kind;
+    field.innerHTML = getErrorMessage(error);
   }
 };
 
@@ -47,15 +49,15 @@ const validateName = name => {
   name = name.trim();
 
   if (!name.length) {
-    return { success: false, kind: 'required', path: 'name' };
+    return { success: false, kind: kinds.REQUIRED, path: 'name' };
   }
 
   if (name.length > 20) {
-    return { success: false, kind: 'long', path: 'name' };
+    return { success: false, kind: kinds.LONG, length: 20, path: 'name' };
   }
 
   if (name.length < 2) {
-    return { success: false, kind: 'short', path: 'name' };
+    return { success: false, kind: kinds.SHORT, length: 2, path: 'name' };
   }
 
   return { success: true, path: 'name' };
@@ -65,16 +67,20 @@ const validatePhone = phone => {
   phone = phone.trim();
 
   if (!phone.length) {
-    return { success: false, kind: 'required', path: 'phone' };
+    return { success: false, kind: kinds.REQUIRED, path: 'phone' };
   }
 
   if (phone.length !== 11) {
-    return { success: false, kind: 'length', path: 'phone' };
+    return { success: false, kind: kinds.LENGTH, length: 11, path: 'phone' };
   }
 
   const regex = RegExp(/^01(\d{9})$/);
   if (!regex.test(phone)) {
-    return { success: false, kind: 'regex', path: 'phone' };
+    return {
+      success: false,
+      kind: kinds.REGEX,
+      path: 'phone',
+    };
   }
 
   return { success: true, path: 'phone' };
