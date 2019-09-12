@@ -1,10 +1,19 @@
 import axios from 'axios';
-import grabForm from '../formGrabber';
+import grabForm from '../util/formGrabber';
 
 const addProductBtn = document.getElementById('add-product-button');
 addProductBtn.addEventListener('click', async e => {
   e.preventDefault();
 
-  const form = grabForm(['name']);
-  console.log('form :', form);
+  const form = grabForm([
+    'category',
+    'manufacturer',
+    'name',
+    'model',
+    'description',
+    'color',
+    'amount',
+    'price',
+    'discount',
+  ]);
 });

@@ -1,7 +1,12 @@
 import axios from 'axios';
-import { clearErrors, displayError } from './validators/error.handle';
+import { clearErrors, displayError } from '../util/error.handle';
 import validatorForm from './validators/login.validator';
-import grabForm from '../formGrabber';
+<<<<<<< HEAD
+import grabForm from '../util/formGrabber';
+import forms from '../constants/forms';
+=======
+import grabForm from './formGrabber';
+>>>>>>> parent of d13525b... created a form grab utility
 
 const loginBtn = document.getElementById('login-submit-button');
 
@@ -9,12 +14,12 @@ loginBtn.addEventListener('click', async e => {
   e.preventDefault();
   try {
     clearErrors();
-    const form = grabForm(['email', 'password']);
+    const form = grabForm();
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is
     if (invalidFields.length) {
-      return invalidFields.forEach(field => displayError(field));
+      return invalidFields.forEach(field => displayError(field, forms.LOGIN));
     }
 
     const loginType = document.querySelector('input[name="login-type"]:checked')

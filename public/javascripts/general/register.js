@@ -1,7 +1,12 @@
 import axios from 'axios';
-import { clearErrors, displayError } from './validators/error.handle';
+import { clearErrors, displayError } from '../util/error.handle';
 import validatorForm from './validators/registration.validator';
-import grabForm from '../formGrabber';
+<<<<<<< HEAD
+import grabForm from '../util/formGrabber';
+import forms from '../constants/forms';
+=======
+import grabForm from './formGrabber';
+>>>>>>> parent of d13525b... created a form grab utility
 
 const registerBtn = document.getElementById('register-submit-button');
 
@@ -10,12 +15,14 @@ registerBtn.addEventListener('click', async e => {
   try {
     clearErrors();
 
-    const form = grabForm(['name', 'phone', 'email', 'password', 'repassword']);
+    const form = grabForm();
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is
     if (invalidFields.length) {
-      return invalidFields.forEach(field => displayError(field));
+      return invalidFields.forEach(field =>
+        displayError(field, forms.REGISTRATION)
+      );
     }
 
     const registrationType = document.querySelector(

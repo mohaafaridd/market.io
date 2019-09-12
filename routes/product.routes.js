@@ -8,8 +8,12 @@ const api = require('./api/products.api');
 const router = express.Router();
 router.use('/api', api);
 router.get('/add', authorization(Role.Store), authentication, (req, res) => {
-  const { store } = req;
-  res.render('products/add-product', { title: 'Add Product', store });
+  try {
+    const { store } = req;
+    res.render('store/add-product', { title: 'Add Product', store });
+  } catch (error) {
+    res.redirect('/');
+  }
 });
 
 module.exports = router;
