@@ -20,8 +20,7 @@ test('Should register a user', async () => {
   expect(user).not.toBeNull();
   expect(response.body).toMatchObject({
     user: {
-      firstname: user.firstname,
-      lastname: user.lastname,
+      name: user.name,
       email: user.email,
       phone: user.phone,
     },
@@ -37,7 +36,7 @@ test('Should not register a user', async () => {
   await request(app)
     .post('/users/api/register')
     .send({
-      user: { ...userTwo, firstname: '', lastname: '' },
+      user: { ...userTwo, name: '' },
     })
     .expect(400);
 

@@ -24,8 +24,7 @@ test('Should register a courier', async () => {
   expect(courier).not.toBeNull();
   expect(response.body).toMatchObject({
     courier: {
-      firstname: courier.firstname,
-      lastname: courier.lastname,
+      name: courier.name,
       email: courier.email,
       phone: courier.phone,
     },

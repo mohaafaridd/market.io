@@ -5,21 +5,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const schema = new Schema({
-  firstname: {
+  name: {
     type: String,
     minlength: 2,
-    maxlength: 15,
+    maxlength: 20,
     trim: true,
-    match: /^[a-zA-Z,.'-]+$/,
-    required: true,
-  },
-
-  lastname: {
-    type: String,
-    minlength: 2,
-    maxlength: 15,
-    trim: true,
-    match: /^[a-zA-Z,.'-]+$/,
     required: true,
   },
 

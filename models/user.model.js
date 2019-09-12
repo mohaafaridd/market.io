@@ -6,21 +6,12 @@ const jwt = require('jsonwebtoken');
 const role = require('../middlewares/role');
 
 const schema = new Schema({
-  // User & Courier
-  firstname: {
+  name: {
     type: String,
     minlength: 2,
-    maxlength: 15,
+    maxlength: 20,
     trim: true,
-    match: /^[a-zA-Z,.'-]+$/,
-  },
-
-  lastname: {
-    type: String,
-    minlength: 2,
-    maxlength: 15,
-    trim: true,
-    match: /^[a-zA-Z,.'-]+$/,
+    required: true,
   },
 
   phone: {

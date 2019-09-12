@@ -7,6 +7,9 @@ const { phones } = require('./products');
 const createUser = (id, role) => {
   const firstname = faker.name.firstName();
   const lastname = faker.name.lastName();
+
+  const name = [firstname, lastname].join(' ');
+
   const email = faker.internet.email(firstname, lastname);
   const phone = faker.phone.phoneNumber('010########');
   const password = faker.internet.password(10);
@@ -14,8 +17,7 @@ const createUser = (id, role) => {
   return {
     _id: id,
     role,
-    firstname,
-    lastname,
+    name,
     email,
     phone,
     password,
