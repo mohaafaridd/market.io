@@ -1,51 +1,7 @@
 import { isEmail } from 'validator';
-import kinds from '../constants/error.kind';
-import { getErrorMessage } from '../messages/register';
+import kinds from '../../constants/error.kind';
 
-export const clearErrors = () => {
-  const fields = document.querySelectorAll('.error');
-  fields.forEach(field => (field.innerHTML = ''));
-};
-
-export const displayError = error => {
-  const className = '.' + error.path;
-  const field = document.querySelector('.error' + className);
-  if (field) {
-    field.innerHTML = getErrorMessage(error);
-  }
-};
-
-export const getForm = () => ({
-  name: document.getElementById('name').value,
-  phone: document.getElementById('phone').value,
-  email: document.getElementById('email').value,
-  password: document.getElementById('password').value,
-  repassword: document.getElementById('repassword').value,
-});
-
-export const validateForm = form => {
-  const { name, phone, email, password, repassword } = form;
-
-  const isValidName = validateName(name);
-  const isValidPhone = validatePhone(phone);
-  const isValidEmail = validateEmail(email);
-  const isValidPassword = validatePassword(password);
-  const isValidRePassword = validateRePassword(password, repassword);
-
-  const validators = [
-    isValidName,
-    isValidPhone,
-    isValidEmail,
-    isValidPassword,
-    isValidRePassword,
-  ];
-
-  const invalidFields = validators.filter(field => field.success === false);
-
-  return invalidFields;
-};
-
-const validateName = name => {
+export const validateName = name => {
   name = name.trim();
 
   if (!name.length) {
@@ -63,7 +19,7 @@ const validateName = name => {
   return { success: true, path: 'name' };
 };
 
-const validatePhone = phone => {
+export const validatePhone = phone => {
   phone = phone.trim();
 
   if (!phone.length) {
@@ -86,7 +42,7 @@ const validatePhone = phone => {
   return { success: true, path: 'phone' };
 };
 
-const validateEmail = email => {
+export const validateEmail = email => {
   if (!email.length) {
     return { success: false, kind: kinds.REQUIRED, path: 'email' };
   }
@@ -98,7 +54,7 @@ const validateEmail = email => {
   return { success: true, path: 'email' };
 };
 
-const validatePassword = password => {
+export const validatePassword = password => {
   password = password.trim();
 
   if (!password.length) {
@@ -121,7 +77,7 @@ const validatePassword = password => {
   return { success: true, path: 'password' };
 };
 
-const validateRePassword = (password, repassword) => {
+export const validateRePassword = (password, repassword) => {
   if (!repassword.length) {
     return { success: false, kind: kinds.REQUIRED, path: 'repassword' };
   }
@@ -149,4 +105,12 @@ const validateRePassword = (password, repassword) => {
   }
 
   return { success: true, path: 'repassword' };
+};
+
+export default {
+  validateName,
+  validatePhone,
+  validateEmail,
+  validatePassword,
+  validateRePassword,
 };

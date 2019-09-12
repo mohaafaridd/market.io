@@ -1,11 +1,8 @@
 import axios from 'axios';
-import faker from 'faker';
-import {
-  getForm,
-  validateForm,
-  displayError,
-  clearErrors,
-} from './formValidator';
+import { clearErrors, displayError } from './validators/error.handle';
+import validatorForm from './validators/registration.validators';
+import grabForm from './formGrabber';
+
 const registerBtn = document.getElementById('register-submit-button');
 
 registerBtn.addEventListener('click', async e => {
@@ -13,8 +10,8 @@ registerBtn.addEventListener('click', async e => {
   try {
     clearErrors();
 
-    const form = getForm();
-    const invalidFields = validateForm(form);
+    const form = grabForm();
+    const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is
     if (invalidFields.length) {
