@@ -1,12 +1,8 @@
 import axios from 'axios';
 import { clearErrors, displayError } from '../util/error.handle';
 import validatorForm from './validators/registration.validator';
-<<<<<<< HEAD
 import grabForm from '../util/formGrabber';
 import forms from '../constants/forms';
-=======
-import grabForm from './formGrabber';
->>>>>>> parent of d13525b... created a form grab utility
 
 const registerBtn = document.getElementById('register-submit-button');
 

@@ -6,6 +6,7 @@ export const REGEX = 'regex';
 export const FORMAT = 'format';
 export const MATCH = 'match';
 export const UNIQUE = 'unique';
+export const MINIMUM = 'minimum';
 
 export default {
   LONG,
@@ -16,4 +17,5 @@ export default {
   FORMAT,
   MATCH,
   UNIQUE,
+  MINIMUM,
 };
