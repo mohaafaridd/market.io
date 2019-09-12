@@ -22,6 +22,17 @@ export const getErrorMessage = error => {
         `This field has to fit the Egyptian Phone Format`
       );
 
+    case kinds.FORMAT:
+      return error.path === 'email' && 'Please enter a valid Email address';
+
+    case kinds.MATCH:
+      return (
+        error.path === 'repassword' && 'This field has to match the password'
+      );
+
+    case kinds.UNIQUE:
+      return `A user is already registered with this ${error.path}`;
+
     default:
       break;
   }

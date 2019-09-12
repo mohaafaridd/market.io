@@ -88,11 +88,11 @@ const validatePhone = phone => {
 
 const validateEmail = email => {
   if (!email.length) {
-    return { success: false, kind: 'required', path: 'email' };
+    return { success: false, kind: kinds.REQUIRED, path: 'email' };
   }
 
   if (!isEmail(email)) {
-    return { success: false, kind: 'format', path: 'email' };
+    return { success: false, kind: kinds.FORMAT, path: 'email' };
   }
 
   return { success: true, path: 'email' };
@@ -102,15 +102,20 @@ const validatePassword = password => {
   password = password.trim();
 
   if (!password.length) {
-    return { success: false, kind: 'required', path: 'password' };
+    return { success: false, kind: kinds.REQUIRED, path: 'password' };
   }
 
   if (password.length > 100) {
-    return { success: false, kind: 'long', path: 'password' };
+    return {
+      success: false,
+      kind: kinds.LONG,
+      length: '100',
+      path: 'password',
+    };
   }
 
   if (password.length < 6) {
-    return { success: false, kind: 'short', path: 'password' };
+    return { success: false, kind: kinds.SHORT, length: '6', path: 'password' };
   }
 
   return { success: true, path: 'password' };
@@ -118,19 +123,29 @@ const validatePassword = password => {
 
 const validateRePassword = (password, repassword) => {
   if (!repassword.length) {
-    return { success: false, kind: 'required', path: 'repassword' };
+    return { success: false, kind: kinds.REQUIRED, path: 'repassword' };
   }
 
   if (repassword.length > 100) {
-    return { success: false, kind: 'long', path: 'repassword' };
+    return {
+      success: false,
+      kind: kinds.LONG,
+      length: '100',
+      path: 'repassword',
+    };
   }
 
   if (repassword.length < 6) {
-    return { success: false, kind: 'short', path: 'repassword' };
+    return {
+      success: false,
+      kind: kinds.SHORT,
+      length: '6',
+      path: 'repassword',
+    };
   }
 
   if (password !== repassword) {
-    return { success: false, kind: 'match', path: 'repassword' };
+    return { success: false, kind: kinds.MATCH, path: 'repassword' };
   }
 
   return { success: true, path: 'repassword' };

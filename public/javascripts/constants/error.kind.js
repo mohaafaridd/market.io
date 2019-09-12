@@ -5,6 +5,7 @@ export const LENGTH = 'length';
 export const REGEX = 'regex';
 export const FORMAT = 'format';
 export const MATCH = 'match';
+export const UNIQUE = 'unique';
 
 export default {
   LONG,
@@ -14,4 +15,5 @@ export default {
   REGEX,
   FORMAT,
   MATCH,
+  UNIQUE,
 };
