@@ -1,7 +1,7 @@
 import {
-  validatePassword,
   validateEmail,
   validateName,
+  validatePassword,
   validatePhone,
   validateRePassword,
 } from './fields.validators';

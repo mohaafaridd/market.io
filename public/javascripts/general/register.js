@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { clearErrors, displayError } from './validators/error.handle';
-import validatorForm from './validators/registration.validators';
+import validatorForm from './validators/registration.validator';
 import grabForm from './formGrabber';
 
 const registerBtn = document.getElementById('register-submit-button');
