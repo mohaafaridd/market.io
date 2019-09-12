@@ -1,0 +1,13 @@
+<nav>
+    {{#if user}}
+    <div>
+        <button>Cart</button>
+        <button>Wishlist</button>
+        <button>Logout</button>
+    </div>
+
+    {{else}}
+    <a href="/register">Register</a>
+    <a href="/login">Login</a>
+    {{/if}}
+</nav>

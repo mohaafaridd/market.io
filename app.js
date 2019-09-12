@@ -1,13 +1,17 @@
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
+const hbs = require('hbs');
 const logger = require('morgan');
+const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
 
 require('dotenv').config();
 require('./db/mongoose');
+
+const partialsPath = path.join(__dirname, 'views', 'partials');
+hbs.registerPartials(partialsPath);
 
 const { connectRoutes } = require('./routes/routes');
 
