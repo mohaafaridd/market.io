@@ -1,16 +1,23 @@
 <nav>
-    {{#if user}}
+
     <div>
+        <input type="text">
+        <button>Search</button>
+    </div>
+
+    {{!-- Basic Planning | Box to the right --}}
+    <div>
+        {{#if user}}
         <button>Cart</button>
         <button>Wishlist</button>
         <button>Logout</button>
-    </div>
-    {{else if store}}
-    <div>
+        {{else if store}}
+        <button>Add a Products</button>
         <button>Products</button>
+        <button>Logout</button>
+        {{else}}
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        {{/if}}
     </div>
-    {{else}}
-    <a href="/register">Register</a>
-    <a href="/login">Login</a>
-    {{/if}}
 </nav>

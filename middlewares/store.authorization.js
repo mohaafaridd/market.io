@@ -7,7 +7,25 @@ function authorization(roles = []) {
 
   return [
     // authenticate JWT token and attach store to request object (req.store)
-    expressJwt({ secret: process.env.SECRET_KEY, requestProperty: 'store' }),
+    expressJwt({
+      secret: process.env.SECRET_KEY,
+      requestProperty: 'store',
+      getToken: function(req) {
+        if (
+          req.header('Authorization') &&
+          req.header('Authorization').split(' ')[0] === 'Bearer'
+        ) {
+          const token = req.header('Authorization').split(' ')[1];
+          req.token = token;
+          return token;
+        } else if (req.cookies.token) {
+          const { token } = req.cookies;
+          req.token = token;
+          return token;
+        }
+        return null;
+      },
+    }),
 
     // authorize based on store role
     (req, res, next) => {
@@ -15,8 +33,6 @@ function authorization(roles = []) {
         // store's role is not authorized
         return res.status(401).json({ message: 'Unauthorized' });
       }
-
-      req.token = req.header('Authorization').replace('Bearer ', '');
       // authentication and authorization successful
       next();
     },

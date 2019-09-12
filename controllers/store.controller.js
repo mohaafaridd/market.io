@@ -13,7 +13,7 @@ const postRegister = async (req, res) => {
     const token = await store.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
-      .cookie('authentication', token, { maxAge })
+      .cookie('token', token, { maxAge })
       .cookie('store', store, { maxAge })
       .status(201)
       .json({ store, token });
@@ -29,7 +29,7 @@ const postLogin = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
 
     res
-      .cookie('authentication', token, { maxAge })
+      .cookie('token', token, { maxAge })
       .cookie('store', store, { maxAge })
       .json({ store, token });
   } catch (error) {
