@@ -31,7 +31,7 @@ function authorization(roles = []) {
     (req, res, next) => {
       if (roles.length && !roles.includes(req.store.role)) {
         // store's role is not authorized
-        return res.status(401).json({ message: 'Unauthorized' });
+        throw new Error('Unauthorized');
       }
       // authentication and authorization successful
       next();

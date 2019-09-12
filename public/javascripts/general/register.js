@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { clearErrors, displayError } from './validators/error.handle';
 import validatorForm from './validators/registration.validator';
-import grabForm from './formGrabber';
+import grabForm from '../formGrabber';
 
 const registerBtn = document.getElementById('register-submit-button');
 
@@ -10,7 +10,7 @@ registerBtn.addEventListener('click', async e => {
   try {
     clearErrors();
 
-    const form = grabForm();
+    const form = grabForm(['name', 'phone', 'email', 'password', 'repassword']);
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is
