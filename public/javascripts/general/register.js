@@ -17,11 +17,20 @@ registerBtn.addEventListener('click', async e => {
     if (invalidFields.length) {
       return invalidFields.forEach(field => displayError(field));
     }
+
+    const registrationType = document.querySelector(
+      'input[name="registration-type"]:checked'
+    ).value;
+
+    if (['store', 'user'].indexOf(registrationType) === -1) {
+      return;
+    }
+
     const response = await axios({
       method: 'POST',
-      url: '/users/api/register',
+      url: `/${registrationType}s/api/register`,
       data: {
-        user: form,
+        [registrationType]: form,
       },
     });
 

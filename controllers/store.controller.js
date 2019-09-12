@@ -4,12 +4,17 @@ const Store = require('../models/store.model');
 
 const postRegister = async (req, res) => {
   try {
-    const store = new Store({ ...req.body.store, role: Role.store });
+    const username = req.body.store.name
+      .trim()
+      .replace(/(\s|[',.])/g, '-')
+      .toLowerCase();
+    const store = new Store({ ...req.body.store, username, role: Role.store });
     await store.save();
     const token = await store.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('authentication', token, { maxAge })
+      .cookie('store', store, { maxAge })
       .status(201)
       .json({ store, token });
   } catch (error) {
@@ -20,11 +25,13 @@ const postRegister = async (req, res) => {
 const postLogin = async (req, res) => {
   try {
     const store = await Store.findByCredentials(req.body.store);
-
     const token = await store.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
 
-    res.cookie('authentication', token, { maxAge }).json({ store, token });
+    res
+      .cookie('authentication', token, { maxAge })
+      .cookie('store', store, { maxAge })
+      .json({ store, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

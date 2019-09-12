@@ -16,13 +16,19 @@ loginBtn.addEventListener('click', async e => {
     if (invalidFields.length) {
       return invalidFields.forEach(field => displayError(field));
     }
-    console.log('here');
+
+    const loginType = document.querySelector('input[name="login-type"]:checked')
+      .value;
+
+    if (['store', 'user'].indexOf(loginType) === -1) {
+      return;
+    }
 
     const response = await axios({
       method: 'POST',
-      url: '/users/api/login',
+      url: `/${loginType}s/api/login`,
       data: {
-        user: form,
+        [loginType]: form,
       },
     });
 
