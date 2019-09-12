@@ -9,6 +9,7 @@ const postRegister = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('authentication', token, { maxAge })
+      .cookie('user', user, { maxAge })
       .status(201)
       .json({ user, token });
   } catch (error) {
@@ -24,7 +25,10 @@ const postLogin = async (req, res) => {
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
 
-    res.cookie('authentication', token, { maxAge }).json({ user, token });
+    res
+      .cookie('authentication', token, { maxAge })
+      .cookie('user', user, { maxAge })
+      .json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

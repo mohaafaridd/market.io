@@ -27,7 +27,8 @@ registerBtn.addEventListener('click', async e => {
         user: form,
       },
     });
-    console.log('response :', response.data);
+
+    window.location.replace('/');
   } catch (error) {
     const { error: extracted } = error.response.data;
     extracted.forEach(field => displayError(field));

@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
+  const { user } = req.cookies;
+  res.render('index', { title: 'Express', user });
 });
 
 router.get('/register', (req, res) => {
