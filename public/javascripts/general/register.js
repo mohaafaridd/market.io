@@ -1,13 +1,25 @@
 import axios from 'axios';
 import faker from 'faker';
-import { getForm, validateForm } from './formValidator';
+import {
+  getForm,
+  validateForm,
+  errorHandler,
+  clearErrors,
+} from './formValidator';
 const registerBtn = document.getElementById('register-submit-button');
 
 registerBtn.addEventListener('click', async e => {
   e.preventDefault();
   try {
+    clearErrors();
+
     const form = getForm();
-    const isValid = validateForm(form);
+    const invalidFields = validateForm(form);
+
+    if (invalidFields.length) {
+      // Shows errors on DOM
+      invalidFields.forEach(field => errorHandler(field));
+    }
 
     const response = await axios({
       method: 'POST',

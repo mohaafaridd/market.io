@@ -1,5 +1,18 @@
 import { isEmail } from 'validator';
 
+export const clearErrors = () => {
+  const fields = document.querySelectorAll('.error');
+  fields.forEach(field => (field.innerHTML = ''));
+};
+
+export const errorHandler = error => {
+  const className = '.' + error.field;
+  const field = document.querySelector('.error' + className);
+  if (field) {
+    field.innerHTML = error.reason;
+  }
+};
+
 export const getForm = () => ({
   name: document.getElementById('name').value,
   phone: document.getElementById('phone').value,
@@ -24,6 +37,10 @@ export const validateForm = form => {
     isValidPassword,
     isValidRePassword,
   ];
+
+  const invalidFields = validators.filter(field => field.success === false);
+
+  return invalidFields;
 };
 
 const validateName = name => {
