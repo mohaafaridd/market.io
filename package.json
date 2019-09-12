@@ -6,8 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "jest --watch --runInBand",
-    "build": "gulp",
-    "watch": "watchify public/javascripts/imports.js -o build/bundle.js -v"
+    "build": "gulp"
   },
   "engines": {
     "node": "10.3.0"
