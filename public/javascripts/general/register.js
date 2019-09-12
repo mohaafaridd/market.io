@@ -12,8 +12,7 @@ registerBtn.addEventListener('click', async e => {
       url: '/users/api/register',
       data: {
         user: {
-          firstname: faker.name.firstName(),
-          lastname: faker.name.lastName(),
+          name: faker.name.firstName(),
           email: faker.internet.email(),
           phone: faker.phone.phoneNumber('010########'),
           password: faker.internet.password(10),
