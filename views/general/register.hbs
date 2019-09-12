@@ -12,27 +12,32 @@
 
         <section>
             <label for="name">Name</label>
-            <input type="text" id="name" autofocus>
+            <input type="text" id="name" autofocus required>
+            <small class="error"></small>
         </section>
 
         <section>
             <label for="phone">Phone</label>
-            <input type="text" id="phone">
+            <input type="text" id="phone" required>
+            <small class="error"></small>
         </section>
 
         <section>
             <label for="email">E-mail</label>
-            <input type="text" id="email">
+            <input type="text" id="email" required>
+            <small class="error"></small>
         </section>
 
         <section>
             <label for="password">Password</label>
-            <input type="text" id="password">
+            <input type="password" id="password" required>
+            <small class="error"></small>
         </section>
 
         <section>
-            <label for="re-password">Retype your password</label>
-            <input type="text" id="re-password">
+            <label for="repassword">Retype your password</label>
+            <input type="password" id="repassword" required>
+            <small class="error"></small>
         </section>
 
         <button id="register-submit-button">Register</button>

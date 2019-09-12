@@ -1,12 +1,14 @@
 import axios from 'axios';
 import faker from 'faker';
-
+import { getForm, validateForm } from './formValidator';
 const registerBtn = document.getElementById('register-submit-button');
 
 registerBtn.addEventListener('click', async e => {
   e.preventDefault();
-
   try {
+    const form = getForm();
+    const isValid = validateForm(form);
+
     const response = await axios({
       method: 'POST',
       url: '/users/api/register',

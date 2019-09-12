@@ -5,7 +5,7 @@ const log = require('gulplog');
 const tap = require('gulp-tap');
 const uglify = require('gulp-uglify');
 
-gulp.task('default', function() {
+gulp.task('transpile:js', function() {
   return (
     gulp
       .src('public/javascripts/**/*.js', { read: false }) // no need of reading file because browserify does.
@@ -32,5 +32,11 @@ gulp.task('default', function() {
       .pipe(gulp.dest('build'))
   );
 });
+
+gulp.task('watch:js', function() {
+  gulp.watch('public/javascripts/**/*.js', gulp.series('transpile:js'));
+});
+
+gulp.task('default', gulp.series('transpile:js'));
 
 exports.default = gulp;
