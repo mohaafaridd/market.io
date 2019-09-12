@@ -7,7 +7,25 @@ function authorization(roles = []) {
 
   return [
     // authenticate JWT token and attach courier to request object (req.courier)
-    expressJwt({ secret: process.env.SECRET_KEY, requestProperty: 'courier' }),
+    expressJwt({
+      secret: process.env.SECRET_KEY,
+      requestProperty: 'courier',
+      getToken: function(req) {
+        if (
+          req.header('Authorization') &&
+          req.header('Authorization').split(' ')[0] === 'Bearer'
+        ) {
+          const token = req.header('Authorization').split(' ')[1];
+          req.token = token;
+          return token;
+        } else if (req.cookies.token) {
+          const { token } = req.cookies;
+          req.token = token;
+          return token;
+        }
+        return null;
+      },
+    }),
 
     // authorize based on courier role
     (req, res, next) => {

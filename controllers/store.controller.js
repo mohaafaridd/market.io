@@ -45,7 +45,8 @@ const postLogout = async (req, res) => {
     await req.store.save();
 
     res
-      .clearCookie('authentication')
+      .clearCookie('token')
+      .clearCookie('store')
       .json({ message: 'store logged out successfully' });
   } catch (error) {
     res.status(400).json({ message: 'store logging out failed' });

@@ -9,7 +9,8 @@ const postRegister = async (req, res) => {
     const token = await courier.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
-      .cookie('authentication', token, { maxAge })
+      .cookie('token', token, { maxAge })
+      .cookie('courier', courier, { maxAge })
       .status(201)
       .json({ courier, token });
   } catch (error) {
@@ -24,7 +25,10 @@ const postLogin = async (req, res) => {
     const token = await courier.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
 
-    res.cookie('authentication', token, { maxAge }).json({ courier, token });
+    res
+      .cookie('token', token, { maxAge })
+      .cookie('courier', courier, { maxAge })
+      .json({ courier, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -38,7 +42,8 @@ const postLogout = async (req, res) => {
     await req.courier.save();
 
     res
-      .clearCookie('authentication')
+      .clearCookie('token')
+      .clearCookie('courier')
       .json({ message: 'courier logged out successfully' });
   } catch (error) {
     res.status(400).json({ message: 'courier logging out failed' });

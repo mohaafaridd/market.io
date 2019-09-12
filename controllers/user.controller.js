@@ -8,7 +8,7 @@ const postRegister = async (req, res) => {
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
-      .cookie('authentication', token, { maxAge })
+      .cookie('token', token, { maxAge })
       .cookie('user', user, { maxAge })
       .status(201)
       .json({ user, token });
@@ -26,7 +26,7 @@ const postLogin = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
 
     res
-      .cookie('authentication', token, { maxAge })
+      .cookie('token', token, { maxAge })
       .cookie('user', user, { maxAge })
       .json({ user, token });
   } catch (error) {
@@ -42,7 +42,8 @@ const postLogout = async (req, res) => {
     await req.user.save();
 
     res
-      .clearCookie('authentication')
+      .clearCookie('token')
+      .clearCookie('user')
       .json({ message: 'user logged out successfully' });
   } catch (error) {
     res.status(400).json({ message: 'user logging out failed' });

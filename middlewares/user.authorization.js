@@ -7,7 +7,24 @@ function authorization(roles = []) {
 
   return [
     // authenticate JWT token and attach user to request object (req.user)
-    expressJwt({ secret: process.env.SECRET_KEY }),
+    expressJwt({
+      secret: process.env.SECRET_KEY,
+      getToken: function(req) {
+        if (
+          req.header('Authorization') &&
+          req.header('Authorization').split(' ')[0] === 'Bearer'
+        ) {
+          const token = req.header('Authorization').split(' ')[1];
+          req.token = token;
+          return token;
+        } else if (req.cookies.token) {
+          const { token } = req.cookies;
+          req.token = token;
+          return token;
+        }
+        return null;
+      },
+    }),
 
     // authorize based on user role
     (req, res, next) => {
