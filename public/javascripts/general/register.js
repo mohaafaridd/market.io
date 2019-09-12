@@ -3,7 +3,7 @@ import faker from 'faker';
 import {
   getForm,
   validateForm,
-  errorHandler,
+  displayError,
   clearErrors,
 } from './formValidator';
 const registerBtn = document.getElementById('register-submit-button');
@@ -16,21 +16,15 @@ registerBtn.addEventListener('click', async e => {
     const form = getForm();
     const invalidFields = validateForm(form);
 
+    // Shows errors on DOM if there is
     if (invalidFields.length) {
-      // Shows errors on DOM
-      invalidFields.forEach(field => errorHandler(field));
+      return invalidFields.forEach(field => displayError(field));
     }
-
     const response = await axios({
       method: 'POST',
       url: '/users/api/register',
       data: {
-        user: {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          phone: faker.phone.phoneNumber('010########'),
-          password: faker.internet.password(10),
-        },
+        user: form,
       },
     });
     console.log('response :', response.data);

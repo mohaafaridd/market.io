@@ -5,7 +5,7 @@ export const clearErrors = () => {
   fields.forEach(field => (field.innerHTML = ''));
 };
 
-export const errorHandler = error => {
+export const displayError = error => {
   const className = '.' + error.field;
   const field = document.querySelector('.error' + className);
   if (field) {
