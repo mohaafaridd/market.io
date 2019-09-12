@@ -1,5 +1,6 @@
 const ms = require('ms');
 const User = require('../models/user.model');
+const { extractErrors } = require('./helpers/validator.helper');
 const postRegister = async (req, res) => {
   try {
     const user = new User(req.body.user);
@@ -11,7 +12,8 @@ const postRegister = async (req, res) => {
       .status(201)
       .json({ user, token });
   } catch (error) {
-    res.status(400).json({ success: false, error });
+    const extracted = extractErrors(error.errors);
+    res.status(400).json({ success: false, error: extracted });
   }
 };
 

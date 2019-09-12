@@ -29,6 +29,7 @@ registerBtn.addEventListener('click', async e => {
     });
     console.log('response :', response.data);
   } catch (error) {
-    console.log(error.response.data);
+    const { error: extracted } = error.response.data;
+    extracted.forEach(field => displayError(field));
   }
 });
