@@ -16,6 +16,20 @@ loginBtn.addEventListener('click', async e => {
     if (invalidFields.length) {
       return invalidFields.forEach(field => displayError(field));
     }
-  } catch (error) {}
-  // const isValid =
+    console.log('here');
+
+    const response = await axios({
+      method: 'POST',
+      url: '/users/api/login',
+      data: {
+        user: form,
+      },
+    });
+
+    window.location.replace('/');
+  } catch (err) {
+    const { error } = err.response.data;
+    const field = document.querySelector('.error.login');
+    field.innerHTML = error;
+  }
 });

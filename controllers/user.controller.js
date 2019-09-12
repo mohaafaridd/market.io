@@ -30,7 +30,7 @@ const postLogin = async (req, res) => {
       .cookie('user', user, { maxAge })
       .json({ user, token });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, error: error.message });
   }
 };
 

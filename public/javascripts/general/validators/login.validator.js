@@ -1,13 +1,10 @@
-import { validateEmail, validatePassword } from './fields.validators';
+import { validateEmail } from './fields.validators';
 
 export default form => {
-  const { email, password } = form;
+  const { email } = form;
 
   const isValidEmail = validateEmail(email);
-  const isValidPassword = validatePassword(password);
-
-  const validators = [isValidEmail, isValidPassword];
-
+  const validators = [isValidEmail];
   const invalidFields = validators.filter(field => field.success === false);
 
   return invalidFields;
