@@ -1,1 +1,71 @@
-<h1>here</h1>
+<section>
+    <h1>Add Product</h1>
+
+    <form>
+        <section>
+            <label for="category">Category</label>
+            <select name="category" id="category" autofocus required>
+                <option selected value="mobile-phones">Mobile Phones</option>
+                <option value="tv">TVs</option>
+                <option value="headphone">Headphones</option>
+            </select>
+            <small class="error category"></small>
+        </section>
+
+        <section>
+            <label for="manufacturer">Manufacturer</label>
+            <select name="manufacturer" id="manufacturer" required>
+                <option selected value="expensive">Apple</option>
+                <option value="huawei">Huawei</option>
+                <option value="samsung">Samsung</option>
+            </select>
+            <small class="error manufacturer"></small>
+        </section>
+
+        <section>
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="iPhone 11 Pro Max" required>
+            <small class="error name"></small>
+        </section>
+
+        <section>
+            <label for="model">Model</label>
+            <input type="text" id="model" placeholder="11 Pro Max" required>
+            <small class="error model"></small>
+        </section>
+
+        <section>
+            <label for="description">Description</label>
+            <textarea name="description" id="description" placeholder="Type your product description here"
+                required></textarea>
+            <small class="error description"></small>
+        </section>
+
+        <section>
+            <label for="color">Color</label>
+            <input type="input" id="color" placeholder="Black" required>
+            <small class="error color"></small>
+        </section>
+
+        <section>
+            <label for="amount">Amount</label>
+            <input type="text" id="amount" placeholder="100" required>
+            <small class="error amount"></small>
+        </section>
+
+        <section>
+            <label for="price">Price</label>
+            <input type="text" id="price" placeholder="1100" required>
+            <small class="error price"></small>
+        </section>
+
+        <section>
+            <label for="discount">Discount</label>
+            <input type="text" id="discount" placeholder="0" required>
+            <small class="error discount"></small>
+        </section>
+
+        <button id="add-product-button">Register</button>
+
+    </form>
+</section>
