@@ -60,7 +60,6 @@ export const validateDescription = description => {
 
 export const validateDiscount = discount => {
   discount = parseInt(discount);
-  console.log('discount :', discount);
   if (!discount && discount !== 0) {
     return { success: false, kind: kinds.REQUIRED, path: 'discount' };
   }

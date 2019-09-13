@@ -31,4 +31,15 @@ addProductBtn.addEventListener('click', async e => {
       displayError(field, forms.ADD_PRODUCT)
     );
   }
+
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: '/products/api/',
+      data: { product: form },
+    });
+    window.location.replace(`/products/${response.data.product._id}`);
+  } catch (error) {
+    console.log(error);
+  }
 });
