@@ -1,5 +1,4 @@
 <nav>
-
     <div>
         <input type="text">
         <button>Search</button>
@@ -8,16 +7,23 @@
     {{!-- Basic Planning | Box to the right --}}
     <div>
         {{#if user}}
-        <button>Cart</button>
-        <button>Wishlist</button>
-        <button>Logout</button>
+        <a id="cart">Cart</a>
+        <a id="wishlist">Wishlist</a>
         {{else if store}}
-        <button>Add a Products</button>
-        <button>Products</button>
-        <button>Logout</button>
+        <a href="/products/add" id="add-product">Add a Products</a>
+        <a id="my-products">Products</a>
         {{else}}
         <a href="/register">Register</a>
         <a href="/login">Login</a>
         {{/if}}
+
+        {{#if user}}
+        {{else}}
+        {{#if store}}
+        <button id="logout">Logout</button>
+        {{/if}}
+        {{/if}}
     </div>
 </nav>
+
+<script src="/partials/navbar.js"></script>
