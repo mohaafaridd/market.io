@@ -1,12 +1,13 @@
 import axios from 'axios';
 import grabForm from '../util/formGrabber';
 import validateForm from './validators/add-product.validator';
+import { clearErrors, displayError } from '../util/error.handle';
 
 const addProductBtn = document.getElementById('add-product-button');
 addProductBtn.addEventListener('click', async e => {
   e.preventDefault();
 
-  console.log('here');
+  clearErrors();
 
   const form = grabForm([
     'amount',
@@ -20,5 +21,12 @@ addProductBtn.addEventListener('click', async e => {
     'price',
   ]);
 
-  validateForm(form);
+  const invalidFields = validateForm(form);
+
+  // Shows errors on DOM if there is
+  if (invalidFields.length) {
+    return invalidFields.forEach(field =>
+      displayError(field, forms.ADD_PRODUCT)
+    );
+  }
 });

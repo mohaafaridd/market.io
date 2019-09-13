@@ -1,19 +1,53 @@
-import { validateAmount } from './fields.validator';
+import {
+  validateGroupOne,
+  validateGroupTwo,
+  validateDescription,
+  validateDiscount,
+} from './fields.validator';
 
 export default form => {
   const {
+    // Group One
     amount,
+    price,
+
+    // Group Two
     category,
+    manufacturer,
+    name,
+    model,
     color,
+
+    // Non Grouped
     description,
     discount,
-    manufacturer,
-    model,
-    name,
-    price,
   } = form;
 
-  const isValidAmount = validateAmount(amount);
+  const isValidAmount = validateGroupOne(amount, 'amount');
+  const isValidPrice = validateGroupOne(price, 'price');
 
-  console.log(isValidAmount);
+  const isValidCategory = validateGroupTwo(category, 'category');
+  const isValidManufacturer = validateGroupTwo(manufacturer, 'manufacturer');
+  const isValidName = validateGroupTwo(name, 'name');
+  const isValidModel = validateGroupTwo(model, 'model');
+  const isValidColor = validateGroupTwo(color, 'color');
+
+  const isValidDescription = validateDescription(description);
+  const isValidDiscount = validateDiscount(discount);
+
+  const validators = [
+    isValidAmount,
+    isValidPrice,
+    isValidCategory,
+    isValidManufacturer,
+    isValidName,
+    isValidModel,
+    isValidColor,
+    isValidDescription,
+    isValidDiscount,
+  ];
+
+  const invalidFields = validators.filter(field => field.success === false);
+
+  return invalidFields;
 };

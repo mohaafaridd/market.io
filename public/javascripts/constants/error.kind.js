@@ -1,21 +1,23 @@
-export const LONG = 'long';
-export const SHORT = 'short';
-export const REQUIRED = 'required';
-export const LENGTH = 'length';
-export const REGEX = 'regex';
 export const FORMAT = 'format';
+export const LENGTH = 'length';
+export const LONG = 'long';
 export const MATCH = 'match';
-export const UNIQUE = 'unique';
+export const MAXIMUM = 'maximum';
 export const MINIMUM = 'minimum';
+export const REGEX = 'regex';
+export const REQUIRED = 'required';
+export const SHORT = 'short';
+export const UNIQUE = 'unique';
 
 export default {
-  LONG,
-  SHORT,
-  REQUIRED,
-  LENGTH,
-  REGEX,
   FORMAT,
+  LENGTH,
+  LONG,
   MATCH,
-  UNIQUE,
+  MAXIMUM,
   MINIMUM,
+  REGEX,
+  REQUIRED,
+  SHORT,
+  UNIQUE,
 };

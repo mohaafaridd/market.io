@@ -1,4 +1,5 @@
 import registrationErrors from '../messages/register';
+import addProductErrors from '../messages/add-product';
 import forms from '../constants/forms';
 
 export const clearErrors = () => {
@@ -16,6 +17,8 @@ export const displayError = (error, form) => {
         field.innerHTML = registrationErrors(error);
         break;
 
+      case forms.ADD_PRODUCT:
+        field.innerHTML = addProductErrors(error);
       default:
         break;
     }

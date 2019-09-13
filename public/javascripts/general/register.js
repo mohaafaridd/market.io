@@ -11,7 +11,7 @@ registerBtn.addEventListener('click', async e => {
   try {
     clearErrors();
 
-    const form = grabForm();
+    const form = grabForm(['name', 'phone', 'email', 'password', 'repassword']);
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is

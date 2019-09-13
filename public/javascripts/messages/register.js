@@ -1,6 +1,6 @@
 import kinds from '../constants/error.kind';
 
-export default registrationErrors = error => {
+export default error => {
   const { kind } = error;
 
   switch (kind) {

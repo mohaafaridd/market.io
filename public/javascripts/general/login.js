@@ -10,7 +10,7 @@ loginBtn.addEventListener('click', async e => {
   e.preventDefault();
   try {
     clearErrors();
-    const form = grabForm();
+    const form = grabForm(['email', 'password']);
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is
@@ -35,6 +35,7 @@ loginBtn.addEventListener('click', async e => {
 
     window.location.replace('/');
   } catch (err) {
+    console.log(err);
     const { error } = err.response.data;
     const field = document.querySelector('.error.login');
     field.innerHTML = error;
