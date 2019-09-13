@@ -10,7 +10,7 @@ router.use('/api', api);
 router.get('/add', authorization(Role.Store), authentication, (req, res) => {
   try {
     const { store } = req;
-    res.render('store/add-product', { title: 'Add Product', store });
+    res.render('products/add-product', { title: 'Add Product', store });
   } catch (error) {
     res.redirect('/');
   }
