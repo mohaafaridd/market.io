@@ -2,7 +2,8 @@ const Product = require('../models/product.model');
 const sharp = require('sharp');
 
 const postProduct = async (req, res) => {
-  const product = new Product({ ...req.body.product, store: req.store.id });
+  const { client: store } = req;
+  const product = new Product({ ...req.body.product, store: store.id });
   try {
     await product.save();
     res.status(201).json({ message: 'product added', product });
@@ -13,7 +14,7 @@ const postProduct = async (req, res) => {
 
 const patchRate = async (req, res) => {
   const { product: productId, rating } = req.body;
-  const { user } = req;
+  const { client: user } = req;
 
   // This code is bad, don't copy it
   // don't ever think it is sufficient
@@ -41,7 +42,6 @@ const patchRate = async (req, res) => {
 
 const postProductPicture = async (req, res) => {
   try {
-    console.log('here');
     const buffer = await sharp(req.file.buffer)
       .png()
       .resize({ width: 300, height: 300 })
