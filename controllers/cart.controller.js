@@ -8,7 +8,7 @@ const {
 
 const postCart = async (req, res) => {
   try {
-    const { user } = req;
+    const { client: user } = req;
     const { product } = req.body;
 
     // checks for total amount ordered if available in stock
@@ -33,7 +33,7 @@ const postCart = async (req, res) => {
 
 const deleteCart = async (req, res) => {
   try {
-    const { user } = req;
+    const { client: user } = req;
     const { products } = req.body;
 
     const requests = products.map(product =>
@@ -54,7 +54,7 @@ const deleteCart = async (req, res) => {
 };
 
 const deleteFullCart = async (req, res) => {
-  const { user } = req;
+  const { client: user } = req;
   const products = await Cart.find({ owner: user.id });
   const mappedProducts = products.map(product => product.product);
   await Cart.deleteMany({ owner: user.id });
