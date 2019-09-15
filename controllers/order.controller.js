@@ -4,10 +4,11 @@ const { formatUpdates } = require('./helpers/order.helper');
 
 const postOrder = async (req, res) => {
   try {
+    const { client: user } = req;
     const { products: productsIds } = req.body;
 
     const requests = productsIds.map(id =>
-      Cart.findOne({ owner: req.user.id, product: id })
+      Cart.findOne({ owner: user.id, product: id })
     );
     const products = (await Promise.all(requests))
       .filter(cart => cart !== null)
@@ -18,7 +19,7 @@ const postOrder = async (req, res) => {
     }
 
     const order = new Order({
-      owner: req.user.id,
+      owner: user.id,
       products,
     });
 
