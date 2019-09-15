@@ -60,7 +60,7 @@ const postProductPicture = async (req, res) => {
   }
 };
 
-const getProduct = async (req, res) => {
+const getProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -68,10 +68,12 @@ const getProduct = async (req, res) => {
       return res.status(404).json({ message: 'No product was found' });
     }
 
-    res.status(200).json({
-      message: 'Product was found',
-      product,
-    });
+    req.product = product;
+    next();
+    // res.status(200).json({
+    //   message: 'Product was found',
+    //   product,
+    // });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

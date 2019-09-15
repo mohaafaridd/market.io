@@ -6,22 +6,17 @@
 
     {{!-- Basic Planning | Box to the right --}}
     <div>
-        {{#if user}}
+        {{#if User}}
         <a id="cart">Cart</a>
         <a id="wishlist">Wishlist</a>
-        {{else if store}}
+        <button id="logout">Logout</button>
+        {{else if Store}}
         <a href="/products/add" id="add-product">Add a Products</a>
         <a id="my-products">Products</a>
-        {{else}}
+        <button id="logout">Logout</button>
+        {{else if Anonymous}}
         <a href="/register">Register</a>
         <a href="/login">Login</a>
-        {{/if}}
-
-        {{#if user}}
-        {{else}}
-        {{#if store}}
-        <button id="logout">Logout</button>
-        {{/if}}
         {{/if}}
     </div>
 </nav>

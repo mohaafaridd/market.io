@@ -1,6 +1,9 @@
 const express = require('express');
 const authorization = require('../middlewares/authorization');
 const authentication = require('../middlewares/authentication');
+
+const controller = require('../controllers/product.controller');
+
 const Role = require('../middlewares/role');
 
 const api = require('./api/products.api');
@@ -16,9 +19,22 @@ router.get('/add', authorization(Role.Store), authentication, (req, res) => {
   }
 });
 
-router.get('/:id', authorization(), authentication, (req, res) => {
-  const { client, token } = req;
-  res.json({ token, client });
-});
+router.get(
+  '/:id',
+  authorization(),
+  authentication,
+  controller.getProduct,
+  (req, res) => {
+    const { client, token, product } = req;
+    const { role } = client;
+    // [role] = true : sends the actual role in shape of variable
+    // so that the template engine can specify the role
+    res.render('products/product-page', {
+      title: product.name,
+      [role]: true,
+      product,
+    });
+  }
+);
 
 module.exports = router;
