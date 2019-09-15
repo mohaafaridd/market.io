@@ -39,10 +39,10 @@ const postLogin = async (req, res) => {
 
 const postLogout = async (req, res) => {
   try {
-    req.store.tokens = req.store.tokens.filter(
+    req.client.tokens = req.client.tokens.filter(
       token => token.token !== req.token
     );
-    await req.store.save();
+    await req.client.save();
 
     res
       .clearCookie('token')
