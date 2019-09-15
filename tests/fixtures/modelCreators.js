@@ -8,7 +8,7 @@ const createUser = (id, role) => {
   const firstname = faker.name.firstName();
   const lastname = faker.name.lastName();
 
-  const name = [firstname, lastname].join(' ');
+  const name = [firstname, lastname].join(' ').slice(0, 19);
 
   const email = faker.internet.email(firstname, lastname);
   const phone = faker.phone.phoneNumber('010########');

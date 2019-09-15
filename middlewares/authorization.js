@@ -33,8 +33,6 @@ function authorization(roles = []) {
         // client's role is not authorized
         return res.status(401).json({ message: 'Unauthorized' });
       }
-
-      req.token = req.header('Authorization').replace('Bearer ', '');
       // authentication and authorization successful
       next();
     },

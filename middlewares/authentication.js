@@ -27,7 +27,7 @@ const getClient = async req => {
         _id: req.client.id,
         'tokens.token': req.token,
       });
-      return;
+      return user;
 
     default:
       break;

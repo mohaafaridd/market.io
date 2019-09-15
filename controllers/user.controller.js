@@ -36,10 +36,10 @@ const postLogin = async (req, res) => {
 
 const postLogout = async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter(
+    req.client.tokens = req.client.tokens.filter(
       token => token.token !== req.token
     );
-    await req.user.save();
+    await req.client.save();
 
     res
       .clearCookie('token')
@@ -54,7 +54,7 @@ const patchInformation = async (req, res) => {
   try {
     const { updates } = req.body;
 
-    const user = await User.findOneAndUpdate({ _id: req.user.id }, updates, {
+    const user = await User.findOneAndUpdate({ _id: req.client.id }, updates, {
       new: true,
       runValidators: true,
       context: 'query',
