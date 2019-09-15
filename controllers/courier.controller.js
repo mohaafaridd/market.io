@@ -36,10 +36,10 @@ const postLogin = async (req, res) => {
 
 const postLogout = async (req, res) => {
   try {
-    req.courier.tokens = req.courier.tokens.filter(
+    req.client.tokens = req.client.tokens.filter(
       token => token.token !== req.token
     );
-    await req.courier.save();
+    await req.client.save();
 
     res
       .clearCookie('token')

@@ -21,6 +21,7 @@ const getClient = async req => {
       });
       return store;
 
+    case Role.Administrator:
     case Role.User:
       const user = await User.findOne({
         _id: req.client.id,
@@ -37,7 +38,9 @@ const authentication = async (req, res, next) => {
   const client = await getClient(req);
 
   if (!client) {
-    return res.status(403).json({ message: 'No access' });
+    return res.status(403).json({
+      message: 'Sorry, you do not have authentication to access this page',
+    });
   } else {
     req.client = client;
     next();
