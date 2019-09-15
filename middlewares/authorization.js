@@ -1,4 +1,6 @@
 const expressJwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const Role = require('./role');
 
 function authorization(roles = []) {
   if (typeof roles === 'string') {
@@ -22,8 +24,14 @@ function authorization(roles = []) {
           const { token } = req.cookies;
           req.token = token;
           return token;
+        } else {
+          const token = jwt.sign(
+            { role: Role.Anonymous },
+            process.env.SECRET_KEY
+          );
+          req.token = token;
+          return token;
         }
-        return null;
       },
     }),
 

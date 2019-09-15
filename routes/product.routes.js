@@ -16,4 +16,9 @@ router.get('/add', authorization(Role.Store), authentication, (req, res) => {
   }
 });
 
+router.get('/:id', authorization(), authentication, (req, res) => {
+  const { client, token } = req;
+  res.json({ token, client });
+});
+
 module.exports = router;

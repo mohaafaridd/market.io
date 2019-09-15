@@ -30,16 +30,22 @@ const getClient = async req => {
       return user;
 
     default:
-      break;
+      return null;
   }
 };
 
 const authentication = async (req, res, next) => {
+  if (req.client.role === Role.Anonymous) {
+    req.anonymous = true;
+    return next();
+  }
+
   const client = await getClient(req);
 
   if (!client) {
     return res.status(403).json({
-      message: 'Sorry, you do not have authentication to access this page',
+      message: `Sorry, you do not have authentication to access this page ${req
+        .client.role === Role.Anonymous && 'You are not logged in'}`,
     });
   } else {
     req.client = client;
