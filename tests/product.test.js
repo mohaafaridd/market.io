@@ -73,19 +73,19 @@ test('Should add image to product in store', async () => {
   expect(product.picture).toEqual(expect.any(Buffer));
 });
 
-test('Should get product from store', async () => {
-  const response = await request(app)
-    .get(`/products/api/${productOneId}`)
-    .expect(200);
+// test('Should get product from store', async () => {
+//   const response = await request(app)
+//     .get(`/products/api/${productOneId}`)
+//     .expect(200);
 
-  expect(response.body).toMatchObject({
-    product: {
-      ...productOne,
-      _id: productOneId.toHexString(),
-      store: storeOneId.toHexString(),
-    },
-  });
-});
+//   expect(response.body).toMatchObject({
+//     product: {
+//       ...productOne,
+//       _id: productOneId.toHexString(),
+//       store: storeOneId.toHexString(),
+//     },
+//   });
+// });
 
 test('Should edit a product from store', async () => {
   const response = await request(app)

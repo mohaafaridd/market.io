@@ -1,3 +1,10 @@
 <h1>{{product.name}}</h1>
 <p>category: {{product.category}}</p>
 <p>manufacturer: {{product.manufacturer}}</p>
+<p>rate: {{product.rate}}</p>
+<p>rate count: {{product.rateCount}}</p>
+<p>{{product.description}}</p>
+
+{{#if User}}
+<button>Add to cart</button>
+{{/if}}

@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   const { user, store } = req.cookies;
-  res.render('index', { title: 'market.io', user, store });
+  const role = (user && 'User') || (store && 'Store') || 'Anonymous';
+  res.render('index', { title: 'market.io', [role]: true });
 });
 
 router.get('/register', (req, res) => {
@@ -11,7 +12,8 @@ router.get('/register', (req, res) => {
   if (user || store) {
     return res.redirect('/');
   }
-  res.render('general/register', { title: 'Register' });
+  const role = 'Anonymous';
+  res.render('general/register', { title: 'Register', [role]: true });
 });
 
 router.get('/login', (req, res) => {
@@ -19,7 +21,8 @@ router.get('/login', (req, res) => {
   if (user || store) {
     return res.redirect('/');
   }
-  res.render('general/login', { title: 'Login' });
+  const role = 'Anonymous';
+  res.render('general/login', { title: 'Login', [role]: true });
 });
 
 module.exports = router;

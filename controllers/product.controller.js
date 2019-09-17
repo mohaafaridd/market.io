@@ -68,6 +68,19 @@ const getProduct = async (req, res, next) => {
       return res.status(404).json({ message: 'No product was found' });
     }
 
+    const { ratings } = product;
+
+    if (ratings.length > 0) {
+      const average =
+        ratings.reduce((total, next) => total + next.rating, 0) /
+        ratings.length;
+      product.rate = average;
+      product.rateCount = ratings.length;
+    } else {
+      product.rate = null;
+      product.rateCount = 0;
+    }
+
     req.product = product;
     next();
     // res.status(200).json({
