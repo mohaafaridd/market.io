@@ -15,7 +15,9 @@ const postOrder = async (req, res) => {
       .map(product => ({ id: product.id, amount: product.amount }));
 
     if (!products.length) {
-      return res.status(400).json({ message: 'No products in cart' });
+      return res
+        .status(400)
+        .json({ success: false, message: "You've no products in your cart" });
     }
 
     const order = new Order({
@@ -25,9 +27,11 @@ const postOrder = async (req, res) => {
 
     await order.save();
 
-    res.status(201).json({ order });
+    res
+      .status(201)
+      .json({ success: true, message: 'Your order has been set!', order });
   } catch (error) {
-    res.json({ error: { ...error }, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
@@ -36,15 +40,12 @@ const updateOrder = async (req, res) => {
     const order = await Order.findByIdAndUpdate(
       req.params.id,
       formatUpdates(req.body.updates),
-      { new: true },
-      (err, order) => {
-        console.log(err);
-      }
+      { new: true }
     );
 
-    res.json({ order });
+    res.json({ success: true, message: 'This order has been updated', order });
   } catch (error) {
-    res.json({ error: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 

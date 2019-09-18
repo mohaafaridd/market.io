@@ -8,7 +8,7 @@ const formatUpdates = givenUpdates => {
   );
 
   if (!isValidOperation) {
-    throw new Error('Invalid key to update');
+    throw new Error('Update failed');
   }
 
   const updatesObject = {};
