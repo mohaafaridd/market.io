@@ -5,7 +5,7 @@ const inStockCheck = async (product, user) => {
   // current stock
   const stock = await Product.findById(product.id);
   if (!stock) {
-    throw new Error('No product was found');
+    throw new Error('We could find this product in our stock');
   }
 
   //   amount wanted

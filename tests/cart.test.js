@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const Cart = require('../models/cart.model');
+const Product = require('../models/product.model');
 
 const {
   setupDatabase,
@@ -92,7 +93,9 @@ test('Should delete all items in user cart', async () => {
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .expect(200);
 
-  const response = await request(app).get(`/products/api/${productOneId}`);
+  // const response = await request(app).get(`/products/api/${productOneId}`);
+  // console.log('response :', response);
 
-  expect(response.body.product.booked).toBe(booked - 1);
+  const product = await Product.findById(productOneId);
+  expect(product.booked).toBe(booked - 1);
 });

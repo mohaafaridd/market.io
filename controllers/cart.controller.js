@@ -25,9 +25,11 @@ const postCart = async (req, res) => {
 
     await increaseBooking(product);
 
-    res.status(200).json({ message: 'Product was added to cart', cart });
+    res
+      .status(200)
+      .json({ success: true, message: 'Product was added to your cart', cart });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: true, message: error.message });
   }
 };
 
@@ -47,19 +49,31 @@ const deleteCart = async (req, res) => {
 
     await decreaseBooking(products);
 
-    res.json({ cart: responses });
+    res.json({
+      success: true,
+      message: "You've removed a product from your cart",
+      cart: responses,
+    });
   } catch (error) {
-    res.json({ error: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
 const deleteFullCart = async (req, res) => {
   const { client: user } = req;
-  const products = await Cart.find({ owner: user.id });
-  const mappedProducts = products.map(product => product.product);
-  await Cart.deleteMany({ owner: user.id });
-  await decreaseBooking(mappedProducts);
-  res.json({ mappedProducts });
+  try {
+    const products = await Cart.find({ owner: user.id });
+    const mappedProducts = products.map(product => product.product);
+    await Cart.deleteMany({ owner: user.id });
+    await decreaseBooking(mappedProducts);
+    res.json({
+      success: true,
+      message: 'All products in your cart have been removed',
+      products: mappedProducts,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 };
 
 module.exports = {
