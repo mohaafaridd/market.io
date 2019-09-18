@@ -10,7 +10,7 @@ const postRegister = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('token', token, { maxAge })
-      .cookie('courier', courier, { maxAge })
+      .cookie('client', JSON.stringify(courier), { maxAge })
       .status(201)
       .json({ courier, token });
   } catch (error) {
@@ -27,7 +27,7 @@ const postLogin = async (req, res) => {
 
     res
       .cookie('token', token, { maxAge })
-      .cookie('courier', courier, { maxAge })
+      .cookie('client', JSON.stringify(courier), { maxAge })
       .json({ courier, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -43,7 +43,7 @@ const postLogout = async (req, res) => {
 
     res
       .clearCookie('token')
-      .clearCookie('courier')
+      .clearCookie('client')
       .json({ message: 'courier logged out successfully' });
   } catch (error) {
     res.status(400).json({ message: 'courier logging out failed' });

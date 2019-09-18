@@ -14,7 +14,7 @@ const postRegister = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('token', token, { maxAge })
-      .cookie('store', store, { maxAge })
+      .cookie('client', JSON.stringify(store), { maxAge })
       .status(201)
       .json({ store, token });
   } catch (error) {
@@ -30,7 +30,7 @@ const postLogin = async (req, res) => {
 
     res
       .cookie('token', token, { maxAge })
-      .cookie('store', store, { maxAge })
+      .cookie('client', JSON.stringify(store), { maxAge })
       .json({ store, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -46,7 +46,7 @@ const postLogout = async (req, res) => {
 
     res
       .clearCookie('token')
-      .clearCookie('store')
+      .clearCookie('client')
       .json({ message: 'store logged out successfully' });
   } catch (error) {
     res.status(400).json({ message: 'store logging out failed' });
