@@ -17,15 +17,17 @@ const postProduct = async (req, res) => {
 };
 
 const patchRate = async (req, res) => {
-  const { product, rating, store } = req.body;
+  const { product, rating: userRating, store } = req.body;
   const { client: user } = req;
 
   try {
     const rating = await Rating.findOneAndUpdate(
       { product, user: user.id, store },
-      { rating },
+      { rating: userRating },
       { new: true, upsert: true }
     );
+
+    rating.save();
 
     res.json({ success: true, message: "You've rated this product", rating });
   } catch (error) {
