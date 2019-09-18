@@ -31,7 +31,7 @@ const patchRate = async (req, res) => {
 
     res.json({ success: true, message: "You've rated this product", rating });
   } catch (error) {
-    res.json({ success: false, message: 'Error rating' });
+    res.json({ success: false, message: 'Error rating', error: error.message });
   }
 };
 
@@ -66,6 +66,8 @@ const getProduct = async (req, res, next) => {
     if (!product) {
       throw new Error('No product was found');
     }
+
+    await product.populate('ratings').execPopulate();
 
     const { ratings } = product;
 

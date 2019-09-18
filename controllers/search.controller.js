@@ -44,12 +44,12 @@ const getProducts = async (req, res) => {
           $lte: parseFloat(maximum),
         },
       },
-      {
-        rating: {
-          $gte: parseFloat(minRating),
-          $lte: parseFloat(maxRating),
-        },
-      },
+      // {
+      //   rating: {
+      //     $gte: parseFloat(minRating),
+      //     $lte: parseFloat(maxRating),
+      //   },
+      // },
     ],
   };
 

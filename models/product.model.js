@@ -82,6 +82,12 @@ const schema = new Schema({
   picture: {
     type: Buffer,
   },
+
+  score: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 schema.index({ name: 'text' });
