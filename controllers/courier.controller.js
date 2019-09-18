@@ -12,9 +12,14 @@ const postRegister = async (req, res) => {
       .cookie('token', token, { maxAge })
       .cookie('client', JSON.stringify(courier), { maxAge })
       .status(201)
-      .json({ courier, token });
+      .json({
+        success: true,
+        message: 'Registered Successfully!',
+        courier,
+        token,
+      });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -28,9 +33,14 @@ const postLogin = async (req, res) => {
     res
       .cookie('token', token, { maxAge })
       .cookie('client', JSON.stringify(courier), { maxAge })
-      .json({ courier, token });
+      .json({
+        success: true,
+        message: `Welcome back ${courier.name}!`,
+        courier,
+        token,
+      });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -44,9 +54,14 @@ const postLogout = async (req, res) => {
     res
       .clearCookie('token')
       .clearCookie('client')
-      .json({ message: 'courier logged out successfully' });
+      .json({
+        success: true,
+        message: `${req.client.name} Logged out Successfully!`,
+      });
   } catch (error) {
-    res.status(400).json({ message: 'courier logging out failed' });
+    res
+      .status(400)
+      .json({ success: false, message: 'courier logging out failed' });
   }
 };
 
