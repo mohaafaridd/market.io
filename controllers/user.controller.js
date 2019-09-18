@@ -11,10 +11,19 @@ const postRegister = async (req, res) => {
       .cookie('token', token, { maxAge })
       .cookie('client', user, { maxAge })
       .status(201)
-      .json({ user, token });
+      .json({
+        success: true,
+        message: 'Registered Successfully!',
+        user,
+        token,
+      });
   } catch (error) {
     const extracted = extractErrors(error.errors);
-    res.status(400).json({ success: false, error: extracted });
+    res.status(400).json({
+      success: false,
+      message: 'Registration failed',
+      cause: extracted,
+    });
   }
 };
 
@@ -28,9 +37,14 @@ const postLogin = async (req, res) => {
     res
       .cookie('token', token, { maxAge })
       .cookie('client', JSON.stringify(user), { maxAge })
-      .json({ user, token });
+      .json({
+        success: true,
+        message: `Welcome back ${user.name}!`,
+        user,
+        token,
+      });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    res.status(400).json({ success: false, message: 'Login failed' });
   }
 };
 
@@ -44,9 +58,12 @@ const postLogout = async (req, res) => {
     res
       .clearCookie('token')
       .clearCookie('client')
-      .json({ message: 'user logged out successfully' });
+      .json({
+        success: true,
+        message: `${req.client.name} Logged out Successfully!`,
+      });
   } catch (error) {
-    res.status(400).json({ message: 'user logging out failed' });
+    res.status(400).json({ success: false, message: 'Logging out failed' });
   }
 };
 
@@ -60,9 +77,13 @@ const patchInformation = async (req, res) => {
       context: 'query',
     });
 
-    res.json({ message: 'success', user });
+    res.json({ success: true, message: 'Successfully updated!', user });
   } catch (error) {
-    res.json({ message: 'failed', error: error.message });
+    res.json({
+      success: false,
+      message: 'Update failed',
+      error: error.message,
+    });
   }
 };
 

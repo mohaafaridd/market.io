@@ -19,7 +19,7 @@ const postRegister = async (req, res) => {
         token,
       });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: 'Registration failed' });
   }
 };
 
@@ -40,7 +40,7 @@ const postLogin = async (req, res) => {
         token,
       });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: 'Login failed' });
   }
 };
 
@@ -59,9 +59,7 @@ const postLogout = async (req, res) => {
         message: `${req.client.name} Logged out Successfully!`,
       });
   } catch (error) {
-    res
-      .status(400)
-      .json({ success: false, message: 'courier logging out failed' });
+    res.status(400).json({ success: false, message: 'Logging out failed' });
   }
 };
 

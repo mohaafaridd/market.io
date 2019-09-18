@@ -16,9 +16,14 @@ const postRegister = async (req, res) => {
       .cookie('token', token, { maxAge })
       .cookie('client', JSON.stringify(store), { maxAge })
       .status(201)
-      .json({ store, token });
+      .json({
+        success: true,
+        message: 'Registered Successfully!',
+        store,
+        token,
+      });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: 'Registration failed' });
   }
 };
 
@@ -31,9 +36,14 @@ const postLogin = async (req, res) => {
     res
       .cookie('token', token, { maxAge })
       .cookie('client', JSON.stringify(store), { maxAge })
-      .json({ store, token });
+      .json({
+        success: true,
+        message: `Welcome back ${store.name}!`,
+        store,
+        token,
+      });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: 'Login failed' });
   }
 };
 
@@ -47,9 +57,12 @@ const postLogout = async (req, res) => {
     res
       .clearCookie('token')
       .clearCookie('client')
-      .json({ message: 'store logged out successfully' });
+      .json({
+        success: true,
+        message: `${req.client.name} Logged out Successfully!`,
+      });
   } catch (error) {
-    res.status(400).json({ message: 'store logging out failed' });
+    res.status(400).json({ success: false, message: 'Logging out failed' });
   }
 };
 
@@ -58,13 +71,20 @@ const getStore = async (req, res) => {
     const store = await Store.findOne({ username: req.params.username });
 
     if (!store) {
-      return res.status(404).json({ message: 'no store was found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No store was found' });
     }
 
     await store.populate('products').execPopulate();
-    res.json({ store, products: store.products });
+    res.json({
+      success: true,
+      message: 'Store found',
+      store,
+      products: store.products,
+    });
   } catch (error) {
-    res.json({ error: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
