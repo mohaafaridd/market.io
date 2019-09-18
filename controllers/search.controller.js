@@ -16,17 +16,18 @@ const getProducts = async (req, res) => {
   if (minimum > maximum) {
     return res
       .status(400)
-      .json({ message: "minimum can't be more than maximum" });
+      .json({ success: false, message: "Minimum can't be more than maximum" });
   }
 
   if (minRating > maxRating) {
-    return res
-      .status(400)
-      .json({ message: "minimum rating can't be more than maximum" });
+    return res.status(400).json({
+      success: false,
+      message: "Minimum rating can't be more than maximum",
+    });
   }
 
   if (minRating < 0 || minRating > 5 || maxRating < 0 || maxRating > 5) {
-    return res.status(400).json({ message: 'bad rating value' });
+    return res.status(400).json({ success: false, message: 'Invalid ratings' });
   }
 
   const matchQuery = {
@@ -52,16 +53,20 @@ const getProducts = async (req, res) => {
     ],
   };
 
-  const products = await Product.find(matchQuery, {
-    score: { $meta: 'textScore' },
-  })
-    .sort({ score: { $meta: 'textScore' } })
-    .limit(10)
-    .skip(page ? page - 1 : 0);
+  try {
+    const products = await Product.find(matchQuery, {
+      score: { $meta: 'textScore' },
+    })
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(10)
+      .skip(page ? page - 1 : 0);
 
-  const count = await Product.find(matchQuery).countDocuments();
+    const count = await Product.find(matchQuery).countDocuments();
 
-  res.json({ products, count });
+    res.json({ success: true, message: 'Search completed', products, count });
+  } catch (error) {
+    res.json({ success: false, message: 'Search failed' });
+  }
 };
 
 module.exports = { getProducts };
