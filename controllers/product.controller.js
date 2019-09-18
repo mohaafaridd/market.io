@@ -6,9 +6,11 @@ const postProduct = async (req, res) => {
   const product = new Product({ ...req.body.product, store: store.id });
   try {
     await product.save();
-    res.status(201).json({ message: 'product added', product });
+    res
+      .status(201)
+      .json({ success: true, message: 'You added a product', product });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -20,24 +22,27 @@ const patchRate = async (req, res) => {
   // don't ever think it is sufficient
   // I did it when I was young just to escape
   // MongoDB Docs
+  try {
+    await Product.findByIdAndUpdate(
+      productId,
+      {
+        $pull: { ratings: { owner: user.id } },
+      },
+      { new: true, upsert: true }
+    );
 
-  await Product.findByIdAndUpdate(
-    productId,
-    {
-      $pull: { ratings: { owner: user.id } },
-    },
-    { new: true, upsert: true }
-  );
+    const product = await Product.findByIdAndUpdate(
+      productId,
+      {
+        $addToSet: { ratings: { owner: user.id, rating } },
+      },
+      { new: true, upsert: true }
+    );
 
-  const product = await Product.findByIdAndUpdate(
-    productId,
-    {
-      $addToSet: { ratings: { owner: user.id, rating } },
-    },
-    { new: true, upsert: true }
-  );
-
-  res.json({ product });
+    res.json({ success: true, message: "You've rated this product", product });
+  } catch (error) {
+    res.json({ success: false, message: 'Error rating' });
+  }
 };
 
 const postProductPicture = async (req, res) => {
@@ -54,9 +59,13 @@ const postProductPicture = async (req, res) => {
       { new: true }
     );
 
-    res.json({ product });
+    res.json({
+      success: true,
+      message: "You've added a picture to this product",
+      product,
+    });
   } catch (error) {
-    res.json({ message: 'Upload failed' });
+    res.json({ success: false, message: 'Upload failed' });
   }
 };
 
@@ -65,7 +74,7 @@ const getProduct = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      return res.status(404).json({ message: 'No product was found' });
+      throw new Error('No product was found');
     }
 
     const { ratings } = product;
@@ -88,7 +97,9 @@ const getProduct = async (req, res, next) => {
     //   product,
     // });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res
+      .status(404)
+      .render('error', { message: "We don't have such a product" });
   }
 };
 
@@ -112,13 +123,15 @@ const patchProduct = async (req, res) => {
     );
 
     if (!isValidOperation) {
-      throw new Error('Invalid key to update');
+      throw new Error('Update Failed');
     }
 
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      return res.status(404).json({ message: 'No product was found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No product was found' });
     }
 
     updates.forEach(update => {
@@ -128,11 +141,12 @@ const patchProduct = async (req, res) => {
     await product.save();
 
     res.json({
+      success: true,
       message: 'Product was updated',
       product,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -141,12 +155,16 @@ const deleteProduct = async (req, res) => {
     const product = await Product.findByIdAndDelete(req.params.id);
 
     if (!product) {
-      return res.status(404).json({ message: 'No product was found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No product was found' });
     }
 
-    res.status(200).json({ message: 'product was deleted', product });
+    res
+      .status(200)
+      .json({ success: true, message: 'Product has been deleted', product });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
