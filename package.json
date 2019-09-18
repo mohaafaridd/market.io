@@ -37,6 +37,7 @@
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
     "jest": "^24.9.0",
+    "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.6.10",

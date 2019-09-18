@@ -1,8 +1,14 @@
+import axios from 'axios';
+import { getCookie } from '../util/cookies';
 const logout = document.getElementById('logout') || null;
 
 if (logout) {
   logout.addEventListener('click', async e => {
     e.preventDefault();
-    console.log('You have logged out');
+    const cookie = getCookie('client');
+    const route = `${cookie.role.toLowerCase()}s`;
+
+    await axios.post(`/${route}/api/logout`);
+    window.location.replace('/');
   });
 }

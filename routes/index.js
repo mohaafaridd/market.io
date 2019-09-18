@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const { user, store } = req.cookies;
-  const role = (user && 'User') || (store && 'Store') || 'Anonymous';
+  const { client } = req.cookies;
+  const objectifiedClient = client && JSON.parse(client);
+  const role = client ? objectifiedClient.role : 'Anonymous';
   res.render('index', { title: 'market.io', [role]: true });
 });
 
 router.get('/register', (req, res) => {
-  const { user, store } = req.cookies;
-  if (user || store) {
+  const { client } = req.cookies;
+  if (client) {
     return res.redirect('/');
   }
   const role = 'Anonymous';
@@ -17,8 +18,8 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  const { user, store } = req.cookies;
-  if (user || store) {
+  const { client } = req.cookies;
+  if (client) {
     return res.redirect('/');
   }
   const role = 'Anonymous';

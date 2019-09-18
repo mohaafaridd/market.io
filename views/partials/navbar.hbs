@@ -9,15 +9,17 @@
         {{#if User}}
         <a id="cart">Cart</a>
         <a id="wishlist">Wishlist</a>
-        <button id="logout">Logout</button>
         {{else if Store}}
         <a href="/products/add" id="add-product">Add a Products</a>
         <a id="my-products">Products</a>
-        <button id="logout">Logout</button>
         {{else if Anonymous}}
         <a href="/register">Register</a>
         <a href="/login">Login</a>
         {{/if}}
+
+        {{#unless Anonymous}}
+        <button id="logout">Logout</button>
+        {{/unless}}
     </div>
 </nav>
 
