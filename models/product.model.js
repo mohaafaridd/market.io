@@ -63,20 +63,6 @@ const schema = new Schema({
     min: 0,
   },
 
-  ratings: [
-    {
-      owner: {
-        type: ObjectId,
-      },
-      rating: {
-        type: Number,
-        min: 0,
-        max: 5,
-        default: 0,
-      },
-    },
-  ],
-
   discount: {
     type: Number,
     required: true,
@@ -99,6 +85,13 @@ const schema = new Schema({
 });
 
 schema.index({ name: 'text' });
+
+// Getting store products if role is store
+schema.virtual('ratings', {
+  ref: 'Rating',
+  localField: '_id',
+  foreignField: 'product',
+});
 
 const Product = model('Product', schema);
 

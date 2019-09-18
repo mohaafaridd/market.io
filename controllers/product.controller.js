@@ -1,5 +1,7 @@
-const Product = require('../models/product.model');
 const sharp = require('sharp');
+
+const Product = require('../models/product.model');
+const Rating = require('../models/rating.model');
 
 const postProduct = async (req, res) => {
   const { client: store } = req;
@@ -15,31 +17,17 @@ const postProduct = async (req, res) => {
 };
 
 const patchRate = async (req, res) => {
-  const { product: productId, rating } = req.body;
+  const { product, rating, store } = req.body;
   const { client: user } = req;
 
-  // This code is bad, don't copy it
-  // don't ever think it is sufficient
-  // I did it when I was young just to escape
-  // MongoDB Docs
   try {
-    await Product.findByIdAndUpdate(
-      productId,
-      {
-        $pull: { ratings: { owner: user.id } },
-      },
+    const rating = await Rating.findOneAndUpdate(
+      { product, user: user.id, store },
+      { rating },
       { new: true, upsert: true }
     );
 
-    const product = await Product.findByIdAndUpdate(
-      productId,
-      {
-        $addToSet: { ratings: { owner: user.id, rating } },
-      },
-      { new: true, upsert: true }
-    );
-
-    res.json({ success: true, message: "You've rated this product", product });
+    res.json({ success: true, message: "You've rated this product", rating });
   } catch (error) {
     res.json({ success: false, message: 'Error rating' });
   }

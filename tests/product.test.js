@@ -30,6 +30,7 @@ test('Should create product for store', async () => {
 
 test('Should rate a product', async () => {
   const rateBefore = await Product.findById(productOneId);
+  await task.populate('owner').execPopulate();
   expect(rateBefore.ratings).toHaveLength(0);
 
   await request(app)
