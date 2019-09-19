@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const { ObjectId } = Schema.Types;
 
 const schema = new Schema({
-  owner: {
+  user: {
     type: ObjectId,
     required: true,
     ref: 'User',
@@ -14,10 +14,17 @@ const schema = new Schema({
     ref: 'Product',
   },
 
+  store: {
+    type: ObjectId,
+    required: true,
+    ref: 'Store',
+  },
+
   amount: {
     type: Number,
+    required: true,
     default: 0,
-    min: 0,
+    min: 1,
   },
 });
 
