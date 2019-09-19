@@ -57,13 +57,19 @@ const getProducts = async (req, res) => {
     const products = await Product.find(matchQuery, {
       matchScore: { $meta: 'textScore' },
     })
+      .populate('store')
       .sort({ matchScore: { $meta: 'textScore' } })
       .limit(10)
       .skip(page ? page - 1 : 0);
 
     const count = await Product.find(matchQuery).countDocuments();
 
-    res.json({ success: true, message: 'Search completed', products, count });
+    res.render('general/search', {
+      success: true,
+      message: 'Search completed',
+      products,
+      count,
+    });
   } catch (error) {
     res.json({ success: false, message: 'Search failed' });
   }

@@ -26,8 +26,7 @@ searchBtn.addEventListener('click', async e => {
     if (!searchText.value) {
       throw new Error('Enter a value to search for!');
     }
-    const results = await axios.get(`/search?name=${searchText.value}`);
-    console.log(results.data);
+    window.location.replace(`/search?name=${searchText.value}`);
   } catch (error) {
     alert(error.message);
   }

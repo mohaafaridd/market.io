@@ -1,0 +1,10 @@
+<h2>Results</h2>
+
+<p>Found {{count}} matches!</p>
+{{#each products}}
+<h5>{{name}}</h5>
+<h6>{{price}}$</h6>
+<p>{{score}} star/s</p>
+<a href="/products/{{id}}">Link</a>
+<button>Add to cart</button>
+{{/each}}
