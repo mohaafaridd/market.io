@@ -25,13 +25,9 @@ test('Should add a valid amount of a product to the cart', async () => {
     .post('/carts/api')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
-      product: {
-        id: productOneId,
-        amount: 1,
-      },
-      store: {
-        id: storeOneId,
-      },
+      amount: 1,
+      product: productOneId,
+      store: storeOneId,
     })
     .expect(200);
 
