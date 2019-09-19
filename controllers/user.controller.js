@@ -9,7 +9,7 @@ const postRegister = async (req, res) => {
     const maxAge = ms(process.env.MAX_AGE);
     res
       .cookie('token', token, { maxAge })
-      .cookie('client', user, { maxAge })
+      .cookie('client', JSON.stringify(user), { maxAge })
       .status(201)
       .json({
         success: true,

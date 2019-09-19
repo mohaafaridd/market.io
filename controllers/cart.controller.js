@@ -33,6 +33,13 @@ const postCart = async (req, res) => {
   }
 };
 
+const getCart = async (req, res, next) => {
+  const { client: user } = req;
+  const cart = await Cart.find({ owner: user.id });
+  req.cart = cart;
+  next();
+};
+
 const deleteCart = async (req, res) => {
   try {
     const { client: user } = req;
@@ -77,7 +84,8 @@ const deleteFullCart = async (req, res) => {
 };
 
 module.exports = {
-  postCart,
   deleteCart,
   deleteFullCart,
+  getCart,
+  postCart,
 };
