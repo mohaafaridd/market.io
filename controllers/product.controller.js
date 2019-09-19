@@ -79,8 +79,6 @@ const getProduct = async (req, res, next) => {
       })
       .execPopulate();
 
-    console.log('product.ratings :', product.ratings);
-
     req.product = product;
     next();
     // res.status(200).json({

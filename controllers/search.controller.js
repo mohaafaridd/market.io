@@ -65,6 +65,7 @@ const getProducts = async (req, res) => {
     const count = await Product.find(matchQuery).countDocuments();
 
     res.render('general/search', {
+      title: `(${count}) Search Results`,
       success: true,
       message: 'Search completed',
       products,

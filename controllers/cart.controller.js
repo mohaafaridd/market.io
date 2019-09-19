@@ -38,7 +38,6 @@ const getCart = async (req, res, next) => {
   const cart = await Cart.find({ user: user.id })
     .populate('product')
     .populate('store');
-  console.log('cart :', cart);
   req.cart = cart;
   next();
 };
