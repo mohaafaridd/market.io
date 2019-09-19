@@ -44,20 +44,20 @@ const getProducts = async (req, res) => {
           $lte: parseFloat(maximum),
         },
       },
-      // {
-      //   rating: {
-      //     $gte: parseFloat(minRating),
-      //     $lte: parseFloat(maxRating),
-      //   },
-      // },
+      {
+        score: {
+          $gte: parseFloat(minRating),
+          $lte: parseFloat(maxRating),
+        },
+      },
     ],
   };
 
   try {
     const products = await Product.find(matchQuery, {
-      score: { $meta: 'textScore' },
+      matchScore: { $meta: 'textScore' },
     })
-      .sort({ score: { $meta: 'textScore' } })
+      .sort({ matchScore: { $meta: 'textScore' } })
       .limit(10)
       .skip(page ? page - 1 : 0);
 

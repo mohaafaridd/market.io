@@ -1,6 +1,8 @@
 const express = require('express');
-const api = require('./api/search.api');
+const controller = require('../controllers/search.controller');
+
 const router = express.Router();
 
-router.use('/api', api);
+router.get('/', controller.getProducts);
+
 module.exports = router;

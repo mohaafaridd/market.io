@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getCookie } from '../util/cookies';
 const logout = document.getElementById('logout') || null;
+const searchBtn = document.getElementById('search-btn') || null;
+const searchText = document.getElementById('search-text') || null;
 
 if (logout) {
   logout.addEventListener('click', async e => {
@@ -16,3 +18,18 @@ if (logout) {
     }
   });
 }
+
+searchBtn.addEventListener('click', async e => {
+  e.preventDefault();
+  searchBtn.disabled = true;
+  try {
+    if (!searchText.value) {
+      throw new Error('Enter a value to search for!');
+    }
+    const results = await axios.get(`/search?name=${searchText.value}`);
+    console.log(results.data);
+  } catch (error) {
+    alert(error.message);
+  }
+  searchBtn.disabled = false;
+});

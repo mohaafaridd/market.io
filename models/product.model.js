@@ -85,6 +85,7 @@ const schema = new Schema({
 
   score: {
     type: Number,
+    default: null,
     min: 0,
     max: 5,
   },
