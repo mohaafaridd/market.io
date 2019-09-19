@@ -2,6 +2,7 @@ const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
 
 const inStockCheck = async (product, user) => {
+  console.log('here', product, user);
   // current stock
   const stock = await Product.findById(product.id);
   if (!stock) {

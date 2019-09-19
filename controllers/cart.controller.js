@@ -10,7 +10,6 @@ const postCart = async (req, res) => {
   try {
     const { client: user } = req;
     const { product, store } = req.body;
-
     // checks for total amount ordered if available in stock
     const inStock = await inStockCheck(product, user);
     if (!inStock) {
@@ -29,7 +28,7 @@ const postCart = async (req, res) => {
       .status(200)
       .json({ success: true, message: 'Product was added to your cart', cart });
   } catch (error) {
-    res.status(400).json({ success: true, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 

@@ -1,3 +1,6 @@
+<pre>
+    {{product}}
+</pre>
 <h1>{{product.name}}</h1>
 <h2>{{product.price}}$</h2>
 <p>category: {{product.category}}</p>
@@ -13,5 +16,12 @@
 {{/each}}
 
 {{#if User}}
-<button>Add to cart</button>
+<form>
+    <input type="hidden" id="product-id" value="{{product.id}}">
+    <input type="hidden" id="store-id" value="{{product.store}}">
+    <input type="text" id="amount">
+    <button id="add-to-cart-btn">Add to cart</button>
+</form>
 {{/if}}
+
+<script src="/products/product-page.js"></script>
