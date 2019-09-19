@@ -17,7 +17,7 @@ router.get(
   controller.getCart,
   (req, res) => {
     const { cart } = req;
-    res.render('user/cart', { cart });
+    res.render('user/cart', { title: 'Shopping Cart', cart });
   }
 );
 

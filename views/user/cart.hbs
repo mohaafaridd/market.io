@@ -1,5 +1,17 @@
 <h2>Cart</h2>
 
-<pre>
-    {{cart}}
-</pre>
+<button>Remove all</button>
+
+{{#each cart}}
+<div>
+    <h3>{{product.name}}</h3>
+    <h4>{{product.category}}</h4>
+    <p>Price: {{product.price}}</p>
+    <p>Color: {{product.color}}</p>
+    <p>Amount: {{amount}}</p>
+
+    <button>Delete</button>
+</div>
+{{/each}}
+
+<button>Order Now</button>

@@ -35,7 +35,8 @@ const postCart = async (req, res) => {
 
 const getCart = async (req, res, next) => {
   const { client: user } = req;
-  const cart = await Cart.find({ owner: user.id });
+  const cart = await Cart.find({ owner: user.id }).populate('product');
+
   req.cart = cart;
   next();
 };
