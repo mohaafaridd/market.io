@@ -89,6 +89,12 @@ const schema = new Schema({
     min: 0,
     max: 5,
   },
+
+  voters: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
 });
 
 schema.index({ name: 'text' });

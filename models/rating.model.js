@@ -49,16 +49,16 @@ const changeScore = async (model, id) => {
     case 'product':
       const product = await Product.findByIdAndUpdate(
         id,
-        { score },
-        { new: true, upsert: true }
+        { score, voters: ratings.length },
+        { new: true }
       );
       return product;
 
     case 'store':
       const store = await Store.findByIdAndUpdate(
         id,
-        { score },
-        { new: true, upsert: true }
+        { score, voters: ratings.length },
+        { new: true }
       );
       return store;
 

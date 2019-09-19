@@ -60,6 +60,12 @@ const schema = new Schema({
     max: 0,
   },
 
+  voters: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+
   tokens: [
     {
       token: {
