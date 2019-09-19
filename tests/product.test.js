@@ -41,8 +41,9 @@ test('Should rate a product', async () => {
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
       product: productOneId,
-      rating: 5,
+      score: 5,
       store: storeOneId,
+      comment: 'haha',
     })
     .expect(200);
 
@@ -57,7 +58,7 @@ test('Should change rate a product', async () => {
     product: productThreeId,
   });
 
-  expect(preRating.rating).toBe(5);
+  expect(preRating.score).toBe(5);
 
   // const rateBefore = await Product.findById(productThreeId);
   // expect(rateBefore.ratings[0].rating).toBe(5);
@@ -68,7 +69,7 @@ test('Should change rate a product', async () => {
     .send({
       product: productThreeId,
       store: storeTwoId,
-      rating: 2,
+      score: 2,
     })
     .expect(200);
 
@@ -77,7 +78,7 @@ test('Should change rate a product', async () => {
     product: productThreeId,
   });
 
-  expect(postRating.rating).toBe(2);
+  expect(postRating.score).toBe(2);
 });
 
 test('Should add image to product in store', async () => {

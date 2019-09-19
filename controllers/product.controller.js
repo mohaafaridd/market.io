@@ -17,13 +17,13 @@ const postProduct = async (req, res) => {
 };
 
 const patchRate = async (req, res) => {
-  const { product, rating: userRating, store } = req.body;
+  const { product, score, store } = req.body;
   const { client: user } = req;
 
   try {
     const rating = await Rating.findOneAndUpdate(
       { product, user: user.id, store },
-      { rating: userRating },
+      { score },
       { new: true, upsert: true }
     );
 
@@ -70,17 +70,6 @@ const getProduct = async (req, res, next) => {
     await product.populate('ratings').execPopulate();
 
     const { ratings } = product;
-
-    if (ratings.length > 0) {
-      const average =
-        ratings.reduce((total, next) => total + next.rating, 0) /
-        ratings.length;
-      product.rate = average;
-      product.rateCount = ratings.length;
-    } else {
-      product.rate = null;
-      product.rateCount = 0;
-    }
 
     req.product = product;
     next();

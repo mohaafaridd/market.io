@@ -54,7 +54,8 @@ const ratingOne = {
   product: productThreeId,
   user: userOneId,
   store: storeTwoId,
-  rating: 5,
+  score: 5,
+  comment: 'lorem ipsum',
 };
 
 const storeOne = createStore(storeOneId);

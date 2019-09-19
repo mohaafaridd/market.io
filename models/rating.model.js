@@ -20,9 +20,11 @@ const schema = new Schema({
     required: true,
   },
 
-  rating: {
+  score: {
     type: Number,
     required: true,
+    min: 0,
+    max: 5,
   },
 
   comment: {
@@ -31,18 +33,20 @@ const schema = new Schema({
   },
 });
 
-schema.post('findOneAndUpdate', async function() {
-  // console.log(typeof this._conditions.product.toString());
+const changeProductScore = async id => {
   const ratings = await Rating.find({
-    product: this._conditions.product,
+    product: id,
   });
 
   const score =
-    ratings.reduce((total, next) => total + next.rating, 0) / ratings.length;
+    ratings.reduce((total, next) => total + next.score, 0) / ratings.length;
 
-  const product = await Product.findByIdAndUpdate(this._conditions.product, {
-    score,
-  });
+  const product = await Product.findByIdAndUpdate(id, { score });
+};
+
+schema.post('findOneAndUpdate', async function() {
+  // console.log(typeof this._conditions.product.toString());
+  await changeProductScore(this._conditions.product);
 });
 
 const Rating = model('Rating', schema);
