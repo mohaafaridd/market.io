@@ -10,7 +10,7 @@ const inStockCheck = async (product, user) => {
 
   //   amount wanted
   const incoming = product.amount;
-  const inCart = await Cart.findOne({ owner: user._id, id: product.id });
+  const inCart = await Cart.findOne({ user: user._id, id: product.id });
   const inCartAmount = inCart ? inCart.amount : 0;
 
   const total = inCartAmount + incoming;

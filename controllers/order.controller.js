@@ -8,7 +8,7 @@ const postOrder = async (req, res) => {
     const { products: productsIds } = req.body;
 
     const requests = productsIds.map(id =>
-      Cart.findOne({ owner: user.id, product: id })
+      Cart.findOne({ user: user.id, product: id })
     );
     const products = (await Promise.all(requests))
       .filter(cart => cart !== null)

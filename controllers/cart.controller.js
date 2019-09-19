@@ -9,7 +9,7 @@ const {
 const postCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product } = req.body;
+    const { product, store } = req.body;
 
     // checks for total amount ordered if available in stock
     const inStock = await inStockCheck(product, user);
@@ -18,7 +18,7 @@ const postCart = async (req, res) => {
     }
 
     const cart = await Cart.findOneAndUpdate(
-      { owner: user.id, product: product.id },
+      { user: user.id, product: product.id, store: store.id },
       { $set: { product: product.id }, $inc: { amount: product.amount } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
@@ -35,7 +35,9 @@ const postCart = async (req, res) => {
 
 const getCart = async (req, res, next) => {
   const { client: user } = req;
-  const cart = await Cart.find({ owner: user.id }).populate('product');
+  const cart = await Cart.find({ user: user.id })
+    .populate('product')
+    .populate('store');
 
   req.cart = cart;
   next();
@@ -48,7 +50,7 @@ const deleteCart = async (req, res) => {
 
     const requests = products.map(product =>
       Cart.findOneAndDelete({
-        owner: user.id,
+        user: user.id,
         product: product,
       })
     );
@@ -70,9 +72,9 @@ const deleteCart = async (req, res) => {
 const deleteFullCart = async (req, res) => {
   const { client: user } = req;
   try {
-    const products = await Cart.find({ owner: user.id });
+    const products = await Cart.find({ user: user.id });
     const mappedProducts = products.map(product => product.product);
-    await Cart.deleteMany({ owner: user.id });
+    await Cart.deleteMany({ user: user.id });
     await decreaseBooking(mappedProducts);
     res.json({
       success: true,

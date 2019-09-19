@@ -29,8 +29,9 @@ const adminOne = createUser(adminOneId, Role.Administrator);
 
 const cartOne = {
   _id: cartOneId,
-  owner: userOneId,
+  user: userOneId,
   product: productOneId,
+  store: storeOneId,
   amount: 1,
 };
 

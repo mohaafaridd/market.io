@@ -9,13 +9,14 @@ const {
   userOne,
   productOneId,
   productOne,
+  storeOneId,
 } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
 
 test('Should add a valid amount of a product to the cart', async () => {
   const cartBefore = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartBefore.amount).toBe(1);
@@ -28,11 +29,14 @@ test('Should add a valid amount of a product to the cart', async () => {
         id: productOneId,
         amount: 1,
       },
+      store: {
+        id: storeOneId,
+      },
     })
     .expect(200);
 
   const cartAfter = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartAfter.amount).toBe(2);
@@ -40,7 +44,7 @@ test('Should add a valid amount of a product to the cart', async () => {
 
 test('Should not add an invalid amount of a product to the cart', async () => {
   const cartBefore = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartBefore.amount).toBe(1);
@@ -53,11 +57,14 @@ test('Should not add an invalid amount of a product to the cart', async () => {
         id: productOneId,
         amount: 2000,
       },
+      store: {
+        id: storeOneId,
+      },
     })
     .expect(400);
 
   const cartAfter = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartAfter.amount).toBe(1);
@@ -65,7 +72,7 @@ test('Should not add an invalid amount of a product to the cart', async () => {
 
 test('Should delete product from cart with valid data', async () => {
   const cartBefore = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartBefore.amount).toBe(1);
@@ -79,7 +86,7 @@ test('Should delete product from cart with valid data', async () => {
     .expect(200);
 
   const cartAfter = await Cart.findOne({
-    owner: userOneId,
+    user: userOneId,
     product: productOneId,
   });
   expect(cartAfter).toBeNull();
