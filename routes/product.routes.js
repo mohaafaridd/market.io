@@ -13,7 +13,12 @@ router.use('/api', api);
 router.get('/add', authorization(Role.Store), authentication, (req, res) => {
   try {
     const { client: store } = req;
-    res.render('products/add-product', { title: 'Add Product', store });
+    const { role } = store;
+    res.render('products/add-product', {
+      title: 'Add Product',
+      [role]: true,
+      store,
+    });
   } catch (error) {
     res.redirect('/');
   }

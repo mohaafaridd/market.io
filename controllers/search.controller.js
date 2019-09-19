@@ -1,6 +1,9 @@
 const Product = require('../models/product.model');
 
 const getProducts = async (req, res) => {
+  const { client } = req;
+  const { role } = client;
+
   const {
     category,
     color,
@@ -66,6 +69,7 @@ const getProducts = async (req, res) => {
 
     res.render('general/search', {
       title: `(${count}) Search Results`,
+      [role]: true,
       success: true,
       message: 'Search completed',
       products,

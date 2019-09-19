@@ -16,8 +16,10 @@ router.get(
   authentication,
   controller.getCart,
   (req, res) => {
-    const { cart } = req;
-    res.render('user/cart', { title: 'Shopping Cart', cart });
+    const { cart, client } = req;
+    const { role } = client;
+
+    res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart });
   }
 );
 
