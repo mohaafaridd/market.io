@@ -1,4 +1,5 @@
 const Product = require('./product.model');
+const Store = require('./store.model');
 
 const { Schema, model } = require('mongoose');
 
@@ -33,20 +34,39 @@ const schema = new Schema({
   },
 });
 
-const changeProductScore = async id => {
+const changeScore = async (model, id) => {
   const ratings = await Rating.find({
-    product: id,
+    [model]: id,
   });
 
   const score =
     ratings.reduce((total, next) => total + next.score, 0) / ratings.length;
 
-  const product = await Product.findByIdAndUpdate(id, { score });
+  switch (model) {
+    case 'product':
+      const product = await Product.findByIdAndUpdate(
+        id,
+        { score },
+        { new: true, upsert: true }
+      );
+      return product;
+
+    case 'store':
+      const store = await Store.findByIdAndUpdate(
+        id,
+        { score },
+        { new: true, upsert: true }
+      );
+      return store;
+
+    default:
+      break;
+  }
 };
 
 schema.post('findOneAndUpdate', async function() {
-  // console.log(typeof this._conditions.product.toString());
-  await changeProductScore(this._conditions.product);
+  const product = await changeScore('product', this._conditions.product);
+  const store = await changeScore('store', this._conditions.store);
 });
 
 const Rating = model('Rating', schema);

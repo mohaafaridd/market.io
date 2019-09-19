@@ -54,10 +54,8 @@ const schema = new Schema({
     default: Role.Store,
   },
 
-  rating: {
+  score: {
     type: Number,
-    required: true,
-    default: 0,
     min: 0,
     max: 0,
   },
