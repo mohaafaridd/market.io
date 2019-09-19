@@ -3,6 +3,9 @@
 <button>Remove all</button>
 
 {{#each cart}}
+{{!-- <pre>
+    {{this}}
+</pre> --}}
 <div>
     <h3>{{product.name}}</h3>
     <h4>{{product.category}}</h4>
@@ -10,6 +13,7 @@
     <p>Color: {{product.color}}</p>
     <p>Amount: {{amount}}</p>
 
+    <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
     <button>Delete</button>
 </div>
 {{/each}}

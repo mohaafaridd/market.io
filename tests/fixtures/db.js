@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const { Types } = require('mongoose');
 const { createProduct, createStore, createUser } = require('./modelCreators');
 
@@ -62,7 +64,22 @@ const ratingOne = {
 const storeOne = createStore(storeOneId);
 const storeTwo = createStore(storeTwoId);
 
-const userOne = createUser(userOneId, Role.User);
+const userOne = {
+  _id: userOneId,
+  role: Role.User,
+  name: 'Mohammed Farid',
+  email: 'mohammed@gmail.com',
+  phone: '01012227424',
+  password: '123456',
+  tokens: [
+    {
+      token: jwt.sign(
+        { id: userOneId, role: Role.User },
+        process.env.SECRET_KEY
+      ),
+    },
+  ],
+};
 const userTwo = createUser(userTwoId, Role.User);
 
 const setupDatabase = async () => {
