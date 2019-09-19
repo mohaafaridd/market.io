@@ -9,16 +9,19 @@ const schema = new Schema({
   product: {
     type: ObjectId,
     required: true,
+    ref: 'Product',
   },
 
   user: {
     type: ObjectId,
     required: true,
+    ref: 'User',
   },
 
   store: {
     type: ObjectId,
     required: true,
+    ref: 'Store',
   },
 
   score: {

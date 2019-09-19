@@ -1,11 +1,14 @@
 <h1>{{product.name}}</h1>
+
 <p>category: {{product.category}}</p>
 <p>manufacturer: {{product.manufacturer}}</p>
-<p>rate: {{product.score}}</p>
-<p>rate count: {{product.ratings.length}}</p>
-<p>{{product.description}}</p>
+<p>score: {{product.score}}</p>
+<p>voters count: {{product.ratings.length}}</p>
+<p>description: {{product.description}}</p>
 
+<h3>Comments</h3>
 {{#each product.ratings}}
+<p>{{user.name}}: </p>
 <p>{{comment}}</p>
 {{/each}}
 

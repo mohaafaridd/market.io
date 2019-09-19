@@ -17,13 +17,13 @@ const postProduct = async (req, res) => {
 };
 
 const patchRate = async (req, res) => {
-  const { product, score, store } = req.body;
+  const { product, score, store, comment } = req.body;
   const { client: user } = req;
 
   try {
     const rating = await Rating.findOneAndUpdate(
       { product, user: user.id, store },
-      { score },
+      { score, comment },
       { new: true, upsert: true }
     );
 
@@ -67,9 +67,19 @@ const getProduct = async (req, res, next) => {
       throw new Error('No product was found');
     }
 
-    await product.populate('ratings').execPopulate();
+    // await product.populate('ratings').execPopulate();
+    await product
+      .populate({
+        populate: {
+          path: 'user',
+          model: 'User',
+        },
+        path: 'ratings',
+        model: 'Rating',
+      })
+      .execPopulate();
 
-    const { ratings } = product;
+    console.log('product.ratings :', product.ratings);
 
     req.product = product;
     next();
