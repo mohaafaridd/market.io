@@ -16,10 +16,6 @@
 {{/each}}
 
 {{#if User}}
-<form>
-    <input type="hidden" name="product-id" value="{{product.id}}">
-    <input type="hidden" name="store-id" value="{{product.store}}">
-    <button class="add-to-cart-btn">Add to cart</button>
-</form>
-<script src="/products/add-to-cart.js"></script>
+{{> addToCart product=product.id store=product.store }}
+<script src="/partials/add-to-cart.js"></script>
 {{/if}}

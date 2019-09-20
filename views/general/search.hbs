@@ -9,15 +9,17 @@
 <a href="/products/{{id}}">Link</a>
 
 {{#if ../User}}
-<form>
+{{!-- <form>
     <input type="hidden" name="product-id" value="{{id}}">
     <input type="hidden" name="store-id" value="{{store.id}}">
     <button class="add-to-cart-btn">Add to cart</button>
-</form>
+</form> --}}
+{{> addToCart product=id store=store.id }}
+
 {{/if}}
 
 {{/each}}
 
 {{#if User}}
-<script src="/products/add-to-cart.js"></script>
+<script src="/partials/add-to-cart.js"></script>
 {{/if}}
