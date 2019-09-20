@@ -6,15 +6,11 @@ const addToCartButtons = document.getElementsByClassName('add-to-cart-btn');
 for (const cartBtn of addToCartButtons) {
   cartBtn.addEventListener('click', async e => {
     e.preventDefault();
+    const { parentElement: form } = cartBtn;
     const fields = ['product-id', 'store-id', 'amount'];
 
     // This block is not for humans
-    const elements = [
-      // Step 1: extracting the form elements from the click event
-      // tip 1: you can't loop on the result without destructuring it
-      // tip 2: I couldn't find a scenario where I need another form this should explain the [0]
-      ...e.path.filter(obj => obj instanceof HTMLFormElement)[0].elements,
-    ]
+    const elements = [...form.elements]
       // filter elements if they have a name and that's valid for my field list
       .filter(element => element.name && fields.includes(element.name))
       // map over the filtered array to make an array of these objects
@@ -26,31 +22,15 @@ for (const cartBtn of addToCartButtons) {
         {}
       );
 
-    console.log('elements :', elements);
-
-    // .map(element => {
-    //   if (element instanceof HTMLInputElement) {
-    //     return { name: element.name, value: element.value };
-    //   }
-    // });
-
-    // const product = document.getElementById('product-id').value;
-    // const store = document.getElementById('store-id').value;
-    // const amount = document.getElementById('amount').value;
-
-    const { parentElement: form } = cartBtn;
-
-    console.log('form :', form.elements);
-
-    const product = form.querySelector('input[name="product-id"]').value;
-    const store = form.querySelector('input[name="store-id"]').value;
-    const amount = form.querySelector('input[name="amount"]').value;
+    const product = elements['product-id'];
+    const store = elements['store-id'];
+    const amount = elements['amount'];
 
     try {
       const response = await axios.post('/carts/api', {
         product,
         store,
-        amount,
+        amount: parseInt(amount),
       });
 
       console.log('response.data :', response.data);
