@@ -1,4 +1,5 @@
 import axios from 'axios';
+import elementsExtractor from '../util/formFieldsExtractor';
 
 // const addToCartBtn = document.getElementById('add-to-cart-btn') || null;
 const addToCartButtons = document.getElementsByClassName('add-to-cart-btn');
@@ -9,29 +10,21 @@ for (const cartBtn of addToCartButtons) {
     cartBtn.disabled = true;
 
     const { parentElement: form } = cartBtn;
-    const fields = ['product-id', 'store-id'];
+    const fields = ['product-id', 'store-id', 'amount'];
 
-    // This block is not for humans
-    const elements = [...form.elements]
-      // filter elements if they have a name and that's valid for my field list
-      .filter(element => element.name && fields.includes(element.name))
-      // map over the filtered array to make an array of these objects
-      .map(element => ({ name: element.name, value: element.value }))
-      // Well, this reduce is from stackoverflow :v
-      // reduce takes every element and assign it to the final Object
-      .reduce(
-        (obj, element) => Object.assign(obj, { [element.name]: element.value }),
-        {}
-      );
+    const elements = elementsExtractor(form, fields);
 
     const product = elements['product-id'];
     const store = elements['store-id'];
+    const amount = isNaN(parseInt(elements['amount']))
+      ? 1
+      : parseInt(elements['amount']);
 
     try {
       const response = await axios.post('/carts/api', {
         product,
         store,
-        amount: 1,
+        amount,
       });
 
       console.log('response.data :', response.data);
