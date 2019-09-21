@@ -1,24 +1,9 @@
 <h2>Results</h2>
 
 <p>Found {{count}} matches!</p>
+
 {{#each products}}
 {{> productCard this}}
-{{!-- <pre>{{this}}</pre> --}}
-{{!-- <h5>{{name}}</h5>
-<h6>{{price}}$</h6>
-<p>{{score}} star/s ({{voters}})</p>
-<a href="/products/{{id}}">Link</a> --}}
-
-{{!-- {{#if ../User}} --}}
-{{!-- <form>
-    <input type="hidden" name="product-id" value="{{id}}">
-    <input type="hidden" name="store-id" value="{{store.id}}">
-    <button class="add-to-cart-btn">Add to cart</button>
-</form> --}}
-{{!-- {{> addToCart product=id store=store.id }} --}}
-
-{{!-- {{/if}} --}}
-
 {{/each}}
 
 {{#if User}}
