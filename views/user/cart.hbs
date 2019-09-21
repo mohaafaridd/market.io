@@ -1,6 +1,7 @@
 <h2>Cart</h2>
 
-<button>Remove all</button>
+<button id="delete-all" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
+
 <button>Delete selected</button>
 
 {{#each cart}}

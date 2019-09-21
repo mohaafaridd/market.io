@@ -70,8 +70,6 @@ const deleteFullCart = async (req, res) => {
     );
     const response = await Promise.all(requests);
 
-    // const mappedProducts = products.map(product => product.product);
-    // await patchBooking(mappedProducts);
     res.json({
       success: true,
       message: 'All products in your cart have been removed',
