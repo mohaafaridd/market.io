@@ -1,3 +1,4 @@
+const { DECREASE, INCREASE } = require('../constants/cart.booking');
 const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
 
@@ -16,23 +17,11 @@ const inStockCheck = async (product, amount, user) => {
   return stock.amount - total > -1 ? true : false;
 };
 
-const increaseBooking = async id => {
-  await Product.findByIdAndUpdate(id, { $inc: { booked: 1 } });
-};
-
-const decreaseBooking = async products => {
-  const requests = products.map(id =>
-    Product.findByIdAndUpdate(
-      id,
-      { $inc: { booked: -1 } },
-      { runValidators: true, context: 'query' }
-    )
-  );
-  const responses = await Promise.all(requests);
+const patchBooking = async (product, amount = 1, mode = INCREASE) => {
+  await Product.findByIdAndUpdate(product, { $inc: { booked: amount * mode } });
 };
 
 module.exports = {
   inStockCheck,
-  increaseBooking,
-  decreaseBooking,
+  patchBooking,
 };

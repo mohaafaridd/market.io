@@ -1,10 +1,7 @@
 const Cart = require('../models/cart.model');
+const { DECREASE } = require('./constants/cart.booking');
 
-const {
-  inStockCheck,
-  increaseBooking,
-  decreaseBooking,
-} = require('./helpers/cart.helper');
+const { inStockCheck, patchBooking } = require('./helpers/cart.helper');
 
 const postCart = async (req, res) => {
   try {
@@ -22,7 +19,7 @@ const postCart = async (req, res) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    await increaseBooking(product);
+    await patchBooking(product, amount);
 
     res
       .status(200)
@@ -44,23 +41,13 @@ const getCart = async (req, res, next) => {
 const deleteCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { products } = req.body;
-
-    const requests = products.map(product =>
-      Cart.findOneAndDelete({
-        user: user.id,
-        product: product,
-      })
-    );
-
-    const responses = await Promise.all(requests);
-
-    await decreaseBooking(products);
-
+    const { product, amount } = req.body;
+    const cart = await Cart.findOneAndDelete({ product, user: user.id });
+    await patchBooking(product, amount, DECREASE);
     res.json({
       success: true,
       message: "You've removed a product from your cart",
-      cart: responses,
+      cart,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -70,14 +57,25 @@ const deleteCart = async (req, res) => {
 const deleteFullCart = async (req, res) => {
   const { client: user } = req;
   try {
+    // Store product
     const products = await Cart.find({ user: user.id });
-    const mappedProducts = products.map(product => product.product);
+    if (products.length < 1) {
+      throw new Error('Cart is already Empty');
+    }
+
     await Cart.deleteMany({ user: user.id });
-    await decreaseBooking(mappedProducts);
+
+    const requests = products.map(item =>
+      patchBooking(item.product, item.amount, DECREASE)
+    );
+    const response = await Promise.all(requests);
+
+    // const mappedProducts = products.map(product => product.product);
+    // await patchBooking(mappedProducts);
     res.json({
       success: true,
       message: 'All products in your cart have been removed',
-      products: mappedProducts,
+      products,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });
