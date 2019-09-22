@@ -74,10 +74,11 @@ test('Should delete product from cart with valid data', async () => {
   expect(cartBefore.amount).toBe(1);
 
   const response = await request(app)
-    .delete('/carts/api')
+    .post('/carts/api/delete-item')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .send({
-      products: [productOneId],
+      product: productOneId,
+      amount: 1,
     })
     .expect(200);
 
@@ -88,16 +89,13 @@ test('Should delete product from cart with valid data', async () => {
   expect(cartAfter).toBeNull();
 });
 
-test('Should delete all items in user cart', async () => {
+test('Should clear user cart', async () => {
   const { booked } = productOne;
 
   await request(app)
-    .delete('/carts/api/all')
+    .post('/carts/api/clear')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
     .expect(200);
-
-  // const response = await request(app).get(`/products/api/${productOneId}`);
-  // console.log('response :', response);
 
   const product = await Product.findById(productOneId);
   expect(product.booked).toBe(booked - 1);

@@ -12,6 +12,7 @@ clearCartButton.addEventListener('click', async e => {
   try {
     const response = await axios.post('/carts/api/clear');
     console.log('response.data :', response.data);
+    location.reload();
   } catch (error) {
     console.log('error.response.data :', error.response.data);
   }
@@ -37,6 +38,7 @@ for (const deleteButton of deleteSingleProductButtons) {
         amount,
       });
       console.log('response.data :', response.data);
+      location.reload();
     } catch (error) {
       console.log('error.response.data :', error.response.data);
     }
