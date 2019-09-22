@@ -6,7 +6,8 @@ const { inStockCheck, patchBooking } = require('./helpers/cart.helper');
 const postCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product, store, amount } = req.body;
+    const { product, store } = req.body;
+    const amount = 1;
     // checks for total amount ordered if available in stock
     const inStock = await inStockCheck(product, amount, user);
     if (!inStock) {

@@ -10,21 +10,17 @@ for (const cartBtn of addToCartButtons) {
     cartBtn.disabled = true;
 
     const { parentElement: form } = cartBtn;
-    const fields = ['product-id', 'store-id', 'amount'];
+    const fields = ['product-id', 'store-id'];
 
     const elements = grabElementsByName(form, fields);
 
     const product = elements['product-id'];
     const store = elements['store-id'];
-    const amount = isNaN(parseInt(elements['amount']))
-      ? 1
-      : parseInt(elements['amount']);
 
     try {
       const response = await axios.post('/carts/api', {
         product,
         store,
-        amount,
       });
 
       console.log('response.data :', response.data);
