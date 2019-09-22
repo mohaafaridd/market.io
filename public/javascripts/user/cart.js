@@ -1,5 +1,8 @@
 import axios from 'axios';
+import forms from '../constants/forms';
+import { patchValidation } from './validators/cart.validator';
 import { grabElementsByName, grabDOMElementByName } from '../util/formGrabber';
+import { clearErrors, displayError } from '../util/error.handle';
 
 const deleteSingleProductButtons = document.getElementsByClassName(
   'delete-single-product'
@@ -49,19 +52,24 @@ for (const patchBtn of patchAmountButtons) {
   patchBtn.addEventListener('click', async e => {
     e.preventDefault();
     try {
-      const { name: mode } = e.target;
-      const validModes = ['increase', 'decrease'];
-      const isValid = validModes.includes(mode);
-      if (!isValid) {
-        throw new Error('Invalid mode');
-      }
+      clearErrors();
 
       const { parentElement: form } = patchBtn;
       const fields = ['product-id', 'amount'];
       const elements = grabElementsByName(form, fields);
+      const { name: mode } = e.target;
+
+      const invalidFields = patchValidation(mode, elements);
+
+      // Shows errors on DOM if there is
+      if (invalidFields.length) {
+        return invalidFields.forEach(field =>
+          displayError(field, forms.ADD_PRODUCT)
+        );
+      }
+
       const product = elements['product-id'];
       const amount = grabDOMElementByName(form, 'amount');
-      console.log(amount);
 
       const response = await axios.patch('/carts/api/', {
         product,

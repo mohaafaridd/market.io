@@ -11,7 +11,6 @@ loginBtn.addEventListener('click', async e => {
   try {
     clearErrors();
     const form = grabForm(['email', 'password']);
-    console.log('form :', form);
     const invalidFields = validatorForm(form);
 
     // Shows errors on DOM if there is

@@ -1,5 +1,6 @@
 import registrationErrors from '../messages/register';
 import addProductErrors from '../messages/add-product';
+import cartErrors from '../messages/cart';
 import forms from '../constants/forms';
 
 export const clearErrors = () => {
@@ -19,6 +20,9 @@ export const displayError = (error, form) => {
 
       case forms.ADD_PRODUCT:
         field.innerHTML = addProductErrors(error);
+
+      case forms.PATCH_CART:
+        field.innerHTML = cartErrors(error);
       default:
         break;
     }
