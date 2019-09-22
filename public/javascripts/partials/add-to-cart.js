@@ -1,5 +1,5 @@
 import axios from 'axios';
-import elementsExtractor from '../util/formFieldsExtractor';
+import { grabElementsByName } from '../util/formGrabber';
 
 // const addToCartBtn = document.getElementById('add-to-cart-btn') || null;
 const addToCartButtons = document.getElementsByClassName('add-to-cart-btn');
@@ -12,7 +12,7 @@ for (const cartBtn of addToCartButtons) {
     const { parentElement: form } = cartBtn;
     const fields = ['product-id', 'store-id', 'amount'];
 
-    const elements = elementsExtractor(form, fields);
+    const elements = grabElementsByName(form, fields);
 
     const product = elements['product-id'];
     const store = elements['store-id'];

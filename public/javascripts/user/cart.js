@@ -1,5 +1,5 @@
 import axios from 'axios';
-import elementsExtractor, { extractElement } from '../util/formFieldsExtractor';
+import { grabElementsByName, grabDOMElementByName } from '../util/formGrabber';
 
 const deleteSingleProductButtons = document.getElementsByClassName(
   'delete-single-product'
@@ -25,7 +25,7 @@ for (const deleteButton of deleteSingleProductButtons) {
     const { parentElement: form } = deleteButton;
     const fields = ['product-id', 'amount'];
 
-    const elements = elementsExtractor(form, fields);
+    const elements = grabElementsByName(form, fields);
 
     const product = elements['product-id'];
     const amount = isNaN(parseInt(elements['amount']))
@@ -58,9 +58,9 @@ for (const patchBtn of patchAmountButtons) {
 
       const { parentElement: form } = patchBtn;
       const fields = ['product-id', 'amount'];
-      const elements = elementsExtractor(form, fields);
+      const elements = grabElementsByName(form, fields);
       const product = elements['product-id'];
-      const amount = extractElement(form, 'amount');
+      const amount = grabDOMElementByName(form, 'amount');
       console.log(amount);
 
       const response = await axios.patch('/carts/api/', {
