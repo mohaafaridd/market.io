@@ -1,5 +1,5 @@
 const Cart = require('../models/cart.model');
-const { DECREASE } = require('./constants/cart.booking');
+const { INCREASE, DECREASE } = require('./constants/cart.flags');
 
 const { inStockCheck, patchBooking } = require('./helpers/cart.helper');
 
@@ -36,6 +36,33 @@ const getCart = async (req, res, next) => {
     .populate('store');
   req.cart = cart;
   next();
+};
+
+const patchCart = async (req, res) => {
+  const { client: user } = req;
+  const { product, mode } = req.body;
+
+  try {
+    const validModes = ['increase', 'decrease'];
+    console.log('mode :', mode);
+    const isValid = validModes.includes(mode);
+    if (!isValid) {
+      throw new Error('invalid mode');
+    }
+
+    const coefficient = mode === 'increase' ? INCREASE : DECREASE;
+    const cart = await Cart.findOneAndUpdate(
+      { product, user: user.id },
+      { $inc: { amount: 1 * coefficient } },
+      { context: 'query', runValidators: true, new: true }
+    );
+
+    await patchBooking(product, 1, coefficient);
+
+    res.json({ success: true, message: 'Patch completed', cart });
+  } catch (error) {
+    res.json({ success: false, message: 'Patch failed', error: error.message });
+  }
 };
 
 const deleteCart = async (req, res) => {
@@ -84,5 +111,6 @@ module.exports = {
   deleteCart,
   deleteFullCart,
   getCart,
+  patchCart,
   postCart,
 };

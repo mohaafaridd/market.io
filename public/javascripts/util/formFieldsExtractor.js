@@ -11,3 +11,11 @@ export default (form, fields) =>
       (obj, element) => Object.assign(obj, { [element.name]: element.value }),
       {}
     );
+
+export const extractElement = (form, name) => {
+  const element = [...form.elements]
+    // filter elements if they have a name and that's valid for my field list
+    .filter(element => element.name && name === element.name)[0];
+
+  return element;
+};

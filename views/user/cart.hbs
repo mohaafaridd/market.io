@@ -8,7 +8,13 @@
     <h4>{{product.category}}</h4>
     <p>Price: {{product.price}}</p>
     <p>Color: {{product.color}}</p>
-    <p>Amount: {{amount}}</p>
+    <form>
+        <label for="amount">Amount</label>
+        <input type="text" name="product-id" value="{{product.id}}">
+        <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
+        <button class="patch-amount" name="increase">Add + </button>
+        <button class="patch-amount" name="decrease">Subtract - </button>
+    </form>
 
     <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
     <form>

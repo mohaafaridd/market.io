@@ -1,4 +1,4 @@
-const { DECREASE, INCREASE } = require('../constants/cart.booking');
+const { DECREASE, INCREASE } = require('../constants/cart.flags');
 const Product = require('../../models/product.model');
 const Cart = require('../../models/cart.model');
 

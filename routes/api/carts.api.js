@@ -11,6 +11,12 @@ const Role = require('../../middlewares/role');
 const router = express.Router();
 
 router.post('/', authorization(Role.User), authentication, controller.postCart);
+router.patch(
+  '/',
+  authorization(Role.User),
+  authentication,
+  controller.patchCart
+);
 router.post(
   '/delete-item',
   authorization(Role.User),
