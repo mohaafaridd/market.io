@@ -2,10 +2,8 @@
 
 <button id="delete-all" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
 
-<button>Delete selected</button>
-
 {{#each cart}}
-<div>
+<div class="product-card">
     <h3>{{product.name}}</h3>
     <h4>{{product.category}}</h4>
     <p>Price: {{product.price}}</p>

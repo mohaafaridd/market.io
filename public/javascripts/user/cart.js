@@ -7,6 +7,16 @@ const deleteSingleProductButtons = document.getElementsByClassName(
 
 const clearCartButton = document.getElementById('delete-all');
 
+clearCartButton.addEventListener('click', async e => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('/carts/api/clear');
+    console.log('response.data :', response.data);
+  } catch (error) {
+    console.log('error.response.data :', error.response.data);
+  }
+});
+
 for (const deleteButton of deleteSingleProductButtons) {
   deleteButton.addEventListener('click', async e => {
     e.preventDefault();
@@ -21,15 +31,14 @@ for (const deleteButton of deleteSingleProductButtons) {
       ? 1
       : parseInt(elements['amount']);
 
-    const response = await axios.post('/carts/api/delete-item', {
-      product,
-      amount,
-    });
-
-    // delete card of cart element
-    const { parentElement: card } = form;
-    card.remove();
-
-    console.log('response.data :', response.data);
+    try {
+      const response = await axios.post('/carts/api/delete-item', {
+        product,
+        amount,
+      });
+      console.log('response.data :', response.data);
+    } catch (error) {
+      console.log('error.response.data :', error.response.data);
+    }
   });
 }
