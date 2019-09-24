@@ -4,12 +4,8 @@
 
 {{#each cart}}
 <div class="product-card">
-    <pre>{{this}}</pre>
-    {{> altProductCard product}}
-    {{!-- <h3>{{product.name}}</h3>
-    <h4>{{product.category}}</h4>
-    <p>Price: {{product.price}}</p>
-    <p>Color: {{product.color}}</p>
+    {{> productCard product}}
+    <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
     <form>
         <label for="amount">Amount</label>
         <input type="text" name="product-id" value="{{product.id}}">
@@ -18,12 +14,10 @@
         <button class="patch-amount" name="increase">Add + </button>
         <button class="patch-amount" name="decrease">Subtract - </button>
     </form>
-
-    <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
     <form>
         <input type="text" name="product-id" value="{{product.id}}">
         <button class="delete-single-product">Delete</button>
-    </form> --}}
+    </form>
 </div>
 {{/each}}
 

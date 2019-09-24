@@ -1,9 +1,8 @@
-<div style="background-color: {{product.color}}">
-    <h5>{{product.name}}</h5>
-    <h6>{{product.price}}$</h6>
-    <p>{{product.score}} star/s ({{product.voters}})</p>
-    <a href="/products/{{product.id}}">Link</a>
-    {{#if user}}
-    {{> addToCart product=product.id store=product.store.id }}
-    {{/if}}
-</div>
+<h4>{{name}}</h4>
+<p>Price: {{price}}$</p>
+<p>Color: {{color}}</p>
+<p>Discount: {{discount}}%</p>
+<p>Manufacturer: {{manufacturer}}</p>
+
+<p>{{#if score}}{{score}}star/s ({{voters}}){{else}}not rated{{/if}} </p>
+<a href="/products/{{id}}">Link</a>
