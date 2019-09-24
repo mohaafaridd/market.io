@@ -8,18 +8,26 @@ const postOrder = async (req, res) => {
     const { client: user } = req;
 
     const carts = await Cart.find({ user: user.id });
+    console.log(carts);
     if (carts.length === 0) {
       return res
         .status(400)
         .json({ success: false, message: "You've no products in your cart" });
     }
 
+    const cartsIds = carts.map(cart => cart.id);
+
     const order = new Order({
       user: user.id,
-      carts: carts.map(cart => ObjectId(cart.id)),
+      carts: cartsIds,
     });
 
     await order.save();
+
+    await Cart.updateMany(
+      { _id: { $in: cartsIds } },
+      { $set: { ordered: true } }
+    );
 
     res
       .status(201)
