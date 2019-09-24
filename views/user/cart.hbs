@@ -1,6 +1,6 @@
 <h2>Cart</h2>
 
-<button id="delete-all" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
+<button id="clear-cart" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
 
 {{#each cart}}
 <div class="product-card">
@@ -21,6 +21,6 @@
 </div>
 {{/each}}
 
-<button>Order Now</button>
+<button id="order-now" {{#unless cart}} disabled {{/unless}}>Order Now</button>
 
 <script src="/user/cart.js"></script>

@@ -20,15 +20,10 @@ const schema = new Schema(
       ref: 'Courier',
     },
 
-    products: [
+    carts: [
       {
-        id: {
-          type: ObjectId,
-        },
-        amount: {
-          type: Number,
-          min: 0,
-        },
+        type: ObjectId,
+        ref: 'Cart',
       },
     ],
   },

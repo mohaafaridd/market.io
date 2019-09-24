@@ -7,13 +7,26 @@ import { clearErrors, displayError } from '../util/error.handle';
 const deleteSingleProductButtons = document.getElementsByClassName(
   'delete-single-product'
 );
-const clearCartButton = document.getElementById('delete-all');
+const clearCartButton = document.getElementById('clear-cart');
+const orderCartButton = document.getElementById('order-now');
 const patchAmountButtons = document.getElementsByClassName('patch-amount');
 
 clearCartButton.addEventListener('click', async e => {
   e.preventDefault();
   try {
     const response = await axios.post('/carts/api/clear');
+    console.log('response.data :', response.data);
+    location.reload();
+  } catch (error) {
+    console.log('error.response.data :', error.response.data);
+  }
+});
+
+orderCartButton.addEventListener('click', async e => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('/orders/api/');
+    await axios.post('/carts/api/clear');
     console.log('response.data :', response.data);
     location.reload();
   } catch (error) {

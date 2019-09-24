@@ -5,16 +5,10 @@ const { formatUpdates } = require('./helpers/order.helper');
 const postOrder = async (req, res) => {
   try {
     const { client: user } = req;
-    const { products: productsIds } = req.body;
 
-    const requests = productsIds.map(id =>
-      Cart.findOne({ user: user.id, product: id })
-    );
-    const products = (await Promise.all(requests))
-      .filter(cart => cart !== null)
-      .map(product => ({ id: product.id, amount: product.amount }));
+    const carts = await Cart.find({ user: user.id });
 
-    if (!products.length) {
+    if (!carts.length) {
       return res
         .status(400)
         .json({ success: false, message: "You've no products in your cart" });
@@ -22,7 +16,7 @@ const postOrder = async (req, res) => {
 
     const order = new Order({
       owner: user.id,
-      products,
+      carts: carts.map(cart => cart.id),
     });
 
     await order.save();
