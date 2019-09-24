@@ -4,7 +4,9 @@
 
 {{#each cart}}
 <div class="product-card">
-    <h3>{{product.name}}</h3>
+    <pre>{{this}}</pre>
+    {{> altProductCard product}}
+    {{!-- <h3>{{product.name}}</h3>
     <h4>{{product.category}}</h4>
     <p>Price: {{product.price}}</p>
     <p>Color: {{product.color}}</p>
@@ -21,7 +23,7 @@
     <form>
         <input type="text" name="product-id" value="{{product.id}}">
         <button class="delete-single-product">Delete</button>
-    </form>
+    </form> --}}
 </div>
 {{/each}}
 

@@ -3,9 +3,11 @@
 <p>Found {{count}} matches!</p>
 
 {{#each products as |product|}}
+{{> altProductCard product}}
+
 {{!-- {{../role}} --}}
 {{!-- <pre>{{product}}</pre> --}}
-{{> productCard product=product user=../user}}
+{{!-- {{> productCard product=product user=../user}} --}}
 {{/each}}
 
 {{#if user}}

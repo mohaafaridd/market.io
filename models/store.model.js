@@ -115,6 +115,7 @@ schema.methods.generateAuthToken = async function generateAuthToken() {
 // removing password and tokens from response
 schema.methods.toJSON = function toJSON() {
   const store = this;
+  console.log('herereerer');
   const storeObject = store.toObject();
 
   delete storeObject.password;
