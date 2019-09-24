@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const Role = require('../middlewares/role');
 
 const getProducts = async (req, res) => {
   const { client } = req;
@@ -48,10 +49,17 @@ const getProducts = async (req, res) => {
         },
       },
       {
-        score: {
-          $gte: parseFloat(minRating),
-          $lte: parseFloat(maxRating),
-        },
+        $or: [
+          {
+            score: {
+              $gte: parseFloat(minRating),
+              $lte: parseFloat(maxRating),
+            },
+          },
+          {
+            score: null,
+          },
+        ],
       },
     ],
   };
@@ -70,13 +78,18 @@ const getProducts = async (req, res) => {
     res.render('general/search', {
       title: `(${count}) Search Results`,
       [role]: true,
+      user: role === Role.User,
       success: true,
       message: 'Search completed',
       products,
       count,
     });
   } catch (error) {
-    res.json({ success: false, message: 'Search failed' });
+    res.json({
+      success: false,
+      message: 'Search failed',
+      error: error.message,
+    });
   }
 };
 

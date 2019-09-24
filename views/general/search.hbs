@@ -2,10 +2,12 @@
 
 <p>Found {{count}} matches!</p>
 
-{{#each products}}
-{{> productCard this}}
+{{#each products as |product|}}
+{{!-- {{../role}} --}}
+{{!-- <pre>{{product}}</pre> --}}
+{{> productCard product=product user=../user}}
 {{/each}}
 
-{{#if User}}
+{{#if user}}
 <script src="/partials/add-to-cart.js"></script>
 {{/if}}
