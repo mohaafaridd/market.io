@@ -26,7 +26,6 @@ orderCartButton.addEventListener('click', async e => {
   e.preventDefault();
   try {
     const response = await axios.post('/orders/api/');
-    await axios.post('/carts/api/clear');
     console.log('response.data :', response.data);
     location.reload();
   } catch (error) {

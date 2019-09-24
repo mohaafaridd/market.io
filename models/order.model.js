@@ -9,7 +9,7 @@ const schema = new Schema(
       default: false,
     },
 
-    owner: {
+    user: {
       type: ObjectId,
       required: true,
       ref: 'User',
@@ -20,12 +20,7 @@ const schema = new Schema(
       ref: 'Courier',
     },
 
-    carts: [
-      {
-        type: ObjectId,
-        ref: 'Cart',
-      },
-    ],
+    carts: [{ type: ObjectId, ref: 'Cart' }],
   },
   { timestamps: true }
 );

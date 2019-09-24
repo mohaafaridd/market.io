@@ -16,8 +16,14 @@ router.get(
     try {
       const { client: user } = req;
       const { id } = req.params;
-      const order = await Order.findOne({ _id: id, owner: user.id });
-      console.log('here', order);
+      const order = await Order.findOne({ _id: id, user: user.id })
+        .populate({
+          path: 'carts',
+          populate: [{ path: 'store' }, { path: 'product' }],
+        })
+        .populate('courier')
+        .populate('user');
+      console.log('here', order.carts);
 
       if (!order) {
         throw new Error('No order was found');

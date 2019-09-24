@@ -16,10 +16,13 @@ const postCart = async (req, res) => {
 
     const cart = await Cart.findOneAndUpdate(
       { user: user.id, product, store },
-      { $set: { product }, $inc: { amount } },
+      { $inc: { amount } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
+    console.log('cart :', cart);
+
+    await cart.save();
     await patchBooking(product, amount);
 
     res
@@ -32,7 +35,7 @@ const postCart = async (req, res) => {
 
 const getCart = async (req, res, next) => {
   const { client: user } = req;
-  const cart = await Cart.find({ user: user.id })
+  const cart = await Cart.find({ user: user.id, ordered: false })
     .populate('product')
     .populate('store');
   req.cart = cart;

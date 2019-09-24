@@ -26,6 +26,12 @@ const schema = new Schema({
     default: 1,
     min: 1,
   },
+
+  ordered: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 const Cart = model('Cart', schema);
