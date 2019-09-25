@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { grabElementsByName } from '../util/formGrabber';
 
-// const addToCartBtn = document.getElementById('add-to-cart-btn') || null;
 const addToCartButtons = document.getElementsByClassName('add-to-cart-btn');
 
 for (const cartBtn of addToCartButtons) {

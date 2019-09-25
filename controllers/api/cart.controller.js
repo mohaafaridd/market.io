@@ -20,8 +20,6 @@ const postCart = async (req, res) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    console.log('cart :', cart);
-
     await cart.save();
     await patchBooking(product, amount);
 

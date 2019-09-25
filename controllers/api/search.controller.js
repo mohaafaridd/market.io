@@ -1,10 +1,8 @@
 const Product = require('../../models/product.model');
 const Role = require('../../middlewares/role');
+const { query } = require('./helpers/search.helper');
 
 const getProducts = async (req, res, next) => {
-  const { client } = req;
-  const { role } = client;
-
   const {
     category,
     color,
@@ -17,54 +15,23 @@ const getProducts = async (req, res, next) => {
     page,
   } = req.query;
 
-  if (minimum > maximum) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Minimum can't be more than maximum" });
-  }
-
-  if (minRating > maxRating) {
-    return res.status(400).json({
-      success: false,
-      message: "Minimum rating can't be more than maximum",
-    });
-  }
-
-  if (minRating < 0 || minRating > 5 || maxRating < 0 || maxRating > 5) {
-    return res.status(400).json({ success: false, message: 'Invalid ratings' });
-  }
-
-  const matchQuery = {
-    $and: [
-      // if a name is passed as a query param it will be used for search
-      // if not the query will just check for name availability in the document
-      name ? { $text: { $search: name } } : { name: { $exists: true } },
-      { color: color ? color : { $exists: true } },
-      { manufacturer: manufacturer ? manufacturer : { $exists: true } },
-      { category: category ? category : { $exists: true } },
-      {
-        price: {
-          $gte: parseFloat(minimum),
-          $lte: parseFloat(maximum),
-        },
-      },
-      {
-        $or: [
-          {
-            score: {
-              $gte: parseFloat(minRating),
-              $lte: parseFloat(maxRating),
-            },
-          },
-          {
-            score: null,
-          },
-        ],
-      },
-    ],
-  };
-
   try {
+    if (minimum > maximum) {
+      throw new Error('Invalid price range');
+    }
+
+    if (
+      minRating > maxRating ||
+      minRating < 0 ||
+      minRating > 5 ||
+      maxRating < 0 ||
+      maxRating > 5
+    ) {
+      throw new Error('Invalid rating range');
+    }
+
+    const matchQuery = query(req.query);
+
     const products = await Product.find(matchQuery, {
       matchScore: { $meta: 'textScore' },
     })
