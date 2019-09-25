@@ -36,7 +36,10 @@ const getCart = async (req, res, next) => {
   const cart = await Cart.find({ user: user.id, ordered: false })
     .populate('product')
     .populate('store');
+
+  const bill = cart.reduce((a, b) => b.amount * b.product.price + a, 0);
   req.cart = cart;
+  req.bill = bill;
   next();
 };
 
