@@ -1,7 +1,7 @@
 const Product = require('../../models/product.model');
 const Role = require('../../middlewares/role');
 
-const getProducts = async (req, res) => {
+const getProducts = async (req, res, next) => {
   const { client } = req;
   const { role } = client;
 
@@ -72,18 +72,12 @@ const getProducts = async (req, res) => {
       .sort({ matchScore: { $meta: 'textScore' } })
       .limit(10)
       .skip(page ? page - 1 : 0);
+    req.products = products;
 
     const count = await Product.find(matchQuery).countDocuments();
+    req.count = count;
 
-    res.render('general/search', {
-      title: `(${count}) Search Results`,
-      [role]: true,
-      user: role === Role.User,
-      success: true,
-      message: 'Search completed',
-      products,
-      count,
-    });
+    next();
   } catch (error) {
     res.json({
       success: false,
