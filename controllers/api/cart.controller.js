@@ -15,7 +15,7 @@ const postCart = async (req, res) => {
     }
 
     const cart = await Cart.findOneAndUpdate(
-      { user: user.id, product, store },
+      { user: user.id, product, store, ordered: false },
       { $inc: { amount } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
@@ -54,7 +54,7 @@ const patchCart = async (req, res) => {
 
     const coefficient = mode === 'increase' ? INCREASE : DECREASE;
     const cart = await Cart.findOneAndUpdate(
-      { product, user: user.id },
+      { product, user: user.id, ordered: false },
       { $inc: { amount: 1 * coefficient } },
       { context: 'query', runValidators: true, new: true }
     );
