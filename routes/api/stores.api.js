@@ -3,7 +3,7 @@ const express = require('express');
 // const authentication = require('../../middlewares/store.authentication');
 const authorization = require('../../middlewares/authorization');
 const authentication = require('../../middlewares/authentication');
-const controller = require('../../controllers/store.controller');
+const controller = require('../../controllers/api/store.controller');
 const Role = require('../../middlewares/role');
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 const ms = require('ms');
-const Role = require('../middlewares/role');
-const Store = require('../models/store.model');
+const Role = require('../../middlewares/role');
+const Store = require('../../models/store.model');
 
 const postRegister = async (req, res) => {
   try {

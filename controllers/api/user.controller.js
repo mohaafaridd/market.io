@@ -1,6 +1,6 @@
 const ms = require('ms');
-const User = require('../models/user.model');
-const { extractErrors } = require('./helpers/validator.helper');
+const User = require('../../models/user.model');
+const { extractErrors } = require('../helpers/validator.helper');
 const postRegister = async (req, res) => {
   try {
     const user = new User(req.body.user);

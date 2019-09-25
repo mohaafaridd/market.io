@@ -8,7 +8,7 @@ const express = require('express');
 const authorization = require('../../middlewares/authorization');
 const authentication = require('../../middlewares/authentication');
 
-const controller = require('../../controllers/product.controller');
+const controller = require('../../controllers/api/product.controller');
 const Role = require('../../middlewares/role');
 const { upload } = require('../../middlewares/imageUpload');
 

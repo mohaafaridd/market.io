@@ -1,7 +1,7 @@
 const sharp = require('sharp');
 
-const Product = require('../models/product.model');
-const Rating = require('../models/rating.model');
+const Product = require('../../models/product.model');
+const Rating = require('../../models/rating.model');
 
 const postProduct = async (req, res) => {
   const { client: store } = req;

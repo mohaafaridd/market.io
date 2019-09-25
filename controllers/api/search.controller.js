@@ -1,5 +1,5 @@
-const Product = require('../models/product.model');
-const Role = require('../middlewares/role');
+const Product = require('../../models/product.model');
+const Role = require('../../middlewares/role');
 
 const getProducts = async (req, res) => {
   const { client } = req;

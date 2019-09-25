@@ -10,7 +10,7 @@ const express = require('express');
 const authorization = require('../../middlewares/authorization');
 const authentication = require('../../middlewares/authentication');
 
-const controller = require('../../controllers/order.controller');
+const controller = require('../../controllers/api/order.controller');
 const Role = require('../../middlewares/role');
 
 const router = express.Router();
