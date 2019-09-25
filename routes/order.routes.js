@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 const Order = require('../models/order.model');
 
 const api = require('./api/orders.api');
@@ -21,15 +22,24 @@ router.get(
           path: 'carts',
           populate: [{ path: 'store' }, { path: 'product' }],
         })
-        .populate('courier')
-        .populate('user');
-      console.log('here', order.carts);
+        .populate('courier');
 
       if (!order) {
         throw new Error('No order was found');
       }
 
-      res.json({ order });
+      const orderDate = moment.utc(order.createdAt).format('D - M - Y');
+      const deliveryDate = order.delivered
+        ? moment.utc(order.updatedAt).format('h:mm')
+        : null;
+
+      res.render('user/order', {
+        title: 'Order',
+        order,
+        orderDate,
+        deliveryDate,
+      });
+      // res.json({ order });
     } catch (error) {
       res.json({ error: error.message });
     }

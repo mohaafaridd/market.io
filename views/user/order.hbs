@@ -1,0 +1,15 @@
+<h1>Order #</h1>
+
+<pre>{{order}}</pre>
+
+<h3>Ordered at {{orderDate}}</h3>
+{{#if deliveryDate}}
+<h3>Delivered at {{deliveryDate}}</h3>
+{{/if}}
+
+{{#each order.carts as |cart|}}
+<div class="product-card">
+    <p>amount: {{amount}}</p>
+    {{> productCard cart.product}}
+</div>
+{{/each}}
