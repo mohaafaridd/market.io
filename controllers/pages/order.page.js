@@ -24,9 +24,15 @@ const extractDates = order => {
   };
 };
 
+const getOrders = (req, res) => {
+  const { orders } = req;
+  res.render('user/orders', { orders });
+};
+
 const getOrder = async (req, res) => {
   try {
     const { client: user } = req;
+    const { role } = user;
     const { id } = req.params;
     const order = await Order.findOne({ _id: id, user: user.id })
       .populate({
@@ -43,6 +49,7 @@ const getOrder = async (req, res) => {
 
     res.render('user/order', {
       title: 'Order',
+      [role]: true,
       order,
       dates,
     });
@@ -53,4 +60,5 @@ const getOrder = async (req, res) => {
 
 module.exports = {
   getOrder,
+  getOrders,
 };

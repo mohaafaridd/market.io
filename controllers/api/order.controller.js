@@ -51,7 +51,27 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const getOrders = async (req, res, next) => {
+  try {
+    const { client: user } = req;
+    const { page } = req.query;
+    const orders = await Order.find({ user: user.id })
+      .limit(10)
+      .skip(page ? page - 1 : 0);
+
+    req.orders = orders;
+    next();
+  } catch (error) {
+    res.json({
+      success: false,
+      message: 'Could not reach your orders',
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
+  getOrders,
   postOrder,
   updateOrder,
 };

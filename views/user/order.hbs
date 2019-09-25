@@ -2,6 +2,9 @@
 
 <pre>{{order}}</pre>
 
+<label for="delivery-check">Delivery state</label>
+<input type="checkbox" id="delivery-check" {{#if order.delivered}} checked {{/if}}>
+
 <h3>Ordered at {{dates.order.date}} ({{dates.order.time}})</h3>
 {{#if order.delivered}}
 <h3>Delivered at {{dates.delivery.date}} ({{dates.delivery.time}})</h3>
