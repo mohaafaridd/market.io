@@ -1,7 +1,7 @@
 const Order = require('../../models/order.model');
 const Cart = require('../../models/cart.model');
 const { ObjectId } = require('mongoose').Types;
-const { formatUpdates } = require('../helpers/order.helper');
+const { formatUpdates } = require('./helpers/order.helper');
 
 const postOrder = async (req, res) => {
   try {

@@ -1,7 +1,7 @@
 const Cart = require('../../models/cart.model');
-const { INCREASE, DECREASE } = require('../constants/cart.flags');
+const { INCREASE, DECREASE } = require('./constants/cart.flags');
 
-const { inStockCheck, patchBooking } = require('../helpers/cart.helper');
+const { inStockCheck, patchBooking } = require('./helpers/cart.helper');
 
 const postCart = async (req, res) => {
   try {
