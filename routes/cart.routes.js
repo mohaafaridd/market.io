@@ -5,7 +5,7 @@ const authorization = require('../middlewares/authorization');
 const authentication = require('../middlewares/authentication');
 
 const controller = require('../controllers/api/cart.controller');
-const pages = require('../controllers/pages/cart.pages');
+const pages = require('../controllers/pages/cart.page');
 
 const Role = require('../middlewares/role');
 
