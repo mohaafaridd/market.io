@@ -5,6 +5,7 @@
 {{#each cart}}
 <div class="product-card">
     {{> productCard product}}
+    <h5 class="single-cart-bill">bill {{bill}}</h5>
     <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
     <form>
         <label for="amount">Amount</label>

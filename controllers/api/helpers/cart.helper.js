@@ -21,7 +21,15 @@ const patchBooking = async (product, amount = 1, mode = INCREASE) => {
   await Product.findByIdAndUpdate(product, { $inc: { booked: amount * mode } });
 };
 
+const calculateBills = carts => {
+  return carts.map(cart => {
+    const { amount, product } = cart;
+    return { ...cart._doc, bill: amount * product.price };
+  });
+};
+
 module.exports = {
   inStockCheck,
   patchBooking,
+  calculateBills,
 };

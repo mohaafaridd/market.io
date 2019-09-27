@@ -1,7 +1,11 @@
 const Cart = require('../../models/cart.model');
 const { INCREASE, DECREASE } = require('./constants/cart.flags');
 
-const { inStockCheck, patchBooking } = require('./helpers/cart.helper');
+const {
+  inStockCheck,
+  patchBooking,
+  calculateBills,
+} = require('./helpers/cart.helper');
 
 const postCart = async (req, res) => {
   try {
@@ -37,8 +41,11 @@ const getCart = async (req, res, next) => {
     .populate('product')
     .populate('store');
 
+  const modifiedCart = calculateBills(cart);
+
   const bill = cart.reduce((a, b) => b.amount * b.product.price + a, 0);
-  req.cart = cart;
+
+  req.cart = modifiedCart;
   req.bill = bill;
   next();
 };
