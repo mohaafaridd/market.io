@@ -2,10 +2,13 @@ const addProduct = (req, res) => {
   try {
     const { client: store } = req;
     const { role } = store;
-    res.render('products/add-product', {
-      title: 'Add Product',
+    const mode = { type: 'add', button: 'Add Product' };
+    res.render('products/add-edit-product', {
       [role]: true,
+      mode,
       store,
+      title: 'Add Product',
+      username: store.username,
     });
   } catch (error) {
     res.redirect('/');

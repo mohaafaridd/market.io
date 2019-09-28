@@ -20,6 +20,7 @@ export default error => {
       return `This field has minimum length of ${error.length}`;
 
     default:
+      return error;
       break;
   }
 };

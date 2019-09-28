@@ -20,6 +20,7 @@ export const displayError = (error, form) => {
 
       case forms.ADD_PRODUCT:
         field.innerHTML = addProductErrors(error);
+        break;
 
       case forms.PATCH_CART:
         field.innerHTML = cartErrors(error);

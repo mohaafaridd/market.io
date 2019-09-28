@@ -37,6 +37,6 @@ loginBtn.addEventListener('click', async e => {
   } catch (err) {
     const { error } = err.response.data;
     const field = document.querySelector('.error.login');
-    field.innerHTML = error;
+    field.innerHTML = 'login failed';
   }
 });
