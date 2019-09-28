@@ -10,7 +10,6 @@ const fetchOrders = async (user, page) => {
     .skip(page ? page - 1 : 0);
 
   const ordersWithProperties = attachProps(orders);
-  console.log('ordersWithProperties :', ordersWithProperties);
   return ordersWithProperties;
 };
 

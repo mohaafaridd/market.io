@@ -56,7 +56,6 @@ const patchCart = async (req, res) => {
 
   try {
     const validModes = ['increase', 'decrease'];
-    console.log('mode :', mode);
     const isValid = validModes.includes(mode);
     if (!isValid) {
       throw new Error('invalid mode');

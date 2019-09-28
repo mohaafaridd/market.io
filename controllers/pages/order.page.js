@@ -1,6 +1,6 @@
 const moment = require('moment');
 const Order = require('../../models/order.model');
-const { fetchOrders } = require('./helpers/order.helpers');
+const { fetchOrders } = require('./helpers/order.helper');
 const extractDates = order => {
   const orderDate = moment.utc(order.createdAt).format('DD - M - Y');
   const orderTime = moment.utc(order.createdAt).format('hh:mm a');
