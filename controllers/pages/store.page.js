@@ -1,6 +1,9 @@
 const Store = require('../../models/store.model');
 const getStore = async (req, res) => {
   try {
+    const { client } = req;
+    const { role } = client;
+
     const store = await Store.findOne({
       username: req.params.username,
     }).populate('products');
@@ -11,7 +14,12 @@ const getStore = async (req, res) => {
         .json({ success: false, message: 'No store was found' });
     }
 
-    res.render('store/profile', { store });
+    res.render('store/profile', {
+      [role]: true,
+      store,
+      title: store.name,
+      username: client.username,
+    });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
