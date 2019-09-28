@@ -16,7 +16,6 @@ router.get(
   '/my-orders',
   authorization(Role.User),
   authentication,
-  controller.getOrders,
   pages.getOrders
 );
 router.get('/:id', authorization(Role.User), authentication, pages.getOrder);

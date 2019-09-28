@@ -1,6 +1,6 @@
 const moment = require('moment');
 const Order = require('../../models/order.model');
-
+const { fetchOrders } = require('./helpers/order.helpers');
 const extractDates = order => {
   const orderDate = moment.utc(order.createdAt).format('DD - M - Y');
   const orderTime = moment.utc(order.createdAt).format('hh:mm a');
@@ -24,9 +24,20 @@ const extractDates = order => {
   };
 };
 
-const getOrders = (req, res) => {
-  const { orders } = req;
-  res.render('user/orders', { orders });
+const getOrders = async (req, res, next) => {
+  try {
+    const { client: user } = req;
+    const { page } = req.query;
+    const orders = await fetchOrders(user, page);
+
+    res.render('user/orders', { orders });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: 'Could not reach your orders',
+      error: error.message,
+    });
+  }
 };
 
 const getOrder = async (req, res) => {

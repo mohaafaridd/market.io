@@ -1,3 +1,4 @@
 <h1>orders</h1>
-
-<pre>{{orders}}</pre>
+{{#each orders as |order|}}
+{{> orderCard order}}
+{{/each}}
