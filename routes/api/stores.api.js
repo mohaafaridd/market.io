@@ -1,6 +1,4 @@
 const express = require('express');
-// const authorization = require('../../middlewares/store.authorization');
-// const authentication = require('../../middlewares/store.authentication');
 const authorization = require('../../middlewares/authorization');
 const authentication = require('../../middlewares/authentication');
 const controller = require('../../controllers/api/store.controller');
@@ -16,6 +14,5 @@ router.post(
   authentication,
   controller.postLogout
 );
-router.get('/:username', controller.getStore);
 
 module.exports = router;

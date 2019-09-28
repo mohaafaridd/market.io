@@ -66,31 +66,8 @@ const postLogout = async (req, res) => {
   }
 };
 
-const getStore = async (req, res) => {
-  try {
-    const store = await Store.findOne({ username: req.params.username });
-
-    if (!store) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'No store was found' });
-    }
-
-    await store.populate('products').execPopulate();
-    res.json({
-      success: true,
-      message: 'Store found',
-      store,
-      products: store.products,
-    });
-  } catch (error) {
-    res.json({ success: false, message: error.message });
-  }
-};
-
 module.exports = {
   postRegister,
   postLogin,
   postLogout,
-  getStore,
 };

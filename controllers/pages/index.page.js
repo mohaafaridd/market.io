@@ -1,8 +1,12 @@
+const Role = require('../../middlewares/role');
+
 const getMainPage = (req, res) => {
   const { client } = req.cookies;
   const objectifiedClient = client && JSON.parse(client);
   const role = client ? objectifiedClient.role : 'Anonymous';
-  res.render('index', { title: 'market.io', [role]: true });
+  const username =
+    objectifiedClient.role === Role.Store ? objectifiedClient.username : null;
+  res.render('index', { title: 'market.io', [role]: true, username });
 };
 
 const getRegisterPage = (req, res) => {

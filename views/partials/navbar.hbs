@@ -14,7 +14,7 @@
         <a href="/orders/my-orders" id="orders">Orders</a>
         {{else if Store}}
         <a href="/products/add" id="add-product">Add a Products</a>
-        <a id="my-products">Products</a>
+        <a href="/stores/{{username}}" id="my-products">Products</a>
         {{else if Anonymous}}
         <a href="/register">Register</a>
         <a href="/login">Login</a>
