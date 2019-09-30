@@ -3,13 +3,13 @@
 <h1>Total Sold Units</h1>
 <p>{{statistics.sold}}</p>
 <h1>Total Revenue</h1>
-<p>{{statistics.revenue}}</p>
+<p>{{statistics.revenue}} ({{statistics.simpleRevenue}})</p>
 <h1>Top Selling</h1>
 
 {{#each products}}
 <p>{{product.name}}</p>
 <p>discount: {{discount}}</p>
-<p>revenue: {{revenue}}</p>
+<p>revenue: {{revenue}} ({{simpleRevenue}})</p>
 <p>sold: {{sold}}</p>
-<p>base price: {{price}}</p>
+<p>base price: {{price}} ({{simplePrice}})</p>
 {{/each}}

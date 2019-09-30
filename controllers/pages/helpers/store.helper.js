@@ -1,5 +1,6 @@
 const Cart = require('../../../models/cart.model');
 const accounting = require('accounting');
+const numeral = require('numeral');
 
 const dashboardQuery = store => {
   return [
@@ -34,6 +35,7 @@ const dashboardQuery = store => {
 const statisticsParser = statistics => ({
   revenue: accounting.formatMoney(statistics.revenue),
   sold: accounting.formatNumber(statistics.sold),
+  simpleRevenue: numeral(statistics.revenue).format('0a'),
 });
 
 const productsParser = products => {
@@ -41,13 +43,17 @@ const productsParser = products => {
     ...product,
     discount: accounting.formatMoney(product.product.discount),
     revenue: accounting.formatMoney(product.revenue),
+    simpleRevenue: numeral(product.revenue).format('0a'),
+
     price: accounting.formatMoney(product.price),
+    simplePrice: numeral(product.price).format('0a'),
   }));
 };
 
 const getStatistics = async store => {
   const statistics = await Cart.aggregate([
     ...dashboardQuery(store),
+    { $limit: 5 },
     {
       $group: {
         _id: null,
