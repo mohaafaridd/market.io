@@ -1,4 +1,6 @@
 const Store = require('../../models/store.model');
+const Cart = require('../../models/cart.model');
+
 const getStore = async (req, res) => {
   try {
     const { client } = req;
@@ -29,10 +31,32 @@ const getStore = async (req, res) => {
 };
 
 const getDashboard = async (req, res) => {
-  const { client: store } = req;
-  const { role } = store;
+  const { client } = req;
+  const { role } = client;
+  const store = await Store.findById(client.id).populate('products');
+  const carts = await Cart.find({ store: store.id, ordered: true }).populate(
+    'product'
+  );
 
-  res.render('store/dashboard', { title: 'Dashboard', [role]: true, store });
+  const sorted = carts
+    .map(cart => ({
+      product: cart.product,
+      amount: cart.amount,
+      income: cart.product.price * cart.amount,
+    }))
+    .sort((a, b) => (a.income > b.income ? -1 : 1));
+  console.log('combine :', combine(sorted));
+  const income = carts.reduce((a, b) => b.product.price * b.amount + a, 0);
+  const { products } = store;
+
+  res.render('store/dashboard', {
+    title: 'Dashboard',
+    [role]: true,
+    store,
+    carts,
+    sorted,
+    income,
+  });
 };
 
 module.exports = {

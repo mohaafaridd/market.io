@@ -1,4 +1,11 @@
-<a href="/products/add" id="add-product">Add a Products</a>
+{{> dashboardSidenav}}
+
 <h1>Total Orders</h1>
+<p>{{carts.length}}</p>
 <h1>Total Income</h1>
+<p>{{income}}</p>
 <h1>Top Selling</h1>
+
+{{#each sorted}}
+<pre>{{this}}</pre>
+{{/each}}
