@@ -49,7 +49,24 @@ const getDashboard = async (req, res) => {
   });
 };
 
+const addProduct = (req, res) => {
+  try {
+    const { client: store } = req;
+    const { role } = store;
+    const mode = { type: 'add', button: 'Add Product' };
+    res.render('store/add-edit-product', {
+      [role]: true,
+      mode,
+      store,
+      title: 'Add Product',
+    });
+  } catch (error) {
+    res.redirect('/');
+  }
+};
+
 module.exports = {
   getStore,
   getDashboard,
+  addProduct,
 };
