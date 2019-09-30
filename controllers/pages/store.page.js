@@ -1,7 +1,7 @@
 const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
 
-const { dashboardQuery } = require('./helpers/store.helper');
+const { getStatistics, getProducts } = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
   try {
@@ -33,22 +33,12 @@ const getStore = async (req, res) => {
 };
 
 const getDashboard = async (req, res) => {
-  const { client } = req;
-  const { role } = client;
-  const store = await Store.findById(client.id).populate('products');
+  const { client: store } = req;
+  const { role } = store;
 
-  const statistics = await Cart.aggregate([
-    ...dashboardQuery(store),
-    {
-      $group: {
-        _id: null,
-        revenue: { $sum: '$revenue' },
-        sold: { $sum: '$sold' },
-      },
-    },
-  ]);
+  const statistics = await getStatistics(store);
 
-  const products = await Cart.aggregate(dashboardQuery(store));
+  const products = await getProducts(store);
 
   res.render('store/dashboard', {
     title: 'Dashboard',

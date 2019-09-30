@@ -1,3 +1,5 @@
+const Cart = require('../../../models/cart.model');
+
 const dashboardQuery = store => {
   return [
     { $match: { store: store._id, ordered: true } },
@@ -28,6 +30,27 @@ const dashboardQuery = store => {
   ];
 };
 
+const getStatistics = async store => {
+  const statistics = await Cart.aggregate([
+    ...dashboardQuery(store),
+    {
+      $group: {
+        _id: null,
+        revenue: { $sum: '$revenue' },
+        sold: { $sum: '$sold' },
+      },
+    },
+  ]);
+
+  return statistics;
+};
+
+const getProducts = async store => {
+  const products = await Cart.aggregate(dashboardQuery(store));
+  return products;
+};
+
 module.exports = {
-  dashboardQuery,
+  getStatistics,
+  getProducts,
 };
