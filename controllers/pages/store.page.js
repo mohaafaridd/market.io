@@ -1,6 +1,8 @@
 const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
 
+const { dashboardQuery } = require('./helpers/store.helper');
+
 const getStore = async (req, res) => {
   try {
     const { client } = req;
@@ -35,33 +37,8 @@ const getDashboard = async (req, res) => {
   const { role } = client;
   const store = await Store.findById(client.id).populate('products');
 
-  const carts = await Cart.find({ store: store.id, ordered: true }).populate(
-    'product'
-  );
-
   const statistics = await Cart.aggregate([
-    { $match: { store: store._id, ordered: true } },
-    {
-      $group: {
-        _id: '$product',
-        sold: { $sum: '$amount' },
-      },
-    },
-    {
-      $lookup: {
-        from: 'products',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'product',
-      },
-    },
-    { $unwind: '$product' },
-    {
-      $project: {
-        revenue: { $multiply: ['$product.price', '$sold'] },
-        sold: '$sold',
-      },
-    },
+    ...dashboardQuery(store),
     {
       $group: {
         _id: null,
@@ -71,33 +48,7 @@ const getDashboard = async (req, res) => {
     },
   ]);
 
-  const products = await Cart.aggregate([
-    { $match: { store: store._id, ordered: true } },
-    {
-      $group: {
-        _id: '$product',
-        sold: { $sum: '$amount' },
-      },
-    },
-    {
-      $lookup: {
-        from: 'products',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'product',
-      },
-    },
-    { $unwind: '$product' },
-    {
-      $project: {
-        product: '$product',
-        revenue: { $multiply: ['$product.price', '$sold'] },
-        sold: '$sold',
-        price: '$product.price',
-      },
-    },
-    { $sort: { sold: -1 } },
-  ]);
+  const products = await Cart.aggregate(dashboardQuery(store));
 
   res.render('store/dashboard', {
     title: 'Dashboard',
