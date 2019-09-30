@@ -1,12 +1,12 @@
 {{> dashboardSidenav}}
 
-<h1>Total Orders</h1>
-<p>{{carts.length}}</p>
-<h1>Total Income</h1>
-<p>{{income}}</p>
+<h1>Total Sold Units</h1>
+<p>{{stats.sold}}</p>
+<h1>Total Revenue</h1>
+<p>{{stats.revenue}}</p>
 <h1>Top Selling</h1>
 
-{{#each aggregation}}
+{{#each products}}
 <p>{{product.name}}</p>
 <p>discount: {{product.discount}}</p>
 <p>revenue: {{revenue}}</p>

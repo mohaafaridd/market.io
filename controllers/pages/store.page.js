@@ -39,7 +39,7 @@ const getDashboard = async (req, res) => {
     'product'
   );
 
-  const agg = await Cart.aggregate([
+  const statistics = await Cart.aggregate([
     { $match: { store: store._id, ordered: true } },
     {
       $group: {
@@ -70,9 +70,8 @@ const getDashboard = async (req, res) => {
       },
     },
   ]);
-  console.log('agg :', agg[0]);
 
-  const aggregation = await Cart.aggregate([
+  const products = await Cart.aggregate([
     { $match: { store: store._id, ordered: true } },
     {
       $group: {
@@ -100,15 +99,12 @@ const getDashboard = async (req, res) => {
     { $sort: { sold: -1 } },
   ]);
 
-  const income = carts.reduce((a, b) => b.product.price * b.amount + a, 0);
-
   res.render('store/dashboard', {
     title: 'Dashboard',
     [role]: true,
     store,
-    carts,
-    aggregation,
-    income,
+    products,
+    stats: statistics[0],
   });
 };
 
