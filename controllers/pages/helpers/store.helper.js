@@ -1,4 +1,5 @@
 const Cart = require('../../../models/cart.model');
+const accounting = require('accounting');
 
 const dashboardQuery = store => {
   return [
@@ -30,6 +31,20 @@ const dashboardQuery = store => {
   ];
 };
 
+const statisticsParser = statistics => ({
+  revenue: accounting.formatMoney(statistics.revenue),
+  sold: accounting.formatNumber(statistics.sold),
+});
+
+const productsParser = products => {
+  return products.map(product => ({
+    ...product,
+    discount: accounting.formatMoney(product.product.discount),
+    revenue: accounting.formatMoney(product.revenue),
+    price: accounting.formatMoney(product.price),
+  }));
+};
+
 const getStatistics = async store => {
   const statistics = await Cart.aggregate([
     ...dashboardQuery(store),
@@ -42,12 +57,15 @@ const getStatistics = async store => {
     },
   ]);
 
-  return statistics;
+  const parsed = statisticsParser(statistics[0]);
+
+  return parsed;
 };
 
 const getProducts = async store => {
   const products = await Cart.aggregate(dashboardQuery(store));
-  return products;
+  const parsed = productsParser(products);
+  return parsed;
 };
 
 module.exports = {

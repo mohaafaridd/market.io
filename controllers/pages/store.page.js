@@ -45,7 +45,7 @@ const getDashboard = async (req, res) => {
     [role]: true,
     store,
     products,
-    stats: statistics[0],
+    statistics,
   });
 };
 
