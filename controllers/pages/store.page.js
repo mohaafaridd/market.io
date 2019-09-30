@@ -39,6 +39,39 @@ const getDashboard = async (req, res) => {
     'product'
   );
 
+  const agg = await Cart.aggregate([
+    { $match: { store: store._id, ordered: true } },
+    {
+      $group: {
+        _id: '$product',
+        sold: { $sum: '$amount' },
+      },
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'product',
+      },
+    },
+    { $unwind: '$product' },
+    {
+      $project: {
+        revenue: { $multiply: ['$product.price', '$sold'] },
+        sold: '$sold',
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        revenue: { $sum: '$revenue' },
+        sold: { $sum: '$sold' },
+      },
+    },
+  ]);
+  console.log('agg :', agg[0]);
+
   const aggregation = await Cart.aggregate([
     { $match: { store: store._id, ordered: true } },
     {
@@ -64,7 +97,7 @@ const getDashboard = async (req, res) => {
         price: '$product.price',
       },
     },
-    { $sort: { revenue: -1 } },
+    { $sort: { sold: -1 } },
   ]);
 
   const income = carts.reduce((a, b) => b.product.price * b.amount + a, 0);
