@@ -34,12 +34,13 @@ const getDashboard = async (req, res) => {
   const { client } = req;
   const { role } = client;
   const store = await Store.findById(client.id).populate('products');
+
   const carts = await Cart.find({ store: store.id, ordered: true }).populate(
     'product'
   );
 
   const aggregation = await Cart.aggregate([
-    { $match: { store: store._id } },
+    { $match: { store: store._id, ordered: true } },
     {
       $group: {
         _id: '$product',
@@ -66,24 +67,14 @@ const getDashboard = async (req, res) => {
     { $sort: { revenue: -1 } },
   ]);
 
-  console.log('aggregation :', aggregation);
-
-  const sorted = carts
-    .map(cart => ({
-      product: cart.product,
-      amount: cart.amount,
-      income: cart.product.price * cart.amount,
-    }))
-    .sort((a, b) => (a.income > b.income ? -1 : 1));
   const income = carts.reduce((a, b) => b.product.price * b.amount + a, 0);
-  const { products } = store;
 
   res.render('store/dashboard', {
     title: 'Dashboard',
     [role]: true,
     store,
     carts,
-    sorted,
+    aggregation,
     income,
   });
 };

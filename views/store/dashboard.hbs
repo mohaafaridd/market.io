@@ -6,6 +6,10 @@
 <p>{{income}}</p>
 <h1>Top Selling</h1>
 
-{{#each sorted}}
-<pre>{{this}}</pre>
+{{#each aggregation}}
+<p>{{product.name}}</p>
+<p>discount: {{product.discount}}</p>
+<p>revenue: {{revenue}}</p>
+<p>sold: {{sold}}</p>
+<p>base price: {{price}}</p>
 {{/each}}
