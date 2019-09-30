@@ -14,9 +14,12 @@ const getStore = async (req, res) => {
         .json({ success: false, message: 'No store was found' });
     }
 
+    const storeOwner = store.id.toString() === client._id.toString();
+
     res.render('store/profile', {
       [role]: true,
       store,
+      storeOwner,
       title: store.name,
       username: client.username,
     });

@@ -2,4 +2,9 @@
 
 {{#each store.products}}
 {{> productCard this}}
+
+{{#if ../storeOwner}}
+<button>Edit</button>
+<button>Delete</button>
+{{/if}}
 {{/each}}

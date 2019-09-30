@@ -2,7 +2,7 @@ const Role = require('../../middlewares/role');
 
 const getSearch = (req, res) => {
   const { products, count, client } = req;
-  const { role } = client;
+  const { role, username } = client;
 
   res.render('general/search', {
     title: `(${count}) Search Results`,
@@ -12,6 +12,7 @@ const getSearch = (req, res) => {
     message: 'Search completed',
     products,
     count,
+    username,
   });
 };
 
