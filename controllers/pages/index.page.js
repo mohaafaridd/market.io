@@ -4,8 +4,7 @@ const getMainPage = (req, res) => {
   const { client } = req.cookies;
   const objectifiedClient = client && JSON.parse(client);
   const role = client ? objectifiedClient.role : 'Anonymous';
-  const username = role === Role.Store ? objectifiedClient.username : null;
-  res.render('index', { title: 'market.io', [role]: true, username });
+  res.render('index', { title: 'market.io', [role]: true });
 };
 
 const getRegisterPage = (req, res) => {

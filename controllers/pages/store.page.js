@@ -28,6 +28,14 @@ const getStore = async (req, res) => {
   }
 };
 
+const getDashboard = async (req, res) => {
+  const { client: store } = req;
+  const { role } = store;
+
+  res.render('store/dashboard', { title: 'Dashboard', [role]: true, store });
+};
+
 module.exports = {
   getStore,
+  getDashboard,
 };

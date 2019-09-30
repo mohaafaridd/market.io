@@ -12,7 +12,6 @@ const getSearch = (req, res) => {
     message: 'Search completed',
     products,
     count,
-    username,
   });
 };
 
