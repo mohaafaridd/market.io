@@ -2,7 +2,10 @@ const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
 const Product = require('../../models/product.model');
 
-const { getJSONStatistics } = require('./helpers/store.helper');
+const {
+  getJSONStatistics,
+  getJSONTopSellers,
+} = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
   try {
@@ -37,8 +40,21 @@ const getStatistics = async (req, res) => {
   try {
     const { client: store } = req;
     const { role } = store;
-    // These are only 5 items
+    // All Store Products
     const statistics = await getJSONStatistics(store);
+    res.json({ success: true, message: 'Products found', statistics });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const getTopSeller = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { role } = store;
+    const limit = parseInt(req.params.limit) || 5;
+    // These are only 'limits' items
+    const statistics = await getJSONTopSellers(store, limit);
     res.json({ success: true, message: 'Products found', statistics });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -101,8 +117,7 @@ const addProduct = (req, res) => {
 
 module.exports = {
   getStore,
-  // getDashboard,
   addProduct,
-  // getMyProducts,
   getStatistics,
+  getTopSeller,
 };

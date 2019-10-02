@@ -23,6 +23,13 @@ router.get(
 );
 
 router.get(
+  '/top/:limit',
+  authorization(Role.Store),
+  authentication,
+  pages.getTopSeller
+);
+
+router.get(
   '/add-product',
   authorization(Role.Store),
   authentication,

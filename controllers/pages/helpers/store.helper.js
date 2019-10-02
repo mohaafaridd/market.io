@@ -54,27 +54,20 @@ const getStaticsAggregation = store => [
 
   { $unwind: '$product' },
 
-  {
-    $project: {
-      price: '$price',
-      sold: '$sold',
-      revenue: '$revenue',
-      createdAt: '$product.createdAt',
-      discount: '$product.discount',
-      booked: '$product.booked',
-      score: '$product.score',
-      amount: '$product.amount',
-      score: '$product.score',
-      booked: '$product.booked',
-      product: '$product',
-    },
-  },
-
   { $sort: { 'product.name': -1 } },
 ];
 
 const getJSONStatistics = async store => {
   const statistics = await Product.aggregate([...getStaticsAggregation(store)]);
+  return statistics;
+};
+
+const getJSONTopSellers = async (store, limit = 5) => {
+  const statistics = await Product.aggregate([
+    ...getStaticsAggregation(store),
+    { $sort: { sold: -1 } },
+    { $limit: limit },
+  ]);
   return statistics;
 };
 
@@ -88,4 +81,5 @@ const statisticsParser = product => ({
 
 module.exports = {
   getJSONStatistics,
+  getJSONTopSellers,
 };
