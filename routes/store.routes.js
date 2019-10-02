@@ -22,6 +22,13 @@ router.get(
   pages.addProduct
 );
 
+router.get(
+  '/my-products',
+  authorization(Role.Store),
+  authentication,
+  pages.getMyProducts
+);
+
 router.get('/:username', authorization(), authentication, pages.getStore);
 
 module.exports = router;

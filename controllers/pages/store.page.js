@@ -49,6 +49,20 @@ const getDashboard = async (req, res) => {
   });
 };
 
+const getMyProducts = async (req, res) => {
+  const { client: store } = req;
+  const { role } = store;
+  const products = await getProducts(store);
+  console.log('products :', products);
+
+  res.render('store/products', {
+    title: 'Products list',
+    [role]: true,
+    store,
+    products,
+  });
+};
+
 const addProduct = (req, res) => {
   try {
     const { client: store } = req;
@@ -69,4 +83,5 @@ module.exports = {
   getStore,
   getDashboard,
   addProduct,
+  getMyProducts,
 };

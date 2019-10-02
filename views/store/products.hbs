@@ -1,0 +1,13 @@
+<section>
+    {{> dashboardSidenav}}
+</section>
+
+<section>
+    {{#each products}}
+    <p>{{product.name}}</p>
+    <p>sold: {{sold}}</p>
+    <p>price: {{price}}</p>
+    <p>discount: {{discount}}</p>
+    <a href="/products/{{product._id}}">Link</a>
+    {{/each}}
+</section>
