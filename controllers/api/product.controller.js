@@ -55,7 +55,7 @@ const postProductPicture = async (req, res) => {
       product,
     });
   } catch (error) {
-    res.json({ success: false, message: 'Upload failed' });
+    res.json({ success: false, message: 'Upload failed', error });
   }
 };
 

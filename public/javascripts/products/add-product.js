@@ -38,7 +38,23 @@ addProductBtn.addEventListener('click', async e => {
       url: '/products/api/',
       data: { product: form },
     });
-    window.location.replace(`/products/${response.data.product._id}`);
+
+    const id = response.data.product._id;
+    const formData = new FormData();
+    const image = document.getElementById('image');
+    formData.append('picture', image.files[0]);
+
+    const imageRequest = await axios.patch(
+      `/products/api/${id}/picture`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    console.log('imageRequest :', imageRequest);
+    // // window.location.replace(`/products/${response.data.product._id}`);
   } catch (error) {
     console.log(error);
   }
