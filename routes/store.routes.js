@@ -8,13 +8,6 @@ const Role = require('../middlewares/role');
 const router = express.Router();
 router.use('/api', api);
 
-// router.get(
-//   '/dashboard',
-//   authorization(Role.Store),
-//   authentication,
-//   pages.getDashboard
-// );
-
 router.get(
   '/dashboard',
   authorization(Role.Store),

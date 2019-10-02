@@ -1,15 +1,17 @@
 {{> dashboardSidenav}}
 
 <h1>Total Sold Units</h1>
-<p>{{statistics.sold}}</p>
-<h1>Total Revenue</h1>
-<p>{{statistics.revenue}} ({{statistics.simpleRevenue}})</p>
-<h1>Top Selling</h1>
+<p>{{totals.sold}}</p>
 
-{{#each products}}
+<h1>Total Revenue</h1>
+<p>{{totals.revenue}} ({{totals.simpleRevenue}})</p>
+
+<h1>Products</h1>
+
+{{#each statistics}}
 <h5>{{product.name}}</h5>
-<p>discount: {{discount}}</p>
-<p>revenue: {{revenue}} ({{simpleRevenue}})</p>
+<p>price: {{price}}</p>
 <p>sold: {{sold}}</p>
-<p>base price: {{price}} ({{simplePrice}})</p>
+<p>revenue: {{revenue}} ({{simpleRevenue}})</p>
+<p>Created At: {{createdAt}}</p>
 {{/each}}

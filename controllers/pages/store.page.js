@@ -1,10 +1,13 @@
 const Store = require('../../models/store.model');
+const numeral = require('numeral');
+
 const Cart = require('../../models/cart.model');
 const Product = require('../../models/product.model');
 
 const {
   getJSONStatistics,
   getJSONTopSellers,
+  statisticsParser,
 } = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
@@ -42,7 +45,26 @@ const getStatistics = async (req, res) => {
     const { role } = store;
     // All Store Products
     const statistics = await getJSONStatistics(store);
-    res.json({ success: true, message: 'Products found', statistics });
+    const parsedStatistics = statistics.map(product =>
+      statisticsParser(product)
+    );
+
+    const totals = {
+      sold: statistics.reduce((a, b) => a + b.sold, 0),
+      revenue: numeral(statistics.reduce((a, b) => a + b.revenue, 0)).format(
+        '$0,0.00'
+      ),
+    };
+
+    totals.simpleRevenue = numeral(totals.revenue).format('0a');
+
+    res.render('store/dashboard', {
+      title: 'Dashboard',
+      [role]: true,
+      statistics: parsedStatistics,
+      totals,
+    });
+    // res.json({ success: true, message: 'Products found', statistics });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }

@@ -1,6 +1,6 @@
-const Cart = require('../../../models/cart.model');
-const Product = require('../../../models/product.model');
+const moment = require('moment');
 const numeral = require('numeral');
+const Product = require('../../../models/product.model');
 
 const getStaticsAggregation = store => [
   // Get store products
@@ -77,9 +77,11 @@ const statisticsParser = product => ({
   price: numeral(product.price).format('$0,0.00'),
   revenue: numeral(product.revenue).format('$0,0.00'),
   simpleRevenue: numeral(product.revenue).format('0a'),
+  createdAt: moment(product.product.createdAt).format('LLL'),
 });
 
 module.exports = {
   getJSONStatistics,
   getJSONTopSellers,
+  statisticsParser,
 };
