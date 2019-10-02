@@ -2,12 +2,7 @@ const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
 const Product = require('../../models/product.model');
 
-const {
-  getStatistics,
-  getDemandedProducts,
-  getProducts,
-  getTopSellers,
-} = require('./helpers/store.helper');
+const { getJSONStatistics } = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
   try {
@@ -38,55 +33,55 @@ const getStore = async (req, res) => {
   }
 };
 
-const getStatisticsPage = async (req, res) => {
+const getStatistics = async (req, res) => {
   try {
     const { client: store } = req;
     const { role } = store;
     // These are only 5 items
-    const statistics = await getTopSellers(store);
+    const statistics = await getJSONStatistics(store);
     res.json({ success: true, message: 'Products found', statistics });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
 };
 
-const getDashboard = async (req, res) => {
-  try {
-    const { client: store } = req;
-    const { role } = store;
+// const getDashboard = async (req, res) => {
+//   try {
+//     const { client: store } = req;
+//     const { role } = store;
 
-    const statistics = await getStatistics(store);
+//     const statistics = await getStatistics(store);
 
-    const products = await getDemandedProducts(store);
+//     const products = await getDemandedProducts(store);
 
-    res.render('store/dashboard', {
-      title: 'Dashboard',
-      [role]: true,
-      store,
-      products,
-      statistics,
-    });
-  } catch (error) {
-    res.json({ success: false, message: error.message });
-  }
-};
+//     res.render('store/dashboard', {
+//       title: 'Dashboard',
+//       [role]: true,
+//       store,
+//       products,
+//       statistics,
+//     });
+//   } catch (error) {
+//     res.json({ success: false, message: error.message });
+//   }
+// };
 
-const getMyProducts = async (req, res) => {
-  try {
-    const { client: store } = req;
-    const { role } = store;
-    const products = await getProducts(store);
+// const getMyProducts = async (req, res) => {
+//   try {
+//     const { client: store } = req;
+//     const { role } = store;
+//     const products = await getProducts(store);
 
-    res.render('store/products', {
-      title: 'Products list',
-      [role]: true,
-      store,
-      products,
-    });
-  } catch (error) {
-    res.json({ success: false, message: error.message });
-  }
-};
+//     res.render('store/products', {
+//       title: 'Products list',
+//       [role]: true,
+//       store,
+//       products,
+//     });
+//   } catch (error) {
+//     res.json({ success: false, message: error.message });
+//   }
+// };
 
 const addProduct = (req, res) => {
   try {
@@ -106,8 +101,8 @@ const addProduct = (req, res) => {
 
 module.exports = {
   getStore,
-  getDashboard,
+  // getDashboard,
   addProduct,
-  getMyProducts,
-  getStatisticsPage,
+  // getMyProducts,
+  getStatistics,
 };

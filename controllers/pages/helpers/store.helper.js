@@ -1,146 +1,91 @@
 const Cart = require('../../../models/cart.model');
 const Product = require('../../../models/product.model');
-const accounting = require('accounting');
 const numeral = require('numeral');
 
-const dashboardQuery = store => {
-  return [
-    { $match: { store: store._id, ordered: true } },
-    {
-      $group: {
-        _id: '$product',
-        sold: { $sum: '$amount' },
-      },
+const getStaticsAggregation = store => [
+  // Get store products
+  { $match: { store: store._id } },
+  // group by id
+  {
+    $group: {
+      _id: '$_id',
+      price: { $sum: '$price' },
     },
-    {
-      $lookup: {
-        from: 'products',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'product',
-      },
+  },
+  // find carts of this product
+  {
+    $lookup: {
+      from: 'carts',
+      localField: '_id',
+      foreignField: 'product',
+      as: 'carts',
     },
-    { $unwind: '$product' },
-    {
-      $project: {
-        product: '$product',
-        revenue: { $multiply: ['$product.price', '$sold'] },
-        sold: '$sold',
-        price: '$product.price',
-      },
-    },
-    { $sort: { sold: -1 } },
-  ];
-};
-
-const getTopSellers = async store => {
-  const statistics = await Product.aggregate([
-    // Get store products
-    { $match: { store: store._id } },
-    // group by id
-    {
-      $group: {
-        _id: '$_id',
-        price: { $sum: '$price' },
-      },
-    },
-    // find carts of this product
-    {
-      $lookup: {
-        from: 'carts',
-        localField: '_id',
-        foreignField: 'product',
-        as: 'carts',
-      },
-    },
-    // filter for ordered carts only
-    {
-      $project: {
-        carts: {
-          $filter: {
-            input: '$carts',
-            as: 'cart',
-            cond: { $eq: ['$$cart.ordered', true] },
-          },
+  },
+  // filter for ordered carts only
+  {
+    $project: {
+      carts: {
+        $filter: {
+          input: '$carts',
+          as: 'cart',
+          cond: { $eq: ['$$cart.ordered', true] },
         },
-        price: '$price',
       },
+      price: '$price',
     },
-    // export price, sold units count and total revenue of each product
-    {
-      $project: {
-        price: '$price',
-        sold: { $sum: '$carts.amount' },
-        revenue: { $multiply: [{ $sum: '$carts.amount' }, '$price'] },
-      },
+  },
+  // export price, sold units count and total revenue of each product
+  {
+    $project: {
+      price: '$price',
+      sold: { $sum: '$carts.amount' },
+      revenue: { $multiply: [{ $sum: '$carts.amount' }, '$price'] },
     },
-  ]);
+  },
+  // get product details
+  {
+    $lookup: {
+      from: 'products',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'product',
+    },
+  },
 
+  { $unwind: '$product' },
+
+  {
+    $project: {
+      price: '$price',
+      sold: '$sold',
+      revenue: '$revenue',
+      createdAt: '$product.createdAt',
+      discount: '$product.discount',
+      booked: '$product.booked',
+      score: '$product.score',
+      amount: '$product.amount',
+      score: '$product.score',
+      booked: '$product.booked',
+      product: '$product',
+    },
+  },
+
+  { $sort: { 'product.name': -1 } },
+];
+
+const getJSONStatistics = async store => {
+  const statistics = await Product.aggregate([...getStaticsAggregation(store)]);
   return statistics;
 };
 
-const getStatistics = async store => {
-  try {
-    const statistics = await Cart.aggregate([
-      ...dashboardQuery(store),
-      { $limit: 5 },
-      {
-        $group: {
-          _id: null,
-          revenue: { $sum: '$revenue' },
-          sold: { $sum: '$sold' },
-        },
-      },
-    ]);
-
-    if (!statistics) {
-      throw new Error('No Sold Products');
-    }
-
-    const parsed = statisticsParser(statistics[0]);
-
-    return parsed;
-  } catch (error) {}
-};
-
-const statisticsParser = statistics => ({
-  revenue: accounting.formatMoney(statistics.revenue),
-  sold: accounting.formatNumber(statistics.sold),
-  simpleRevenue: numeral(statistics.revenue).format('0a'),
+//
+const statisticsParser = product => ({
+  ...product,
+  price: numeral(product.price).format('$0,0.00'),
+  revenue: numeral(product.revenue).format('$0,0.00'),
+  simpleRevenue: numeral(product.revenue).format('0a'),
 });
 
-const productsParser = products => {
-  return products.map(product => ({
-    ...product,
-    discount: accounting.formatMoney(product.product.discount),
-    revenue: accounting.formatMoney(product.revenue),
-    simpleRevenue: numeral(product.revenue).format('0a'),
-
-    price: accounting.formatMoney(product.price),
-    simplePrice: numeral(product.price).format('0a'),
-  }));
-};
-
-const getDemandedProducts = async store => {
-  try {
-    const products = await Cart.aggregate(dashboardQuery(store));
-    const parsed = productsParser(products);
-    return parsed;
-  } catch (error) {}
-};
-
-const getProducts = async store => {
-  const products = await Product.find({ store: store.id });
-  const mapped = products.map(product => ({
-    ...product._doc,
-    picture: Buffer.from(product.picture).toString('base64'),
-  }));
-  return mapped;
-};
-
 module.exports = {
-  getTopSellers,
-  getStatistics,
-  getDemandedProducts,
-  getProducts,
+  getJSONStatistics,
 };
