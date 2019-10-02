@@ -33,6 +33,76 @@ const dashboardQuery = store => {
   ];
 };
 
+const getTopSellers = async store => {
+  const statistics = await Product.aggregate([
+    // Get store products
+    { $match: { store: store._id } },
+    // group by id
+    {
+      $group: {
+        _id: '$_id',
+        price: { $sum: '$price' },
+      },
+    },
+    // find carts of this product
+    {
+      $lookup: {
+        from: 'carts',
+        localField: '_id',
+        foreignField: 'product',
+        as: 'carts',
+      },
+    },
+    // filter for ordered carts only
+    {
+      $project: {
+        carts: {
+          $filter: {
+            input: '$carts',
+            as: 'cart',
+            cond: { $eq: ['$$cart.ordered', true] },
+          },
+        },
+        price: '$price',
+      },
+    },
+    // export price, sold units count and total revenue of each product
+    {
+      $project: {
+        price: '$price',
+        sold: { $sum: '$carts.amount' },
+        revenue: { $multiply: [{ $sum: '$carts.amount' }, '$price'] },
+      },
+    },
+  ]);
+
+  return statistics;
+};
+
+const getStatistics = async store => {
+  try {
+    const statistics = await Cart.aggregate([
+      ...dashboardQuery(store),
+      { $limit: 5 },
+      {
+        $group: {
+          _id: null,
+          revenue: { $sum: '$revenue' },
+          sold: { $sum: '$sold' },
+        },
+      },
+    ]);
+
+    if (!statistics) {
+      throw new Error('No Sold Products');
+    }
+
+    const parsed = statisticsParser(statistics[0]);
+
+    return parsed;
+  } catch (error) {}
+};
+
 const statisticsParser = statistics => ({
   revenue: accounting.formatMoney(statistics.revenue),
   sold: accounting.formatNumber(statistics.sold),
@@ -51,28 +121,12 @@ const productsParser = products => {
   }));
 };
 
-const getStatistics = async store => {
-  const statistics = await Cart.aggregate([
-    ...dashboardQuery(store),
-    { $limit: 5 },
-    {
-      $group: {
-        _id: null,
-        revenue: { $sum: '$revenue' },
-        sold: { $sum: '$sold' },
-      },
-    },
-  ]);
-
-  const parsed = statisticsParser(statistics[0]);
-
-  return parsed;
-};
-
 const getDemandedProducts = async store => {
-  const products = await Cart.aggregate(dashboardQuery(store));
-  const parsed = productsParser(products);
-  return parsed;
+  try {
+    const products = await Cart.aggregate(dashboardQuery(store));
+    const parsed = productsParser(products);
+    return parsed;
+  } catch (error) {}
 };
 
 const getProducts = async store => {
@@ -85,6 +139,7 @@ const getProducts = async store => {
 };
 
 module.exports = {
+  getTopSellers,
   getStatistics,
   getDemandedProducts,
   getProducts,

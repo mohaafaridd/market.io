@@ -1,10 +1,12 @@
 const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
+const Product = require('../../models/product.model');
 
 const {
   getStatistics,
   getDemandedProducts,
   getProducts,
+  getTopSellers,
 } = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
@@ -36,34 +38,54 @@ const getStore = async (req, res) => {
   }
 };
 
+const getStatisticsPage = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { role } = store;
+    // These are only 5 items
+    const statistics = await getTopSellers(store);
+    res.json({ success: true, message: 'Products found', statistics });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 const getDashboard = async (req, res) => {
-  const { client: store } = req;
-  const { role } = store;
+  try {
+    const { client: store } = req;
+    const { role } = store;
 
-  const statistics = await getStatistics(store);
+    const statistics = await getStatistics(store);
 
-  const products = await getDemandedProducts(store);
+    const products = await getDemandedProducts(store);
 
-  res.render('store/dashboard', {
-    title: 'Dashboard',
-    [role]: true,
-    store,
-    products,
-    statistics,
-  });
+    res.render('store/dashboard', {
+      title: 'Dashboard',
+      [role]: true,
+      store,
+      products,
+      statistics,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 };
 
 const getMyProducts = async (req, res) => {
-  const { client: store } = req;
-  const { role } = store;
-  const products = await getProducts(store);
+  try {
+    const { client: store } = req;
+    const { role } = store;
+    const products = await getProducts(store);
 
-  res.render('store/products', {
-    title: 'Products list',
-    [role]: true,
-    store,
-    products,
-  });
+    res.render('store/products', {
+      title: 'Products list',
+      [role]: true,
+      store,
+      products,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 };
 
 const addProduct = (req, res) => {
@@ -87,4 +109,5 @@ module.exports = {
   getDashboard,
   addProduct,
   getMyProducts,
+  getStatisticsPage,
 };

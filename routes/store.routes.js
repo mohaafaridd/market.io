@@ -16,6 +16,13 @@ router.get(
 );
 
 router.get(
+  '/dashboard/statistics',
+  authorization(Role.Store),
+  authentication,
+  pages.getStatisticsPage
+);
+
+router.get(
   '/add-product',
   authorization(Role.Store),
   authentication,
