@@ -18,7 +18,6 @@ addProductBtn.addEventListener('click', async e => {
     'description',
     'discount',
     'manufacturer',
-    'model',
     'name',
     'price',
   ]);

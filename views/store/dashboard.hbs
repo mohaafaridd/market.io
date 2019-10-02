@@ -6,12 +6,21 @@
 <h1>Total Revenue</h1>
 <p>{{totals.revenue}} ({{totals.simpleRevenue}})</p>
 
+{{#if statistics.length}}
+
 <h1>Products</h1>
 
 {{#each statistics}}
+<img src="data:image/png;base64, {{picture}}" alt="{{product.name}} image" />
 <h5>{{product.name}}</h5>
 <p>price: {{price}}</p>
 <p>sold: {{sold}}</p>
 <p>revenue: {{revenue}} ({{simpleRevenue}})</p>
 <p>Created At: {{createdAt}}</p>
 {{/each}}
+
+{{else}}
+
+<h3>You got no products yet</h3>
+<a href="/stores/add-product">Go and add some product</a>
+{{/if}}

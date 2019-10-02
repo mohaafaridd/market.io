@@ -78,6 +78,9 @@ const statisticsParser = product => ({
   revenue: numeral(product.revenue).format('$0,0.00'),
   simpleRevenue: numeral(product.revenue).format('0a'),
   createdAt: moment(product.product.createdAt).format('LLL'),
+  picture: Buffer.from(product.product.picture.buffer, 'binary').toString(
+    'base64'
+  ),
 });
 
 module.exports = {

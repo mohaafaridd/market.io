@@ -15,7 +15,6 @@ export default form => {
     category,
     manufacturer,
     name,
-    model,
     color,
 
     // Non Grouped
@@ -29,7 +28,6 @@ export default form => {
   const isValidCategory = validateGroupTwo(category, 'category');
   const isValidManufacturer = validateGroupTwo(manufacturer, 'manufacturer');
   const isValidName = validateGroupTwo(name, 'name');
-  const isValidModel = validateGroupTwo(model, 'model');
   const isValidColor = validateGroupTwo(color, 'color');
 
   const isValidDescription = validateDescription(description);
@@ -41,7 +39,6 @@ export default form => {
     isValidCategory,
     isValidManufacturer,
     isValidName,
-    isValidModel,
     isValidColor,
     isValidDescription,
     isValidDiscount,

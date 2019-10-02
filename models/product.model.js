@@ -32,13 +32,6 @@ const schema = new Schema(
       maxlength: 300,
     },
 
-    model: {
-      type: String,
-      required: true,
-      minlength: 2,
-      maxlength: 36,
-    },
-
     color: {
       type: String,
       required: true,
