@@ -4,10 +4,12 @@
 
 <section>
     {{#each products}}
+    <pre>{{this}}</pre>
     <p>{{product.name}}</p>
     <p>sold: {{sold}}</p>
     <p>price: {{price}}</p>
     <p>discount: {{discount}}</p>
     <a href="/products/{{product._id}}">Link</a>
+    <img src="data:image/png;base64, {{picture}}" alt="{{product.name}} image" />
     {{/each}}
 </section>

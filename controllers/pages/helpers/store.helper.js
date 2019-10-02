@@ -1,4 +1,5 @@
 const Cart = require('../../../models/cart.model');
+const Product = require('../../../models/product.model');
 const accounting = require('accounting');
 const numeral = require('numeral');
 
@@ -68,13 +69,23 @@ const getStatistics = async store => {
   return parsed;
 };
 
-const getProducts = async store => {
+const getDemandedProducts = async store => {
   const products = await Cart.aggregate(dashboardQuery(store));
   const parsed = productsParser(products);
   return parsed;
 };
 
+const getProducts = async store => {
+  const products = await Product.find({ store: store.id });
+  const mapped = products.map(product => ({
+    ...product._doc,
+    picture: Buffer.from(product.picture).toString('base64'),
+  }));
+  return mapped;
+};
+
 module.exports = {
   getStatistics,
+  getDemandedProducts,
   getProducts,
 };

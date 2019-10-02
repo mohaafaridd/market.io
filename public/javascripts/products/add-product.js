@@ -53,8 +53,7 @@ addProductBtn.addEventListener('click', async e => {
         },
       }
     );
-    console.log('imageRequest :', imageRequest);
-    // // window.location.replace(`/products/${response.data.product._id}`);
+    window.location.replace(`/products/${response.data.product._id}`);
   } catch (error) {
     console.log(error);
   }

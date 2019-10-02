@@ -1,7 +1,11 @@
 const Store = require('../../models/store.model');
 const Cart = require('../../models/cart.model');
 
-const { getStatistics, getProducts } = require('./helpers/store.helper');
+const {
+  getStatistics,
+  getDemandedProducts,
+  getProducts,
+} = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
   try {
@@ -38,7 +42,7 @@ const getDashboard = async (req, res) => {
 
   const statistics = await getStatistics(store);
 
-  const products = await getProducts(store);
+  const products = await getDemandedProducts(store);
 
   res.render('store/dashboard', {
     title: 'Dashboard',
@@ -53,7 +57,6 @@ const getMyProducts = async (req, res) => {
   const { client: store } = req;
   const { role } = store;
   const products = await getProducts(store);
-  console.log('products :', products);
 
   res.render('store/products', {
     title: 'Products list',
