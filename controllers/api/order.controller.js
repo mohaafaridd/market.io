@@ -1,5 +1,6 @@
 const Order = require('../../models/order.model');
 const Cart = require('../../models/cart.model');
+const Product = require('../../models/product.model');
 const { ObjectId } = require('mongoose').Types;
 const { formatUpdates } = require('./helpers/order.helper');
 
@@ -15,6 +16,10 @@ const postOrder = async (req, res) => {
     }
 
     const cartsIds = carts.map(cart => cart.id);
+    const productsInfo = carts.map(cart => ({
+      id: cart.product,
+      amount: cart.amount,
+    }));
 
     const order = new Order({
       user: user.id,
@@ -27,6 +32,15 @@ const postOrder = async (req, res) => {
       { _id: { $in: cartsIds } },
       { $set: { ordered: true } }
     );
+
+    const requests = productsInfo.map(item =>
+      Product.updateOne(
+        { _id: item.id },
+        { $inc: { amount: item.amount * -1, booked: item.amount * -1 } }
+      )
+    );
+
+    await Promise.all(requests);
 
     res
       .status(201)
