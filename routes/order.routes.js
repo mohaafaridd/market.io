@@ -1,12 +1,7 @@
 const express = require('express');
-const moment = require('moment');
-
-const Order = require('../models/order.model');
-
 const api = require('./api/orders.api');
 const authentication = require('../middlewares/authentication');
 const authorization = require('../middlewares/authorization');
-const controller = require('../controllers/api/order.controller');
 const pages = require('../controllers/pages/order.page');
 const Role = require('../middlewares/role');
 
