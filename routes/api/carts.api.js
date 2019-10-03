@@ -16,12 +16,12 @@ router.patch(
   controller.patchCart
 );
 
-// router.post(
-//   '/delete-item',
-//   authorization(Role.User),
-//   authentication,
-//   controller.deleteCart
-// );
+router.delete(
+  '/:id',
+  authorization(Role.User),
+  authentication,
+  controller.deleteCart
+);
 
 // router.post(
 //   '/clear',

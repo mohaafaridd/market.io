@@ -62,31 +62,23 @@ const patchCart = async (req, res) => {
   }
 };
 
-// const patchCart = async (req, res) => {
-//   const { client: user } = req;
-//   const { product, mode } = req.body;
-
-//   try {
-//     const validModes = ['increase', 'decrease'];
-//     const isValid = validModes.includes(mode);
-//     if (!isValid) {
-//       throw new Error('invalid mode');
-//     }
-
-//     const coefficient = mode === 'increase' ? INCREASE : DECREASE;
-//     const cart = await Cart.findOneAndUpdate(
-//       { product, user: user.id, ordered: false },
-//       { $inc: { amount: 1 * coefficient } },
-//       { context: 'query', runValidators: true, new: true }
-//     );
-
-//     await patchBooking(product, 1, coefficient);
-
-//     res.json({ success: true, message: 'Patch completed', cart });
-//   } catch (error) {
-//     res.json({ success: false, message: 'Patch failed', error: error.message });
-//   }
-// };
+const deleteCart = async (req, res) => {
+  try {
+    const { client: user } = req;
+    const { id } = req.params;
+    const cart = await Cart.findOneAndDelete({ _id: id, user: user.id });
+    if (!cart) {
+      throw new Error('No cart was found');
+    }
+    res.json({
+      success: true,
+      message: `You have deleted an item from your cart`,
+      cart,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
 
 // const deleteCart = async (req, res) => {
 //   try {
@@ -133,6 +125,7 @@ const patchCart = async (req, res) => {
 module.exports = {
   postCart,
   patchCart,
+  deleteCart,
   // deleteCart,
   // deleteFullCart,
   // getCart,
