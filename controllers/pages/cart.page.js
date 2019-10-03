@@ -1,4 +1,4 @@
-const myCart = async (req, res) => {
+const getCart = async (req, res) => {
   const { cart, bill, client } = req;
   const { role } = client;
 
@@ -6,5 +6,5 @@ const myCart = async (req, res) => {
 };
 
 module.exports = {
-  myCart,
+  getCart,
 };

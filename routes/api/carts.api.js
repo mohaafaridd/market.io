@@ -23,10 +23,10 @@ router.delete(
   controller.deleteCart
 );
 
-// router.post(
-//   '/clear',
-//   authorization(Role.User),
-//   authentication,
-//   controller.deleteFullCart
-// );
+router.delete(
+  '/',
+  authorization(Role.User),
+  authentication,
+  controller.clearCart
+);
 module.exports = router;

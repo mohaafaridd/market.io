@@ -9,6 +9,6 @@ const Role = require('../middlewares/role');
 const router = express.Router();
 
 router.use('/api', api);
-router.get('/my-cart', authorization(Role.User), authentication, pages.myCart);
+router.get('/my-cart', authorization(Role.User), authentication, pages.getCart);
 
 module.exports = router;

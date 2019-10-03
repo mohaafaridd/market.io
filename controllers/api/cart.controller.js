@@ -80,55 +80,22 @@ const deleteCart = async (req, res) => {
   }
 };
 
-// const deleteCart = async (req, res) => {
-//   try {
-//     const { client: user } = req;
-//     const { product, amount } = req.body;
-//     const cart = await Cart.findOneAndDelete({ product, user: user.id });
-//     await patchBooking(product, amount, DECREASE);
-//     res.json({
-//       success: true,
-//       message: "You've removed a product from your cart",
-//       cart,
-//     });
-//   } catch (error) {
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
-// const deleteFullCart = async (req, res) => {
-//   const { client: user } = req;
-//   try {
-//     // Store product
-//     const products = await Cart.find({ user: user.id });
-//     if (products.length < 1) {
-//       throw new Error('Cart is already Empty');
-//     }
-
-//     await Cart.deleteMany({ user: user.id });
-
-//     const requests = products.map(item =>
-//       patchBooking(item.product, item.amount, DECREASE)
-//     );
-//     const response = await Promise.all(requests);
-
-//     res.json({
-//       success: true,
-//       message: 'All products in your cart have been removed',
-//       products,
-//     });
-//   } catch (error) {
-//     res.json({ success: false, message: error.message });
-//   }
-// };
+const clearCart = async (req, res) => {
+  try {
+    const { client: user } = req;
+    await Cart.deleteMany({ user: user.id });
+    res.json({
+      success: true,
+      message: `You have wiped your cart`,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
 
 module.exports = {
   postCart,
   patchCart,
   deleteCart,
-  // deleteCart,
-  // deleteFullCart,
-  // getCart,
-  // patchCart,
-  // postCart,
+  clearCart,
 };
