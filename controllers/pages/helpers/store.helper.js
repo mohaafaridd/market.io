@@ -1,7 +1,7 @@
 const moment = require('moment');
 const numeral = require('numeral');
 const Product = require('../../../models/product.model');
-
+const Bundle = require('../../../models/bundle.model');
 const getStaticsAggregation = store => [
   // Get store products
   { $match: { store: store._id } },
@@ -71,7 +71,6 @@ const getJSONTopSellers = async (store, limit = 5) => {
   return statistics;
 };
 
-//
 const statisticsParser = product => ({
   ...product,
   price: numeral(product.price).format('$0,0.00'),
@@ -83,8 +82,18 @@ const statisticsParser = product => ({
   ),
 });
 
+const getJSONBundle = async store => {
+  try {
+    const bundles = await Bundle.find({ store: store.id });
+    return bundles;
+  } catch (error) {
+    return null;
+  }
+};
+
 module.exports = {
   getJSONStatistics,
   getJSONTopSellers,
   statisticsParser,
+  getJSONBundle,
 };

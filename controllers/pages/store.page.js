@@ -1,13 +1,11 @@
 const Store = require('../../models/store.model');
 const numeral = require('numeral');
 
-const Cart = require('../../models/cart.model');
-const Product = require('../../models/product.model');
-
 const {
   getJSONStatistics,
   getJSONTopSellers,
   statisticsParser,
+  getJSONBundle,
 } = require('./helpers/store.helper');
 
 const getStore = async (req, res) => {
@@ -83,44 +81,6 @@ const getTopSeller = async (req, res) => {
   }
 };
 
-// const getDashboard = async (req, res) => {
-//   try {
-//     const { client: store } = req;
-//     const { role } = store;
-
-//     const statistics = await getStatistics(store);
-
-//     const products = await getDemandedProducts(store);
-
-//     res.render('store/dashboard', {
-//       title: 'Dashboard',
-//       [role]: true,
-//       store,
-//       products,
-//       statistics,
-//     });
-//   } catch (error) {
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
-// const getMyProducts = async (req, res) => {
-//   try {
-//     const { client: store } = req;
-//     const { role } = store;
-//     const products = await getProducts(store);
-
-//     res.render('store/products', {
-//       title: 'Products list',
-//       [role]: true,
-//       store,
-//       products,
-//     });
-//   } catch (error) {
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
 const addProduct = (req, res) => {
   try {
     const { client: store } = req;
@@ -137,9 +97,21 @@ const addProduct = (req, res) => {
   }
 };
 
+const getBundles = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { role } = store;
+    const bundles = await getJSONBundle(store);
+    res.render('store/bundles', { title: 'Bundles', [role]: true, bundles });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getStore,
   addProduct,
   getStatistics,
   getTopSeller,
+  getBundles,
 };

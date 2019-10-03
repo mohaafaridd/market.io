@@ -29,6 +29,13 @@ router.get(
   pages.addProduct
 );
 
+router.get(
+  '/bundles',
+  authorization(Role.Store),
+  authentication,
+  pages.getBundles
+);
+
 router.get('/:username', authorization(), authentication, pages.getStore);
 
 module.exports = router;
