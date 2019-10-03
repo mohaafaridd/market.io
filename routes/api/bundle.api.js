@@ -19,4 +19,11 @@ router.patch(
   controller.patchBundle
 );
 
+router.put(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  controller.putBundle
+);
+
 module.exports = router;

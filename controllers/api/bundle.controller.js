@@ -24,7 +24,6 @@ const postBundle = async (req, res) => {
 const patchBundle = async (req, res) => {
   try {
     const { client: store } = req;
-    const { role } = store;
     const { name, discount } = req.body;
     const { id } = req.params;
 
@@ -48,7 +47,30 @@ const patchBundle = async (req, res) => {
   }
 };
 
+const putBundle = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { id } = req.params;
+    const { product } = req.body;
+
+    const bundle = await Bundle.findOneAndUpdate(
+      { _id: id, store: store.id },
+      { $addToSet: { products: product } },
+      { context: 'query', runValidators: true, new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Added product to bundle!',
+      bundle,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   postBundle,
   patchBundle,
+  putBundle,
 };
