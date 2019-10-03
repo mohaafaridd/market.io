@@ -12,10 +12,19 @@ const postCart = async (req, res) => {
     const { client: user } = req;
     const { payload, type, store } = req.body;
 
+    // TODO: Check for stock
+    // TODO: Change booking
+
     const cart = await Cart.findOneAndUpdate(
       { user: user.id, [type]: payload, store, ordered: false },
       { $inc: { amount: 1 } },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      {
+        context: 'query',
+        new: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+        upsert: true,
+      }
     );
 
     res.json({
@@ -28,48 +37,30 @@ const postCart = async (req, res) => {
   }
 };
 
-// const postCart = async (req, res) => {
-//   try {
-//     const { client: user } = req;
-//     const { product, store } = req.body;
-//     const amount = 1;
-//     // checks for total amount ordered if available in stock
-//     const inStock = await inStockCheck(product, amount, user);
-//     if (!inStock) {
-//       throw new Error('The amount you ordered is out of our capabilities');
-//     }
+const patchCart = async (req, res) => {
+  try {
+    const { client: user } = req;
+    const { payload, type, mode } = req.body;
+    const coefficient = mode === 'increase' ? 1 : -1;
 
-//     const cart = await Cart.findOneAndUpdate(
-//       { user: user.id, product, store, ordered: false },
-//       { $inc: { amount } },
-//       { upsert: true, new: true, setDefaultsOnInsert: true }
-//     );
+    // TODO: Check for stock
+    // TODO: Change booking
 
-//     await cart.save();
-//     await patchBooking(product, amount);
+    const cart = await Cart.findOneAndUpdate(
+      { user: user.id, [type]: payload, ordered: false },
+      { $inc: { amount: coefficient } },
+      { context: 'query', runValidators: true, new: true }
+    );
 
-//     res
-//       .status(200)
-//       .json({ success: true, message: 'Product was added to your cart', cart });
-//   } catch (error) {
-//     res.status(400).json({ success: false, message: error.message });
-//   }
-// };
-
-// const getCart = async (req, res, next) => {
-//   const { client: user } = req;
-//   const cart = await Cart.find({ user: user.id, ordered: false })
-//     .populate('product')
-//     .populate('store');
-
-//   const modifiedCart = calculateBills(cart);
-
-//   const bill = cart.reduce((a, b) => b.amount * b.product.price + a, 0);
-
-//   req.cart = modifiedCart;
-//   req.bill = bill;
-//   next();
-// };
+    res.json({
+      success: true,
+      message: `You have updated your ${type} amount`,
+      cart,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
 
 // const patchCart = async (req, res) => {
 //   const { client: user } = req;
@@ -141,6 +132,7 @@ const postCart = async (req, res) => {
 
 module.exports = {
   postCart,
+  patchCart,
   // deleteCart,
   // deleteFullCart,
   // getCart,
