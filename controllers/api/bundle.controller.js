@@ -69,8 +69,26 @@ const putBundle = async (req, res) => {
   }
 };
 
+const deleteBundle = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { id } = req.params;
+
+    const bundle = await Bundle.findOneAndDelete({ _id: id, store: store.id });
+
+    res.status(200).json({
+      success: true,
+      message: 'Bundle is deleted!',
+      bundle,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   postBundle,
   patchBundle,
   putBundle,
+  deleteBundle,
 };

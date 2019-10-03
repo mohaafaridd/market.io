@@ -26,4 +26,11 @@ router.put(
   controller.putBundle
 );
 
+router.delete(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  controller.deleteBundle
+);
+
 module.exports = router;
