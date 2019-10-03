@@ -7,6 +7,27 @@ const {
   calculateBills,
 } = require('./helpers/cart.helper');
 
+const postCart = async (req, res) => {
+  try {
+    const { client: user } = req;
+    const { payload, type, store } = req.body;
+
+    const cart = await Cart.findOneAndUpdate(
+      { user: user.id, [type]: payload, store, ordered: false },
+      { $inc: { amount: 1 } },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    res.json({
+      success: true,
+      message: `You have added a ${type} to your cart`,
+      cart,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
 // const postCart = async (req, res) => {
 //   try {
 //     const { client: user } = req;
@@ -119,6 +140,7 @@ const {
 // };
 
 module.exports = {
+  postCart,
   // deleteCart,
   // deleteFullCart,
   // getCart,
