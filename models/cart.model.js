@@ -10,8 +10,12 @@ const schema = new Schema({
 
   product: {
     type: ObjectId,
-    required: true,
     ref: 'Product',
+  },
+
+  bundle: {
+    type: ObjectId,
+    ref: 'Bundle',
   },
 
   store: {
