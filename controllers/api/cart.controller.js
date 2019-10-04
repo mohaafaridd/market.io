@@ -1,4 +1,5 @@
 const Cart = require('../../models/cart.model');
+const Bundle = require('../../models/bundle.model');
 const { INCREASE, DECREASE } = require('./constants/cart.flags');
 
 const {
@@ -10,22 +11,42 @@ const {
 const postCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { payload, type, store } = req.body;
+    const { product = null, bundle: bundleId = null, store } = req.body;
 
     // TODO: Check for stock
     // TODO: Change booking
 
-    const cart = await Cart.findOneAndUpdate(
-      { user: user.id, [type]: payload, store, ordered: false },
-      { $inc: { amount: 1 } },
-      {
-        context: 'query',
-        new: true,
-        runValidators: true,
-        setDefaultsOnInsert: true,
-        upsert: true,
-      }
-    );
+    let cart;
+    let type;
+
+    if (bundleId) {
+      const bundle = await Bundle.findById(bundleId);
+      type = 'bundle';
+      cart = await Cart.updateMany(
+        {
+          user: user.id,
+          product: { $in: bundle.products },
+          bundle: bundleId,
+          ordered: false,
+          store,
+        },
+        { $inc: { amount: 1 } },
+        { upsert: true, setDefaultsOnInsert: true }
+      );
+    } else {
+      type = 'product';
+      cart = await Cart.findOneAndUpdate(
+        { user: user.id, product, store, ordered: false, bundle: null },
+        { $inc: { amount: 1 } },
+        {
+          context: 'query',
+          new: true,
+          runValidators: true,
+          setDefaultsOnInsert: true,
+          upsert: true,
+        }
+      );
+    }
 
     res.json({
       success: true,

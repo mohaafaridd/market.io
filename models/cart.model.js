@@ -11,11 +11,13 @@ const schema = new Schema({
   product: {
     type: ObjectId,
     ref: 'Product',
+    required: true,
   },
 
   bundle: {
     type: ObjectId,
     ref: 'Bundle',
+    default: null,
   },
 
   store: {
