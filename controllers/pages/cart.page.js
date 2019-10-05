@@ -56,10 +56,21 @@ const getCart = async (req, res) => {
       $project: {
         amount: '$amount',
         bill: {
+          // amount * productPrice * ( !bundle ? productDiscount  )
           $multiply: [
             '$amount',
             '$product.price',
-            { $subtract: [1, { $divide: ['$bundle.discount', 100] }] },
+            {
+              $subtract: [
+                1,
+                {
+                  $divide: [
+                    { $ifNull: ['$bundle.discount', '$product.discount'] },
+                    100,
+                  ],
+                },
+              ],
+            },
           ],
         },
         bundle: '$bundle',
@@ -67,8 +78,23 @@ const getCart = async (req, res) => {
         store: '$store',
       },
     },
+
+    {
+      $group: {
+        _id: '$bundle._id',
+        bill: { $sum: '$bill' },
+        products: {
+          $push: {
+            product: '$product.name',
+            amount: '$amount',
+            bill: '$bill',
+            discount: { $ifNull: ['$bundle.discount', '$product.discount'] },
+          },
+        },
+      },
+    },
   ]);
-  console.log('cart :', cart);
+  console.log('cart :', JSON.stringify(cart, undefined, 2));
 
   res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart });
 };
