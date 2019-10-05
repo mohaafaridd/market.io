@@ -38,8 +38,33 @@ const getCart = async (req, res) => {
     },
 
     {
-      $group: {
-        _id: '$_id',
+      $lookup: {
+        from: 'stores',
+        localField: 'store',
+        foreignField: '_id',
+        as: 'store',
+      },
+    },
+
+    {
+      $unwind: {
+        path: '$store',
+      },
+    },
+
+    {
+      $project: {
+        amount: '$amount',
+        bill: {
+          $multiply: [
+            '$amount',
+            '$product.price',
+            { $subtract: [1, { $divide: ['$bundle.discount', 100] }] },
+          ],
+        },
+        bundle: '$bundle',
+        product: '$product',
+        store: '$store',
       },
     },
   ]);
