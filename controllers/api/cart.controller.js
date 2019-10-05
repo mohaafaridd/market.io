@@ -22,17 +22,27 @@ const postCart = async (req, res) => {
     if (bundleId) {
       const bundle = await Bundle.findById(bundleId);
       type = 'bundle';
-      cart = await Cart.updateMany(
-        {
-          user: user.id,
-          product: { $in: bundle.products },
-          bundle: bundleId,
-          ordered: false,
-          store,
-        },
-        { $inc: { amount: 1 } },
-        { upsert: true, setDefaultsOnInsert: true }
+      const requests = bundle.products.map(product =>
+        Cart.findOneAndUpdate(
+          {
+            user: user.id,
+            product,
+            bundle: bundleId,
+            ordered: false,
+            store,
+          },
+          { $inc: { amount: 1 } },
+          {
+            context: 'query',
+            new: true,
+            runValidators: true,
+            setDefaultsOnInsert: true,
+            upsert: true,
+          }
+        )
       );
+      const response = await Promise.all(requests);
+      cart = response;
     } else {
       type = 'product';
       cart = await Cart.findOneAndUpdate(
@@ -61,17 +71,28 @@ const postCart = async (req, res) => {
 const patchCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { payload, type, mode } = req.body;
+    const { product = null, bundle: bundleId = null, mode } = req.body;
     const coefficient = mode === 'increase' ? 1 : -1;
 
     // TODO: Check for stock
     // TODO: Change booking
-
-    const cart = await Cart.findOneAndUpdate(
-      { user: user.id, [type]: payload, ordered: false },
-      { $inc: { amount: coefficient } },
-      { context: 'query', runValidators: true, new: true }
-    );
+    let cart;
+    let type;
+    if (bundleId) {
+      type = 'bundle';
+      cart = await Cart.updateMany(
+        { user: user.id, bundle: bundleId, ordered: false },
+        { $inc: { amount: coefficient } },
+        { context: 'query', runValidators: true, new: true }
+      );
+    } else {
+      type = 'product';
+      cart = await Cart.findOneAndUpdate(
+        { user: user.id, product, bundle: null, ordered: false },
+        { $inc: { amount: coefficient } },
+        { context: 'query', runValidators: true, new: true }
+      );
+    }
 
     res.json({
       success: true,
