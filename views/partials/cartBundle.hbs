@@ -2,20 +2,20 @@
     <h3>{{bundle.name}} ({{bundle.discount}}% off)</h3>
     <p>Bundle Price: {{bill}}</p>
     {{#each products}}
-    <section class="product-cart">
+    <section class="product-card">
         <h6>{{product.name}}</h6>
         <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
         <p>Color: {{product.color}}</p>
         <p>Description: {{product.description}}</p>
         <p>Unit Price: {{product.price}}</p>
-        <p>Total Price: {{bill}}</p>
+        <p>Total Price: {{bill}} ({{bundle.discount}}% off)</p>
         <p>Store: {{store.name}}</p>
         <p>Amount: <input type="text" readonly value="{{amount}}"></p>
     </section>
     {{/each}}
     <form>
         <button>-</button>
-        <input type="text" value="{{amount}}">
+        <input type="text" readonly value="{{amount}}">
         <button>+</button>
     </form>
 </section>

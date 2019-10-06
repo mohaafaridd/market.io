@@ -1,1 +1,19 @@
-<h1>IS NOT BUNDLE</h1>
+<section class="product-cart">
+    {{#each products}}
+    <section class="product-card">
+        <h6>{{product.name}}</h6>
+        <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
+        <p>Color: {{product.color}}</p>
+        <p>Description: {{product.description}}</p>
+        <p>Unit Price: {{product.price}}</p>
+        <p>Total Price: {{bill}} ({{product.discount}}% off)</p>
+        <p>Store: {{store.name}}</p>
+        <form>
+            <button>-</button>
+            <input type="text" readonly value="{{amount}}">
+            <button>+</button>
+        </form>
+    </section>
+    {{/each}}
+
+</section>
