@@ -83,11 +83,16 @@ const getCart = async (req, res) => {
       $group: {
         _id: '$bundle._id',
         bill: { $sum: '$bill' },
+        bundle: { $first: '$bundle' },
+        amount: { $first: '$amount' },
+
         products: {
           $push: {
-            product: '$product.name',
+            product: '$product',
+            bundle: '$bundle',
             amount: '$amount',
             bill: '$bill',
+            store: '$store',
             discount: { $ifNull: ['$bundle.discount', '$product.discount'] },
           },
         },

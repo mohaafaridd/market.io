@@ -3,7 +3,14 @@
 <button id="clear-cart" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
 
 {{#each cart}}
-<div class="product-card">
+
+{{#if bundle}}
+{{> cartBundle this}}
+{{else}}
+{{> cartProduct this}}
+{{/if}}
+
+{{!-- <div class="product-card">
     {{> productCard product}}
     <h5 class="single-cart-bill">bill {{bill}}</h5>
     <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
@@ -19,7 +26,7 @@
         <input type="text" name="product-id" value="{{product.id}}">
         <button class="delete-single-product">Delete</button>
     </form>
-</div>
+</div> --}}
 {{/each}}
 
 <h5 id="final-bill">Final bill {{bill}}</h5>
