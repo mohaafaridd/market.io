@@ -46,12 +46,9 @@ for (const deleteButton of deleteSingleProductButtons) {
     const amount = isNaN(parseInt(elements['amount']))
       ? 1
       : parseInt(elements['amount']);
-
+    console.log('product :', product);
     try {
-      const response = await axios.post('/carts/api/delete-item', {
-        product,
-        amount,
-      });
+      const response = await axios.delete(`/carts/api/${product}`);
       console.log('response.data :', response.data);
       location.reload();
     } catch (error) {
@@ -65,8 +62,8 @@ for (const patchBtn of patchAmountButtons) {
     e.preventDefault();
     try {
       clearErrors();
-
       const { parentElement: form } = patchBtn;
+      console.log('form :', form);
       const fields = ['product-id', 'amount'];
       const elements = grabElementsByName(form, fields);
       const { name: mode } = e.target;
@@ -81,6 +78,7 @@ for (const patchBtn of patchAmountButtons) {
       }
 
       const product = elements['product-id'];
+      console.log('here', elements);
       const amount = grabDOMElementByName(form, 'amount');
 
       const response = await axios.patch('/carts/api/', {

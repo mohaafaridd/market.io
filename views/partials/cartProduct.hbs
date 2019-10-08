@@ -8,10 +8,18 @@
         <p>Unit Price: {{product.price}}</p>
         <p>Total Price: {{bill}} ({{product.discount}}% off)</p>
         <p>Store: {{store.name}}</p>
+        <pre>{{product}}</pre>
         <form>
-            <button>-</button>
-            <input type="text" readonly value="{{amount}}">
-            <button>+</button>
+            <input type="text" name="product-id" value="{{product._id}}">
+            <button class="patch-amount" name="decrease">-</button>
+            <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
+            <small class="error amount"></small>
+            <button class="patch-amount" name="increase">+</button>
+        </form>
+
+        <form>
+            <input type="text" name="product-id" value="{{product._id}}">
+            <button class="delete-single-product">Delete</button>
         </form>
     </section>
     {{/each}}

@@ -108,7 +108,12 @@ const deleteCart = async (req, res) => {
   try {
     const { client: user } = req;
     const { id } = req.params;
-    const cart = await Cart.findOneAndDelete({ _id: id, user: user.id });
+    console.log('id :', id);
+    const cart = await Cart.findOneAndDelete({
+      product: id,
+      user: user.id,
+      ordered: false,
+    });
     if (!cart) {
       throw new Error('No cart was found');
     }
