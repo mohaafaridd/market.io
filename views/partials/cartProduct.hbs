@@ -1,6 +1,9 @@
 <section class="product-cart">
+    id
+    {{json this}}
     {{#each products}}
     <section class="product-card">
+
         <h6>{{product.name}}</h6>
         <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
         <p>Color: {{product.color}}</p>
@@ -8,7 +11,6 @@
         <p>Unit Price: {{product.price}}</p>
         <p>Total Price: {{bill}} ({{product.discount}}% off)</p>
         <p>Store: {{store.name}}</p>
-        <pre>{{product}}</pre>
         <form>
             <input type="text" name="product-id" value="{{product._id}}">
             <button class="patch-amount" name="decrease">-</button>
@@ -18,8 +20,8 @@
         </form>
 
         <form>
-            <input type="text" name="product-id" value="{{product._id}}">
-            <button class="delete-single-product">Delete</button>
+            <input type="text" name="cart-id" value="{{cart}}">
+            <button class="delete-single-cart">Delete</button>
         </form>
     </section>
     {{/each}}

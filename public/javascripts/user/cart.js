@@ -5,7 +5,7 @@ import { grabElementsByName, grabDOMElementByName } from '../util/formGrabber';
 import { clearErrors, displayError } from '../util/error.handle';
 
 const deleteSingleProductButtons = document.getElementsByClassName(
-  'delete-single-product'
+  'delete-single-cart'
 );
 const clearCartButton = document.getElementById('clear-cart');
 const orderCartButton = document.getElementById('order-now');
@@ -38,17 +38,13 @@ for (const deleteButton of deleteSingleProductButtons) {
     e.preventDefault();
 
     const { parentElement: form } = deleteButton;
-    const fields = ['product-id', 'amount'];
+    const fields = ['cart-id', 'amount'];
 
     const elements = grabElementsByName(form, fields);
 
-    const product = elements['product-id'];
-    const amount = isNaN(parseInt(elements['amount']))
-      ? 1
-      : parseInt(elements['amount']);
-    console.log('product :', product);
+    const cart = elements['cart-id'];
     try {
-      const response = await axios.delete(`/carts/api/${product}`);
+      const response = await axios.delete(`/carts/api/${cart}`);
       console.log('response.data :', response.data);
       location.reload();
     } catch (error) {

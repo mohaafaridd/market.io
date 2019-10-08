@@ -54,6 +54,7 @@ const getCart = async (req, res) => {
 
     {
       $project: {
+        cart: '$_id',
         amount: '$amount',
         bill: {
           // amount * productPrice * ( !bundle ? productDiscount  )
@@ -88,6 +89,7 @@ const getCart = async (req, res) => {
 
         products: {
           $push: {
+            cart: '$cart',
             product: '$product',
             bundle: '$bundle',
             amount: '$amount',

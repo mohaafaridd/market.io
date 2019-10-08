@@ -108,9 +108,8 @@ const deleteCart = async (req, res) => {
   try {
     const { client: user } = req;
     const { id } = req.params;
-    console.log('id :', id);
     const cart = await Cart.findOneAndDelete({
-      product: id,
+      _id: id,
       user: user.id,
       ordered: false,
     });

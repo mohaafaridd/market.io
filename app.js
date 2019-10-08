@@ -12,7 +12,9 @@ require('./db/mongoose');
 
 const partialsPath = path.join(__dirname, 'views', 'partials');
 hbs.registerPartials(partialsPath);
-
+hbs.registerHelper('json', function(obj) {
+  return JSON.stringify(obj);
+});
 const { connectRoutes } = require('./routes/routes');
 
 const DEFAULT_PATH = path.join(__dirname, 'public');
