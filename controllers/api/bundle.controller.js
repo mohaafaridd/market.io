@@ -3,12 +3,10 @@ const Bundle = require('../../models/bundle.model');
 const postBundle = async (req, res) => {
   try {
     const { client: store } = req;
-    const { role } = store;
-    const { name, discount } = req.body;
+    const { name } = req.body;
 
     const bundle = new Bundle({
       name,
-      discount,
       store: store.id,
     });
 
@@ -24,12 +22,12 @@ const postBundle = async (req, res) => {
 const patchBundle = async (req, res) => {
   try {
     const { client: store } = req;
-    const { name, discount } = req.body;
+    const { name } = req.body;
     const { id } = req.params;
 
     const bundle = await Bundle.findOneAndUpdate(
       { _id: id, store: store.id },
-      { name, discount: parseInt(discount) },
+      { name },
       { context: 'query', runValidators: true, new: true }
     );
 
@@ -51,11 +49,11 @@ const putBundle = async (req, res) => {
   try {
     const { client: store } = req;
     const { id } = req.params;
-    const { product } = req.body;
+    const { product, discount } = req.body;
 
     const bundle = await Bundle.findOneAndUpdate(
       { _id: id, store: store.id },
-      { $addToSet: { products: product } },
+      { $addToSet: { products: { product, discount } } },
       { context: 'query', runValidators: true, new: true }
     );
 

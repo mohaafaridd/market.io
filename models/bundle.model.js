@@ -14,18 +14,16 @@ const schema = new Schema({
 
   products: [
     {
-      type: ObjectId,
-      ref: 'Product',
+      product: { type: ObjectId, ref: 'Product' },
+      discount: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100,
+        required: true,
+      },
     },
   ],
-
-  discount: {
-    type: Number,
-    default: 0,
-    min: 0,
-    max: 100,
-    required: true,
-  },
 });
 
 const Bundle = model('Bundle', schema);
