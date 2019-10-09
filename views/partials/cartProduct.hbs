@@ -9,7 +9,9 @@
         <p>Color: {{product.color}}</p>
         <p>Description: {{product.description}}</p>
         <p>Unit Price: {{product.price}}</p>
-        <p>Total Price: {{bill}} ({{product.discount}}% off)</p>
+        <p>Total Price: {{bill}} ({{discount}}% off)</p>
+        <p>Saved Money: {{saved}}</p>
+
         <p>Store: {{store.name}}</p>
         <form>
             <input type="text" name="product-id" value="{{product._id}}">

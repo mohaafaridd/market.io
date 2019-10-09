@@ -7,7 +7,7 @@ const getCart = async (req, res) => {
   const cart = await Cart.aggregate([
     { $match: { user: user._id, ordered: false } },
 
-    // Step 1: Look for the bundle
+    // Step 1.1: Look for the bundle
     {
       $lookup: {
         from: 'bundles',
@@ -17,7 +17,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 2: Clear if no bundle
+    // Step 1.2: Clear if no bundle
     {
       $unwind: {
         path: '$bundle',
@@ -25,16 +25,18 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 3: Move product id from bundle array to product property
+    // Step 2.1: Move product id from bundle array to product property
     {
       $project: {
         bundle: '$bundle',
         amount: '$amount',
-        product: { $ifNull: ['$product', '$bundle.products'] },
+        product: {
+          $ifNull: ['$product', '$bundle.products.product'],
+        },
       },
     },
 
-    // Step 4: Separate the array if exists
+    // Step 2.2: Separate the array if exists
     {
       $unwind: {
         path: '$product',
@@ -42,7 +44,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 5: Look for product
+    // Step 3.1: Look for product
     {
       $lookup: {
         from: 'products',
@@ -52,7 +54,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 6: Moves the project out of the array
+    // // Step 3.2: Moves the project out of the array
     {
       $unwind: {
         path: '$product',
@@ -60,7 +62,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 6.1: Get product store
+    // Step 4.1: Get product store
     {
       $lookup: {
         from: 'stores',
@@ -70,7 +72,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 6.2: Move store out of the array
+    // Step 4.2: Move store out of the array
     {
       $unwind: {
         path: '$store',
@@ -78,34 +80,78 @@ const getCart = async (req, res) => {
       },
     },
 
-    // Step 7: Project to calculate Bill
+    // Step 5.1: Get product details from bundle (TO EXTRACT DISCOUNT)
     {
       $project: {
         bundle: '$bundle',
         amount: '$amount',
         product: '$product',
         store: '$store',
-        bill: {
-          $multiply: [
-            '$amount',
-            '$product.price',
+        details: {
+          $filter: {
+            input: '$bundle.products',
+            as: 'cart',
+            cond: { $eq: ['$product._id', '$$cart.product'] },
+          },
+        },
+      },
+    },
+
+    // Step 5.2: Add discount property
+    {
+      $project: {
+        bundle: '$bundle',
+        amount: '$amount',
+        product: '$product',
+        store: '$store',
+        discount: { $ifNull: ['$details.discount', '$product.discount'] },
+      },
+    },
+
+    // Step 5.3: Extract array element
+    {
+      $unwind: {
+        path: '$discount',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // Step 5.4: Change discount into fraction
+    {
+      $project: {
+        bundle: '$bundle',
+        amount: '$amount',
+        product: '$product',
+        store: '$store',
+        discount: '$discount',
+        saved: {
+          $divide: ['$discount', 100],
+        },
+        fraction: {
+          $subtract: [
+            1,
             {
-              $subtract: [
-                1,
-                {
-                  $divide: [
-                    { $ifNull: ['$bundle.discount', '$product.discount'] },
-                    100,
-                  ],
-                },
-              ],
+              $divide: ['$discount', 100],
             },
           ],
         },
       },
     },
 
-    // Step 8: Group all products within their bundles
+    // Step 6: Project to calculate Bill
+    {
+      $project: {
+        bundle: '$bundle',
+        amount: '$amount',
+        product: '$product',
+        discount: '$discount',
+        store: '$store',
+        saved: { $multiply: ['$amount', '$product.price', '$saved'] },
+        bill: { $multiply: ['$amount', '$product.price', '$fraction'] },
+      },
+    },
+
+    // Step 7: Group all products within their bundles
     {
       $group: {
         _id: '$bundle._id',
@@ -119,7 +165,8 @@ const getCart = async (req, res) => {
             bundle: '$bundle',
             amount: '$amount',
             bill: '$bill',
-            discount: { $ifNull: ['$bundle.discount', '$product.discount'] },
+            discount: '$discount',
+            saved: '$saved',
           },
         },
       },
@@ -127,7 +174,7 @@ const getCart = async (req, res) => {
   ]);
 
   const bill = cart.reduce((a, b) => a + b.bill, 0);
-  // console.log('cart :', JSON.stringify(cart, undefined, 2));
+  console.log('cart :', JSON.stringify(cart, undefined, 2));
 
   res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart, bill });
 };

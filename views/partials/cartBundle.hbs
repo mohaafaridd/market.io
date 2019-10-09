@@ -1,7 +1,7 @@
 <pre>{{json this}}</pre>
 
 <section class="bundle-cart">
-    <h3>{{bundle.name}} ({{bundle.discount}}% off)</h3>
+    <h3>{{bundle.name}}</h3>
     <p>Bundle Price: {{bill}}</p>
     {{#each products}}
     <section class="product-card">
@@ -10,7 +10,8 @@
         <p>Color: {{product.color}}</p>
         <p>Description: {{product.description}}</p>
         <p>Unit Price: {{product.price}}</p>
-        <p>Total Price: {{bill}} ({{bundle.discount}}% off)</p>
+        <p>Total Price: {{bill}} ({{discount}}% off)</p>
+        <p>Saved Money: {{saved}}</p>
         <p>Store: {{store.name}}</p>
         <p>Amount: <input type="text" readonly value="{{amount}}"></p>
     </section>
