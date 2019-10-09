@@ -11,52 +11,22 @@ const {
 const postCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product = null, bundle: bundleId = null, store } = req.body;
+    const { product = null, bundle = null, store } = req.body;
 
     // TODO: Check for stock
     // TODO: Change booking
-
-    let cart;
-    let type;
-
-    if (bundleId) {
-      const bundle = await Bundle.findById(bundleId);
-      type = 'bundle';
-      const requests = bundle.products.map(product =>
-        Cart.findOneAndUpdate(
-          {
-            user: user.id,
-            product,
-            bundle: bundleId,
-            ordered: false,
-            store,
-          },
-          { $inc: { amount: 1 } },
-          {
-            context: 'query',
-            new: true,
-            runValidators: true,
-            setDefaultsOnInsert: true,
-            upsert: true,
-          }
-        )
-      );
-      const response = await Promise.all(requests);
-      cart = response;
-    } else {
-      type = 'product';
-      cart = await Cart.findOneAndUpdate(
-        { user: user.id, product, store, ordered: false, bundle: null },
-        { $inc: { amount: 1 } },
-        {
-          context: 'query',
-          new: true,
-          runValidators: true,
-          setDefaultsOnInsert: true,
-          upsert: true,
-        }
-      );
-    }
+    const type = product ? 'product' : 'bundle';
+    const cart = await Cart.findOneAndUpdate(
+      { user: user.id, product, bundle, ordered: false, store },
+      { $inc: { amount: 1 } },
+      {
+        context: 'query',
+        new: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+        upsert: true,
+      }
+    );
 
     res.json({
       success: true,
