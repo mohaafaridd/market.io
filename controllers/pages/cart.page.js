@@ -167,13 +167,31 @@ const getCart = async (req, res) => {
       },
     },
 
+    // Step 6.1: Get product store
+    {
+      $lookup: {
+        from: 'stores',
+        localField: 'product.store',
+        foreignField: '_id',
+        as: 'store',
+      },
+    },
+
+    // Step 6.2: Move store out of the array
+    {
+      $unwind: {
+        path: '$store',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
     // Step 7: Project to calculate Bill
     {
       $project: {
         bundle: '$bundle',
         amount: '$amount',
         product: '$product',
-
+        store: '$store',
         bill: {
           $multiply: [
             '$amount',
@@ -204,6 +222,7 @@ const getCart = async (req, res) => {
         products: {
           $push: {
             product: '$product',
+            store: '$store',
             bundle: '$bundle',
             amount: '$amount',
             bill: '$bill',
@@ -215,7 +234,7 @@ const getCart = async (req, res) => {
   ]);
 
   const bill = cart.reduce((a, b) => a + b.bill, 0);
-  console.log('cart :', JSON.stringify(cart, undefined, 2));
+  // console.log('cart :', JSON.stringify(cart, undefined, 2));
 
   res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart, bill });
 };
