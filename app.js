@@ -13,7 +13,7 @@ require('./db/mongoose');
 const partialsPath = path.join(__dirname, 'views', 'partials');
 hbs.registerPartials(partialsPath);
 hbs.registerHelper('json', function(obj) {
-  return JSON.stringify(obj);
+  return JSON.stringify(obj, undefined, 2);
 });
 const { connectRoutes } = require('./routes/routes');
 

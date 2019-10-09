@@ -114,24 +114,7 @@ const getCart = async (req, res) => {
   const cart = await Cart.aggregate([
     { $match: { user: user._id, ordered: false } },
 
-    // Look for single product if exists
-    {
-      $lookup: {
-        from: 'products',
-        localField: 'product',
-        foreignField: '_id',
-        as: 'product',
-      },
-    },
-
-    {
-      $unwind: {
-        path: '$product',
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-
-    //
+    // Step 1: Look for the bundle
     {
       $lookup: {
         from: 'bundles',
@@ -141,10 +124,92 @@ const getCart = async (req, res) => {
       },
     },
 
+    // Step 2: Clear if no bundle
     {
       $unwind: {
         path: '$bundle',
         preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // Step 3: Move product id from bundle array to product property
+    {
+      $project: {
+        bundle: '$bundle',
+        amount: '$amount',
+        product: { $ifNull: ['$product', '$bundle.products'] },
+      },
+    },
+
+    // Step 4: Separate the array if exists
+    {
+      $unwind: {
+        path: '$product',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // Step 5: Look for product
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'product',
+      },
+    },
+
+    // Step 6: Moves the project out of the array
+    {
+      $unwind: {
+        path: '$product',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // Step 7: Project to calculate Bill
+    {
+      $project: {
+        bundle: '$bundle',
+        amount: '$amount',
+        product: '$product',
+
+        bill: {
+          $multiply: [
+            '$amount',
+            '$product.price',
+            {
+              $subtract: [
+                1,
+                {
+                  $divide: [
+                    { $ifNull: ['$bundle.discount', '$product.discount'] },
+                    100,
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+
+    // Step 8: Group all products within their bundles
+    {
+      $group: {
+        _id: '$bundle._id',
+        bill: { $sum: '$bill' },
+        bundle: { $first: '$bundle' },
+        amount: { $first: '$amount' },
+        products: {
+          $push: {
+            product: '$product',
+            bundle: '$bundle',
+            amount: '$amount',
+            bill: '$bill',
+            discount: { $ifNull: ['$bundle.discount', '$product.discount'] },
+          },
+        },
       },
     },
   ]);
