@@ -1,8 +1,9 @@
-<pre>{{json this}}</pre>
+{{!-- <pre>{{json this}}</pre> --}}
 
 <section class="bundle-cart">
     <h3>{{bundle.name}}</h3>
     <p>Bundle Price: {{bill}}</p>
+    <p>Saved Money: {{saved}}</p>
     {{#each products}}
     <section class="product-card">
         <h6>{{product.name}}</h6>
@@ -17,8 +18,15 @@
     </section>
     {{/each}}
     <form>
-        <button>-</button>
-        <input type="text" readonly value="{{amount}}">
-        <button>+</button>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="patch-amount" name="decrease">-</button>
+        <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
+        <small class="error amount"></small>
+        <button class="patch-amount" name="increase">+</button>
+    </form>
+
+    <form>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="delete-single-cart">Delete</button>
     </form>
 </section>

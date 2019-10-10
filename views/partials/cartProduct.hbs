@@ -1,5 +1,5 @@
 <section class="product-cart">
-    <pre>{{json this}}</pre>
+    {{!-- <pre>{{json this}}</pre> --}}
 
     {{#each products}}
     <section class="product-card">
@@ -14,7 +14,7 @@
 
         <p>Store: {{store.name}}</p>
         <form>
-            <input type="text" name="product-id" value="{{product._id}}">
+            <input type="text" name="cart-id" value="{{cart}}">
             <button class="patch-amount" name="decrease">-</button>
             <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
             <small class="error amount"></small>

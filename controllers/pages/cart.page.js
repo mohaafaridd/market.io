@@ -28,6 +28,7 @@ const getCart = async (req, res) => {
     // Step 2.1: Move product id from bundle array to product property
     {
       $project: {
+        cart: '$_id',
         bundle: '$bundle',
         amount: '$amount',
         product: {
@@ -83,8 +84,9 @@ const getCart = async (req, res) => {
     // Step 5.1: Get product details from bundle (TO EXTRACT DISCOUNT)
     {
       $project: {
-        bundle: '$bundle',
         amount: '$amount',
+        bundle: '$bundle',
+        cart: '$cart',
         product: '$product',
         store: '$store',
         details: {
@@ -100,8 +102,9 @@ const getCart = async (req, res) => {
     // Step 5.2: Add discount property
     {
       $project: {
-        bundle: '$bundle',
         amount: '$amount',
+        bundle: '$bundle',
+        cart: '$cart',
         product: '$product',
         store: '$store',
         discount: { $ifNull: ['$details.discount', '$product.discount'] },
@@ -119,11 +122,12 @@ const getCart = async (req, res) => {
     // Step 5.4: Change discount into fraction
     {
       $project: {
-        bundle: '$bundle',
         amount: '$amount',
+        bundle: '$bundle',
+        cart: '$cart',
+        discount: '$discount',
         product: '$product',
         store: '$store',
-        discount: '$discount',
         saved: {
           $divide: ['$discount', 100],
         },
@@ -141,10 +145,11 @@ const getCart = async (req, res) => {
     // Step 6: Project to calculate Bill
     {
       $project: {
-        bundle: '$bundle',
         amount: '$amount',
-        product: '$product',
+        bundle: '$bundle',
+        cart: '$cart',
         discount: '$discount',
+        product: '$product',
         store: '$store',
         saved: { $multiply: ['$amount', '$product.price', '$saved'] },
         bill: { $multiply: ['$amount', '$product.price', '$fraction'] },
@@ -155,11 +160,14 @@ const getCart = async (req, res) => {
     {
       $group: {
         _id: '$bundle._id',
+        amount: { $first: '$amount' },
         bill: { $sum: '$bill' },
         bundle: { $first: '$bundle' },
-        amount: { $first: '$amount' },
+        cart: { $first: '$cart' },
+        saved: { $sum: '$saved' },
         products: {
           $push: {
+            cart: '$cart',
             product: '$product',
             store: '$store',
             bundle: '$bundle',
