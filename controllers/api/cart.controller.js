@@ -41,28 +41,23 @@ const postCart = async (req, res) => {
 const patchCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product = null, bundle: bundleId = null, mode } = req.body;
-    const coefficient = mode === 'increase' ? 1 : -1;
+    const { mode } = req.body;
+    const { id } = req.params;
 
     // TODO: Check for stock
     // TODO: Change booking
-    let cart;
-    let type;
-    if (bundleId) {
-      type = 'bundle';
-      cart = await Cart.updateMany(
-        { user: user.id, bundle: bundleId, ordered: false },
-        { $inc: { amount: coefficient } },
-        { context: 'query', runValidators: true, new: true }
-      );
-    } else {
-      type = 'product';
-      cart = await Cart.findOneAndUpdate(
-        { user: user.id, product, bundle: null, ordered: false },
-        { $inc: { amount: coefficient } },
-        { context: 'query', runValidators: true, new: true }
-      );
-    }
+
+    const cart = await Cart.findOneAndUpdate(
+      {
+        _id: id,
+        user: user.id,
+        ordered: false,
+      },
+      { $inc: { amount: mode === 'increase' ? 1 : -1 } },
+      { context: 'query', runValidators: true, new: true }
+    );
+
+    const type = cart.bundle ? 'bundle' : 'product';
 
     res.json({
       success: true,

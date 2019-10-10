@@ -2,14 +2,15 @@
 
 <button id="clear-cart" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
 
-{{#each cart}}
-{{#if bundle}}
-{{> cartBundle this}}
-{{else}}
-{{> cartProduct this}}
-{{/if}}
-
-{{/each}}
+<section class="cart-grid">
+    {{#each cart}}
+    {{#if bundle}}
+    {{> cartBundle this}}
+    {{else}}
+    {{> cartProduct this}}
+    {{/if}}
+    {{/each}}
+</section>
 
 <h5 id="final-bill">Final bill {{bill}}</h5>
 

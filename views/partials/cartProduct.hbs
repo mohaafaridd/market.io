@@ -1,31 +1,28 @@
-<section class="product-cart">
-    {{!-- <pre>{{json this}}</pre> --}}
+{{!-- <pre>{{json this}}</pre> --}}
 
-    {{#each products}}
-    <section class="product-card">
+{{#each products}}
+<section class="product-card">
 
-        <h6>{{product.name}}</h6>
-        <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
-        <p>Color: {{product.color}}</p>
-        <p>Description: {{product.description}}</p>
-        <p>Unit Price: {{product.price}}</p>
-        <p>Total Price: {{bill}} ({{discount}}% off)</p>
-        <p>Saved Money: {{saved}}</p>
+    <h6>{{product.name}}</h6>
+    <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
+    <p>Color: {{product.color}}</p>
+    <p>Description: {{product.description}}</p>
+    <p>Unit Price: {{product.price}}</p>
+    <p>Total Price: {{bill}} ({{discount}}% off)</p>
+    <p>Saved Money: {{saved}}</p>
 
-        <p>Store: {{store.name}}</p>
-        <form>
-            <input type="text" name="cart-id" value="{{cart}}">
-            <button class="patch-amount" name="decrease">-</button>
-            <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
-            <small class="error amount"></small>
-            <button class="patch-amount" name="increase">+</button>
-        </form>
+    <p>Store: {{store.name}}</p>
+    <form>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="patch-amount" name="decrease">-</button>
+        <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
+        <small class="error amount"></small>
+        <button class="patch-amount" name="increase">+</button>
+    </form>
 
-        <form>
-            <input type="text" name="cart-id" value="{{cart}}">
-            <button class="delete-single-cart">Delete</button>
-        </form>
-    </section>
-    {{/each}}
-
+    <form>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="delete-single-cart">Delete</button>
+    </form>
 </section>
+{{/each}}

@@ -8,4 +8,13 @@ a {
 label {
   display: block; }
 
+.cart-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); }
+  .cart-grid .product-card {
+    border: solid 1px black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr); }
+
 /*# sourceMappingURL=style.css.map */

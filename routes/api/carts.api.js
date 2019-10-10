@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/', authorization(Role.User), authentication, controller.postCart);
 
 router.patch(
-  '/',
+  '/:id',
   authorization(Role.User),
   authentication,
   controller.patchCart
