@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { grabElementsByName, grabDOMElementByName } from '../util/formGrabber';
+
 const patchBtns = document.querySelectorAll('.patch-amount');
+const deleteBtns = document.querySelectorAll('.delete-cart');
 
 for (const button of patchBtns) {
   button.addEventListener('click', async e => {
@@ -8,9 +10,9 @@ for (const button of patchBtns) {
     button.disabled = true;
 
     const { parentElement: form } = button;
-
     const fields = ['cart-id'];
     const elements = grabElementsByName(form, fields);
+
     const cart = elements['cart-id'];
     const mode = button.name === 'increase' ? 'increase' : 'decrease';
     const amount = grabDOMElementByName(form, 'amount');
@@ -23,6 +25,27 @@ for (const button of patchBtns) {
     } catch (error) {
       console.log('error.response :', error.response);
     }
+    button.disabled = false;
+  });
+}
+
+for (const button of deleteBtns) {
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    button.disabled = true;
+
+    const { parentElement: form } = button;
+    const fields = ['cart-id'];
+    const elements = grabElementsByName(form, fields);
+
+    const cart = elements['cart-id'];
+    try {
+      const response = await axios.delete(`/carts/api/${cart}`);
+      console.log('response.data :', response.data);
+    } catch (error) {
+      console.log('error.response :', error.response);
+    }
+
     button.disabled = false;
   });
 }
