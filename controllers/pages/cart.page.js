@@ -182,7 +182,6 @@ const getCart = async (req, res) => {
   ]);
 
   const bill = cart.reduce((a, b) => a + b.bill, 0);
-  console.log('cart :', JSON.stringify(cart, undefined, 2));
 
   res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart, bill });
 };
