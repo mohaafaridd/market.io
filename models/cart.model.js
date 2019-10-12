@@ -11,11 +11,13 @@ const schema = new Schema({
   product: {
     type: ObjectId,
     ref: 'Product',
+    required: true,
   },
 
   bundle: {
     type: ObjectId,
     ref: 'Bundle',
+    default: null,
   },
 
   store: {
@@ -26,8 +28,7 @@ const schema = new Schema({
 
   amount: {
     type: Number,
-    required: true,
-    default: 1,
+    default: 0,
     min: 1,
   },
 

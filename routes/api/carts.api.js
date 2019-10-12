@@ -8,22 +8,25 @@ const Role = require('../../middlewares/role');
 const router = express.Router();
 
 router.post('/', authorization(Role.User), authentication, controller.postCart);
+
 router.patch(
-  '/',
+  '/:id',
   authorization(Role.User),
   authentication,
   controller.patchCart
 );
-router.post(
-  '/delete-item',
+
+router.delete(
+  '/:id',
   authorization(Role.User),
   authentication,
   controller.deleteCart
 );
-router.post(
-  '/clear',
+
+router.delete(
+  '/',
   authorization(Role.User),
   authentication,
-  controller.deleteFullCart
+  controller.clearCart
 );
 module.exports = router;

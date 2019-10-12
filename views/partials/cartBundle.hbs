@@ -1,0 +1,31 @@
+{{!-- <pre>{{json this}}</pre> --}}
+
+<section class="bundle-card">
+    <h3>{{bundle.name}}</h3>
+    <p>Bundle Price: {{bill}}</p>
+    <p>Saved Money: {{saved}}</p>
+    {{#each products}}
+    <section class="product-card">
+        <h6>{{product.name}}</h6>
+        <p>Rate:{{#if product.score}} {{product.score}} {{else}} Not Rated {{/if}}</p>
+        <p>Color: {{product.color}}</p>
+        <p>Description: {{product.description}}</p>
+        <p>Unit Price: {{product.price}}</p>
+        <p>Total Price: {{bill}} ({{discount}}% off)</p>
+        <p>Saved Money: {{saved}}</p>
+        <p>Store: {{store.name}}</p>
+    </section>
+    {{/each}}
+    <form>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="patch-amount" name="decrease">-</button>
+        <input type="text" name="amount" value="{{amount}}" readonly>
+        <small class="error amount"></small>
+        <button class="patch-amount" name="increase">+</button>
+    </form>
+
+    <form>
+        <input type="text" name="cart-id" value="{{cart}}">
+        <button class="delete-cart">Delete</button>
+    </form>
+</section>

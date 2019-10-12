@@ -1,11 +1,11 @@
+const express = require('express');
+const { ObjectId } = require('mongoose').Types;
 const Cart = require('../../models/cart.model');
+const router = express.Router();
 
-const getCart = async (req, res) => {
-  const { client: user } = req;
-  const { role } = user;
-
+router.get('/:id', async (req, res) => {
   const cart = await Cart.aggregate([
-    { $match: { user: user._id, ordered: false } },
+    { $match: { _id: ObjectId(req.params.id) } },
 
     // Step 1.1: Look for the bundle
     {
@@ -181,11 +181,12 @@ const getCart = async (req, res) => {
     },
   ]);
 
-  const bill = cart.reduce((a, b) => a + b.bill, 0);
+  const { products } = cart[0];
 
-  res.render('user/cart', { title: 'Shopping Cart', [role]: true, cart, bill });
-};
+  res.render('partials/cartProduct', {
+    products,
+    layout: false,
+  });
+});
 
-module.exports = {
-  getCart,
-};
+module.exports = router;

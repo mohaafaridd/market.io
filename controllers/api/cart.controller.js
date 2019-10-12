@@ -1,4 +1,5 @@
 const Cart = require('../../models/cart.model');
+const Bundle = require('../../models/bundle.model');
 const { INCREASE, DECREASE } = require('./constants/cart.flags');
 
 const {
@@ -10,118 +11,102 @@ const {
 const postCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product, store } = req.body;
-    const amount = 1;
-    // checks for total amount ordered if available in stock
-    const inStock = await inStockCheck(product, amount, user);
-    if (!inStock) {
-      throw new Error('The amount you ordered is out of our capabilities');
-    }
+    const { product = null, bundle = null, store } = req.body;
 
+    // TODO: Check for stock
+    // TODO: Change booking
+    const type = product ? 'product' : 'bundle';
     const cart = await Cart.findOneAndUpdate(
-      { user: user.id, product, store, ordered: false },
-      { $inc: { amount } },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { user: user.id, product, bundle, ordered: false, store },
+      { $inc: { amount: 1 } },
+      {
+        context: 'query',
+        new: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+        upsert: true,
+      }
     );
 
-    await cart.save();
-    await patchBooking(product, amount);
-
-    res
-      .status(200)
-      .json({ success: true, message: 'Product was added to your cart', cart });
+    res.json({
+      success: true,
+      message: `You have added a ${type} to your cart`,
+      cart,
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
 };
 
-const getCart = async (req, res, next) => {
-  const { client: user } = req;
-  const cart = await Cart.find({ user: user.id, ordered: false })
-    .populate('product')
-    .populate('store');
-
-  const modifiedCart = calculateBills(cart);
-
-  const bill = cart.reduce((a, b) => b.amount * b.product.price + a, 0);
-
-  req.cart = modifiedCart;
-  req.bill = bill;
-  next();
-};
-
 const patchCart = async (req, res) => {
-  const { client: user } = req;
-  const { product, mode } = req.body;
-
   try {
-    const validModes = ['increase', 'decrease'];
-    const isValid = validModes.includes(mode);
-    if (!isValid) {
-      throw new Error('invalid mode');
-    }
+    const { client: user } = req;
+    const { mode } = req.body;
+    const { id } = req.params;
 
-    const coefficient = mode === 'increase' ? INCREASE : DECREASE;
+    // TODO: Check for stock
+    // TODO: Change booking
+
     const cart = await Cart.findOneAndUpdate(
-      { product, user: user.id, ordered: false },
-      { $inc: { amount: 1 * coefficient } },
+      {
+        _id: id,
+        user: user.id,
+        ordered: false,
+      },
+      { $inc: { amount: mode === 'increase' ? 1 : -1 } },
       { context: 'query', runValidators: true, new: true }
     );
 
-    await patchBooking(product, 1, coefficient);
+    const type = cart.bundle ? 'bundle' : 'product';
 
-    res.json({ success: true, message: 'Patch completed', cart });
+    res.json({
+      success: true,
+      message: `You have updated your ${type} amount`,
+      cart,
+    });
   } catch (error) {
-    res.json({ success: false, message: 'Patch failed', error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
 const deleteCart = async (req, res) => {
   try {
     const { client: user } = req;
-    const { product, amount } = req.body;
-    const cart = await Cart.findOneAndDelete({ product, user: user.id });
-    await patchBooking(product, amount, DECREASE);
+    const { id } = req.params;
+    const cart = await Cart.findOneAndDelete({
+      _id: id,
+      user: user.id,
+      ordered: false,
+    });
+    if (!cart) {
+      throw new Error('No cart was found');
+    }
     res.json({
       success: true,
-      message: "You've removed a product from your cart",
+      message: `You have deleted an item from your cart`,
       cart,
     });
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
-const deleteFullCart = async (req, res) => {
-  const { client: user } = req;
+const clearCart = async (req, res) => {
   try {
-    // Store product
-    const products = await Cart.find({ user: user.id });
-    if (products.length < 1) {
-      throw new Error('Cart is already Empty');
-    }
-
+    const { client: user } = req;
     await Cart.deleteMany({ user: user.id });
-
-    const requests = products.map(item =>
-      patchBooking(item.product, item.amount, DECREASE)
-    );
-    const response = await Promise.all(requests);
-
     res.json({
       success: true,
-      message: 'All products in your cart have been removed',
-      products,
+      message: `You have wiped your cart`,
     });
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
 module.exports = {
-  deleteCart,
-  deleteFullCart,
-  getCart,
-  patchCart,
   postCart,
+  patchCart,
+  deleteCart,
+  clearCart,
 };

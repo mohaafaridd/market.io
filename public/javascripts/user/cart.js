@@ -1,100 +1,63 @@
 import axios from 'axios';
-import forms from '../constants/forms';
-import { patchValidation } from './validators/cart.validator';
 import { grabElementsByName, grabDOMElementByName } from '../util/formGrabber';
-import { clearErrors, displayError } from '../util/error.handle';
 
-const deleteSingleProductButtons = document.getElementsByClassName(
-  'delete-single-product'
-);
-const clearCartButton = document.getElementById('clear-cart');
-const orderCartButton = document.getElementById('order-now');
-const patchAmountButtons = document.getElementsByClassName('patch-amount');
+const patchBtns = document.querySelectorAll('.patch-amount');
+const deleteBtns = document.querySelectorAll('.delete-cart');
 
-clearCartButton.addEventListener('click', async e => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('/carts/api/clear');
-    console.log('response.data :', response.data);
-    location.reload();
-  } catch (error) {
-    console.log('error.response.data :', error.response.data);
-  }
-});
-
-orderCartButton.addEventListener('click', async e => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('/orders/api/');
-    console.log('response.data :', response.data);
-    location.reload();
-  } catch (error) {
-    console.log('error.response.data :', error.response.data);
-  }
-});
-
-for (const deleteButton of deleteSingleProductButtons) {
-  deleteButton.addEventListener('click', async e => {
+for (const button of patchBtns) {
+  button.addEventListener('click', async e => {
     e.preventDefault();
+    button.disabled = true;
 
-    const { parentElement: form } = deleteButton;
-    const fields = ['product-id', 'amount'];
-
+    const { parentElement: form } = button;
+    const { parentElement: card } = form;
+    const fields = ['cart-id'];
     const elements = grabElementsByName(form, fields);
 
-    const product = elements['product-id'];
-    const amount = isNaN(parseInt(elements['amount']))
-      ? 1
-      : parseInt(elements['amount']);
-
+    const cart = elements['cart-id'];
+    const mode = button.name === 'increase' ? 'increase' : 'decrease';
+    const amount = grabDOMElementByName(form, 'amount');
     try {
-      const response = await axios.post('/carts/api/delete-item', {
-        product,
-        amount,
-      });
-      console.log('response.data :', response.data);
-      location.reload();
-    } catch (error) {
-      console.log('error.response.data :', error.response.data);
-    }
-  });
-}
-
-for (const patchBtn of patchAmountButtons) {
-  patchBtn.addEventListener('click', async e => {
-    e.preventDefault();
-    try {
-      clearErrors();
-
-      const { parentElement: form } = patchBtn;
-      const fields = ['product-id', 'amount'];
-      const elements = grabElementsByName(form, fields);
-      const { name: mode } = e.target;
-
-      const invalidFields = patchValidation(mode, elements);
-
-      // Shows errors on DOM if there is
-      if (invalidFields.length) {
-        return invalidFields.forEach(field =>
-          displayError(field, forms.ADD_PRODUCT)
-        );
-      }
-
-      const product = elements['product-id'];
-      const amount = grabDOMElementByName(form, 'amount');
-
-      const response = await axios.patch('/carts/api/', {
-        product,
+      const response = await axios.patch(`/carts/api/${cart}`, {
         mode,
       });
+      // amount.value = response.data.cart.amount;
 
-      if (response.data.success) {
-        amount.value = response.data.cart.amount;
-      }
+      const newCard = await axios.get(`/carts/cards/${cart}`);
+      console.log('newCard :', newCard);
+      card.innerHTML = newCard.data;
 
       console.log('response.data :', response.data);
     } catch (error) {
-      console.log(error);
+      console.log('error.response :', error.response);
     }
+    button.disabled = false;
   });
 }
+
+for (const button of deleteBtns) {
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    button.disabled = true;
+
+    const { parentElement: form } = button;
+    const { parentElement: card } = form;
+    const fields = ['cart-id'];
+    const elements = grabElementsByName(form, fields);
+
+    const cart = elements['cart-id'];
+    try {
+      const response = await axios.delete(`/carts/api/${cart}`);
+      card.remove();
+      console.log('response.data :', response.data);
+    } catch (error) {
+      console.log('error.response :', error.response);
+    }
+
+    button.disabled = false;
+  });
+}
+
+// const patchCart = e => {
+//   e.preventDefault();
+// };

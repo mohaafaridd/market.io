@@ -2,25 +2,15 @@
 
 <button id="clear-cart" {{#unless cart}} disabled {{/unless}}>Clear your cart</button>
 
-{{#each cart}}
-<div class="product-card">
-    {{> productCard product}}
-    <h5 class="single-cart-bill">bill {{bill}}</h5>
-    <a href="/stores/{{store.username}}">Seller: {{store.name}}</a>
-    <form>
-        <label for="amount">Amount</label>
-        <input type="text" name="product-id" value="{{product.id}}">
-        <input type="text" id="amount" name="amount" value="{{amount}}" readonly>
-        <small class="error amount"></small>
-        <button class="patch-amount" name="increase">Add + </button>
-        <button class="patch-amount" name="decrease">Subtract - </button>
-    </form>
-    <form>
-        <input type="text" name="product-id" value="{{product.id}}">
-        <button class="delete-single-product">Delete</button>
-    </form>
-</div>
-{{/each}}
+<section class="cart-grid">
+    {{#each cart}}
+    {{#if bundle}}
+    {{> cartBundle this}}
+    {{else}}
+    {{> cartProduct this}}
+    {{/if}}
+    {{/each}}
+</section>
 
 <h5 id="final-bill">Final bill {{bill}}</h5>
 
