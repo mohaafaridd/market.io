@@ -30,10 +30,11 @@ const search = async (req, res) => {
     maxRating,
     minRating,
     type,
-    page,
+    page = 1,
   } = req.query;
 
   try {
+    console.log('minPrice', minPrice);
     const products = await Product.aggregate([
       {
         $match: {
@@ -45,16 +46,16 @@ const search = async (req, res) => {
               ? { manufacturer: manufacturer }
               : { manufacturer: { $exists: true } },
             maxPrice
-              ? { price: { $lte: maxPrice } }
+              ? { price: { $lte: parseInt(maxPrice) } }
               : { price: { $exists: true } },
             minPrice
-              ? { price: { $gte: minPrice } }
+              ? { price: { $gte: parseInt(minPrice) } }
               : { price: { $exists: true } },
             maxRating
-              ? { score: { $lte: maxRating } }
+              ? { score: { $lte: parseInt(maxRating) } }
               : { score: { $exists: true } },
             minRating
-              ? { score: { $gte: minRating } }
+              ? { score: { $gte: parseInt(minRating) } }
               : { score: { $exists: true } },
           ],
         },

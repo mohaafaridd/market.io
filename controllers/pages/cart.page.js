@@ -55,7 +55,7 @@ const getCart = async (req, res) => {
       },
     },
 
-    // // Step 3.2: Moves the project out of the array
+    // Step 3.2: Moves the project out of the array
     {
       $unwind: {
         path: '$product',
