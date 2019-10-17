@@ -10,17 +10,17 @@ const productRoutes = require('./product.routes');
 const searchRoutes = require('./search.routes');
 const storeRoutes = require('./store.routes');
 const bundleRoutes = require('./bundle.routes');
-const userRoutes = require('./user.routes');
+const userRoutes = require('./users.routes');
 
 const connectRoutes = () => {
-  router.use('/carts', cartRoutes);
-  router.use('/bundles', bundleRoutes);
-  router.use('/couriers', courierRoutes);
-  router.use('/orders', orderRoutes);
-  router.use('/products', productRoutes);
-  router.use('/search', searchRoutes);
-  router.use('/stores', storeRoutes);
-  router.use('/users', userRoutes);
+  router.use('/api/carts', cartRoutes);
+  router.use('/api/bundles', bundleRoutes);
+  router.use('/api/couriers', courierRoutes);
+  router.use('/api/orders', orderRoutes);
+  router.use('/api/products', productRoutes);
+  router.use('/api/search', searchRoutes);
+  router.use('/api/stores', storeRoutes);
+  router.use('/api/users', userRoutes);
   router.use('/', indexRoutes);
   return router;
 };

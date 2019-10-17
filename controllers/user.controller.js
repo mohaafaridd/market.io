@@ -1,10 +1,15 @@
 const ms = require('ms');
-const User = require('../../models/user.model');
-const { extractErrors } = require('./helpers/validator.helper');
+const User = require('../models/user.model');
+const { extractErrors } = require('./helpers/validator');
+
+// @route       POST api/users
+// @desc        Register a user
+// @access      Public
 const postRegister = async (req, res) => {
   try {
-    const user = new User(req.body.user);
+    const user = new User(req.body);
     await user.save();
+
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
     res
@@ -18,19 +23,22 @@ const postRegister = async (req, res) => {
         token,
       });
   } catch (error) {
-    const extracted = extractErrors(error.errors);
+    const errors = extractErrors(error.errors);
+
     res.status(400).json({
       success: false,
       message: 'Registration failed',
-      cause: extracted,
+      cause: errors,
     });
   }
 };
 
+// @route       POST api/users
+// @desc        Register a user
+// @access      Public
 const postLogin = async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.user);
-
+    const user = await User.findByCredentials(req.body);
     const token = await user.generateAuthToken();
     const maxAge = ms(process.env.MAX_AGE);
 
@@ -48,6 +56,9 @@ const postLogin = async (req, res) => {
   }
 };
 
+// @route       POST api/users
+// @desc        Register a user
+// @access      Private
 const postLogout = async (req, res) => {
   try {
     req.client.tokens = req.client.tokens.filter(
@@ -67,29 +78,8 @@ const postLogout = async (req, res) => {
   }
 };
 
-const patchInformation = async (req, res) => {
-  try {
-    const { updates } = req.body;
-
-    const user = await User.findOneAndUpdate({ _id: req.client.id }, updates, {
-      new: true,
-      runValidators: true,
-      context: 'query',
-    });
-
-    res.json({ success: true, message: 'Successfully updated!', user });
-  } catch (error) {
-    res.json({
-      success: false,
-      message: 'Update failed',
-      error: error.message,
-    });
-  }
-};
-
 module.exports = {
   postRegister,
   postLogin,
   postLogout,
-  patchInformation,
 };
