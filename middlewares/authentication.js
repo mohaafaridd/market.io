@@ -1,4 +1,3 @@
-const Courier = require('../models/courier.model');
 const Store = require('../models/store.model');
 const User = require('../models/user.model');
 const Role = require('./role');
@@ -7,13 +6,6 @@ const getClient = async req => {
   const { role } = req.client;
 
   switch (role) {
-    case Role.Courier:
-      const courier = await Courier.findOne({
-        _id: req.client.id,
-        'tokens.token': req.token,
-      });
-      return courier;
-
     case Role.Store:
       const store = await Store.findOne({
         _id: req.client.id,

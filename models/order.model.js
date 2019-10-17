@@ -15,11 +15,6 @@ const schema = new Schema(
       ref: 'User',
     },
 
-    courier: {
-      type: ObjectId,
-      ref: 'Courier',
-    },
-
     carts: [{ type: ObjectId, ref: 'Cart' }],
   },
   { timestamps: true }
