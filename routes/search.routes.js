@@ -1,16 +1,13 @@
 const express = require('express');
-const pages = require('../controllers/pages/search.page');
-const controller = require('../controllers/api/search.controller');
-const authorization = require('../middlewares/authorization');
-const authentication = require('../middlewares/authentication');
+
+// Validate Form
+const controller = require('../controllers/search.controller');
+
 const router = express.Router();
 
-router.get(
-  '/',
-  authorization(),
-  authentication,
-  controller.getProducts,
-  pages.getSearch
-);
+// @route       GET api/search
+// @desc        Search for bundles or products
+// @access      Public
+router.get('/', controller.search);
 
 module.exports = router;
