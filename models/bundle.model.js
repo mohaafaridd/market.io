@@ -14,6 +14,7 @@ const schema = new Schema({
 
   products: [
     {
+      _id: false,
       product: { type: ObjectId, ref: 'Product' },
       discount: {
         type: Number,
