@@ -1,4 +1,5 @@
 const express = require('express');
+
 // Validate Form
 const validation = require('../middlewares/validationResult');
 const validator = require('../controllers/user.validator');
@@ -16,12 +17,12 @@ const router = express.Router();
 router.post('/', validator.postRegister, validation, controller.postRegister);
 
 // @route       POST api/users/login
-// @desc        login a user
+// @desc        Logout a user
 // @access      Public
 router.post('/login', validator.postLogin, validation, controller.postLogin);
 
 // @route       POST api/users/logout
-// @desc        Register a user
+// @desc        Logout a user
 // @access      Private
 router.post(
   '/logout',

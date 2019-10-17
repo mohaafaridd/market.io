@@ -1,41 +1,54 @@
 const express = require('express');
-const api = require('./api/stores.api');
-const pages = require('../controllers/pages/store.page');
+
+// Validate Form
+const validation = require('../middlewares/validationResult');
+const validator = require('../controllers/store.validator');
+const controller = require('../controllers/store.controller');
+// Validate Role
 const authorization = require('../middlewares/authorization');
 const authentication = require('../middlewares/authentication');
 const Role = require('../middlewares/role');
 
 const router = express.Router();
-router.use('/api', api);
 
-// router.get(
-//   '/dashboard',
-//   authorization(Role.Store),
-//   authentication,
-//   pages.getStatistics
-// );
+// @route       POST api/stores
+// @desc        Register a store
+// @access      Public
+router.post('/', validator.postRegister, validation, controller.postRegister);
 
-// router.get(
-//   '/top/:limit',
-//   authorization(Role.Store),
-//   authentication,
-//   pages.getTopSeller
-// );
+// @route       POST api/stores/login
+// @desc        Login a store
+// @access      Public
+router.post('/login', validator.postLogin, validation, controller.postLogin);
 
-// router.get(
-//   '/add-product',
-//   authorization(Role.Store),
-//   authentication,
-//   pages.addProduct
-// );
+// @route       POST api/stores/logout
+// @desc        Logout a store
+// @access      Private
+router.post(
+  '/logout',
+  authorization(Role.Store),
+  authentication,
+  controller.postLogout
+);
 
-// router.get(
-//   '/bundles',
-//   authorization(Role.Store),
-//   authentication,
-//   pages.getBundles
-// );
+// @route       POST api/stores/statistics
+// @desc        Get store statistics
+// @access      Private
+router.get(
+  '/statistics',
+  authorization(Role.Store),
+  authentication,
+  controller.getStatistics
+);
 
-// router.get('/:username', authorization(), authentication, pages.getStore);
+// @route       POST api/stores/p/:id
+// @desc        Get store products
+// @access      Public
+router.get('/p/:id', controller.getProducts);
+
+// @route       POST api/stores/b/:id
+// @desc        Get store bundles
+// @access      Public
+router.get('/b/:id', controller.getBundles);
 
 module.exports = router;

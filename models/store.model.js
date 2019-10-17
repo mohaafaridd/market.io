@@ -54,18 +54,6 @@ const schema = new Schema({
     default: Role.Store,
   },
 
-  score: {
-    type: Number,
-    min: 0,
-    max: 0,
-  },
-
-  voters: {
-    type: Number,
-    default: 0,
-    min: 0,
-  },
-
   tokens: [
     {
       token: {
