@@ -7,11 +7,11 @@ const Role = require('../middlewares/role');
 
 const router = express.Router();
 router.use('/api', api);
-router.get(
-  '/my-orders',
-  authorization(Role.User),
-  authentication,
-  pages.getOrders
-);
-router.get('/:id', authorization(Role.User), authentication, pages.getOrder);
+// router.get(
+//   '/my-orders',
+//   authorization(Role.User),
+//   authentication,
+//   pages.getOrders
+// );
+// router.get('/:id', authorization(Role.User), authentication, pages.getOrder);
 module.exports = router;

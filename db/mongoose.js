@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
 
-mongoose.connection.on('connected', () => {
-  console.log(`Database connected ${process.env.MONGODB_URL}`);
-});
+    console.log('MongoDB Connected...');
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+};
 
-mongoose.connection.on('error', err => {
-  console.log(`database error ${err}`);
-});
+module.exports = connectDB;

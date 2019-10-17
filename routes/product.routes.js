@@ -9,12 +9,12 @@ const api = require('./api/products.api');
 const router = express.Router();
 router.use('/api', api);
 
-router.get(
-  '/:id',
-  authorization(),
-  authentication,
-  controller.getProduct,
-  pages.getProduct
-);
+// router.get(
+//   '/:id',
+//   authorization(),
+//   authentication,
+//   controller.getProduct,
+//   pages.getProduct
+// );
 
 module.exports = router;

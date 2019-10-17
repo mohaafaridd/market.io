@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "test": "jest --watch --runInBand",
-    "build": "gulp"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest --watch --runInBand"
   },
   "engines": {
     "node": "10.3.0"
@@ -15,12 +14,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
     "axios": "^0.19.0",
-    "babelify": "^10.0.0",
     "bcryptjs": "^2.4.3",
-    "browserify": "^16.5.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -28,14 +23,6 @@
     "express": "~4.16.0",
     "express-jwt": "^5.3.1",
     "faker": "^4.1.0",
-    "gulp": "^4.0.2",
-    "gulp-buffer": "0.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-tap": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "gulplog": "^1.0.0",
-    "hbs": "~4.0.1",
-    "http-errors": "~1.6.2",
     "jest": "^24.9.0",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
@@ -46,12 +33,10 @@
     "morgan": "~1.9.0",
     "ms": "^2.1.2",
     "multer": "^1.4.2",
-    "node-sass-middleware": "0.11.0",
     "numeral": "^2.0.6",
     "sharp": "^0.23.0",
     "supertest": "^4.0.2",
-    "validator": "^11.1.0",
-    "watchify": "^3.11.1"
+    "validator": "^11.1.0"
   },
   "devDependencies": {}
 }

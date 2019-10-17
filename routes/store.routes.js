@@ -8,34 +8,34 @@ const Role = require('../middlewares/role');
 const router = express.Router();
 router.use('/api', api);
 
-router.get(
-  '/dashboard',
-  authorization(Role.Store),
-  authentication,
-  pages.getStatistics
-);
+// router.get(
+//   '/dashboard',
+//   authorization(Role.Store),
+//   authentication,
+//   pages.getStatistics
+// );
 
-router.get(
-  '/top/:limit',
-  authorization(Role.Store),
-  authentication,
-  pages.getTopSeller
-);
+// router.get(
+//   '/top/:limit',
+//   authorization(Role.Store),
+//   authentication,
+//   pages.getTopSeller
+// );
 
-router.get(
-  '/add-product',
-  authorization(Role.Store),
-  authentication,
-  pages.addProduct
-);
+// router.get(
+//   '/add-product',
+//   authorization(Role.Store),
+//   authentication,
+//   pages.addProduct
+// );
 
-router.get(
-  '/bundles',
-  authorization(Role.Store),
-  authentication,
-  pages.getBundles
-);
+// router.get(
+//   '/bundles',
+//   authorization(Role.Store),
+//   authentication,
+//   pages.getBundles
+// );
 
-router.get('/:username', authorization(), authentication, pages.getStore);
+// router.get('/:username', authorization(), authentication, pages.getStore);
 
 module.exports = router;
