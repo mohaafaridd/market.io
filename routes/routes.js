@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 const cartRoutes = require('./cart.routes');
-const indexRoutes = require('./index');
 const orderRoutes = require('./order.routes');
 const productRoutes = require('./product.routes');
 const searchRoutes = require('./search.routes');
@@ -19,7 +18,6 @@ const connectRoutes = () => {
   router.use('/api/search', searchRoutes);
   router.use('/api/stores', storeRoutes);
   router.use('/api/users', userRoutes);
-  router.use('/', indexRoutes);
   return router;
 };
 
