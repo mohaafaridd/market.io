@@ -26,9 +26,19 @@ router.post('/login', validator.postLogin, validation, controller.postLogin);
 // @access      Private
 router.post(
   '/logout',
-  authorization(Role.User),
+  authorization([Role.User, Role.Store]),
   authentication,
   controller.postLogout
+);
+
+// @route       GET api/users/me
+// @desc        Gets credentials
+// @access      Private
+router.get(
+  '/me',
+  authorization([Role.User, Role.Store]),
+  authentication,
+  controller.getUser
 );
 
 module.exports = router;

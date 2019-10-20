@@ -78,8 +78,20 @@ const postLogout = async (req, res) => {
   }
 };
 
+// @route       GET api/users/me
+// @desc        Gets credentials
+// @access      Private
+const getUser = (req, res) => {
+  try {
+    res.json({ client: req.client });
+  } catch (error) {
+    res.json({ error });
+  }
+};
+
 module.exports = {
   postRegister,
   postLogin,
   postLogout,
+  getUser,
 };
