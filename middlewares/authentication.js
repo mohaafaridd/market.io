@@ -1,29 +1,12 @@
-const Store = require('../models/store.model');
 const User = require('../models/user.model');
 const Role = require('./role');
 
 const getClient = async req => {
-  const { role } = req.client;
-
-  switch (role) {
-    case Role.Store:
-      const store = await Store.findOne({
-        _id: req.client.id,
-        'tokens.token': req.token,
-      });
-      return store;
-
-    case Role.Administrator:
-    case Role.User:
-      const user = await User.findOne({
-        _id: req.client.id,
-        'tokens.token': req.token,
-      });
-      return user;
-
-    default:
-      return null;
-  }
+  const user = await User.findOne({
+    _id: req.client.id,
+    'tokens.token': req.token,
+  });
+  return user;
 };
 
 const authentication = async (req, res, next) => {

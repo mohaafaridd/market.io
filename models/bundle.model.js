@@ -9,7 +9,7 @@ const schema = new Schema({
 
   store: {
     type: ObjectId,
-    ref: 'Store',
+    ref: 'User',
   },
 
   products: [

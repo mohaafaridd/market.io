@@ -42,7 +42,7 @@ const schema = new Schema(
     store: {
       type: ObjectId,
       required: true,
-      ref: 'Store',
+      ref: 'User',
     },
 
     amount: {

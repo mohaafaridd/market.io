@@ -11,26 +11,6 @@ const Role = require('../middlewares/role');
 
 const router = express.Router();
 
-// @route       POST api/stores
-// @desc        Register a store
-// @access      Public
-router.post('/', validator.postRegister, validation, controller.postRegister);
-
-// @route       POST api/stores/login
-// @desc        Login a store
-// @access      Public
-router.post('/login', validator.postLogin, validation, controller.postLogin);
-
-// @route       POST api/stores/logout
-// @desc        Logout a store
-// @access      Private
-router.post(
-  '/logout',
-  authorization(Role.Store),
-  authentication,
-  controller.postLogout
-);
-
 // @route       POST api/stores/statistics
 // @desc        Get store statistics
 // @access      Private

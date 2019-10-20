@@ -1,5 +1,5 @@
 const Product = require('./product.model');
-const Store = require('./store.model');
+const User = require('./user.model');
 
 const { Schema, model } = require('mongoose');
 
@@ -21,7 +21,7 @@ const schema = new Schema({
   store: {
     type: ObjectId,
     required: true,
-    ref: 'Store',
+    ref: 'User',
   },
 
   score: {
@@ -55,7 +55,7 @@ const changeScore = async (model, id) => {
       return product;
 
     case 'store':
-      const store = await Store.findByIdAndUpdate(
+      const store = await User.findByIdAndUpdate(
         id,
         { score, voters: ratings.length },
         { new: true }
