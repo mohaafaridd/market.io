@@ -20,8 +20,9 @@ const AuthState = props => {
     dispatch({ type: CLIENT_LOADED });
   };
 
-  const registerClient = async client => {
+  const register = async client => {
     if (client) {
+      console.log('client', client);
       dispatch({ type: REGISTER_SUCCESS });
     } else {
       dispatch({ type: REGISTER_FAIL });
@@ -32,7 +33,7 @@ const AuthState = props => {
     <AuthContext.Provider
       value={{
         loadClient,
-        registerClient,
+        register,
       }}
     >
       {props.children}
