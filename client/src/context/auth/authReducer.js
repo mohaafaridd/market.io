@@ -1,4 +1,10 @@
-import { CLIENT_LOADED, REGISTER_SUCCESS, REGISTER_FAIL } from '../types';
+import {
+  CLIENT_LOADED,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+} from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -7,10 +13,11 @@ export default (state, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        client: action.payload,
+        client: action.payload.client,
       };
 
     case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         ...action.payload,
@@ -19,6 +26,7 @@ export default (state, action) => {
       };
 
     case REGISTER_FAIL:
+    case LOGIN_FAIL:
       return { ...state };
 
     default:

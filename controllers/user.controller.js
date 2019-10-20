@@ -48,7 +48,7 @@ const postLogin = async (req, res) => {
       .json({
         success: true,
         message: `Welcome back ${user.name}!`,
-        user,
+        client: user,
         token,
       });
   } catch (error) {

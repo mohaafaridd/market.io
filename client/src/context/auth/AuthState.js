@@ -7,6 +7,8 @@ import {
   CLIENT_LOADED,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   AUTH_ERROR,
 } from '../types';
 
@@ -30,13 +32,25 @@ const AuthState = props => {
     }
   };
 
+  // Register a user or a store
   const register = async client => {
     try {
       const response = await axios.post('/api/users', client);
       dispatch({ type: REGISTER_SUCCESS, payload: response.data });
       loadClient();
     } catch (error) {
-      dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
+      dispatch({ type: REGISTER_FAIL, payload: error.response.data.message });
+    }
+  };
+
+  // Register a user or a store
+  const login = async client => {
+    try {
+      const response = await axios.post('/api/users/login', client);
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+      loadClient();
+    } catch (error) {
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
   };
 
@@ -46,6 +60,7 @@ const AuthState = props => {
         client: state.client,
         loadClient,
         register,
+        login,
       }}
     >
       {props.children}

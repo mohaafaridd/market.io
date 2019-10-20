@@ -26,7 +26,6 @@ const Register = () => {
       role.trim() === ''
     ) {
       console.log('Please enter all fields');
-      // setAlert('Please enter all fields', 'danger');
     } else {
       register(user);
     }

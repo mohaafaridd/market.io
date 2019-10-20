@@ -9,6 +9,7 @@ import AuthState from './context/auth/AuthState';
 /* Components */
 import Navbar from './components/layout/Navbar';
 import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Navbar />
 
           <Register />
+          <Login />
         </Fragment>
       </AuthState>
     </CookiesProvider>
