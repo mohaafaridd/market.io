@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { CookiesProvider } from 'react-cookie';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -15,12 +16,16 @@ function App() {
   return (
     <CookiesProvider>
       <AuthState>
-        <Fragment>
-          <Navbar />
+        <Router>
+          <Fragment>
+            <Navbar />
 
-          <Register />
-          <Login />
-        </Fragment>
+            <Switch>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </Switch>
+          </Fragment>
+        </Router>
       </AuthState>
     </CookiesProvider>
   );

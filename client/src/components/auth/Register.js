@@ -78,6 +78,7 @@ const Register = () => {
             required
             value={password}
             onChange={onChange}
+            autoComplete='current-password'
           />
         </div>
         <div className='form-group'>

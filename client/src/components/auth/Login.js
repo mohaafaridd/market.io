@@ -46,6 +46,7 @@ const Login = () => {
             required
             value={password}
             onChange={onChange}
+            autoComplete='current-password'
           />
         </div>
 
