@@ -1,8 +1,14 @@
 import React, { useReducer } from 'react';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import { CLIENT_LOADED, REGISTER_SUCCESS, REGISTER_FAIL } from '../types';
+import {
+  CLIENT_LOADED,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  AUTH_ERROR,
+} from '../types';
 
 const AuthState = props => {
   const [cookies] = useCookies(['token', 'client']);
@@ -16,22 +22,28 @@ const AuthState = props => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const loadClient = async () => {
-    const token = cookies.token;
-    dispatch({ type: CLIENT_LOADED });
+    try {
+      const response = await axios.get('/api/users/me');
+      dispatch({ type: CLIENT_LOADED, payload: response.data });
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR });
+    }
   };
 
   const register = async client => {
-    if (client) {
-      console.log('client', client);
-      dispatch({ type: REGISTER_SUCCESS });
-    } else {
-      dispatch({ type: REGISTER_FAIL });
+    try {
+      const response = await axios.post('/api/users', client);
+      dispatch({ type: REGISTER_SUCCESS, payload: response.data });
+      loadClient();
+    } catch (error) {
+      dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
     }
   };
 
   return (
     <AuthContext.Provider
       value={{
+        client: state.client,
         loadClient,
         register,
       }}

@@ -89,7 +89,6 @@ const Register = () => {
             required
             value='User'
             onChange={onChange}
-            checked
           />{' '}
           User
           <input

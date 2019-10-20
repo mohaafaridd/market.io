@@ -19,7 +19,7 @@ const postRegister = async (req, res) => {
       .json({
         success: true,
         message: 'Registered Successfully!',
-        user,
+        client: user,
         token,
       });
   } catch (error) {
