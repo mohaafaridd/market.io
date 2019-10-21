@@ -1,10 +1,9 @@
 import {
   CLIENT_LOADED,
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   AUTH_ERROR,
+  LOGOUT,
 } from '../types';
 
 export default (state, action) => {
@@ -12,26 +11,37 @@ export default (state, action) => {
     case CLIENT_LOADED:
       return {
         ...state,
+        client: action.payload.client,
         isAuthenticated: true,
         loading: false,
-        client: action.payload.client,
       };
 
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        client: action.payload.client,
         isAuthenticated: true,
         loading: false,
       };
 
-    case AUTH_ERROR:
-    case REGISTER_FAIL:
-    case LOGIN_FAIL:
+    case LOGOUT:
       return {
         ...state,
+        client: null,
         isAuthenticated: false,
+        loading: false,
+        token: false,
+      };
+
+    case AUTH_ERROR:
+      return {
+        ...state,
+        client: null,
+        error: action.payload,
+        isAuthenticated: false,
+        loading: false,
+        token: false,
       };
 
     default:

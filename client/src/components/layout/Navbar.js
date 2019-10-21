@@ -4,11 +4,15 @@ import AuthContext from '../../context/auth/authContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, client, loadClient } = authContext;
+  const { isAuthenticated, client, loadClient, logout } = authContext;
 
   useEffect(() => {
     loadClient();
   }, []);
+
+  const onLogout = e => {
+    logout();
+  };
 
   const guestLinks = (
     <Fragment>
@@ -34,7 +38,9 @@ const Navbar = () => {
         </li>
       )}
       <li>
-        <a href='#!'>Logout</a>
+        <a href='#!' onClick={onLogout}>
+          Logout
+        </a>
       </li>
     </Fragment>
   );
