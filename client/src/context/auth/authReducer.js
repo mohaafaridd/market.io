@@ -4,6 +4,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  AUTH_ERROR,
 } from '../types';
 
 export default (state, action) => {
@@ -25,9 +26,13 @@ export default (state, action) => {
         loading: false,
       };
 
+    case AUTH_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
-      return { ...state };
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
 
     default:
       return state;

@@ -17,7 +17,7 @@ const AuthState = props => {
   const initialState = {
     client: null,
     error: null,
-    isAuthenticated: null,
+    isAuthenticated: false,
     loading: true,
     token: cookies.token,
   };
@@ -58,6 +58,7 @@ const AuthState = props => {
     <AuthContext.Provider
       value={{
         client: state.client,
+        isAuthenticated: state.isAuthenticated,
         loadClient,
         register,
         login,
