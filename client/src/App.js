@@ -6,6 +6,7 @@ import './App.css';
 
 /* Contexts */
 import AuthState from './context/auth/AuthState';
+import ProductState from './context/product/ProductState';
 
 /* Components */
 import Navbar from './components/layout/Navbar';
@@ -16,16 +17,18 @@ function App() {
   return (
     <CookiesProvider>
       <AuthState>
-        <Router>
-          <Fragment>
-            <Navbar />
+        <ProductState>
+          <Router>
+            <Fragment>
+              <Navbar />
 
-            <Switch>
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
-            </Switch>
-          </Fragment>
-        </Router>
+              <Switch>
+                <Route exact path='/register' component={Register} />
+                <Route exact path='/login' component={Login} />
+              </Switch>
+            </Fragment>
+          </Router>
+        </ProductState>
       </AuthState>
     </CookiesProvider>
   );
