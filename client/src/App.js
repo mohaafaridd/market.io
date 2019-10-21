@@ -13,6 +13,9 @@ import Navbar from './components/layout/Navbar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+/* Pages */
+import StoreDashboard from './components/pages/StoreDashboard';
+
 function App() {
   return (
     <CookiesProvider>
@@ -25,6 +28,7 @@ function App() {
               <Switch>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route path='/store' component={StoreDashboard} />
               </Switch>
             </Fragment>
           </Router>
