@@ -1,9 +1,12 @@
 import React, { Fragment, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import ProductContext from '../../context/product/productContext';
 
 const AddProduct = () => {
   const productContext = useContext(ProductContext);
-  const { addProduct, updateProduct, getProducts, current } = productContext;
+  let history = useHistory();
+
+  const { addProduct, updateProduct, clearCurrent, current } = productContext;
 
   const [product, setProduct] = useState({
     _id: current ? current._id : undefined,
@@ -35,15 +38,33 @@ const AddProduct = () => {
   const onSubmit = async e => {
     e.preventDefault();
     if (current) {
-      updateProduct(product);
+      await updateProduct(product);
     } else {
-      addProduct(product);
+      await addProduct(product);
     }
+    history.push('/store/products');
+  };
+
+  const onClear = () => {
+    clearCurrent();
+    setProduct({
+      _id: undefined,
+      category: '',
+      manufacturer: '',
+      name: '',
+      description: '',
+      color: '',
+      amount: '',
+      price: '',
+      discount: '',
+      store: '',
+    });
   };
 
   return (
     <Fragment>
-      <h3>Add product</h3>
+      <h3>{current ? 'Edit product' : 'Add product'}</h3>
+      <button onClick={onClear}>Clear</button>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
           <label htmlFor='category'>Category</label>
@@ -141,7 +162,7 @@ const AddProduct = () => {
           />
         </div>
 
-        <input type='submit' value={current ? 'Edit Product' : 'Add Product'} />
+        <input type='submit' value={current ? 'Edit Product' : 'Create'} />
       </form>
     </Fragment>
   );

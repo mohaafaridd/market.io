@@ -1,5 +1,6 @@
 import {
   SET_CURRENT,
+  CLEAR_CURRENT,
   SET_LOADING,
   PRODUCT_ERROR,
   ADD_PRODUCT,
@@ -16,6 +17,9 @@ export default (state, action) => {
 
     case SET_CURRENT:
       return { ...state, current: action.payload };
+
+    case CLEAR_CURRENT:
+      return { ...state, current: null };
 
     case ADD_PRODUCT:
       return {

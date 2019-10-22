@@ -11,6 +11,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   SET_CURRENT,
+  CLEAR_CURRENT,
 } from '../types';
 
 const ProductState = props => {
@@ -70,6 +71,10 @@ const ProductState = props => {
     }
   };
 
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -82,6 +87,7 @@ const ProductState = props => {
         getProducts,
         updateProduct,
         deleteProduct,
+        clearCurrent,
       }}
     >
       {props.children}
