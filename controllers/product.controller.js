@@ -11,10 +11,10 @@ const postProduct = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'You added a product',
-      payload: product,
+      product,
     });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message, error });
   }
 };
 
@@ -28,10 +28,10 @@ const getProduct = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Product found',
-      payload: product,
+      product,
     });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message, error });
   }
 };
 
@@ -71,10 +71,10 @@ const updateProduct = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Product updated',
-      payload: product,
+      product,
     });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message, error });
   }
 };
 
@@ -91,7 +91,7 @@ const deleteProduct = async (req, res) => {
       message: 'Product removed',
     });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message, error });
   }
 };
 

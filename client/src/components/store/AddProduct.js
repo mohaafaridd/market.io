@@ -1,15 +1,19 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
+import ProductContext from '../../context/product/productContext';
 
 const AddProduct = () => {
+  const productContext = useContext(ProductContext);
+  const { addProduct } = productContext;
+
   const [product, setProduct] = useState({
-    category: null,
-    manufacturer: null,
-    name: null,
-    description: null,
-    color: null,
-    amount: null,
-    price: null,
-    discount: null,
+    category: '',
+    manufacturer: '',
+    name: '',
+    description: '',
+    color: '',
+    amount: '',
+    price: '',
+    discount: '',
   });
   const {
     category,
@@ -21,13 +25,19 @@ const AddProduct = () => {
     price,
     discount,
   } = product;
+
   const onChange = e =>
     setProduct({ ...product, [e.target.name]: e.target.value });
+
+  const onSubmit = e => {
+    e.preventDefault();
+    addProduct(product);
+  };
 
   return (
     <Fragment>
       <h3>Add product</h3>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className='form-group'>
           <label htmlFor='category'>Category</label>
           <input
