@@ -6,7 +6,7 @@ const AddProduct = () => {
   const { addProduct, updateProduct, getProducts, current } = productContext;
 
   const [product, setProduct] = useState({
-    _id: current ? current._id : '',
+    _id: current ? current._id : undefined,
     category: current ? current.category : '',
     manufacturer: current ? current.manufacturer : '',
     name: current ? current.name : '',
@@ -36,7 +36,6 @@ const AddProduct = () => {
     e.preventDefault();
     if (current) {
       updateProduct(product);
-      // getProducts(product.store);
     } else {
       addProduct(product);
     }

@@ -10,18 +10,24 @@ const Products = () => {
   const { client } = authContext;
 
   useEffect(() => {
-    getProducts(client);
+    if (client) {
+      getProducts(client._id);
+    }
   }, [client]);
 
   if (loading) {
     return <h4>Loading...</h4>;
   }
 
+  if (!loading && products.length === 0) {
+    return <h4>You don't have any products to show</h4>;
+  }
+
   return (
     <div>
       {products &&
         products.map(product => (
-          <ProductItem product={product} key={product._id} />
+          <ProductItem key={product._id} product={product} />
         ))}
     </div>
   );

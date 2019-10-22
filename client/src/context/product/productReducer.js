@@ -18,11 +18,10 @@ export default (state, action) => {
       return { ...state, current: action.payload };
 
     case ADD_PRODUCT:
-    case UPDATE_PRODUCT:
       return {
         ...state,
         current: null,
-        products: null,
+        products: [...state.products, action.payload],
         error: null,
       };
 
@@ -32,6 +31,24 @@ export default (state, action) => {
         products: action.payload.products,
         current: null,
         error: null,
+        loading: false,
+      };
+
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map(product =>
+          product._id === action.payload._id ? action.payload : product
+        ),
+        loading: false,
+      };
+
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter(
+          product => product._id !== action.payload._id
+        ),
         loading: false,
       };
 

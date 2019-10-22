@@ -9,10 +9,14 @@ const ProductItem = ({ product }) => {
   const { name, price, store } = product;
 
   const { client } = authContext;
-  const { setCurrent } = productContext;
+  const { setCurrent, deleteProduct } = productContext;
 
   const editProduct = () => {
     setCurrent(product);
+  };
+
+  const onDelete = () => {
+    deleteProduct(product);
   };
 
   const owner = (
@@ -21,7 +25,9 @@ const ProductItem = ({ product }) => {
       <a href='#!' onClick={editProduct}>
         Edit
       </a>
-      <a href='#!'>Delete</a>
+      <a href='#!' onClick={onDelete}>
+        Delete
+      </a>
     </Fragment>
   );
 

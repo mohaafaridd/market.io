@@ -15,7 +15,7 @@ import {
 
 const ProductState = props => {
   const initialState = {
-    products: null,
+    products: [],
     loading: false,
     current: null,
     error: null,
@@ -42,7 +42,7 @@ const ProductState = props => {
   const getProducts = async store => {
     try {
       dispatch({ type: SET_LOADING });
-      const response = await axios.get(`/api/stores/p/${store._id}`);
+      const response = await axios.get(`/api/stores/p/${store}`);
       dispatch({ type: GET_PRODUCTS, payload: response.data });
     } catch (error) {
       dispatch({ type: PRODUCT_ERROR, payload: error });
@@ -51,12 +51,20 @@ const ProductState = props => {
 
   const updateProduct = async product => {
     try {
-      console.log('product', product);
       const response = await axios.patch(
         `/api/products/${product._id}`,
         product
       );
-      dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+      dispatch({ type: UPDATE_PRODUCT, payload: product });
+    } catch (error) {
+      dispatch({ type: PRODUCT_ERROR, payload: error });
+    }
+  };
+
+  const deleteProduct = async product => {
+    try {
+      await axios.delete(`/api/products/${product._id}`);
+      dispatch({ type: DELETE_PRODUCT, payload: product });
     } catch (error) {
       dispatch({ type: PRODUCT_ERROR, payload: error });
     }
@@ -73,6 +81,7 @@ const ProductState = props => {
         addProduct,
         getProducts,
         updateProduct,
+        deleteProduct,
       }}
     >
       {props.children}
