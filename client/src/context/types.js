@@ -1,5 +1,6 @@
 // Loading
 export const SET_LOADING = 'SET_LOADING';
+export const SET_CURRENT = 'SET_CURRENT';
 
 // Authentication
 export const CLIENT_LOADED = 'CLIENT_LOADED';

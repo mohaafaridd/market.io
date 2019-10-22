@@ -1,4 +1,5 @@
 import {
+  SET_CURRENT,
   SET_LOADING,
   PRODUCT_ERROR,
   ADD_PRODUCT,
@@ -13,10 +14,14 @@ export default (state, action) => {
     case SET_LOADING:
       return { ...state, loading: true };
 
+    case SET_CURRENT:
+      return { ...state, current: action.payload };
+
     case ADD_PRODUCT:
+    case UPDATE_PRODUCT:
       return {
         ...state,
-        current: action.payload.product,
+        current: null,
         products: null,
         error: null,
       };

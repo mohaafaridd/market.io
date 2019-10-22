@@ -10,6 +10,7 @@ import {
   GET_PRODUCTS,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
+  SET_CURRENT,
 } from '../types';
 
 const ProductState = props => {
@@ -21,6 +22,11 @@ const ProductState = props => {
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);
+
+  // Set current product to edit
+  const setCurrent = product => {
+    dispatch({ type: SET_CURRENT, payload: product });
+  };
 
   // Adds product to database
   const addProduct = async product => {
@@ -43,6 +49,19 @@ const ProductState = props => {
     }
   };
 
+  const updateProduct = async product => {
+    try {
+      console.log('product', product);
+      const response = await axios.patch(
+        `/api/products/${product._id}`,
+        product
+      );
+      dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_ERROR, payload: error });
+    }
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -50,8 +69,10 @@ const ProductState = props => {
         current: state.current,
         loading: state.loading,
         error: state.error,
+        setCurrent,
         addProduct,
         getProducts,
+        updateProduct,
       }}
     >
       {props.children}

@@ -3,18 +3,21 @@ import ProductContext from '../../context/product/productContext';
 
 const AddProduct = () => {
   const productContext = useContext(ProductContext);
-  const { addProduct } = productContext;
+  const { addProduct, updateProduct, getProducts, current } = productContext;
 
   const [product, setProduct] = useState({
-    category: '',
-    manufacturer: '',
-    name: '',
-    description: '',
-    color: '',
-    amount: '',
-    price: '',
-    discount: '',
+    _id: current ? current._id : '',
+    category: current ? current.category : '',
+    manufacturer: current ? current.manufacturer : '',
+    name: current ? current.name : '',
+    description: current ? current.description : '',
+    color: current ? current.color : '',
+    amount: current ? current.amount : '',
+    price: current ? current.price : '',
+    discount: current ? current.discount : '',
+    store: current ? current.store : '',
   });
+
   const {
     category,
     manufacturer,
@@ -29,9 +32,14 @@ const AddProduct = () => {
   const onChange = e =>
     setProduct({ ...product, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    addProduct(product);
+    if (current) {
+      updateProduct(product);
+      // getProducts(product.store);
+    } else {
+      addProduct(product);
+    }
   };
 
   return (
@@ -134,7 +142,7 @@ const AddProduct = () => {
           />
         </div>
 
-        <input type='submit' value='Add Product' />
+        <input type='submit' value={current ? 'Edit Product' : 'Add Product'} />
       </form>
     </Fragment>
   );
