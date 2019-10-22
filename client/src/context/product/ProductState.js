@@ -6,6 +6,7 @@ import {
   PRODUCT_ERROR,
   ADD_PRODUCT,
   GET_PRODUCT,
+  GET_PRODUCTS,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
 } from '../types';
@@ -25,7 +26,17 @@ const ProductState = props => {
       const response = await axios.post('/api/products', product);
       dispatch({ type: ADD_PRODUCT, payload: response.data });
     } catch (error) {
-      dispatch({ type: PRODUCT_ERROR });
+      dispatch({ type: PRODUCT_ERROR, payload: error });
+    }
+  };
+
+  // Gets products by store from database
+  const getProducts = async store => {
+    try {
+      const response = await axios.get(`/api/stores/p/${store._id}`);
+      dispatch({ type: GET_PRODUCTS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_ERROR, payload: error });
     }
   };
 
@@ -36,6 +47,7 @@ const ProductState = props => {
         current: state.current,
         error: state.error,
         addProduct,
+        getProducts,
       }}
     >
       {props.children}

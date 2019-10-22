@@ -7,7 +7,7 @@ const authentication = async (req, res, next) => {
     return next();
   }
 
-  const client = await await User.findOne({
+  const client = await User.findOne({
     _id: req.client.id,
     'tokens.token': req.token,
   });

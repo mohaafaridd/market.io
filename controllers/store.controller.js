@@ -22,11 +22,9 @@ const getProducts = async (req, res) => {
   try {
     const { id } = req.params;
     const products = await Product.find({ store: id });
-    res.json({ success: true, message: 'Search complete', payload: products });
+    res.json({ success: true, message: 'Search complete', products });
   } catch (error) {
-    res
-      .status(400)
-      .json({ success: false, message: 'Search failed', payload: error });
+    res.status(400).json({ success: false, message: 'Search failed', error });
   }
 };
 
@@ -37,11 +35,9 @@ const getBundles = async (req, res) => {
   try {
     const { id } = req.params;
     const bundles = await Bundle.find({ store: id });
-    res.json({ success: true, message: 'Search complete', payload: bundles });
+    res.json({ success: true, message: 'Search complete', bundles });
   } catch (error) {
-    res
-      .status(400)
-      .json({ success: false, message: 'Search failed', payload: error });
+    res.status(400).json({ success: false, message: 'Search failed', error });
   }
 };
 
