@@ -1,3 +1,6 @@
+// Loading
+export const SET_LOADING = 'SET_LOADING';
+
 // Authentication
 export const CLIENT_LOADED = 'CLIENT_LOADED';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';

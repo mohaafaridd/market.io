@@ -82,9 +82,8 @@ const AddProduct = () => {
             id='description'
             required
             onChange={onChange}
-          >
-            {description}
-          </textarea>
+            value={description}
+          ></textarea>
         </div>
 
         <div className='form-group'>

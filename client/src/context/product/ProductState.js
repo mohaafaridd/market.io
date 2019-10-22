@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProductContext from './productContext';
 import productReducer from './productReducer';
 import {
+  SET_LOADING,
   PRODUCT_ERROR,
   ADD_PRODUCT,
   GET_PRODUCT,
@@ -14,6 +15,7 @@ import {
 const ProductState = props => {
   const initialState = {
     products: null,
+    loading: false,
     current: null,
     error: null,
   };
@@ -33,6 +35,7 @@ const ProductState = props => {
   // Gets products by store from database
   const getProducts = async store => {
     try {
+      dispatch({ type: SET_LOADING });
       const response = await axios.get(`/api/stores/p/${store._id}`);
       dispatch({ type: GET_PRODUCTS, payload: response.data });
     } catch (error) {
@@ -45,6 +48,7 @@ const ProductState = props => {
       value={{
         products: state.products,
         current: state.current,
+        loading: state.loading,
         error: state.error,
         addProduct,
         getProducts,

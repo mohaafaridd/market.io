@@ -1,4 +1,5 @@
 import {
+  SET_LOADING,
   PRODUCT_ERROR,
   ADD_PRODUCT,
   GET_PRODUCT,
@@ -9,6 +10,9 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case SET_LOADING:
+      return { ...state, loading: true };
+
     case ADD_PRODUCT:
       return {
         ...state,
@@ -23,6 +27,7 @@ export default (state, action) => {
         products: action.payload.products,
         current: null,
         error: null,
+        loading: false,
       };
 
     case PRODUCT_ERROR:

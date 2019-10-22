@@ -4,7 +4,7 @@ import AuthContext from '../../context/auth/authContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, client, loadClient, logout } = authContext;
+  const { isAuthenticated, client, loadClient, logout, loading } = authContext;
 
   useEffect(() => {
     loadClient();
@@ -13,6 +13,10 @@ const Navbar = () => {
   const onLogout = e => {
     logout();
   };
+
+  if (loading) {
+    return <h4>Loading</h4>;
+  }
 
   const guestLinks = (
     <Fragment>

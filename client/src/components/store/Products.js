@@ -6,12 +6,16 @@ const Products = () => {
   const productContext = useContext(ProductContext);
   const authContext = useContext(AuthContext);
 
-  const { getProducts, products } = productContext;
+  const { getProducts, products, loading } = productContext;
   const { client } = authContext;
 
   useEffect(() => {
     getProducts(client);
   }, [client]);
+
+  if (loading) {
+    return <h4>Loading...</h4>;
+  }
 
   return (
     <div>
