@@ -12,13 +12,7 @@ const StoreNavbar = () => {
         <Link to='/store'>Statistics</Link>
       </li>
       <li>
-        <Link to='/store/add-product'>Add Product</Link>
-      </li>
-      <li>
         <Link to='/store/products'>Products</Link>
-      </li>
-      <li>
-        <Link to='/store/add-bundle'>Add Bundle</Link>
       </li>
       <li>
         <Link to='/store/bundles'>Bundles</Link>

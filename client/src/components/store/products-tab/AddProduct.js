@@ -1,10 +1,7 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import ProductContext from '../../context/product/productContext';
-
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import ProductContext from '../../../context/product/productContext';
 const AddProduct = () => {
   const productContext = useContext(ProductContext);
-  let history = useHistory();
 
   const { addProduct, updateProduct, clearCurrent, current } = productContext;
 
@@ -20,6 +17,21 @@ const AddProduct = () => {
     discount: current ? current.discount : '',
     store: current ? current.store : '',
   });
+
+  useEffect(() => {
+    setProduct({
+      _id: current ? current._id : undefined,
+      category: current ? current.category : '',
+      manufacturer: current ? current.manufacturer : '',
+      name: current ? current.name : '',
+      description: current ? current.description : '',
+      color: current ? current.color : '',
+      amount: current ? current.amount : '',
+      price: current ? current.price : '',
+      discount: current ? current.discount : '',
+      store: current ? current.store : '',
+    });
+  }, [current]);
 
   const {
     category,
@@ -42,7 +54,6 @@ const AddProduct = () => {
     } else {
       await addProduct(product);
     }
-    history.push('/store/products');
   };
 
   const onClear = () => {

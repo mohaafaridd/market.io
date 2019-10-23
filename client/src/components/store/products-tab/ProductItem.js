@@ -1,12 +1,10 @@
 import React, { useContext, Fragment } from 'react';
-import { useHistory } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
-import ProductContext from '../../context/product/productContext';
+import AuthContext from '../../../context/auth/authContext';
+import ProductContext from '../../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
   const authContext = useContext(AuthContext);
   const productContext = useContext(ProductContext);
-  let history = useHistory();
 
   const { name, price, store } = product;
 
@@ -15,7 +13,6 @@ const ProductItem = ({ product }) => {
 
   const editProduct = () => {
     setCurrent(product);
-    history.push('/store/add-product');
   };
 
   const onDelete = () => {
@@ -43,7 +40,7 @@ const ProductItem = ({ product }) => {
 
   return (
     <div>
-      <h3>{name}</h3>
+      <h4>{name}</h4>
       <p>${price}</p>
       {client && client._id === store && owner}
       {client && client.role === 'User' && user}

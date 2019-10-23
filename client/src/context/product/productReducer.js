@@ -25,7 +25,7 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
-        products: [...state.products, action.payload],
+        products: [...state.products, action.payload.product],
         error: null,
       };
 
@@ -54,6 +54,7 @@ export default (state, action) => {
           product => product._id !== action.payload._id
         ),
         loading: false,
+        current: null,
       };
 
     case PRODUCT_ERROR:

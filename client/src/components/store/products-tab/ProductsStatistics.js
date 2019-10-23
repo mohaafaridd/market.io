@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useContext } from 'react';
-import ProductContext from '../../context/product/productContext';
-import AuthContext from '../../context/auth/authContext';
+import ProductContext from '../../../context/product/productContext';
+import AuthContext from '../../../context/auth/authContext';
 import ProductItem from './ProductItem';
 const Products = () => {
   const productContext = useContext(ProductContext);
@@ -24,12 +24,13 @@ const Products = () => {
   }
 
   return (
-    <div>
+    <Fragment>
+      <h3>Products</h3>
       {products &&
         products.map(product => (
           <ProductItem key={product._id} product={product} />
         ))}
-    </div>
+    </Fragment>
   );
 };
 
