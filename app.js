@@ -17,7 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 app.use(connectRoutes());
-
 // Serve Static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder

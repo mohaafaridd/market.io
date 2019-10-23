@@ -7,9 +7,11 @@ const ProductItem = ({ product }) => {
   const productContext = useContext(ProductContext);
 
   const { name, price, store } = product;
-
+  const image = Buffer.from(product.image.data).toString('base64');
   const { client } = authContext;
   const { setCurrent, deleteProduct } = productContext;
+
+  // console.log('image', Buffer.from(image).toString('base64'));
 
   const editProduct = () => {
     setCurrent(product);
@@ -40,6 +42,7 @@ const ProductItem = ({ product }) => {
 
   return (
     <div>
+      <img src={`data:image/jpeg;base64,${image}`} alt='' />
       <h4>{name}</h4>
       <p>${price}</p>
       {client && client._id === store && owner}

@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 
 // Validate Form
 const validation = require('../middlewares/validationResult');
@@ -10,6 +11,18 @@ const authentication = require('../middlewares/authentication');
 const Role = require('../middlewares/role');
 
 const router = express.Router();
+const upload = multer({
+  limits: {
+    fileSize: 2000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
+      return cb(new Error('Please upload an image'));
+    }
+    cb(undefined, true);
+    // cb(undefined, false)
+  },
+});
 
 // @route       POST api/products
 // @desc        Create a product
@@ -27,6 +40,17 @@ router.post(
 // @desc        Get product
 // @access      Public
 router.get('/:id', controller.getProduct);
+
+// @route       POST api/products/:id
+// @desc        Upload an image to database
+// @access      Private
+router.post(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  upload.single('image'),
+  controller.postProductImage
+);
 
 // @route       PATCH api/products/:id
 // @desc        Update a product

@@ -73,7 +73,7 @@ const schema = new Schema(
       default: 0,
     },
 
-    picture: {
+    image: {
       type: Buffer,
     },
 

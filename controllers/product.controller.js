@@ -1,3 +1,5 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Product = require('../models/product.model');
 
 // @route       POST api/products
@@ -28,6 +30,34 @@ const getProduct = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Product found',
+      product,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message, error });
+  }
+};
+
+// @route       POST api/products/:id
+// @desc        Upload an image to database
+// @access      Private
+const postProductImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { client: store } = req;
+    const image = await sharp(req.file.buffer)
+      .resize(250, 250, { fit: 'inside' })
+      .png()
+      .toBuffer();
+    const product = await Product.findOneAndUpdate(
+      { _id: id, store: store._id },
+      { image },
+      { new: true }
+    );
+    // const product = new Product({ ...req.body, store: store.id });
+    // await product.save();
+    res.status(200).json({
+      success: true,
+      message: 'You added a product',
       product,
     });
   } catch (error) {
@@ -98,6 +128,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
   postProduct,
   getProduct,
+  postProductImage,
   updateProduct,
   deleteProduct,
 };
