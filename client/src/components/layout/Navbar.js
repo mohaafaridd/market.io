@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   if (loading) {
-    return <h4>Loading</h4>;
+    return <h4>Loading Navbar</h4>;
   }
 
   const guestLinks = (

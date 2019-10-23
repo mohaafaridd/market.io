@@ -1,7 +1,6 @@
 import {
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_LOADING,
   PRODUCT_ERROR,
   ADD_PRODUCT,
   GET_PRODUCT,
@@ -12,9 +11,6 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
-    case SET_LOADING:
-      return { ...state, loading: true };
-
     case SET_CURRENT:
       return { ...state, current: action.payload };
 
@@ -27,6 +23,7 @@ export default (state, action) => {
         current: null,
         products: [...state.products, action.payload.product],
         error: null,
+        loading: false,
       };
 
     case GET_PRODUCTS:
@@ -53,8 +50,8 @@ export default (state, action) => {
         products: state.products.filter(
           product => product._id !== action.payload._id
         ),
-        loading: false,
         current: null,
+        loading: false,
       };
 
     case PRODUCT_ERROR:
@@ -63,6 +60,7 @@ export default (state, action) => {
         products: null,
         current: null,
         error: action.payload.error,
+        loading: false,
       };
 
     default:

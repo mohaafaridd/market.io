@@ -70,6 +70,7 @@ const AuthState = props => {
       value={{
         client: state.client,
         isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
         loadClient,
         register,
         login,

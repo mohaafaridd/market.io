@@ -7,10 +7,12 @@ import Statistics from '../store/Statistics';
 import ProductsTab from '../store/products-tab/ProductsTab';
 const Dashboard = ({ match }) => {
   const authContext = useContext(AuthContext);
-  const { client } = authContext;
+  const { client, loading } = authContext;
   let history = useHistory();
 
-  if (!client || client.role !== 'Store') {
+  if (loading) {
+    return <h4>Loading Dashboard...</h4>;
+  } else if (!client || client.role !== 'Store') {
     history.push('/');
   }
 

@@ -16,20 +16,17 @@ const Products = () => {
   }, [client]);
 
   if (loading) {
-    return <h4>Loading...</h4>;
-  }
-
-  if (!loading && products.length === 0) {
+    return <h4>Loading products...</h4>;
+  } else if (products.length === 0) {
     return <h4>You don't have any products to show</h4>;
   }
 
   return (
     <Fragment>
       <h3>Products</h3>
-      {products &&
-        products.map(product => (
-          <ProductItem key={product._id} product={product} />
-        ))}
+      {products.map(product => (
+        <ProductItem key={product._id} product={product} />
+      ))}
     </Fragment>
   );
 };

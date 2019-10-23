@@ -1,11 +1,7 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
 
 const StoreNavbar = () => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated, client } = authContext;
-
   return (
     <ul>
       <li>
