@@ -66,7 +66,9 @@ const AddProduct = () => {
 
   const onImageSubmit = e => {
     e.preventDefault();
-    postProductImage(current, image);
+    if (current) {
+      postProductImage(current, image);
+    }
   };
 
   const onClear = () => {
@@ -205,7 +207,9 @@ const AddProduct = () => {
             required
             onChange={e => setImage(e.target.files[0])}
           />
-          <button type='submit'>Submit Image</button>
+          <button disabled={!!!current || !image} type='submit'>
+            Submit Image
+          </button>
         </div>
       </form>
     </Fragment>
