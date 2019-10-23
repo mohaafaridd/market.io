@@ -41,6 +41,8 @@ export default (state, action) => {
         products: state.products.map(product =>
           product._id === action.payload._id ? action.payload : product
         ),
+        current: null,
+        error: null,
         loading: false,
       };
 
@@ -51,6 +53,7 @@ export default (state, action) => {
           product => product._id !== action.payload._id
         ),
         current: null,
+        error: null,
         loading: false,
       };
 

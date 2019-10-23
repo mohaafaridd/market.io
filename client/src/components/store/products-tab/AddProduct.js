@@ -6,16 +6,16 @@ const AddProduct = () => {
   const { addProduct, updateProduct, clearCurrent, current } = productContext;
 
   const [product, setProduct] = useState({
-    _id: current ? current._id : undefined,
-    category: current ? current.category : '',
-    manufacturer: current ? current.manufacturer : '',
-    name: current ? current.name : '',
-    description: current ? current.description : '',
-    color: current ? current.color : '',
-    amount: current ? current.amount : '',
-    price: current ? current.price : '',
-    discount: current ? current.discount : '',
-    store: current ? current.store : '',
+    _id: undefined,
+    category: '',
+    manufacturer: '',
+    name: '',
+    description: '',
+    color: '',
+    amount: '',
+    price: '',
+    discount: '',
+    store: '',
   });
 
   useEffect(() => {
@@ -47,12 +47,12 @@ const AddProduct = () => {
   const onChange = e =>
     setProduct({ ...product, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = e => {
     e.preventDefault();
     if (current) {
-      await updateProduct(product);
+      updateProduct(product);
     } else {
-      await addProduct(product);
+      addProduct(product);
     }
   };
 
