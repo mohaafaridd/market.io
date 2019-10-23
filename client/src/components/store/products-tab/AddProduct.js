@@ -3,7 +3,15 @@ import ProductContext from '../../../context/product/productContext';
 const AddProduct = () => {
   const productContext = useContext(ProductContext);
 
-  const { addProduct, updateProduct, clearCurrent, current } = productContext;
+  const {
+    addProduct,
+    updateProduct,
+    clearCurrent,
+    current,
+    postProductImage,
+  } = productContext;
+
+  const [image, setImage] = useState(null);
 
   const [product, setProduct] = useState({
     _id: undefined,
@@ -54,6 +62,11 @@ const AddProduct = () => {
     } else {
       addProduct(product);
     }
+  };
+
+  const onImageSubmit = e => {
+    e.preventDefault();
+    postProductImage(current, image);
   };
 
   const onClear = () => {
@@ -174,6 +187,26 @@ const AddProduct = () => {
         </div>
 
         <input type='submit' value={current ? 'Edit Product' : 'Create'} />
+      </form>
+
+      <form onSubmit={onImageSubmit}>
+        <h3>
+          {current
+            ? `Change Image for ${current.name}`
+            : 'Please select a product to assign an image'}
+        </h3>
+        <div className='form-group'>
+          <label htmlFor='image'>Image</label>
+          <input
+            disabled={!!!current}
+            type='file'
+            name='image'
+            id='image'
+            required
+            onChange={e => setImage(e.target.files[0])}
+          />
+          <button type='submit'>Submit Image</button>
+        </div>
       </form>
     </Fragment>
   );

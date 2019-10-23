@@ -3,11 +3,11 @@ import ProductContext from '../../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
   const productContext = useContext(ProductContext);
-
-  product.image =
-    product.image && Buffer.from(product.image.data).toString('base64');
   const { name, price, image } = product;
   const { setCurrent, deleteProduct } = productContext;
+
+  // product.image =
+  //   product.image && Buffer.from(product.image.data).toString('base64');
 
   // console.log('image', Buffer.from(image).toString('base64'));
 
@@ -21,7 +21,16 @@ const ProductItem = ({ product }) => {
 
   return (
     <div>
-      <img src={`data:image/jpeg;base64,${image}`} alt='product image' />
+      {image ? (
+        <img
+          src={`data:image/jpeg;base64,${Buffer.from(image.data).toString(
+            'base64'
+          )}`}
+          alt='product image'
+        />
+      ) : (
+        <p>No Image for this product</p>
+      )}
       <h4>{name}</h4>
       <p>${price}</p>
       <a href='#!'>Add to Bundle</a>

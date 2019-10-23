@@ -33,6 +33,7 @@ const ProductState = props => {
     try {
       const response = await axios.post('/api/products', product);
       dispatch({ type: ADD_PRODUCT, payload: response.data });
+      return { response: response.data.product };
     } catch (error) {
       dispatch({ type: PRODUCT_ERROR, payload: error });
     }
@@ -54,7 +55,26 @@ const ProductState = props => {
         `/api/products/${product._id}`,
         product
       );
-      dispatch({ type: UPDATE_PRODUCT, payload: product });
+      dispatch({ type: UPDATE_PRODUCT, payload: response.data.product });
+    } catch (error) {
+      dispatch({ type: PRODUCT_ERROR, payload: error });
+    }
+  };
+
+  const postProductImage = async (product, image) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', image);
+      const response = await axios.post(
+        `/api/products/${product._id}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      dispatch({ type: UPDATE_PRODUCT, payload: response.data.product });
     } catch (error) {
       dispatch({ type: PRODUCT_ERROR, payload: error });
     }
@@ -86,6 +106,7 @@ const ProductState = props => {
         updateProduct,
         deleteProduct,
         clearCurrent,
+        postProductImage,
       }}
     >
       {props.children}

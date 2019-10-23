@@ -20,7 +20,7 @@ export default (state, action) => {
     case ADD_PRODUCT:
       return {
         ...state,
-        current: null,
+        current: action.payload.product,
         products: [...state.products, action.payload.product],
         error: null,
         loading: false,
@@ -41,7 +41,7 @@ export default (state, action) => {
         products: state.products.map(product =>
           product._id === action.payload._id ? action.payload : product
         ),
-        current: null,
+        current: action.payload.product,
         error: null,
         loading: false,
       };
