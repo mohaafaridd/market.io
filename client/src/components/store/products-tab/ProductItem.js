@@ -6,11 +6,6 @@ const ProductItem = ({ product }) => {
   const { name, price, image } = product;
   const { setCurrent, deleteProduct } = productContext;
 
-  // product.image =
-  //   product.image && Buffer.from(product.image.data).toString('base64');
-
-  // console.log('image', Buffer.from(image).toString('base64'));
-
   const editProduct = () => {
     setCurrent(product);
   };
