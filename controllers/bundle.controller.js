@@ -64,7 +64,7 @@ const putBundle = async (req, res) => {
 
     const bundle = await Bundle.findOneAndUpdate(
       { _id: id, store: store._id },
-      { $addToSet: { products: { product, discount } } },
+      { $push: { products: { product, discount } } },
       { context: 'query', runValidators: true, new: true }
     );
 

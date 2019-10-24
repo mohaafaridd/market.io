@@ -16,3 +16,12 @@ export const GET_PRODUCT = 'GET_PRODUCT';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+
+// Bundles
+export const BUNDLE_ERROR = 'BUNDLE_ERROR';
+export const ADD_BUNDLE = 'ADD_BUNDLE';
+export const GET_BUNDLE = 'GET_BUNDLE';
+export const GET_BUNDLES = 'GET_BUNDLES';
+export const PUT_BUNDLE_PRODUCT = 'PUT_BUNDLE_PRODUCT';
+export const UPDATE_BUNDLE = 'UPDATE_BUNDLE';
+export const DELETE_BUNDLE = 'DELETE_BUNDLE';
