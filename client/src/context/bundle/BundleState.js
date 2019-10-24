@@ -25,6 +25,14 @@ const BundleState = props => {
     }
   };
 
+  // const updateBundle = async (bundle) => {
+  //   try {
+  //     const response = await axios.patch(`/api/bundles/${bundle._id}`, bundle);
+  //   } catch (error) {
+
+  //   }
+  // }
+
   return (
     <BundleContext.Provider
       value={{

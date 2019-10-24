@@ -1,14 +1,26 @@
-import React, { Fragment, useContext, useState, useRef } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import BundleContext from '../../../context/bundle/bundleContext';
 const AddBundle = () => {
   const bundleContext = useContext(BundleContext);
-  const name = useRef('');
-
   const { createBundle, bundle } = bundleContext;
+  const [state, setState] = useState({
+    _id: undefined,
+    name: '',
+  });
 
+  useEffect(() => {
+    setState({
+      _id: bundle ? bundle._id : undefined,
+      name: bundle ? bundle.name : '',
+    });
+  }, [bundle]);
+
+  const { name } = state;
+
+  const onChange = e => setState({ ...state, [e.target.name]: e.target.value });
   const onSubmit = e => {
     e.preventDefault();
-    createBundle({ name: name.current.value });
+    createBundle(state);
   };
 
   return (
@@ -19,7 +31,14 @@ const AddBundle = () => {
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <label htmlFor='name'>Name</label>
-            <input type='text' name='name' id='name' required ref={name} />
+            <input
+              type='text'
+              name='name'
+              id='name'
+              required
+              value={name}
+              onChange={onChange}
+            />
           </div>
           <button type='submit'>{bundle ? 'Edit Bundle' : 'Add Bundle'}</button>
         </form>
