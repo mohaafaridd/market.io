@@ -19,7 +19,9 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 // Bundles
 export const SET_BUNDLE = 'SET_BUNDLE';
+export const CLEAR_BUNDLE = 'CLEAR_BUNDLE';
 export const SET_PRODUCT = 'SET_PRODUCT';
+export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
 export const BUNDLE_ERROR = 'BUNDLE_ERROR';
 export const ADD_BUNDLE = 'ADD_BUNDLE';
 export const GET_BUNDLE = 'GET_BUNDLE';

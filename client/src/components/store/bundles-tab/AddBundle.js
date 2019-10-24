@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState, useEffect } from 'react';
 import BundleContext from '../../../context/bundle/bundleContext';
 const AddBundle = () => {
   const bundleContext = useContext(BundleContext);
-  const { createBundle, bundle } = bundleContext;
+  const { clearBundle, createBundle, updateBundle, bundle } = bundleContext;
   const [state, setState] = useState({
     _id: undefined,
     name: '',
@@ -20,14 +20,22 @@ const AddBundle = () => {
   const onChange = e => setState({ ...state, [e.target.name]: e.target.value });
   const onSubmit = e => {
     e.preventDefault();
-    createBundle(state);
+    if (bundle) {
+      updateBundle(state);
+    } else {
+      createBundle(state);
+    }
+  };
+  const onClear = e => {
+    e.preventDefault();
+    clearBundle();
   };
 
   return (
     <Fragment>
       <div>
         <h3>{bundle ? 'Edit Bundle' : 'Add Bundle'}</h3>
-        <button>Clear</button>
+        <button onClick={onClear}>Clear</button>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <label htmlFor='name'>Name</label>
