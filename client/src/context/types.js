@@ -18,6 +18,8 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 // Bundles
+export const SET_BUNDLE = 'SET_BUNDLE';
+export const SET_PRODUCT = 'SET_PRODUCT';
 export const BUNDLE_ERROR = 'BUNDLE_ERROR';
 export const ADD_BUNDLE = 'ADD_BUNDLE';
 export const GET_BUNDLE = 'GET_BUNDLE';

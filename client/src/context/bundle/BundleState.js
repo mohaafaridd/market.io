@@ -7,21 +7,33 @@ import { BUNDLE_ERROR, ADD_BUNDLE } from '../types';
 
 const BundleState = props => {
   const initialState = {
-    products: [],
-    loading: true,
-    current: null,
+    bundle: null,
     error: null,
+    loading: true,
+    product: null,
+    products: [],
   };
 
   const [state, dispatch] = useReducer(bundleReducer, initialState);
 
+  const createBundle = async bundle => {
+    try {
+      const response = await axios.post('/api/bundles', bundle);
+      dispatch({ type: ADD_BUNDLE, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
+  };
+
   return (
     <BundleContext.Provider
       value={{
-        products: state.products,
-        current: state.current,
-        loading: state.loading,
+        bundle: state.bundle,
         error: state.error,
+        loading: state.loading,
+        product: state.product,
+        products: state.products,
+        createBundle,
       }}
     >
       {props.children}

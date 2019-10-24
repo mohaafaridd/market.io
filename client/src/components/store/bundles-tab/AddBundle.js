@@ -1,21 +1,31 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useState, useRef } from 'react';
+import BundleContext from '../../../context/bundle/bundleContext';
 const AddBundle = () => {
+  const bundleContext = useContext(BundleContext);
+  const name = useRef('');
+
+  const { createBundle, bundle } = bundleContext;
+
+  const onSubmit = e => {
+    e.preventDefault();
+    createBundle({ name: name.current.value });
+  };
+
   return (
     <Fragment>
       <div>
-        <h3>Add Bundle</h3>
+        <h3>{bundle ? 'Edit Bundle' : 'Add Bundle'}</h3>
         <button>Clear</button>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='form-group'>
             <label htmlFor='name'>Name</label>
-            <input type='text' name='name' id='name' required />
+            <input type='text' name='name' id='name' required ref={name} />
           </div>
-
-          <button type='submit'>Create</button>
+          <button type='submit'>{bundle ? 'Edit Bundle' : 'Add Bundle'}</button>
         </form>
       </div>
 
-      <div>
+      {/* <div>
         <h3>Add Products to bundle</h3>
         <button>Clear</button>
         <form>
@@ -70,7 +80,7 @@ const AddBundle = () => {
             <button>Delete</button>
           </li>
         </ul>
-      </div>
+      </div> */}
     </Fragment>
   );
 };

@@ -12,7 +12,7 @@ const postBundle = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'You added a bundle',
-      payload: bundle,
+      bundle,
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
