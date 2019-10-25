@@ -11,6 +11,8 @@ import {
   CLEAR_BUNDLE,
   PUT_BUNDLE_PRODUCT,
   GET_BUNDLES,
+  SET_BUNDLE,
+  GET_BUNDLE,
 } from '../types';
 
 const BundleState = props => {
@@ -29,6 +31,10 @@ const BundleState = props => {
     dispatch({ type: CLEAR_BUNDLE });
   };
 
+  const setBundle = bundle => {
+    dispatch({ type: SET_BUNDLE, payload: bundle });
+  };
+
   const setProduct = product => {
     dispatch({ type: SET_PRODUCT, payload: product });
   };
@@ -37,6 +43,15 @@ const BundleState = props => {
     try {
       const response = await axios.get('/api/bundles');
       dispatch({ type: GET_BUNDLES, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
+  };
+
+  const getBundle = async bundle => {
+    try {
+      const response = await axios.get(`/api/bundles/${bundle._id}`);
+      dispatch({ type: GET_BUNDLE, payload: response.data });
     } catch (error) {
       dispatch({ type: BUNDLE_ERROR, payload: error });
     }
@@ -83,10 +98,12 @@ const BundleState = props => {
         products: state.products,
         addBundleProduct,
         setProduct,
+        setBundle,
         clearBundle,
         createBundle,
         updateBundle,
         getBundles,
+        getBundle,
       }}
     >
       {props.children}

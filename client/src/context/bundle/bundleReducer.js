@@ -6,6 +6,8 @@ import {
   SET_PRODUCT,
   PUT_BUNDLE_PRODUCT,
   GET_BUNDLES,
+  SET_BUNDLE,
+  GET_BUNDLE,
 } from '../types';
 
 export default (state, action) => {
@@ -18,6 +20,12 @@ export default (state, action) => {
         product: null,
         error: null,
         loading: false,
+      };
+
+    case GET_BUNDLE:
+      return {
+        ...state,
+        products: action.payload.bundle.products,
       };
 
     case CLEAR_BUNDLE:
@@ -34,6 +42,12 @@ export default (state, action) => {
       return {
         ...state,
         product: action.payload,
+      };
+
+    case SET_BUNDLE:
+      return {
+        ...state,
+        bundle: action.payload,
       };
 
     case ADD_BUNDLE:
@@ -59,10 +73,14 @@ export default (state, action) => {
       };
 
     case PUT_BUNDLE_PRODUCT:
-      console.log('action.payload.bundle', action.payload.bundle);
       return {
         ...state,
         bundle: action.payload.bundle,
+        bundles: state.bundles.map(bundle =>
+          bundle._id === action.payload.bundle._id
+            ? action.payload.bundle
+            : bundle
+        ),
         error: null,
         loading: false,
       };
