@@ -10,15 +10,17 @@ import {
   UPDATE_BUNDLE,
   CLEAR_BUNDLE,
   PUT_BUNDLE_PRODUCT,
+  GET_BUNDLES,
 } from '../types';
 
 const BundleState = props => {
   const initialState = {
     bundle: null,
-    error: null,
-    loading: true,
+    bundles: [],
     product: null,
     products: [],
+    loading: true,
+    error: null,
   };
 
   const [state, dispatch] = useReducer(bundleReducer, initialState);
@@ -31,13 +33,21 @@ const BundleState = props => {
     dispatch({ type: SET_PRODUCT, payload: product });
   };
 
+  const getBundles = async () => {
+    try {
+      const response = await axios.get('/api/bundles');
+      dispatch({ type: GET_BUNDLES, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
+  };
+
   const addBundleProduct = async (bundle, body) => {
     try {
       const response = await axios.put(`/api/bundles/p/${bundle._id}`, {
         product: body.product,
         discount: body.discount,
       });
-      console.log('response', response);
       dispatch({ type: PUT_BUNDLE_PRODUCT, payload: response.data });
     } catch (error) {
       dispatch({ type: BUNDLE_ERROR, payload: error });
@@ -66,6 +76,7 @@ const BundleState = props => {
     <BundleContext.Provider
       value={{
         bundle: state.bundle,
+        bundles: state.bundles,
         error: state.error,
         loading: state.loading,
         product: state.product,
@@ -75,6 +86,7 @@ const BundleState = props => {
         clearBundle,
         createBundle,
         updateBundle,
+        getBundles,
       }}
     >
       {props.children}

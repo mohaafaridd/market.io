@@ -5,10 +5,21 @@ import {
   CLEAR_BUNDLE,
   SET_PRODUCT,
   PUT_BUNDLE_PRODUCT,
+  GET_BUNDLES,
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_BUNDLES:
+      return {
+        ...state,
+        bundles: action.payload.bundles,
+        bundle: null,
+        product: null,
+        error: null,
+        loading: false,
+      };
+
     case CLEAR_BUNDLE:
       return {
         ...state,
