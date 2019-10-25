@@ -63,8 +63,26 @@ const getBundle = async (req, res) => {
     }
     res.status(200).json({
       success: true,
-      message: 'Your got your bundle details!',
+      message: 'You got your bundle details!',
       bundle,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// @route       GET api/bundles/
+// @desc        Gets all store bundles
+// @access      Private
+const getBundles = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const bundles = await Bundle.find({ store: store._id });
+
+    res.status(200).json({
+      success: true,
+      message: 'You got your bundles !',
+      bundles,
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -157,6 +175,7 @@ module.exports = {
   postBundle,
   patchBundle,
   getBundle,
+  getBundles,
   putBundle,
   deleteFromBundle,
   deleteBundle,
