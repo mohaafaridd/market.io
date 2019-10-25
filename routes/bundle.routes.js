@@ -59,6 +59,16 @@ router.patch(
   controller.patchBundle
 );
 
+// @route       GET api/bundles/:id
+// @desc        Gets a bundle data
+// @access      Private
+router.get(
+  '/:id',
+  authorization(Role.Store),
+  authentication,
+  controller.getBundle
+);
+
 // @route       DELETE api/bundles/:id
 // @desc        Deletes bundle
 // @access      Private

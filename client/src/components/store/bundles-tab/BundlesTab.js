@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 
 import AddBundle from './AddBundle';
 import AddProduct from './AddProduct';
+import Products from './Products';
 
 const BundlesTab = () => {
   return (
@@ -9,6 +10,7 @@ const BundlesTab = () => {
       <h1>Bundles</h1>
       <AddBundle />
       <AddProduct />
+      <Products />
     </Fragment>
   );
 };

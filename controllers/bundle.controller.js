@@ -48,6 +48,29 @@ const patchBundle = async (req, res) => {
   }
 };
 
+// @route       GET api/bundles/:id
+// @desc        Gets a bundle data
+// @access      Private
+const getBundle = async (req, res) => {
+  try {
+    const { client: store } = req;
+    const { id } = req.params;
+    const bundle = await Bundle.findOne({ _id: id, store: store._id }).populate(
+      'products.product'
+    );
+    if (!bundle) {
+      throw new Error('No bundle was found');
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Your got your bundle details!',
+      bundle,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
 // @route       PUT api/bundles/:id
 // @desc        Adds product to bundle
 // @access      Private
@@ -133,6 +156,7 @@ const deleteBundle = async (req, res) => {
 module.exports = {
   postBundle,
   patchBundle,
+  getBundle,
   putBundle,
   deleteFromBundle,
   deleteBundle,
