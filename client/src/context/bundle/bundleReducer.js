@@ -44,12 +44,18 @@ export default (state, action) => {
         loading: false,
         product: null,
         products: [],
+        bundles: [...state.bundles, action.payload.bundle],
       };
 
     case UPDATE_BUNDLE:
       return {
         ...state,
         loading: false,
+        bundles: state.bundles.map(bundle =>
+          bundle._id === action.payload.bundle._id
+            ? action.payload.bundle
+            : bundle
+        ),
       };
 
     case PUT_BUNDLE_PRODUCT:

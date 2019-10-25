@@ -66,7 +66,7 @@ const BundleState = props => {
   const updateBundle = async bundle => {
     try {
       const response = await axios.patch(`/api/bundles/${bundle._id}`, bundle);
-      dispatch({ type: UPDATE_BUNDLE, payload: response.data.bundle });
+      dispatch({ type: UPDATE_BUNDLE, payload: response.data });
     } catch (error) {
       dispatch({ type: BUNDLE_ERROR, payload: error });
     }
