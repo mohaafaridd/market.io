@@ -5,9 +5,11 @@ import bundleReducer from './bundleReducer';
 
 import {
   BUNDLE_ERROR,
+  SET_PRODUCT,
   ADD_BUNDLE,
   UPDATE_BUNDLE,
   CLEAR_BUNDLE,
+  PUT_BUNDLE_PRODUCT,
 } from '../types';
 
 const BundleState = props => {
@@ -23,6 +25,23 @@ const BundleState = props => {
 
   const clearBundle = () => {
     dispatch({ type: CLEAR_BUNDLE });
+  };
+
+  const setProduct = product => {
+    dispatch({ type: SET_PRODUCT, payload: product });
+  };
+
+  const addBundleProduct = async (bundle, body) => {
+    try {
+      const response = await axios.put(`/api/bundles/p/${bundle._id}`, {
+        product: body.product,
+        discount: body.discount,
+      });
+      console.log('response', response);
+      dispatch({ type: PUT_BUNDLE_PRODUCT, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
   };
 
   const createBundle = async bundle => {
@@ -51,6 +70,8 @@ const BundleState = props => {
         loading: state.loading,
         product: state.product,
         products: state.products,
+        addBundleProduct,
+        setProduct,
         clearBundle,
         createBundle,
         updateBundle,

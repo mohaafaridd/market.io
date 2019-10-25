@@ -33,24 +33,22 @@ const AddBundle = () => {
 
   return (
     <Fragment>
-      <div>
-        <h3>{bundle ? 'Edit Bundle' : 'Add Bundle'}</h3>
-        <button onClick={onClear}>Clear</button>
-        <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <label htmlFor='name'>Name</label>
-            <input
-              type='text'
-              name='name'
-              id='name'
-              required
-              value={name}
-              onChange={onChange}
-            />
-          </div>
-          <button type='submit'>{bundle ? 'Edit Bundle' : 'Add Bundle'}</button>
-        </form>
-      </div>
+      <h3>{bundle ? 'Edit Bundle' : 'Add Bundle'}</h3>
+      <button onClick={onClear}>Clear</button>
+      <form onSubmit={onSubmit}>
+        <div className='form-group'>
+          <label htmlFor='name'>Name</label>
+          <input
+            type='text'
+            name='name'
+            id='name'
+            required
+            value={name}
+            onChange={onChange}
+          />
+        </div>
+        <button type='submit'>{bundle ? 'Edit Bundle' : 'Add Bundle'}</button>
+      </form>
 
       {/* <div>
         <h3>Add Products to bundle</h3>

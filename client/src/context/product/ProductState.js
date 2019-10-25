@@ -5,7 +5,6 @@ import productReducer from './productReducer';
 import {
   PRODUCT_ERROR,
   ADD_PRODUCT,
-  GET_PRODUCT,
   GET_PRODUCTS,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,

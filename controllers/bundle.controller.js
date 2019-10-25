@@ -41,7 +41,7 @@ const patchBundle = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Your new bundle has been updated!',
-      payload: bundle,
+      bundle,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -71,7 +71,7 @@ const putBundle = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Added product to bundle!',
-      payload: bundle,
+      bundle,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });
