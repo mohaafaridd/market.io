@@ -13,6 +13,7 @@ import {
   GET_BUNDLES,
   SET_BUNDLE,
   GET_BUNDLE,
+  REMOVE_BUNDLE_PRODUCT,
 } from '../types';
 
 const BundleState = props => {
@@ -73,6 +74,17 @@ const BundleState = props => {
     }
   };
 
+  const removeBundleProduct = async (bundle, product) => {
+    try {
+      const response = await axios.patch(`/api/bundles/p/${bundle._id}`, {
+        product: product._id,
+      });
+      dispatch({ type: REMOVE_BUNDLE_PRODUCT, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
+  };
+
   const createBundle = async bundle => {
     try {
       const response = await axios.post('/api/bundles', bundle);
@@ -101,6 +113,7 @@ const BundleState = props => {
         product: state.product,
         products: state.products,
         addBundleProduct,
+        removeBundleProduct,
         setProduct,
         setBundle,
         clearBundle,

@@ -8,6 +8,7 @@ import {
   GET_BUNDLES,
   SET_BUNDLE,
   GET_BUNDLE,
+  REMOVE_BUNDLE_PRODUCT,
 } from '../types';
 
 export default (state, action) => {
@@ -81,6 +82,20 @@ export default (state, action) => {
             ? action.payload.bundle
             : bundle
         ),
+        error: null,
+        loading: false,
+      };
+
+    case REMOVE_BUNDLE_PRODUCT:
+      return {
+        ...state,
+        bundle: action.payload.bundle,
+        bundles: state.bundles.map(bundle =>
+          bundle._id === action.payload.bundle._id
+            ? action.payload.bundle
+            : bundle
+        ),
+        product: null,
         error: null,
         loading: false,
       };

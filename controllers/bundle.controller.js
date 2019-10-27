@@ -142,7 +142,7 @@ const deleteFromBundle = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Product was removed from bundle!',
-      payload: bundle,
+      bundle,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });

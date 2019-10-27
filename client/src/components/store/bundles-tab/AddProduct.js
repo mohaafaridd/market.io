@@ -139,7 +139,7 @@ const AddProduct = () => {
       const { _id } = client;
       getProducts(_id);
     }
-  }, [client]);
+  }, []);
 
   // 2 - on product change
   useEffect(() => {
@@ -180,34 +180,36 @@ const AddProduct = () => {
     <Fragment>
       <h3>{inBundle ? 'Edit Product' : 'Add Product'}</h3>
       <form onSubmit={onSubmit}>
-        <select
-          name='products'
-          id='products'
-          onChange={onOptionChange}
-          value={product ? product._id : 'default'}
-        >
-          <option value='default' disabled>
-            Select a product
-          </option>
-          {storeProducts.map(product => (
-            <option key={product._id} value={product._id}>
-              {product.name}
+        <fieldset disabled={!!!bundle}>
+          <select
+            name='products'
+            id='products'
+            onChange={onOptionChange}
+            value={product ? product._id : 'default'}
+          >
+            <option value='default' disabled>
+              Select a product
             </option>
-          ))}
-        </select>
-        <input
-          type='text'
-          name='discount'
-          value={discount}
-          onChange={onDiscountChange}
-        />
-        <input
-          type='text'
-          name='priceAfterDiscount'
-          value={product ? product.price * (1 - discount / 100) : 0}
-          disabled
-        />
-        <button type='submit'>Submit</button>
+            {storeProducts.map(product => (
+              <option key={product._id} value={product._id}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+          <input
+            type='text'
+            name='discount'
+            value={discount}
+            onChange={onDiscountChange}
+          />
+          <input
+            type='text'
+            name='priceAfterDiscount'
+            value={product ? product.price * (1 - discount / 100) : 0}
+            disabled
+          />
+          <button type='submit'>Submit</button>
+        </fieldset>
       </form>
     </Fragment>
   );
