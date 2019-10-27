@@ -14,6 +14,7 @@ import {
   SET_BUNDLE,
   GET_BUNDLE,
   REMOVE_BUNDLE_PRODUCT,
+  DELETE_BUNDLE,
 } from '../types';
 
 const BundleState = props => {
@@ -103,6 +104,15 @@ const BundleState = props => {
     }
   };
 
+  const deleteBundle = async bundle => {
+    try {
+      const response = await axios.delete(`/api/bundles/${bundle._id}`);
+      dispatch({ type: DELETE_BUNDLE, payload: response.data });
+    } catch (error) {
+      dispatch({ type: BUNDLE_ERROR, payload: error });
+    }
+  };
+
   return (
     <BundleContext.Provider
       value={{
@@ -119,6 +129,7 @@ const BundleState = props => {
         clearBundle,
         createBundle,
         updateBundle,
+        deleteBundle,
         getBundles,
         getBundle,
       }}

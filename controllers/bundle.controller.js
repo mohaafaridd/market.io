@@ -166,6 +166,7 @@ const deleteBundle = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Bundle is deleted!',
+      bundle,
     });
   } catch (error) {
     res.json({ success: false, message: error.message });

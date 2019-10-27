@@ -9,6 +9,7 @@ import {
   SET_BUNDLE,
   GET_BUNDLE,
   REMOVE_BUNDLE_PRODUCT,
+  DELETE_BUNDLE,
 } from '../types';
 
 export default (state, action) => {
@@ -70,6 +71,16 @@ export default (state, action) => {
           bundle._id === action.payload.bundle._id
             ? action.payload.bundle
             : bundle
+        ),
+      };
+
+    case DELETE_BUNDLE:
+      return {
+        ...state,
+        loading: false,
+        bundle: null,
+        bundles: state.bundles.filter(
+          bundle => bundle._id !== action.payload.bundle._id
         ),
       };
 
