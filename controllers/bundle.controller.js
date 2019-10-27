@@ -115,6 +115,7 @@ const putBundle = async (req, res) => {
       bundle,
     });
   } catch (error) {
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

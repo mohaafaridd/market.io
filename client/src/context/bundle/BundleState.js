@@ -61,11 +61,11 @@ const BundleState = props => {
     }
   };
 
-  const addBundleProduct = async (bundle, body) => {
+  const addBundleProduct = async (bundle, product, discount) => {
     try {
       const response = await axios.put(`/api/bundles/p/${bundle._id}`, {
-        product: body.product,
-        discount: body.discount,
+        product: product._id,
+        discount: discount,
       });
       dispatch({ type: PUT_BUNDLE_PRODUCT, payload: response.data });
     } catch (error) {

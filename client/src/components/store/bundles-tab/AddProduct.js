@@ -118,7 +118,13 @@ import ProductContext from '../../../context/product/productContext';
 
 const AddProduct = () => {
   const { client } = useContext(AuthContext);
-  const { bundle, product, products, setProduct } = useContext(BundleContext);
+  const {
+    bundle,
+    product,
+    products,
+    setProduct,
+    addBundleProduct,
+  } = useContext(BundleContext);
   const { getProducts, products: storeProducts } = useContext(ProductContext);
 
   const [state, setState] = useState({
@@ -129,19 +135,23 @@ const AddProduct = () => {
 
   // 1 - Get all products that this store has
   useEffect(() => {
-    const { _id } = client;
-    getProducts(_id);
+    if (client) {
+      const { _id } = client;
+      getProducts(_id);
+    }
   }, [client]);
 
   // 2 - on product change
   useEffect(() => {
-    const item = products.find(p => p.product._id === product._id);
-    if (item) {
-      setState({ ...state, inBundle: true, discount: item.discount });
-    } else {
-      setState({ ...state, inBundle: false, discount: 0 });
+    if (product) {
+      const item = products.find(p => p.product._id === product._id);
+      if (item) {
+        setState({ ...state, inBundle: true, discount: item.discount });
+      } else {
+        setState({ ...state, inBundle: false, discount: 0 });
+      }
     }
-  }, [product, bundle]);
+  }, [product, bundle, products]);
 
   // 3 - on select option change
   const onOptionChange = e => {
@@ -152,10 +162,24 @@ const AddProduct = () => {
     }
   };
 
+  // 4 - on discount change
+  const onDiscountChange = e => {
+    const value = parseFloat(e.target.value);
+    const discount = isNaN(value) ? 0 : value > 100 ? 100 : value;
+
+    setState({ ...state, discount });
+  };
+
+  // 5 - Submit product to bundle (Add or Edit)
+  const onSubmit = e => {
+    e.preventDefault();
+    addBundleProduct(bundle, product, discount);
+  };
+
   return (
     <Fragment>
       <h3>{inBundle ? 'Edit Product' : 'Add Product'}</h3>
-      <form>
+      <form onSubmit={onSubmit}>
         <select
           name='products'
           id='products'
@@ -171,14 +195,19 @@ const AddProduct = () => {
             </option>
           ))}
         </select>
-        <input type='text' name='discount' value={discount} />
+        <input
+          type='text'
+          name='discount'
+          value={discount}
+          onChange={onDiscountChange}
+        />
         <input
           type='text'
           name='priceAfterDiscount'
           value={product ? product.price * (1 - discount / 100) : 0}
           disabled
         />
-        <button>Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </Fragment>
   );
