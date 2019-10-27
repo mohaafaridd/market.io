@@ -184,7 +184,7 @@ const AddProduct = () => {
           name='products'
           id='products'
           onChange={onOptionChange}
-          defaultValue='default'
+          value={product ? product._id : 'default'}
         >
           <option value='default' disabled>
             Select a product
