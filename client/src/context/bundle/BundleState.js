@@ -17,9 +17,13 @@ import {
 
 const BundleState = props => {
   const initialState = {
+    // Current Chosen Bundle
     bundle: null,
+    // All Store Bundles
     bundles: [],
+    // Current product (ADD TO BUNDLE)
     product: null,
+    // Current Bundle products
     products: [],
     loading: true,
     error: null,

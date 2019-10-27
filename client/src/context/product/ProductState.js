@@ -14,6 +14,7 @@ import {
 
 const ProductState = props => {
   const initialState = {
+    // Store Products
     products: [],
     loading: true,
     current: null,

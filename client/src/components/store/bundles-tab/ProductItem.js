@@ -4,7 +4,9 @@ const ProductItem = ({ item: { discount, product } }) => {
   return (
     <li>
       <p>{product.name}</p>
-      <p>{discount}</p>
+      <p>price: ${product.price}</p>
+      <p>discount: {discount}%</p>
+      <p>price after discount: ${product.price * (1 - discount / 100)}</p>
     </li>
   );
 };
