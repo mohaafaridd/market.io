@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import { Link, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import StoreNavbar from '../layout/StoreNavbar';
 
 import AuthContext from '../../context/auth/authContext';

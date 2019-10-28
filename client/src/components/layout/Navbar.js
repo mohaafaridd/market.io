@@ -33,9 +33,14 @@ const Navbar = () => {
     <Fragment>
       <li>Hello {client && client.name}</li>
       {client && client.role === 'User' ? (
-        <li>
-          <Link to='/cart'>Cart</Link>
-        </li>
+        <Fragment>
+          <li>
+            <Link to='/user/cart'>Cart</Link>
+          </li>
+          <li>
+            <Link to='/user/orders'>Orders</Link>
+          </li>
+        </Fragment>
       ) : (
         <li>
           <Link to='/store'>Dashboard</Link>
