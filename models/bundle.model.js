@@ -12,7 +12,7 @@ const schema = new Schema({
     ref: 'User',
   },
 
-  products: [
+  offers: [
     {
       _id: false,
       product: { type: ObjectId, ref: 'Product' },

@@ -56,7 +56,7 @@ const getBundle = async (req, res) => {
     const { client: store } = req;
     const { id } = req.params;
     const bundle = await Bundle.findOne({ _id: id, store: store._id }).populate(
-      'products.product'
+      'offers.product'
     );
     if (!bundle) {
       throw new Error('No bundle was found');
@@ -100,12 +100,12 @@ const putBundle = async (req, res) => {
 
     await Bundle.findOneAndUpdate(
       { _id: id, store: store._id },
-      { $pull: { products: { product } } }
+      { $pull: { offers: { product } } }
     );
 
     const bundle = await Bundle.findOneAndUpdate(
       { _id: id, store: store._id },
-      { $push: { products: { product, discount } } },
+      { $push: { offers: { product, discount } } },
       { context: 'query', runValidators: true, new: true }
     );
 
@@ -131,7 +131,7 @@ const deleteFromBundle = async (req, res) => {
 
     const bundle = await Bundle.findOneAndUpdate(
       { _id: id, store: store._id },
-      { $pull: { products: { product } } },
+      { $pull: { offers: { product } } },
       { new: true }
     );
 
