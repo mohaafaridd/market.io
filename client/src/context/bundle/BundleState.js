@@ -26,7 +26,7 @@ const BundleState = props => {
     // Current product (ADD TO BUNDLE)
     product: null,
     // Current Bundle products
-    products: [],
+    offers: [],
     loading: true,
     error: null,
   };
@@ -121,7 +121,7 @@ const BundleState = props => {
         error: state.error,
         loading: state.loading,
         product: state.product,
-        products: state.products,
+        offers: state.offers,
         addBundleProduct,
         removeBundleProduct,
         setProduct,

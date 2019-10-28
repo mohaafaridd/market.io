@@ -4,7 +4,7 @@ import BundleContext from '../../../context/bundle/bundleContext';
 
 const Products = () => {
   const bundleContext = useContext(BundleContext);
-  const { products, bundle, getBundle } = bundleContext;
+  const { offers, bundle, getBundle } = bundleContext;
   useEffect(() => {
     if (bundle) {
       getBundle(bundle);
@@ -16,9 +16,13 @@ const Products = () => {
       <h3>Products in bundle</h3>
       <ul>
         {bundle ? (
-          products.map(item => (
-            <ProductItem key={item.product._id} item={item} />
-          ))
+          offers.length === 0 ? (
+            <li>No offers</li>
+          ) : (
+            offers.map(item => (
+              <ProductItem key={item.product._id} item={item} />
+            ))
+          )
         ) : (
           <li>Please Select a bundle</li>
         )}

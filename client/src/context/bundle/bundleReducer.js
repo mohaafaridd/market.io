@@ -27,7 +27,7 @@ export default (state, action) => {
     case GET_BUNDLE:
       return {
         ...state,
-        products: action.payload.bundle.products,
+        offers: action.payload.bundle.offers,
       };
 
     case CLEAR_BUNDLE:
@@ -37,7 +37,7 @@ export default (state, action) => {
         product: null,
         error: null,
         loading: false,
-        products: [],
+        offers: [],
       };
 
     case SET_PRODUCT:
@@ -59,7 +59,7 @@ export default (state, action) => {
         error: null,
         loading: false,
         product: null,
-        products: [],
+        offers: [],
         bundles: [...state.bundles, action.payload.bundle],
       };
 
