@@ -64,6 +64,7 @@ const AddProduct = () => {
       <h3>{inBundle ? 'Edit Product' : 'Add Product'}</h3>
       <form onSubmit={onSubmit}>
         <fieldset disabled={!!!bundle}>
+          <label htmlFor='products'>Products</label>
           <select
             name='products'
             id='products'
@@ -79,15 +80,19 @@ const AddProduct = () => {
               </option>
             ))}
           </select>
+          <label htmlFor='discount'>Discount</label>
           <input
             type='text'
             name='discount'
+            id='discount'
             value={discount}
             onChange={onDiscountChange}
           />
+          <label htmlFor='priceAfterDiscount'>Price after discount</label>
           <input
             type='text'
             name='priceAfterDiscount'
+            id='priceAfterDiscount'
             value={product ? product.price * (1 - discount / 100) : 0}
             disabled
           />

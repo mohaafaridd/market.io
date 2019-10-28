@@ -34,7 +34,9 @@ const AddBundle = () => {
   return (
     <Fragment>
       <h3>{bundle ? 'Edit Bundle' : 'Add Bundle'}</h3>
-      <button onClick={onClear}>Clear</button>
+      <button disabled={!!!bundle} onClick={onClear}>
+        Clear
+      </button>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
           <label htmlFor='name'>Name</label>
