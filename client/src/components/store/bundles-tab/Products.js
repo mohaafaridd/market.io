@@ -9,7 +9,7 @@ const Products = () => {
     if (bundle) {
       getBundle(bundle);
     }
-  }, [bundle]);
+  }, []);
 
   return (
     <div>

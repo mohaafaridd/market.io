@@ -50,6 +50,7 @@ export default (state, action) => {
       return {
         ...state,
         bundle: action.payload,
+        offers: action.payload.offers,
       };
 
     case ADD_BUNDLE:
@@ -82,6 +83,8 @@ export default (state, action) => {
         bundles: state.bundles.filter(
           bundle => bundle._id !== action.payload.bundle._id
         ),
+        offers: [],
+        product: null,
       };
 
     case PUT_BUNDLE_PRODUCT:
@@ -93,6 +96,7 @@ export default (state, action) => {
             ? action.payload.bundle
             : bundle
         ),
+        offers: action.payload.bundle.offers,
         error: null,
         loading: false,
       };
@@ -106,6 +110,7 @@ export default (state, action) => {
             ? action.payload.bundle
             : bundle
         ),
+        offers: action.payload.bundle.offers,
         product: null,
         error: null,
         loading: false,

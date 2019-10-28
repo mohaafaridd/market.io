@@ -77,7 +77,9 @@ const getBundle = async (req, res) => {
 const getBundles = async (req, res) => {
   try {
     const { client: store } = req;
-    const bundles = await Bundle.find({ store: store._id });
+    const bundles = await Bundle.find({ store: store._id }).populate(
+      'offers.product'
+    );
 
     res.status(200).json({
       success: true,
@@ -107,7 +109,7 @@ const putBundle = async (req, res) => {
       { _id: id, store: store._id },
       { $push: { offers: { product, discount } } },
       { context: 'query', runValidators: true, new: true }
-    );
+    ).populate('offers.product');
 
     res.status(200).json({
       success: true,
@@ -133,7 +135,7 @@ const deleteFromBundle = async (req, res) => {
       { _id: id, store: store._id },
       { $pull: { offers: { product } } },
       { new: true }
-    );
+    ).populate('offers.product');
 
     if (!bundle) {
       throw new Error('No bundle was found');
