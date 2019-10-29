@@ -30,3 +30,9 @@ export const PUT_BUNDLE_PRODUCT = 'PUT_BUNDLE_PRODUCT';
 export const REMOVE_BUNDLE_PRODUCT = 'REMOVE_BUNDLE_PRODUCT';
 export const UPDATE_BUNDLE = 'UPDATE_BUNDLE';
 export const DELETE_BUNDLE = 'DELETE_BUNDLE';
+
+// Cart
+export const ADD_CART = 'ADD_CART';
+export const GET_CARTS = 'GET_CARTS';
+export const EDIT_CART = 'EDIT_CART';
+export const DELETE_CART = 'DELETE_CART';
