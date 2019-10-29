@@ -8,6 +8,7 @@ import './App.css';
 import AuthState from './context/auth/AuthState';
 import ProductState from './context/product/ProductState';
 import BundleState from './context/bundle/BundleState';
+import CartState from './context/cart/CartState';
 
 /* Components */
 import Navbar from './components/layout/Navbar';
@@ -24,18 +25,20 @@ function App() {
       <AuthState>
         <ProductState>
           <BundleState>
-            <Router>
-              <Fragment>
-                <Navbar />
+            <CartState>
+              <Router>
+                <Fragment>
+                  <Navbar />
 
-                <Switch>
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                  <Route path='/store' component={StoreDashboard} />
-                  <Route path='/user' component={UserDashboard} />
-                </Switch>
-              </Fragment>
-            </Router>
+                  <Switch>
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/login' component={Login} />
+                    <Route path='/store' component={StoreDashboard} />
+                    <Route path='/user' component={UserDashboard} />
+                  </Switch>
+                </Fragment>
+              </Router>
+            </CartState>
           </BundleState>
         </ProductState>
       </AuthState>

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 
-import Cart from '../user/Cart';
+import Cart from '../cart/Cart';
 
 const UserDashboard = ({ match }) => {
   return (
