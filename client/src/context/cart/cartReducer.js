@@ -5,7 +5,7 @@ export default (state, action) => {
     case GET_CARTS:
       return {
         ...state,
-        carts: action.payload.carts,
+        carts: action.payload.cart,
       };
 
     default:

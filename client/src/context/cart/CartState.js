@@ -15,6 +15,7 @@ const CartState = props => {
   const getCarts = async () => {
     try {
       const response = await axios.get('/api/carts');
+
       dispatch({ type: GET_CARTS, payload: response.data });
     } catch (error) {
       dispatch({ type: CART_ERROR, payload: error.response });

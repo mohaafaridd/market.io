@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import CartItem from './CartItem';
+import CartProductItem from './CartProductItem';
 import CartContext from '../../context/cart/cartContext';
 const Carts = () => {
   const { getCarts, carts } = useContext(CartContext);
+  const [bundles, products, bill] = carts;
 
   useEffect(() => {
     getCarts();
@@ -11,12 +12,9 @@ const Carts = () => {
   return (
     <div>
       <h3>Carts</h3>
+      <p>Bill: {bill ? bill : 0}</p>
       <ul>
-        {carts && carts.length === 0 ? (
-          <li>No products in cart</li>
-        ) : (
-          carts.map(cart => <CartItem cart={cart} />)
-        )}
+        {products && products.map(cart => <CartProductItem cart={cart} />)}
       </ul>
     </div>
   );

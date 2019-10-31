@@ -147,6 +147,7 @@ const getProducts = async user => {
     {
       $project: {
         product: '$product',
+        amount: '$amount',
         store: '$store',
         bill: {
           $sum: {
