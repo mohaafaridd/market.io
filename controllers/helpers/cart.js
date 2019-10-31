@@ -69,8 +69,30 @@ const getBundles = async user => {
     // Step 6.0: Calculate bill
     {
       $project: {
+        name: '$bundle.name',
         products: '$products',
+        amount: '$amount',
         store: '$store',
+        saved: {
+          $sum: {
+            $map: {
+              input: '$products',
+              as: 'product',
+              in: {
+                $multiply: [
+                  '$$product.price',
+                  '$amount',
+                  // discount = 10%
+                  // then it's 0.9 of the price
+                  // ((100 - 10)/100)
+                  {
+                    $divide: ['$$product.discount', 100],
+                  },
+                ],
+              },
+            },
+          },
+        },
         bill: {
           $sum: {
             $map: {

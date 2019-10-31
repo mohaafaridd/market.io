@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import CartBundleItem from './CartBundleItem';
 import CartProductItem from './CartProductItem';
 import CartContext from '../../context/cart/cartContext';
 const Carts = () => {
@@ -15,6 +16,7 @@ const Carts = () => {
       <p>Bill: {bill ? bill : 0}</p>
       <ul>
         {products && products.map(cart => <CartProductItem cart={cart} />)}
+        {bundles && bundles.map(cart => <CartBundleItem cart={cart} />)}
       </ul>
     </div>
   );
