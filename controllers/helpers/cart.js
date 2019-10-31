@@ -185,7 +185,14 @@ const getProducts = async user => {
   return products;
 };
 
+const getBill = (bundles, products) => {
+  const cart = [...bundles, ...products];
+  const bill = cart.reduce((total, item) => total + item.bill, 0);
+  return bill;
+};
+
 module.exports = {
   getBundles,
   getProducts,
+  getBill,
 };
