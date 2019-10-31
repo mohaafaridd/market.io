@@ -114,6 +114,78 @@ const getBundles = async user => {
   return bundles;
 };
 
+const getProducts = async user => {
+  const products = await Cart.aggregate([
+    // Step 1.0: Fetch all products
+    {
+      $match: {
+        user: user._id,
+        ordered: false,
+        product: { $exists: true, $ne: null },
+      },
+    },
+
+    // Step 2.0: lookup product
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'product',
+      },
+    },
+
+    // Step 3.0: Uncompress and delete Empty Products (Not possible in the first place)
+    {
+      $unwind: {
+        path: '$product',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // Step 4.0: Calculate bill
+    {
+      $project: {
+        product: '$product',
+        store: '$store',
+        bill: {
+          $sum: {
+            $multiply: [
+              '$product.price',
+              '$amount',
+              // discount = 10%
+              // then it's 0.9 of the price
+              // ((100 - 10)/100)
+              {
+                $divide: [{ $subtract: [100, '$product.discount'] }, 100],
+              },
+            ],
+          },
+        },
+      },
+    },
+
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'store',
+        foreignField: '_id',
+        as: 'store',
+      },
+    },
+
+    {
+      $unwind: {
+        path: '$store',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+  ]);
+
+  return products;
+};
+
 module.exports = {
   getBundles,
+  getProducts,
 };

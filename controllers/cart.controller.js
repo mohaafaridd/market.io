@@ -89,11 +89,12 @@ const getCarts = async (req, res) => {
 
     // bundles: contained all bundles user has added in his cart
     const bundles = await helper.getBundles(user);
+    const products = await helper.getProducts(user);
 
     res.json({
       success: true,
       message: 'Carts found!',
-      bundles,
+      products,
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
