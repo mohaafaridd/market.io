@@ -35,7 +35,7 @@ const postCart = async (req, res) => {
       }
     );
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: `You have added a ${type} to your cart`,
       payload: cart,
@@ -69,10 +69,10 @@ const updateCart = async (req, res) => {
 
     const type = cart.bundle ? 'bundle' : 'product';
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: `You have updated your ${type} amount`,
-      payload: cart,
+      cart,
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
