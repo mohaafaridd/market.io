@@ -3,22 +3,27 @@ import CartContext from '../../context/cart/cartContext';
 
 const CartItem = ({ cart }) => {
   const { product, store, bill, amount } = cart;
-  const { editCart } = useContext(CartContext);
+  const { editCart, deleteCart } = useContext(CartContext);
 
   const updateAmount = e => {
     e.preventDefault();
     editCart(cart, e.target.value);
   };
 
+  const deleteProductCart = e => {
+    e.preventDefault();
+    deleteCart(cart);
+  };
+
   return (
     <li>
       <p>{product.name}</p>
-      <p>Amount: {amount}</p>
       <p>rate: {product.score ? product.score : 'Not Rated'}</p>
       <p>Unit Price: {product.price}</p>
       <p>Total Price: {bill}</p>
       <p>Store: {store.name}</p>
 
+      <label htmlFor='amount'>Amount </label>
       <select
         name='amount'
         id='amount'
@@ -31,6 +36,8 @@ const CartItem = ({ cart }) => {
         <option value='4'>4</option>
         <option value='5'>5</option>
       </select>
+
+      <button onClick={deleteProductCart}>Delete</button>
     </li>
   );
 };

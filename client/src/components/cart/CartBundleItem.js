@@ -4,17 +4,21 @@ import CartContext from '../../context/cart/cartContext';
 
 const CartItem = ({ cart }) => {
   const { products, name, bill, saved, store, amount } = cart;
-  const { editCart } = useContext(CartContext);
+  const { editCart, deleteCart } = useContext(CartContext);
 
   const updateAmount = e => {
     e.preventDefault();
     editCart(cart, e.target.value);
   };
 
+  const deleteBundleCart = e => {
+    e.preventDefault();
+    deleteCart(cart);
+  };
+
   return (
     <li>
       <p>{name}</p>
-      <p>Amount: {amount}</p>
       <ul>
         {products.map(product => (
           <li key={uuid.v4()}>
@@ -30,6 +34,7 @@ const CartItem = ({ cart }) => {
       <p>Saved: {saved}</p>
       <p>Store: {store.name}</p>
 
+      <label htmlFor='amount'>Amount </label>
       <select
         name='amount'
         id='amount'
@@ -42,6 +47,8 @@ const CartItem = ({ cart }) => {
         <option value='4'>4</option>
         <option value='5'>5</option>
       </select>
+
+      <button onClick={deleteBundleCart}>Delete</button>
     </li>
   );
 };
