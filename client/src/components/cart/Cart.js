@@ -15,6 +15,10 @@ const Carts = () => {
     clearCart();
   };
 
+  if (bill === 0) {
+    return <h4>Your cart is empty</h4>;
+  }
+
   return (
     <div>
       <h3>Carts</h3>

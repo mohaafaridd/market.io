@@ -38,3 +38,8 @@ export const EDIT_CART = 'EDIT_CART';
 export const DELETE_CART = 'DELETE_CART';
 export const CLEAR_CART = 'CLEAR_CART';
 export const CART_ERROR = 'CART_ERROR';
+
+// Order
+export const CREATE_ORDER = 'CREATE_ORDER';
+export const GET_ORDERS = 'GET_ORDERS';
+export const ORDER_ERROR = 'ORDER_ERROR';
