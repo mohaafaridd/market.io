@@ -93,6 +93,15 @@ const ProductState = props => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
+  const searchProductByName = async name => {
+    try {
+      const response = await axios.get(`/api/search?name=${name}`);
+      dispatch({ type: GET_PRODUCTS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_ERROR, payload: error });
+    }
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -100,6 +109,7 @@ const ProductState = props => {
         current: state.current,
         loading: state.loading,
         error: state.error,
+
         setCurrent,
         addProduct,
         getProducts,
@@ -107,6 +117,8 @@ const ProductState = props => {
         deleteProduct,
         clearCurrent,
         postProductImage,
+
+        searchProductByName,
       }}
     >
       {props.children}

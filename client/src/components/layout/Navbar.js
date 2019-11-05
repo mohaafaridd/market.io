@@ -1,11 +1,14 @@
-import React, { Fragment, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useContext, useEffect, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import ProductContext from '../../context/product/productContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
+  const { searchProductByName } = useContext(ProductContext);
+  const text = useRef('');
   const { isAuthenticated, client, loadClient, logout, loading } = authContext;
-
+  let history = useHistory();
   useEffect(() => {
     loadClient();
   }, []);
@@ -54,9 +57,21 @@ const Navbar = () => {
     </Fragment>
   );
 
+  const onSubmit = e => {
+    e.preventDefault();
+    if (text.current.value.trim() !== '') {
+      history.push(`/search?name=${text.current.value}`);
+    }
+  };
+
   return (
     <nav>
       <span>Market</span>
+
+      <form onSubmit={onSubmit}>
+        <input type='text' placeholder='Search products...' ref={text} />
+        <button>Search</button>
+      </form>
 
       <ul>{isAuthenticated ? clientLinks : guestLinks}</ul>
     </nav>

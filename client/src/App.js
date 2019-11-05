@@ -20,6 +20,7 @@ import Login from './components/auth/Login';
 /* Pages */
 import StoreDashboard from './components/pages/StoreDashboard';
 import UserDashboard from './components/pages/UserDashboard';
+import Search from './components/pages/Search';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                         <Route exact path='/login' component={Login} />
                         <Route path='/store' component={StoreDashboard} />
                         <Route path='/user' component={UserDashboard} />
+                        <Route path='/search' component={Search} />
                       </Switch>
                     </Fragment>
                   </Router>
