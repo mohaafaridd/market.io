@@ -141,7 +141,7 @@ const getStatistics = async (req, res) => {
             total: { $sum: ['$productProfit', '$bundleProfit'] },
           },
           graph: {
-            selling: {
+            amount: {
               product: {
                 $filter: {
                   input: '$sellingGraph',
@@ -157,17 +157,17 @@ const getStatistics = async (req, res) => {
                 },
               },
             },
-            profitGraph: {
+            profit: {
               product: {
                 $filter: {
-                  input: '$sellingGraph',
+                  input: '$profitGraph',
                   as: 'trade',
                   cond: { $eq: ['$$trade.type', 'product'] },
                 },
               },
               bundle: {
                 $filter: {
-                  input: '$sellingGraph',
+                  input: '$profitGraph',
                   as: 'trade',
                   cond: { $eq: ['$$trade.type', 'bundle'] },
                 },
