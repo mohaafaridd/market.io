@@ -21,4 +21,9 @@ router.post(
   controller.postOrder
 );
 
+// @route       GET api/orders
+// @desc        Gets all orders
+// @access      Private
+router.get('/', authorization(Role.User), authentication, controller.getOrders);
+
 module.exports = router;

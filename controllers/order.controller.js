@@ -76,6 +76,67 @@ const postOrder = async (req, res) => {
   }
 };
 
+const getOrders = async (req, res) => {
+  try {
+    const { client: user } = req;
+
+    const orders = await Order.aggregate([
+      { $match: { user: user._id } },
+      {
+        $project: {
+          _id: '$cart',
+          type: {
+            $cond: {
+              if: { $eq: ['$bundle', null] },
+              then: 'product',
+              else: 'bundle',
+            },
+          },
+          amount: '$amount',
+          bill: {
+            $sum: {
+              $multiply: [
+                '$price',
+                '$amount',
+                {
+                  $subtract: [
+                    1,
+                    {
+                      $divide: ['$discount', 100],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          createdAt: '$createdAt',
+          updatedAt: '$updatedAt',
+        },
+      },
+
+      {
+        $group: {
+          _id: '$_id',
+          type: { $first: '$type' },
+          amount: { $first: '$amount' },
+          bill: { $sum: '$bill' },
+          createdAt: { $first: '$createdAt' },
+          updatedAt: { $first: '$updatedAt' },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: 'Your orders has been fetched',
+      orders,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   postOrder,
+  getOrders,
 };
