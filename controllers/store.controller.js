@@ -177,7 +177,13 @@ const getStatistics = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ statistics });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Statistics fetched successfully',
+        statistics,
+      });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message, error });
   }

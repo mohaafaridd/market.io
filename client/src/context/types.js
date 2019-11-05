@@ -43,3 +43,7 @@ export const CART_ERROR = 'CART_ERROR';
 export const CREATE_ORDER = 'CREATE_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const ORDER_ERROR = 'ORDER_ERROR';
+
+// Store
+export const GET_STATISTICS = 'GET_STATISTICS';
+export const STATISTICS_ERROR = 'STATISTICS_ERROR';
