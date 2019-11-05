@@ -15,7 +15,33 @@ const schema = new Schema(
       ref: 'User',
     },
 
-    carts: [{ type: ObjectId, ref: 'Cart' }],
+    product: {
+      type: ObjectId,
+      required: true,
+      ref: 'Product',
+    },
+
+    bundle: {
+      type: ObjectId,
+      ref: 'Bundle',
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+
+    discount: {
+      type: Number,
+      required: true,
+    },
+
+    amount: {
+      type: Number,
+      required: true,
+    },
+
+    cart: { type: ObjectId, ref: 'Cart' },
   },
   { timestamps: true }
 );

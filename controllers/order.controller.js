@@ -8,76 +8,69 @@ const Order = require('../models/order.model');
 const postOrder = async (req, res) => {
   try {
     const { client: user } = req;
-    const carts = await Cart.find({ user: user.id, ordered: false });
-    if (carts.length === 0) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'You have no products in your cart' });
-    }
-    const ids = carts.map(cart => cart.id);
-    const order = new Order({ user: user._id, carts: ids });
-    await order.save();
+    const carts = await Cart.find({ user: user.id, ordered: false })
+      .populate('product')
+      .populate({
+        path: 'bundle',
+        model: 'Bundle',
+        populate: {
+          path: 'offers.product',
+          model: 'Product',
+        },
+      });
+
+    const orders = carts
+      .map(cart => {
+        const isBundle = !!cart.bundle;
+
+        // Loops in bundle to create proper order
+        if (isBundle) {
+          const orders = cart.bundle.offers.map(offer => {
+            // From Order schema
+            return {
+              user: user._id,
+              product: offer.product._id,
+              bundle: cart.bundle._id,
+              price: offer.product.price,
+              discount: offer.discount,
+              amount: cart.amount,
+              cart: cart._id,
+            };
+          });
+
+          return orders;
+        } else {
+          return {
+            user: user._id,
+            product: cart.product._id,
+            bundle: null,
+            price: cart.product.price,
+            discount: cart.product.discount,
+            amount: cart.amount,
+            cart: cart._id,
+          };
+        }
+      })
+      .reduce((acc, current) => {
+        if (Array.isArray(current)) {
+          acc.push(...current);
+        } else {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+
+    await Order.insertMany(orders);
+    await Cart.updateMany();
+
+    const ids = orders.map(order => order.cart);
     await Cart.updateMany({ _id: { $in: ids } }, { $set: { ordered: true } });
+
     res.status(201).json({
       success: true,
       message: 'You order has been set',
-      payload: order,
+      orders,
     });
-  } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
-  }
-};
-
-// @route       GET api/orders/:id
-// @desc        Gets an order details
-// @access      Private
-const getOrder = async (req, res) => {
-  try {
-    const { client: user } = req;
-    const { id } = req.params;
-    const order = await Order.aggregate([
-      {
-        $match: {
-          $and: [{ _id: mongoose.Types.ObjectId(id) }, { user: user._id }],
-        },
-      },
-      //   { $unwind: '$carts' },
-      {
-        $lookup: {
-          from: 'carts',
-          localField: 'carts',
-          foreignField: '_id',
-          as: 'cart',
-        },
-      },
-      { $unwind: '$cart' },
-      {
-        $lookup: {
-          from: 'products',
-          localField: 'cart.product',
-          foreignField: '_id',
-          as: 'cart.product',
-        },
-      },
-      { $unwind: '$cart.product' },
-      {
-        $lookup: {
-          from: 'stores',
-          localField: 'cart.store',
-          foreignField: '_id',
-          as: 'cart.store',
-        },
-      },
-      { $unwind: '$cart.store' },
-      {
-        $group: {
-          _id: '$_id',
-          amount: { $sum: '$cart.amount' },
-          carts: { $push: '$cart' },
-        },
-      },
-    ]);
-    res.send(order);
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -85,5 +78,4 @@ const getOrder = async (req, res) => {
 
 module.exports = {
   postOrder,
-  getOrder,
 };

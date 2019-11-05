@@ -1,12 +1,12 @@
 const Cart = require('../../models/cart.model');
 
-const getBundles = async user => {
+const getBundles = async (user, ordered = false) => {
   const bundles = await Cart.aggregate([
     // Step 1.0: Fetch all bundles
     {
       $match: {
         user: user._id,
-        ordered: false,
+        ordered,
         bundle: { $exists: true, $ne: null },
       },
     },
