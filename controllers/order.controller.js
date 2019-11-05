@@ -35,6 +35,7 @@ const postOrder = async (req, res) => {
               discount: offer.discount,
               amount: cart.amount,
               cart: cart._id,
+              store: cart.store,
             };
           });
 
@@ -48,6 +49,7 @@ const postOrder = async (req, res) => {
             discount: cart.product.discount,
             amount: cart.amount,
             cart: cart._id,
+            store: cart.store,
           };
         }
       })

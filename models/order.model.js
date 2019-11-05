@@ -41,7 +41,17 @@ const schema = new Schema(
       required: true,
     },
 
-    cart: { type: ObjectId, ref: 'Cart' },
+    cart: {
+      type: ObjectId,
+      required: true,
+      ref: 'Cart',
+    },
+
+    store: {
+      type: ObjectId,
+      required: true,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 );

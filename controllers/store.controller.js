@@ -1,5 +1,6 @@
 const Product = require('../models/product.model');
 const Bundle = require('../models/bundle.model');
+const Order = require('../models/order.model');
 
 // @route       POST api/stores/statistics
 // @desc        Get store statistics
@@ -12,7 +13,174 @@ const getStatistics = async (req, res) => {
   // 4 - Net profit (ref: orders)
   // 5 - Products (ref: products)
   // 6 - Bundles (ref: bundles)
-  res.json({ message: 'Not done yet' });
+  try {
+    const { client: store } = req;
+    const statistics = await Order.aggregate([
+      { $match: { store: store._id } },
+      {
+        $group: {
+          _id: null,
+          bundles: {
+            $sum: {
+              $cond: {
+                if: { $ne: ['$bundle', null] },
+                then: '$amount',
+                else: 0,
+              },
+            },
+          },
+
+          sellingGraph: {
+            $push: {
+              type: {
+                $cond: {
+                  if: { $eq: ['$bundle', null] },
+                  then: 'product',
+                  else: 'bundle',
+                },
+              },
+              amount: '$amount',
+              date: '$createdAt',
+            },
+          },
+
+          profitGraph: {
+            $push: {
+              type: {
+                $cond: {
+                  if: { $eq: ['$bundle', null] },
+                  then: 'product',
+                  else: 'bundle',
+                },
+              },
+
+              profit: {
+                $multiply: [
+                  '$amount',
+                  '$price',
+                  {
+                    $subtract: [
+                      1,
+                      {
+                        $divide: ['$discount', 100],
+                      },
+                    ],
+                  },
+                ],
+              },
+
+              date: '$createdAt',
+            },
+          },
+
+          bundleProfit: {
+            $sum: {
+              $cond: {
+                if: { $ne: ['$bundle', null] },
+                then: {
+                  $multiply: [
+                    '$amount',
+                    '$price',
+                    {
+                      $subtract: [
+                        1,
+                        {
+                          $divide: ['$discount', 100],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                else: 0,
+              },
+            },
+          },
+
+          products: {
+            $sum: {
+              $cond: {
+                if: { $eq: ['$bundle', null] },
+                then: '$amount',
+                else: 0,
+              },
+            },
+          },
+
+          productProfit: {
+            $sum: {
+              $cond: {
+                if: { $eq: ['$bundle', null] },
+                then: {
+                  $multiply: [
+                    '$amount',
+                    '$price',
+                    {
+                      $subtract: [
+                        1,
+                        {
+                          $divide: ['$discount', 100],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                else: 0,
+              },
+            },
+          },
+        },
+      },
+
+      {
+        $project: {
+          bundles: '$bundles',
+          products: '$products',
+          profit: {
+            products: '$productProfit',
+            bundles: '$bundleProfit',
+            total: { $sum: ['$productProfit', '$bundleProfit'] },
+          },
+          graph: {
+            selling: {
+              product: {
+                $filter: {
+                  input: '$sellingGraph',
+                  as: 'trade',
+                  cond: { $eq: ['$$trade.type', 'product'] },
+                },
+              },
+              bundle: {
+                $filter: {
+                  input: '$sellingGraph',
+                  as: 'trade',
+                  cond: { $eq: ['$$trade.type', 'bundle'] },
+                },
+              },
+            },
+            profitGraph: {
+              product: {
+                $filter: {
+                  input: '$sellingGraph',
+                  as: 'trade',
+                  cond: { $eq: ['$$trade.type', 'product'] },
+                },
+              },
+              bundle: {
+                $filter: {
+                  input: '$sellingGraph',
+                  as: 'trade',
+                  cond: { $eq: ['$$trade.type', 'bundle'] },
+                },
+              },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).json({ statistics });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message, error });
+  }
 };
 
 // @route       POST api/stores/p/:id
