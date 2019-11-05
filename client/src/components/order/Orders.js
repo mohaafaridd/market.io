@@ -2,11 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import OrderItem from './OrderItem';
 import OrderContext from '../../context/order/orderContext';
 const Orders = () => {
-  const { getOrders, orders } = useContext(OrderContext);
+  const { getOrders, orders, loading } = useContext(OrderContext);
 
   useEffect(() => {
     getOrders();
   }, []);
+
+  if (loading) {
+    return <h4>loading orders</h4>;
+  }
 
   return (
     <div>

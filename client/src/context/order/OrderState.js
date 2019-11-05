@@ -8,6 +8,7 @@ import { GET_ORDERS, ORDER_ERROR } from '../types';
 const OrderState = props => {
   const initialState = {
     orders: [],
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(orderReducer, initialState);
@@ -25,6 +26,7 @@ const OrderState = props => {
     <OrderContext.Provider
       value={{
         orders: state.orders,
+        loading: state.loading,
         getOrders,
       }}
     >

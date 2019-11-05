@@ -6,6 +6,7 @@ export default (state, action) => {
       return {
         ...state,
         carts: action.payload.cart,
+        loading: false,
       };
 
     case EDIT_CART:

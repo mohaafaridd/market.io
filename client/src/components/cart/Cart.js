@@ -4,7 +4,7 @@ import CartBundleItem from './CartBundleItem';
 import CartProductItem from './CartProductItem';
 import CartContext from '../../context/cart/cartContext';
 const Carts = () => {
-  const { getCarts, carts, clearCart } = useContext(CartContext);
+  const { getCarts, carts, clearCart, loading } = useContext(CartContext);
   const [bundles, products, bill] = carts;
 
   useEffect(() => {
@@ -14,6 +14,10 @@ const Carts = () => {
   const onClearCart = e => {
     clearCart();
   };
+
+  if (loading) {
+    return <h4>Loading</h4>;
+  }
 
   if (bill === 0) {
     return <h4>Your cart is empty</h4>;

@@ -6,6 +6,7 @@ export default (state, action) => {
       return {
         ...state,
         orders: action.payload.orders,
+        loading: false,
       };
 
     default:

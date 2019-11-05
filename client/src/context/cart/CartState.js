@@ -14,6 +14,7 @@ import {
 const CartState = props => {
   const initialState = {
     carts: [],
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(cartReducer, initialState);
@@ -61,6 +62,7 @@ const CartState = props => {
     <CartContext.Provider
       value={{
         carts: state.carts,
+        loading: state.loading,
         getCarts,
         editCart,
         deleteCart,
