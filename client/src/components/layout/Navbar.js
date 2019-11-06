@@ -7,19 +7,12 @@ const Navbar = () => {
   const authContext = useContext(AuthContext);
   const { searchProductByName } = useContext(ProductContext);
   const text = useRef('');
-  const { isAuthenticated, client, loadClient, logout, loading } = authContext;
+  const { isAuthenticated, client, logout } = authContext;
   let history = useHistory();
-  useEffect(() => {
-    loadClient();
-  }, []);
 
   const onLogout = e => {
     logout();
   };
-
-  if (loading) {
-    return <h4>Loading Navbar</h4>;
-  }
 
   const guestLinks = (
     <Fragment>

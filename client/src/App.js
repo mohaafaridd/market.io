@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { CookiesProvider } from 'react-cookie';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './App.css';
 
@@ -13,14 +13,9 @@ import OrderState from './context/order/OrderState';
 import StoreState from './context/store/StoreState';
 
 /* Components */
-import Navbar from './components/layout/Navbar';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
 
 /* Pages */
-import StoreDashboard from './components/pages/StoreDashboard';
-import UserDashboard from './components/pages/UserDashboard';
-import Search from './components/pages/Search';
+import Home from './components/pages/Home';
 
 function App() {
   return (
@@ -32,17 +27,7 @@ function App() {
               <OrderState>
                 <StoreState>
                   <Router>
-                    <Fragment>
-                      <Navbar />
-
-                      <Switch>
-                        <Route exact path='/register' component={Register} />
-                        <Route exact path='/login' component={Login} />
-                        <Route path='/store' component={StoreDashboard} />
-                        <Route path='/user' component={UserDashboard} />
-                        <Route path='/search' component={Search} />
-                      </Switch>
-                    </Fragment>
+                    <Home />
                   </Router>
                 </StoreState>
               </OrderState>
