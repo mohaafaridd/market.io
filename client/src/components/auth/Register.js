@@ -15,7 +15,7 @@ const Register = () => {
     history.push('/');
   }
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = data => {
     registerUser(data);
   };
@@ -97,6 +97,38 @@ const Register = () => {
         {backendErrors && backendErrors.password && (
           <small>{backendErrors.password.msg}</small>
         )}
+      </div>
+
+      <div className='form-group'>
+        <input
+          type='password'
+          name='passwordConfirm'
+          placeholder='Confirm Password'
+          ref={register({
+            required: true,
+            minLength: 6,
+            maxLength: 100,
+            validate: value => value === watch('password'),
+          })}
+        />
+        {errors.passwordConfirm &&
+          errors.passwordConfirm.type === 'required' && (
+            <small>Password confirmation is required</small>
+          )}
+        {errors.passwordConfirm &&
+          errors.passwordConfirm.type === 'minLength' && (
+            <small>
+              Password confirmation must not be lower than 6 characters
+            </small>
+          )}
+        {errors.passwordConfirm &&
+          errors.passwordConfirm.type === 'maxlength' && (
+            <small>Password confirmation must not exceed 100 characters</small>
+          )}
+        {errors.passwordConfirm &&
+          errors.passwordConfirm.type === 'validate' && (
+            <small>Passwords have to match</small>
+          )}
       </div>
 
       <div className='form-group'>
