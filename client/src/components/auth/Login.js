@@ -1,61 +1,59 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import useForm from 'react-hook-form';
+
 import AuthContext from '../../context/auth/authContext';
 
-const Login = props => {
-  const authContext = useContext(AuthContext);
-  const { login, isAuthenticated } = authContext;
+const Login = () => {
+  const {
+    error: backendErrors,
+    isAuthenticated,
+    login: loginUser,
+  } = useContext(AuthContext);
+  const history = useHistory();
   if (isAuthenticated) {
-    props.history.push('/');
+    history.push('/');
   }
-
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-  });
-
-  const { email, password } = user;
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
-  const onSubmit = e => {
-    e.preventDefault();
-    if (email.trim() === '' || password.trim() === '') {
-      console.log('Please enter all fields');
-    } else {
-      login(user);
-    }
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = data => {
+    loginUser(data);
   };
+
   return (
-    <section>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h3>Login</h3>
 
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            name='email'
-            id='email'
-            required
-            value={email}
-            onChange={onChange}
-          />
-        </div>
+      <div className='form-group'>
+        <input
+          name='email'
+          placeholder='Email'
+          ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+        />
+        {errors.email && errors.email.type === 'required' && (
+          <small>Email is required</small>
+        )}
+        {errors.email && errors.email.type === 'pattern' && (
+          <small>This isn't an email</small>
+        )}
+      </div>
 
-        <div className='form-group'>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            id='password'
-            required
-            value={password}
-            onChange={onChange}
-            autoComplete='current-password'
-          />
-        </div>
+      <div className='form-group'>
+        <input
+          type='password'
+          name='password'
+          placeholder='Password'
+          ref={register({ required: true })}
+        />
+        {errors.password && errors.password.type === 'required' && (
+          <small>Password is required</small>
+        )}
+      </div>
 
-        <input type='submit' value='Login' />
-      </form>
-    </section>
+      {backendErrors && backendErrors.public && (
+        <small>{backendErrors.public.msg}</small>
+      )}
+      <input type='submit' />
+    </form>
   );
 };
 

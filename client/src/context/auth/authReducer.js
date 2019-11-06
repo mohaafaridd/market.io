@@ -20,6 +20,7 @@ export default (state, action) => {
         client: action.payload.client,
         isAuthenticated: true,
         loading: false,
+        error: null,
       };
 
     case REGISTER_SUCCESS:
@@ -29,6 +30,7 @@ export default (state, action) => {
         client: action.payload.client,
         isAuthenticated: true,
         loading: false,
+        error: null,
       };
 
     case LOGOUT:
@@ -38,6 +40,7 @@ export default (state, action) => {
         isAuthenticated: false,
         loading: false,
         token: false,
+        error: null,
       };
 
     case AUTH_ERROR:

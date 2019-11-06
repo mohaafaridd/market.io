@@ -53,7 +53,13 @@ const postLogin = async (req, res) => {
         token,
       });
   } catch (error) {
-    res.status(400).json({ success: false, message: 'Login failed' });
+    res
+      .status(400)
+      .json({
+        success: false,
+        message: 'Login failed',
+        errors: { public: { msg: 'Either your Email or password is wrong' } },
+      });
   }
 };
 
