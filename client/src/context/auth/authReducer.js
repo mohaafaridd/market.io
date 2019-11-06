@@ -1,4 +1,5 @@
 import {
+  SET_LOADING,
   CLIENT_LOADED,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
@@ -8,6 +9,11 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case CLIENT_LOADED:
       return {
         ...state,

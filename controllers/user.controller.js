@@ -24,11 +24,12 @@ const postRegister = async (req, res) => {
       });
   } catch (error) {
     const errors = extractErrors(error.errors);
+    console.log(errors);
 
     res.status(400).json({
       success: false,
       message: 'Registration failed',
-      cause: errors,
+      errors,
     });
   }
 };
