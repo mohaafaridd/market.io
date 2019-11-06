@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import useForm from 'react-hook-form';
 
@@ -14,7 +14,7 @@ const Login = () => {
   if (isAuthenticated) {
     history.push('/');
   }
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = data => {
     loginUser(data);
   };

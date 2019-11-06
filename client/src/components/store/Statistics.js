@@ -6,6 +6,7 @@ const Statistics = () => {
 
   useEffect(() => {
     getStatistics();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {

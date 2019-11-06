@@ -9,6 +9,7 @@ const Products = () => {
     if (bundle) {
       getBundle(bundle);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

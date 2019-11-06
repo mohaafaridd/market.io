@@ -6,6 +6,7 @@ const Orders = () => {
 
   useEffect(() => {
     getOrders();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {

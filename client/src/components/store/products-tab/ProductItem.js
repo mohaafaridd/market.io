@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import ProductContext from '../../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
@@ -21,7 +21,7 @@ const ProductItem = ({ product }) => {
           src={`data:image/jpeg;base64,${Buffer.from(image.data).toString(
             'base64'
           )}`}
-          alt='product image'
+          alt={`${name}`}
         />
       ) : (
         <p>No Image for this product</p>

@@ -11,6 +11,7 @@ const Carts = () => {
 
   useEffect(() => {
     getCarts();
+    // eslint-disable-next-line
   }, []);
 
   const onClearCart = e => {

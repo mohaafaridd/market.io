@@ -1,11 +1,9 @@
-import React, { Fragment, useContext, useEffect, useRef } from 'react';
+import React, { Fragment, useContext, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
-import ProductContext from '../../context/product/productContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { searchProductByName } = useContext(ProductContext);
   const text = useRef('');
   const { isAuthenticated, client, logout } = authContext;
   let history = useHistory();

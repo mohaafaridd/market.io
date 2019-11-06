@@ -4,7 +4,7 @@ import {
   DELETE_CART,
   CLEAR_CART,
   CREATE_ORDER,
-  ADD_CART,
+  // ADD_CART,
 } from '../types';
 
 export default (state, action) => {

@@ -10,6 +10,7 @@ const Search = ({ location }) => {
     const { name } = queryString.parse(location.search);
     console.log(name);
     searchProductByName(name);
+    // eslint-disable-next-line
   }, [location.search]);
 
   if (loading) {

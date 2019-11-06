@@ -22,6 +22,7 @@ const AddProduct = () => {
       const { _id } = client;
       getProducts(_id);
     }
+    // eslint-disable-next-line
   }, []);
 
   // 2 - on product change
@@ -34,6 +35,7 @@ const AddProduct = () => {
         setState({ ...state, inBundle: false, discount: 0 });
       }
     }
+    // eslint-disable-next-line
   }, [product, bundle, offers]);
 
   // 3 - on select option change

@@ -10,7 +10,7 @@ import {
   DELETE_CART,
   CLEAR_CART,
   CREATE_ORDER,
-  ADD_CART,
+  // ADD_CART,
 } from '../types';
 
 const CartState = props => {
@@ -33,7 +33,7 @@ const CartState = props => {
 
   const editCart = async (cart, amount) => {
     try {
-      const response = await axios.patch(`/api/carts/${cart._id}`, { amount });
+      await axios.patch(`/api/carts/${cart._id}`, { amount });
       const update = await axios.get('/api/carts');
       dispatch({ type: EDIT_CART, payload: update.data });
     } catch (error) {
@@ -43,7 +43,7 @@ const CartState = props => {
 
   const deleteCart = async cart => {
     try {
-      const response = await axios.delete(`/api/carts/${cart._id}`);
+      await axios.delete(`/api/carts/${cart._id}`);
       const update = await axios.get('/api/carts');
       dispatch({ type: DELETE_CART, payload: update.data });
     } catch (error) {
@@ -53,7 +53,7 @@ const CartState = props => {
 
   const clearCart = async () => {
     try {
-      const response = await axios.delete('/api/carts');
+      await axios.delete('/api/carts');
       dispatch({ type: CLEAR_CART });
     } catch (error) {
       dispatch({ type: CART_ERROR, payload: error.response });
@@ -71,9 +71,7 @@ const CartState = props => {
 
   const addToCart = async (item, type) => {
     try {
-      const response = await axios.post('/api/carts', { [type]: item._id });
-      // Has not impact on search component
-      // dispatch({ type: ADD_CART, payload: response.data });
+      await axios.post('/api/carts', { [type]: item._id });
     } catch (error) {
       dispatch({ type: CART_ERROR, payload: error.response });
     }

@@ -6,6 +6,7 @@ const Bundles = () => {
   const { bundles, getBundles } = bundleContext;
   useEffect(() => {
     getBundles();
+    // eslint-disable-next-line
   }, []);
 
   if (!bundles) {

@@ -15,7 +15,7 @@ const Register = () => {
     history.push('/');
   }
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = data => {
     registerUser(data);
   };

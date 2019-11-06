@@ -13,6 +13,7 @@ const Products = () => {
     if (client) {
       getProducts(client._id);
     }
+    // eslint-disable-next-line
   }, [client]);
 
   if (loading) {
