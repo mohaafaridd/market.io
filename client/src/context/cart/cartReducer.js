@@ -1,4 +1,11 @@
-import { GET_CARTS, EDIT_CART, DELETE_CART, CLEAR_CART } from '../types';
+import {
+  GET_CARTS,
+  EDIT_CART,
+  DELETE_CART,
+  CLEAR_CART,
+  CREATE_ORDER,
+  ADD_CART,
+} from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -22,6 +29,12 @@ export default (state, action) => {
       };
 
     case CLEAR_CART:
+      return {
+        ...state,
+        carts: [],
+      };
+
+    case CREATE_ORDER:
       return {
         ...state,
         carts: [],

@@ -9,6 +9,8 @@ import {
   EDIT_CART,
   DELETE_CART,
   CLEAR_CART,
+  CREATE_ORDER,
+  ADD_CART,
 } from '../types';
 
 const CartState = props => {
@@ -58,6 +60,25 @@ const CartState = props => {
     }
   };
 
+  const createOrder = async () => {
+    try {
+      const response = await axios.post('/api/orders');
+      dispatch({ type: CREATE_ORDER, payload: response.data });
+    } catch (error) {
+      dispatch({ type: CART_ERROR, payload: error.response });
+    }
+  };
+
+  const addToCart = async (item, type) => {
+    try {
+      const response = await axios.post('/api/carts', { [type]: item._id });
+      // Has not impact on search component
+      // dispatch({ type: ADD_CART, payload: response.data });
+    } catch (error) {
+      dispatch({ type: CART_ERROR, payload: error.response });
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -67,6 +88,8 @@ const CartState = props => {
         editCart,
         deleteCart,
         clearCart,
+        createOrder,
+        addToCart,
       }}
     >
       {props.children}
