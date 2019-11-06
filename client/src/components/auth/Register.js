@@ -1,11 +1,15 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 
-const Register = props => {
-  const authContext = useContext(AuthContext);
-  const { register, isAuthenticated } = authContext;
+const Register = () => {
+  const { error, isAuthenticated, loading, register, setLoading } = useContext(
+    AuthContext
+  );
+  const history = useHistory();
+
   if (isAuthenticated) {
-    props.history.push('/');
+    history.push('/');
   }
 
   const [user, setUser] = useState({
@@ -31,9 +35,14 @@ const Register = props => {
     ) {
       console.log('Please enter all fields');
     } else {
+      setLoading();
       register(user);
     }
   };
+
+  if (loading) {
+    return <h4>Loading</h4>;
+  }
 
   return (
     <section>
@@ -50,6 +59,7 @@ const Register = props => {
             value={name}
             onChange={onChange}
           />
+          {error && error.name && <small>{error.name.msg}</small>}
         </div>
         <div className='form-group'>
           <label htmlFor='email'>Email</label>
@@ -61,6 +71,7 @@ const Register = props => {
             value={email}
             onChange={onChange}
           />
+          {error && error.email && <small>{error.email.msg}</small>}
         </div>
         <div className='form-group'>
           <label htmlFor='phone'>Phone</label>
@@ -72,6 +83,7 @@ const Register = props => {
             value={phone}
             onChange={onChange}
           />
+          {error && error.phone && <small>{error.phone.msg}</small>}
         </div>
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
@@ -84,9 +96,10 @@ const Register = props => {
             onChange={onChange}
             autoComplete='current-password'
           />
+          {error && error.password && <small>{error.password.msg}</small>}
         </div>
         <div className='form-group'>
-          <label htmlFor='password'>Register as</label>
+          <label>Register as</label>
           <input
             type='radio'
             name='role'

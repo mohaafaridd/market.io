@@ -4,6 +4,7 @@ import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import {
+  SET_LOADING,
   CLIENT_LOADED,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
@@ -22,13 +23,17 @@ const AuthState = props => {
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  const setLoading = () => {
+    dispatch({ type: SET_LOADING });
+  };
+
   // Loads client (user or store) from MongoDB
   const loadClient = async () => {
     try {
       const response = await axios.get('/api/users/me');
       dispatch({ type: CLIENT_LOADED, payload: response.data });
     } catch (error) {
-      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: AUTH_ERROR, payload: error.response });
     }
   };
 
@@ -39,7 +44,7 @@ const AuthState = props => {
       dispatch({ type: REGISTER_SUCCESS, payload: response.data });
       loadClient();
     } catch (error) {
-      dispatch({ type: AUTH_ERROR, payload: error.response.data });
+      dispatch({ type: AUTH_ERROR, payload: error.response });
     }
   };
 
@@ -71,6 +76,8 @@ const AuthState = props => {
         client: state.client,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
+        error: state.error,
+        setLoading,
         loadClient,
         register,
         login,
