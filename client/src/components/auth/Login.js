@@ -20,11 +20,12 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h3>Login</h3>
+    <form className='tile form register-form' onSubmit={handleSubmit(onSubmit)}>
+      <h3 className='text-4xl py-2 secondary-text'>Login</h3>
 
       <div className='form-group'>
         <input
+          className='input'
           name='email'
           placeholder='Email'
           ref={register({ required: true, pattern: /^\S+@\S+$/i })}
@@ -39,6 +40,7 @@ const Login = () => {
 
       <div className='form-group'>
         <input
+          className='input'
           type='password'
           name='password'
           placeholder='Password'
@@ -49,10 +51,14 @@ const Login = () => {
         )}
       </div>
 
-      {backendErrors && backendErrors.public && (
-        <small>{backendErrors.public.msg}</small>
-      )}
-      <input type='submit' />
+      <div className='form-group'>
+        {backendErrors && backendErrors.public && (
+          <small className='self-center mb-4'>{backendErrors.public.msg}</small>
+        )}
+        <button type='submit' className='btn btn-primary'>
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
