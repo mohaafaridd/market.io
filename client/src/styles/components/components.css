@@ -2,6 +2,8 @@
 @import './Inputs.scss';
 @import './Cards.scss';
 @import './Typography.scss';
-@import './pages/Home.scss';
 @import './auth/Register.scss';
 @import './layout/Navbar.scss';
+
+@import './pages/Home.scss';
+@import './pages/StoreDashboard.scss';

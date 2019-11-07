@@ -15,8 +15,6 @@ const Statistics = () => {
     return <h4>Loading</h4>;
   }
 
-  console.log('statistics', statistics);
-
   const { bundles, products, profit, graph } = statistics;
 
   const lineGraphOptions = {

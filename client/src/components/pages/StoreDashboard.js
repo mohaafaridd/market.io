@@ -19,11 +19,13 @@ const Dashboard = ({ match }) => {
   }
 
   return (
-    <section className='flex flex-1'>
+    <section className='store-dashboard'>
       <StoreNavbar />
-      <Route path={`${match.url}/`} exact component={Statistics} />
-      <Route path={`${match.url}/products`} exact component={ProductsTab} />
-      <Route path={`${match.url}/bundles`} exact component={BundlesTab} />
+      <div className='body'>
+        <Route path={`${match.url}/`} exact component={Statistics} />
+        <Route path={`${match.url}/products`} exact component={ProductsTab} />
+        <Route path={`${match.url}/bundles`} exact component={BundlesTab} />
+      </div>
     </section>
   );
 };
