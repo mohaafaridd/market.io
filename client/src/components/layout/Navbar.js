@@ -66,7 +66,7 @@ const Navbar = () => {
           ref={text}
         />
         <button className='btn btn-accent ml-2'>
-          <i class='fas fa-search'></i> Search
+          <i className='fas fa-search'></i> Search
         </button>
       </form>
 
