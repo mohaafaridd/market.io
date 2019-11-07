@@ -1,22 +1,74 @@
 .nav {
-  @apply bg-primary flex justify-around p-5 items-center shadow;
+  @apply flex bg-primary p-5 shadow;
 }
 
 .nav .title {
-  @apply flex-1 text-3xl;
+  @apply text-3xl w-4/12;
 }
 
-.nav .search-box {
+.nav .search-input {
+  @apply flex flex-col w-4/12;
+}
+
+.nav .search-input form {
   @apply flex flex-1;
 }
 
+.nav .search-input form input {
+  @apply flex-1;
+}
+
 .nav ul {
-  @apply flex-1 flex justify-end;
+  @apply flex justify-end w-4/12;
+}
+@screen xl {
+  .nav .title {
+    @apply w-3/12;
+  }
+  .nav .search-input {
+    @apply flex w-6/12;
+  }
+  .nav ul {
+    @apply flex justify-end w-3/12;
+  }
+}
+
+@screen lg {
+  .nav .title {
+    @apply w-2/12;
+  }
+  .nav .search-input {
+    @apply flex w-7/12;
+  }
+  .nav ul {
+    @apply flex justify-end w-3/12;
+  }
+}
+
+@screen md {
+  .nav .title {
+    @apply w-2/12;
+  }
+  .nav .search-input {
+    @apply flex w-6/12;
+  }
+  .nav ul {
+    @apply flex justify-end w-4/12;
+  }
 }
 
 @screen sm {
-  .nav .search-box {
-    @apply hidden;
+  .nav {
+    @apply flex-col items-center;
+  }
+  .nav .title {
+    @apply w-auto;
+  }
+  .nav .search-input {
+    @apply w-auto my-2;
+  }
+  .nav ul {
+    @apply w-auto;
   }
 }
 

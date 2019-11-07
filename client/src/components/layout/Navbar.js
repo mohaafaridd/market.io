@@ -58,18 +58,20 @@ const Navbar = () => {
     <nav className='nav'>
       <span className='title secondary-text'>Market</span>
 
-      <form className='search-box' onSubmit={onSubmit}>
-        <input
-          className='input flex-1'
-          type='text'
-          placeholder='Search products...'
-          ref={text}
-        />
-        <button className='btn btn-accent ml-2'>
-          <i className='fas fa-search'></i> Search
-        </button>
-      </form>
-
+      <div className='search-input'>
+        <form onSubmit={onSubmit}>
+          <input
+            className='input'
+            type='text'
+            placeholder='Search products...'
+            ref={text}
+          />
+          <button className='btn btn-accent ml-2'>
+            <i className='fas fa-search'></i>{' '}
+            <span className='sm:hidden'>Search</span>
+          </button>
+        </form>
+      </div>
       <ul>{isAuthenticated ? clientLinks : guestLinks}</ul>
     </nav>
   );
