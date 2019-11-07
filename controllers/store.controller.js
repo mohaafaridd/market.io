@@ -177,13 +177,36 @@ const getStatistics = async (req, res) => {
         },
       },
     ]);
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Statistics fetched successfully',
-        statistics,
-      });
+
+    if (statistics.length === 0) {
+      const response = {
+        bundles: 0,
+        products: 0,
+        profit: {
+          products: 0,
+          bundles: 0,
+          total: 0,
+        },
+        graph: {
+          amount: {
+            product: [],
+            bundle: [],
+          },
+          profit: {
+            product: [],
+            bundle: [],
+          },
+        },
+      };
+
+      statistics.push(response);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Statistics fetched successfully',
+      statistics,
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message, error });
   }
