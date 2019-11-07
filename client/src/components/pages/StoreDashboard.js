@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import StoreNavbar from '../layout/StoreNavbar';
 

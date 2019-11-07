@@ -19,3 +19,20 @@
 .store-dashboard .body .state .graph .tile {
   @apply m-2 flex-1;
 }
+
+@screen sm {
+  .store-dashboard .body .state {
+    @apply flex-col;
+  }
+  .store-dashboard .body .state .numeric {
+    @apply flex flex-col flex-1 w-screen;
+  }
+
+  .store-dashboard .body .state .graph {
+    @apply flex flex-col flex-1 w-screen;
+  }
+
+  .store-dashboard .body .state .graph .tile {
+    @apply m-2 flex-1;
+  }
+}

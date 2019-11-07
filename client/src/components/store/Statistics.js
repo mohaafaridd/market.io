@@ -18,6 +18,7 @@ const Statistics = () => {
   const { bundles, products, profit, graph } = statistics;
 
   const lineGraphOptions = {
+    responsive: true,
     legend: {
       labels: {
         fontColor: 'white',
