@@ -24,7 +24,7 @@ const Home = () => {
   }
 
   return (
-    <Fragment>
+    <section className='home-grid'>
       <Navbar />
 
       <Switch>
@@ -34,7 +34,7 @@ const Home = () => {
         <Route path='/user' component={UserDashboard} />
         <Route path='/search' component={Search} />
       </Switch>
-    </Fragment>
+    </section>
   );
 };
 

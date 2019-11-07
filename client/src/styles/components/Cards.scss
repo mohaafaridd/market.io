@@ -1,0 +1,23 @@
+.tile {
+  @apply bg-primary rounded p-5 shadow;
+}
+
+.form {
+  @apply m-auto w-1/5;
+}
+
+.form .form-group {
+  @apply flex flex-col py-2 justify-center;
+}
+
+.form .form-group small {
+  @apply text-red-500;
+}
+
+.form .form-group a:hover {
+  @apply text-green-700;
+}
+
+.form .form-group-horizontal {
+  @apply flex flex-row py-2 justify-around;
+}

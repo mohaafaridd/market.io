@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import useForm from 'react-hook-form';
 
@@ -21,11 +21,12 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h3>Register</h3>
+    <form className='tile form' onSubmit={handleSubmit(onSubmit)}>
+      <h3 className='text-4xl py-2 secondary-text'>Register</h3>
 
       <div className='form-group'>
         <input
+          className='input'
           name='name'
           placeholder='Name'
           ref={register({ required: true, maxlength: 20, minLength: 2 })}
@@ -46,6 +47,7 @@ const Register = () => {
 
       <div className='form-group'>
         <input
+          className='input'
           name='email'
           placeholder='Email'
           ref={register({ required: true, pattern: /^\S+@\S+$/i })}
@@ -63,6 +65,7 @@ const Register = () => {
 
       <div className='form-group'>
         <input
+          className='input'
           name='phone'
           placeholder='Phone'
           ref={register({ required: true, pattern: /^01(\d{9})$/ })}
@@ -80,6 +83,7 @@ const Register = () => {
 
       <div className='form-group'>
         <input
+          className='input'
           type='password'
           name='password'
           placeholder='Password'
@@ -101,6 +105,7 @@ const Register = () => {
 
       <div className='form-group'>
         <input
+          className='input'
           type='password'
           name='passwordConfirm'
           placeholder='Confirm Password'
@@ -131,28 +136,52 @@ const Register = () => {
           )}
       </div>
 
-      <div className='form-group'>
-        <label>Register as</label>
+      <div className='form-group-horizontal'>
         <input
+          className='hidden'
           name='role'
           type='radio'
           value='User'
+          id='user'
           ref={register({ required: true })}
         />{' '}
-        User
+        <label
+          className={`btn ${
+            watch('role') === 'User' ? 'btn-accent' : 'btn-grayed'
+          }`}
+          htmlFor='user'
+        >
+          User
+        </label>
         <input
+          className='hidden'
           name='role'
           type='radio'
           value='Store'
+          id='store'
           ref={register({ required: true })}
         />{' '}
-        Store
+        <label
+          className={`btn ${
+            watch('role') === 'Store' ? 'btn-accent' : 'btn-grayed'
+          }`}
+          htmlFor='store'
+        >
+          Store
+        </label>
         {errors.role && errors.role.type === 'required' && (
           <small>A role must be selected</small>
         )}
       </div>
 
-      <input type='submit' />
+      <div className='form-group'>
+        <button type='submit' className='btn btn-primary'>
+          Submit
+        </button>
+        <a className='self-center mt-4'>
+          <Link to='/login'>Already Have an account?</Link>
+        </a>
+      </div>
     </form>
   );
 };

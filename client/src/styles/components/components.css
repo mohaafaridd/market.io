@@ -1,3 +1,6 @@
 @import './Buttons.scss';
 @import './Inputs.scss';
+@import './Cards.scss';
+@import './Typography.scss';
+@import './pages/Home.scss';
 @import './layout/Navbar.scss';

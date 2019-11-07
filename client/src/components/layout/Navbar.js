@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const guestLinks = (
     <Fragment>
-      <li className='btn btn-accent'>
+      <li className='btn btn-accent mr-2'>
         <Link to='/register'>Register</Link>
       </li>
       <li className='btn btn-accent'>
@@ -56,7 +56,7 @@ const Navbar = () => {
 
   return (
     <nav className='nav'>
-      <span className='title'>Market</span>
+      <span className='title secondary-text'>Market</span>
 
       <form className='search-box' onSubmit={onSubmit}>
         <input

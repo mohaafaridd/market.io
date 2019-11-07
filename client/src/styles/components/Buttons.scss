@@ -7,6 +7,25 @@
   @apply bg-transparent border;
 }
 
+/* Primary Button */
+
+.btn-primary {
+  @apply bg-green-500;
+}
+
+.btn-primary:hover {
+  @apply bg-green-600;
+}
+
+.btn-primary-border {
+  @apply border-green-500;
+}
+.btn-primary-border:hover {
+  @apply bg-green-500 border-green-500;
+}
+
+/* Accent Button */
+
 .btn-accent {
   @apply bg-blue-500;
 }
@@ -20,4 +39,21 @@
 }
 .btn-accent-border:hover {
   @apply bg-blue-500 border-blue-500;
+}
+
+/* Grayed Button */
+
+.btn-grayed {
+  @apply bg-gray-500;
+}
+
+.btn-grayed:hover {
+  @apply bg-gray-600;
+}
+
+.btn-grayed-border {
+  @apply border-gray-500;
+}
+.btn-grayed-border:hover {
+  @apply bg-gray-500 border-gray-500;
 }
