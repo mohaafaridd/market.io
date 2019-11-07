@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import { Line, Pie } from 'react-chartjs-2';
 import moment from 'moment';
 import StoreContext from '../../context/store/storeContext';
@@ -137,10 +137,10 @@ const Statistics = () => {
   };
 
   return (
-    <div className='flex flex-1 flex-col'>
+    <Fragment>
       {/* Sold Units - Start */}
-      <section className='flex justify-around p-2'>
-        <div className='flex w-2/12 flex-col justify-around'>
+      <section className='state'>
+        <div className='numeric'>
           <div className='tile'>
             <p>Total Sold Products</p>
             <p>{products}</p>
@@ -151,21 +151,23 @@ const Statistics = () => {
           </div>
         </div>
 
-        <div className='tile w-8/12'>
-          <Line
-            data={lineGraph(graph.amount, 'amount', {
-              product: 'Total Sold Products',
-              bundle: 'Total Sold Bundles',
-            })}
-            options={lineGraphOptions}
-          />
+        <div className='graph'>
+          <div className='tile'>
+            <Line
+              data={lineGraph(graph.amount, 'amount', {
+                product: 'Total Sold Products',
+                bundle: 'Total Sold Bundles',
+              })}
+              options={lineGraphOptions}
+            />
+          </div>
         </div>
       </section>
       {/* Sold Units - End */}
 
       {/* Profit Units - Start */}
-      <section className='flex justify-around p-2'>
-        <div className='flex w-2/12 flex-col justify-around'>
+      <section className='state'>
+        <div className='numeric'>
           <div className='tile'>
             <p>Total Sold Product Profit</p>
             <p>{profit.products}</p>
@@ -176,33 +178,37 @@ const Statistics = () => {
           </div>
         </div>
 
-        <div className='tile w-8/12'>
-          <Line
-            data={lineGraph(graph.profit, 'profit', {
-              product: 'Total Sold Product Profit',
-              bundle: 'Total Sold Bundles Profit',
-            })}
-            options={lineGraphOptions}
-          />
+        <div className='graph'>
+          <div className='tile'>
+            <Line
+              data={lineGraph(graph.profit, 'profit', {
+                product: 'Total Sold Product Profit',
+                bundle: 'Total Sold Bundles Profit',
+              })}
+              options={lineGraphOptions}
+            />
+          </div>
         </div>
       </section>
       {/* Profit Units - End */}
 
       {/* Profit Units - Start */}
-      <section className='flex justify-around p-2'>
-        <div className='flex w-2/12 flex-col justify-around'>
+      <section className='state'>
+        <div className='numeric'>
           <div className='tile'>
             <p>Total Profit</p>
             <p>{profit.total}</p>
           </div>
         </div>
 
-        <div className='tile w-8/12'>
-          <Pie data={pieGraph} options={pieGraphOptions} />
+        <div className='graph'>
+          <div className='tile'>
+            <Pie data={pieGraph} options={pieGraphOptions} />
+          </div>
         </div>
       </section>
       {/* Profit Units - End */}
-    </div>
+    </Fragment>
   );
 };
 

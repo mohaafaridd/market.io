@@ -1,0 +1,21 @@
+.store-dashboard .body {
+  @apply flex;
+}
+
+.store-dashboard .body .state {
+  @apply flex justify-between;
+}
+
+.store-dashboard .body .state .numeric {
+  @apply flex flex-col w-1/4;
+}
+.store-dashboard .body .state .numeric .tile {
+  @apply m-2;
+}
+
+.store-dashboard .body .state .graph {
+  @apply flex flex-col flex-1 w-3/4;
+}
+.store-dashboard .body .state .graph .tile {
+  @apply m-2 flex-1;
+}
