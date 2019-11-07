@@ -19,3 +19,18 @@
     @apply hidden;
   }
 }
+
+.side-nav {
+  @apply bg-primary p-5;
+}
+
+.side-nav li {
+  transition: ease-in 0.2s all;
+  @apply bg-gray-500 my-5 flex text-center rounded cursor-pointer;
+}
+.side-nav li .side-nav-item {
+  @apply flex-1 py-2 px-20;
+}
+.side-nav li .active {
+  @apply bg-gray-600 rounded;
+}

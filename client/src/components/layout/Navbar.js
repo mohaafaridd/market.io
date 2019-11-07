@@ -35,7 +35,7 @@ const Navbar = () => {
           </li>
         </Fragment>
       ) : (
-        <li>
+        <li className='btn btn-accent mr-2'>
           <Link to='/store'>Dashboard</Link>
         </li>
       )}

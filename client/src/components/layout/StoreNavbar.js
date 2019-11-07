@@ -1,17 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const StoreNavbar = () => {
   return (
-    <ul>
+    <ul className='side-nav shadow'>
       <li>
-        <Link to='/store'>Statistics</Link>
+        <NavLink
+          className='side-nav-item'
+          exact
+          activeClassName='active'
+          to='/store'
+        >
+          Statistics
+        </NavLink>
       </li>
       <li>
-        <Link to='/store/products'>Products</Link>
+        <NavLink
+          className='side-nav-item'
+          exact
+          activeClassName='active'
+          to='/store/products'
+        >
+          Products
+        </NavLink>
       </li>
       <li>
-        <Link to='/store/bundles'>Bundles</Link>
+        <NavLink
+          className='side-nav-item'
+          exact
+          activeClassName='active'
+          to='/store/bundles'
+        >
+          Bundles
+        </NavLink>
       </li>
     </ul>
   );
