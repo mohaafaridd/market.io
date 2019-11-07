@@ -1,0 +1,16 @@
+.nav {
+  @apply bg-primary flex justify-around p-5 items-center shadow;
+}
+
+.nav .title {
+  font-family: 'Caveat', cursive;
+  @apply flex-1 text-3xl;
+}
+
+.nav .search-box {
+  @apply flex flex-1;
+}
+
+.nav ul {
+  @apply flex-1 flex justify-end;
+}

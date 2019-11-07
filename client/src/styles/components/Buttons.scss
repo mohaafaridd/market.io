@@ -1,0 +1,23 @@
+.btn {
+  transition: all 0.2s ease-in;
+  @apply py-2 px-4 rounded cursor-pointer;
+}
+
+.btn-outlined {
+  @apply bg-transparent border;
+}
+
+.btn-accent {
+  @apply bg-blue-500;
+}
+
+.btn-accent:hover {
+  @apply bg-blue-600;
+}
+
+.btn-accent-border {
+  @apply border-blue-500;
+}
+.btn-accent-border:hover {
+  @apply bg-blue-500 border-blue-500;
+}

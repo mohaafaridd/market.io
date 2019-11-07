@@ -14,10 +14,10 @@ const Navbar = () => {
 
   const guestLinks = (
     <Fragment>
-      <li>
+      <li className='btn btn-accent'>
         <Link to='/register'>Register</Link>
       </li>
-      <li>
+      <li className='btn btn-accent'>
         <Link to='/login'>Login</Link>
       </li>
     </Fragment>
@@ -25,13 +25,12 @@ const Navbar = () => {
 
   const clientLinks = (
     <Fragment>
-      <li>Hello {client && client.name}</li>
       {client && client.role === 'User' ? (
         <Fragment>
-          <li>
+          <li className='btn btn-accent'>
             <Link to='/user/cart'>Cart</Link>
           </li>
-          <li>
+          <li className='btn btn-accent mx-2'>
             <Link to='/user/orders'>Orders</Link>
           </li>
         </Fragment>
@@ -40,7 +39,7 @@ const Navbar = () => {
           <Link to='/store'>Dashboard</Link>
         </li>
       )}
-      <li>
+      <li className='btn btn-outlined btn-accent-border'>
         <a href='#!' onClick={onLogout}>
           Logout
         </a>
@@ -56,12 +55,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <span>Market</span>
+    <nav className='nav'>
+      <span className='title'>Market</span>
 
-      <form onSubmit={onSubmit}>
-        <input type='text' placeholder='Search products...' ref={text} />
-        <button>Search</button>
+      <form className='search-box' onSubmit={onSubmit}>
+        <input
+          className='input flex-1'
+          type='text'
+          placeholder='Search products...'
+          ref={text}
+        />
+        <button className='btn btn-accent ml-2'>
+          <i class='fas fa-search'></i> Search
+        </button>
       </form>
 
       <ul>{isAuthenticated ? clientLinks : guestLinks}</ul>
