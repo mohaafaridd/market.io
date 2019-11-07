@@ -1,0 +1,30 @@
+.store-dashboard {
+  @apply flex flex-1;
+}
+.store-dashboard .body {
+  @apply flex-1;
+}
+
+@screen xl {
+  .store-dashboard {
+    @apply flex-col;
+  }
+}
+
+@screen lg {
+  .store-dashboard {
+    @apply flex-col;
+  }
+}
+
+@screen md {
+  .store-dashboard {
+    @apply flex-col;
+  }
+}
+
+@screen sm {
+  .store-dashboard {
+    @apply flex-col;
+  }
+}
