@@ -3,7 +3,7 @@ import axios from 'axios';
 import StoreContext from './storeContext';
 import storeReducer from './storeReducer';
 
-import { GET_STATISTICS, STATISTICS_ERROR } from '../types';
+import { GET_STATISTICS, STATISTICS_ERROR, SET_LOADING } from '../types';
 
 const StoreState = props => {
   const initialState = {
@@ -16,6 +16,7 @@ const StoreState = props => {
   // Gets products by store from database
   const getStatistics = async () => {
     try {
+      dispatch({ type: SET_LOADING });
       const response = await axios.get(`/api/stores/statistics`);
       dispatch({ type: GET_STATISTICS, payload: response.data });
     } catch (error) {

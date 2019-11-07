@@ -9,6 +9,12 @@ export default (state, action) => {
         loading: false,
       };
 
+    case GET_STATISTICS:
+      return {
+        ...state,
+        loading: true,
+      };
+
     default:
       return state;
   }

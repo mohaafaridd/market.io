@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { Line, Pie } from 'react-chartjs-2';
 import moment from 'moment';
-
 import StoreContext from '../../context/store/storeContext';
+
 const Statistics = () => {
   const { getStatistics, statistics, loading } = useContext(StoreContext);
 
@@ -14,6 +14,9 @@ const Statistics = () => {
   if (loading) {
     return <h4>Loading</h4>;
   }
+
+  console.log('statistics', statistics);
+
   const { bundles, products, profit, graph } = statistics;
 
   const lineGraphOptions = {
