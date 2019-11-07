@@ -17,7 +17,7 @@ const Navbar = () => {
       <li className='btn btn-accent mr-2'>
         <Link to='/register'>Register</Link>
       </li>
-      <li className='btn btn-accent'>
+      <li className='btn btn-accent-border'>
         <Link to='/login'>Login</Link>
       </li>
     </Fragment>

@@ -21,7 +21,7 @@ const Register = () => {
   };
 
   return (
-    <form className='tile form' onSubmit={handleSubmit(onSubmit)}>
+    <form className='tile form register-form' onSubmit={handleSubmit(onSubmit)}>
       <h3 className='text-4xl py-2 secondary-text'>Register</h3>
 
       <div className='form-group'>

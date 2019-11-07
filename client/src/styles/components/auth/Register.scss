@@ -1,0 +1,23 @@
+@screen xl {
+  .register-form {
+    @apply w-6/12;
+  }
+}
+
+@screen lg {
+  .register-form {
+    @apply w-7/12;
+  }
+}
+
+@screen md {
+  .register-form {
+    @apply w-3/5;
+  }
+}
+
+@screen sm {
+  .register-form {
+    @apply w-full;
+  }
+}

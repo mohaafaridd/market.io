@@ -3,4 +3,5 @@
 @import './Cards.scss';
 @import './Typography.scss';
 @import './pages/Home.scss';
+@import './auth/Register.scss';
 @import './layout/Navbar.scss';
