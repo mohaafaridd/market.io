@@ -13,3 +13,9 @@
 .nav ul {
   @apply flex-1 flex justify-end;
 }
+
+@screen sm {
+  .nav .search-box {
+    @apply hidden;
+  }
+}
