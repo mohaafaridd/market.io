@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import AddProduct from './AddProduct';
 import ProductsStatistics from './ProductsStatistics';
 
 const ProductsTab = () => {
   return (
-    <Fragment>
+    <section className='products-tab'>
       <AddProduct />
       <ProductsStatistics />
-    </Fragment>
+    </section>
   );
 };
 

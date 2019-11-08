@@ -1,0 +1,10 @@
+.store-dashboard .body .products-tab {
+  @apply flex flex-row bg-green-900;
+}
+
+.store-dashboard .body .products-tab .add-product-partition .form-group {
+  @apply flex flex-1 flex-col my-2;
+}
+.store-dashboard .body .products-tab .add-product-partition .form-group small {
+  @apply text-red-500;
+}
