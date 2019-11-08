@@ -51,8 +51,6 @@ const ProductState = props => {
 
   const updateProduct = async product => {
     try {
-      console.log('in product state');
-      console.log('product', product);
       const response = await axios.patch(
         `/api/products/${product._id}`,
         product
@@ -67,6 +65,7 @@ const ProductState = props => {
     try {
       const formData = new FormData();
       formData.append('image', image);
+
       const response = await axios.post(
         `/api/products/${product._id}`,
         formData,

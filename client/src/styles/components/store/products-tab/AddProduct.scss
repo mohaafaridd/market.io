@@ -1,5 +1,9 @@
 .store-dashboard .body .products-tab {
-  @apply flex flex-row bg-green-900;
+  @apply flex flex-row bg-blue-400;
+}
+
+.store-dashboard .body .products-tab .add-product-partition {
+  @apply flex flex-col w-1/5;
 }
 
 .store-dashboard .body .products-tab .add-product-partition .form-group {
@@ -7,4 +11,7 @@
 }
 .store-dashboard .body .products-tab .add-product-partition .form-group small {
   @apply text-red-500;
+}
+.store-dashboard .body .products-tab .add-product-partition .dropzone {
+  @apply flex-1 flex flex-col items-center p-5 border-2 border-dashed border-gray-100 bg-main outline-none text-gray-100 cursor-pointer rounded-full my-5;
 }
