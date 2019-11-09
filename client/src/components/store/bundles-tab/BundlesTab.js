@@ -7,13 +7,16 @@ import Bundles from './Bundles';
 
 const BundlesTab = () => {
   return (
-    <Fragment>
-      <h1>Bundles</h1>
-      <AddBundle />
-      <AddProduct />
-      <Products />
-      <Bundles />
-    </Fragment>
+    <section className='bundles-tab'>
+      <div className='bundle-control'>
+        <AddBundle />
+        <AddProduct />
+        <Products />
+      </div>
+      <div className='bundle-statistics'>
+        <Bundles />
+      </div>
+    </section>
   );
 };
 

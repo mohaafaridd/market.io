@@ -1,0 +1,9 @@
+.store-dashboard .body .bundles-tab {
+  @apply flex;
+}
+.store-dashboard .body .bundles-tab .bundle-control {
+  @apply w-1/4;
+}
+.store-dashboard .body .bundles-tab .bundle-statistics {
+  @apply w-3/4;
+}
