@@ -1,5 +1,9 @@
 .store-dashboard .body .products-tab .add-product-partition {
-  @apply flex flex-col w-1/5;
+  @apply flex flex-col w-1/5 p-2;
+}
+
+.store-dashboard .body .products-tab .add-product-partition .tile:first-child {
+  @apply mb-2;
 }
 
 .store-dashboard .body .products-tab .add-product-partition .form-group {

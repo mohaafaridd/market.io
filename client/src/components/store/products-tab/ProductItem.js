@@ -44,7 +44,7 @@ const ProductItem = ({ product }) => {
       </div>
       <div className='field'>
         <button className='btn btn-primary' onClick={editProduct}>
-          <i class='fas fa-pencil-alt'></i>
+          <i className='fas fa-pencil-alt'></i>
         </button>
       </div>
       <div className='field'>
@@ -52,7 +52,7 @@ const ProductItem = ({ product }) => {
           className='btn btn-outlined btn-danger-border'
           onClick={onDelete}
         >
-          <i class='fas fa-trash-alt'></i>
+          <i className='fas fa-trash-alt'></i>
         </button>
       </div>
     </li>
