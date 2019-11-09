@@ -14,11 +14,15 @@ const Navbar = () => {
 
   const guestLinks = (
     <Fragment>
-      <li className='btn btn-accent mr-2'>
-        <Link to='/register'>Register</Link>
+      <li>
+        <Link className='btn btn-accent mr-2' to='/register'>
+          Register
+        </Link>
       </li>
-      <li className='btn btn-accent-border'>
-        <Link to='/login'>Login</Link>
+      <li>
+        <Link className='btn btn-outlined btn-accent-border' to='/login'>
+          Login
+        </Link>
       </li>
     </Fragment>
   );
@@ -27,20 +31,30 @@ const Navbar = () => {
     <Fragment>
       {client && client.role === 'User' ? (
         <Fragment>
-          <li className='btn btn-accent'>
-            <Link to='/user/cart'>Cart</Link>
+          <li>
+            <Link className='btn btn-accent' to='/user/cart'>
+              Cart
+            </Link>
           </li>
-          <li className='btn btn-accent mx-2'>
-            <Link to='/user/orders'>Orders</Link>
+          <li>
+            <Link className='btn btn-accent mx-2' to='/user/orders'>
+              Orders
+            </Link>
           </li>
         </Fragment>
       ) : (
-        <li className='btn btn-accent mr-2'>
-          <Link to='/store'>Dashboard</Link>
+        <li>
+          <Link className='btn btn-accent mr-2' to='/store'>
+            Dashboard
+          </Link>
         </li>
       )}
-      <li className='btn btn-outlined btn-accent-border'>
-        <a href='#!' onClick={onLogout}>
+      <li>
+        <a
+          className='btn btn-outlined btn-accent-border'
+          href='#!'
+          onClick={onLogout}
+        >
           Logout
         </a>
       </li>

@@ -19,7 +19,7 @@
 }
 
 .nav ul {
-  @apply flex justify-end w-4/12;
+  @apply flex justify-end w-4/12 items-center;
 }
 @screen xl {
   .nav .title {
