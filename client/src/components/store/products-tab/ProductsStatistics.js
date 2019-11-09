@@ -23,12 +23,13 @@ const Products = () => {
   }
 
   return (
-    <Fragment>
-      <h3>Products</h3>
-      {products.map(product => (
-        <ProductItem key={product._id} product={product} />
-      ))}
-    </Fragment>
+    <section className='products-statistics'>
+      <ul className='products-list'>
+        {products.map(product => (
+          <ProductItem key={product._id} product={product} />
+        ))}
+      </ul>
+    </section>
   );
 };
 

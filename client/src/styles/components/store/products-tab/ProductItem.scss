@@ -1,0 +1,18 @@
+.store-dashboard
+  .body
+  .products-tab
+  .products-statistics
+  .products-list
+  .product-item {
+  @apply flex;
+}
+
+.store-dashboard
+  .body
+  .products-tab
+  .products-statistics
+  .products-list
+  .product-item
+  .field {
+  @apply flex w-1/12 self-center;
+}

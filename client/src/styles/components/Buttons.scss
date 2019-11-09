@@ -41,6 +41,23 @@
   @apply bg-blue-500 border-blue-500;
 }
 
+/* Danger Button */
+
+.btn-danger {
+  @apply bg-red-500;
+}
+
+.btn-danger:hover {
+  @apply bg-red-600;
+}
+
+.btn-danger-border {
+  @apply border-red-500;
+}
+.btn-danger-border:hover {
+  @apply bg-red-500 border-red-500;
+}
+
 /* Grayed Button */
 
 .btn-grayed {
