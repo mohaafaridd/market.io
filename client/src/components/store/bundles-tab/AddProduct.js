@@ -62,12 +62,13 @@ const AddProduct = () => {
   };
 
   return (
-    <Fragment>
-      <h3>{inBundle ? 'Edit Product' : 'Add Product'}</h3>
+    <section className='tile add-product'>
       <form onSubmit={onSubmit}>
-        <fieldset disabled={!!!bundle}>
-          <label htmlFor='products'>Products</label>
+        <div className='form-group'>
+          <label htmlFor='products'>Select a product</label>
           <select
+            disabled={!!!bundle}
+            className='input'
             name='products'
             id='products'
             onChange={onOptionChange}
@@ -82,26 +83,41 @@ const AddProduct = () => {
               </option>
             ))}
           </select>
-          <label htmlFor='discount'>Discount</label>
+        </div>
+        <div className='form-group'>
+          <label htmlFor='discount'>Discount (%)</label>
           <input
+            disabled={!!!bundle}
+            className='input'
+            placeholder='Discount'
             type='text'
             name='discount'
             id='discount'
             value={discount}
             onChange={onDiscountChange}
           />
+        </div>
+        <div className='form-group'>
           <label htmlFor='priceAfterDiscount'>Price after discount</label>
           <input
+            placeholder='Price after discount'
+            className='input'
             type='text'
             name='priceAfterDiscount'
             id='priceAfterDiscount'
             value={product ? product.price * (1 - discount / 100) : 0}
             disabled
           />
-          <button type='submit'>Submit</button>
-        </fieldset>
+        </div>
+        <button
+          disabled={!!!bundle}
+          className={`btn ${!!!bundle ? 'btn-disabled' : 'btn-primary'}`}
+          type='submit'
+        >
+          {inBundle ? 'Edit Product' : 'Add Product'}
+        </button>
       </form>
-    </Fragment>
+    </section>
   );
 };
 

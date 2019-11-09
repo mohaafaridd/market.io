@@ -4,3 +4,6 @@
 .input:focus {
   @apply bg-gray-100;
 }
+.input:disabled {
+  @apply bg-gray-300 text-gray-500;
+}

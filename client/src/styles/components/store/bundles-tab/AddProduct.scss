@@ -1,0 +1,17 @@
+.store-dashboard .body .bundles-tab .bundle-control .add-product {
+  @apply flex flex-col;
+}
+
+.store-dashboard .body .bundles-tab .bundle-control .add-product form {
+  @apply flex flex-1 flex-col;
+}
+
+.store-dashboard
+  .body
+  .bundles-tab
+  .bundle-control
+  .add-product
+  form
+  .form-group {
+  @apply flex flex-col my-2;
+}

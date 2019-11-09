@@ -13,6 +13,7 @@
 
 @import './store/bundles-tab/BundlesTab.scss';
 @import './store/bundles-tab/AddBundle.scss';
+@import './store/bundles-tab/AddProduct.scss';
 
 @import './pages/Home.scss';
 @import './pages/StoreDashboard.scss';
