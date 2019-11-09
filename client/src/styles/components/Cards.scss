@@ -1,5 +1,11 @@
+.alt-tile {
+  @apply bg-main rounded p-5 shadow;
+}
 .tile {
   @apply bg-primary rounded p-5 shadow;
+}
+.sm-tile {
+  @apply bg-primary rounded p-2 shadow;
 }
 
 .form {

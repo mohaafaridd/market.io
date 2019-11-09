@@ -13,22 +13,22 @@ const Products = () => {
   }, []);
 
   return (
-    <div>
-      <h3>Products in bundle</h3>
-      <ul>
+    <section className='tile products-list-container'>
+      <h3>Products</h3>
+      <ul className='alt-tile products-list'>
         {bundle ? (
           offers.length === 0 ? (
-            <li>No offers</li>
+            <li className='tile'>No offers</li>
           ) : (
             offers.map(item => (
               <ProductItem key={item.product._id} item={item} />
             ))
           )
         ) : (
-          <li>Please Select a bundle</li>
+          <li className='tile'>Please Select a bundle</li>
         )}
       </ul>
-    </div>
+    </section>
   );
 };
 

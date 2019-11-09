@@ -5,14 +5,33 @@ const ProductItem = ({ item: { discount, product } }) => {
   const { setProduct, removeBundleProduct, bundle } = useContext(BundleContext);
 
   return (
-    <li>
-      <p>{product.name}</p>
-      <p>price: ${product.price}</p>
-      <p>discount: {discount}%</p>
-      <p>price after discount: ${product.price * (1 - discount / 100)}</p>
-      <button onClick={e => setProduct(product)}>Edit</button>
-      <button onClick={e => removeBundleProduct(bundle, product)}>
-        Delete
+    <li className='tile product-item'>
+      <img
+        className='product-image'
+        src={`data:image/jpeg;base64,${Buffer.from(product.image.data).toString(
+          'base64'
+        )}`}
+      />
+      <div className='info'>
+        <span className='product-name'>
+          {product.name} ({discount}%)
+        </span>
+        <span>
+          <span className='original-price'>${product.price}</span> $
+          {product.price * (1 - discount / 100)}
+        </span>
+      </div>
+      <button
+        className='btn btn-primary btn-circle-sm'
+        onClick={e => setProduct(product)}
+      >
+        <i class='fas fa-pen fa-sm'></i>
+      </button>
+      <button
+        className='btn btn-outlined btn-danger-border btn-circle-sm'
+        onClick={e => removeBundleProduct(bundle, product)}
+      >
+        <i class='fas fa-trash fa-sm'></i>
       </button>
     </li>
   );

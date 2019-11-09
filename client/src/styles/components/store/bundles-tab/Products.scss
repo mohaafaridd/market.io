@@ -1,0 +1,39 @@
+.store-dashboard .bundles-tab .products-list-container {
+  @apply flex flex-col;
+}
+
+.store-dashboard .bundles-tab .products-list-container .products-list {
+  @apply flex flex-col;
+}
+
+.store-dashboard
+  .bundles-tab
+  .products-list-container
+  .products-list
+  .product-item {
+  @apply flex my-2 text-sm items-center justify-between px-5 py-2;
+}
+.store-dashboard
+  .bundles-tab
+  .products-list-container
+  .products-list
+  .product-item
+  img {
+  @apply w-1/6;
+}
+.store-dashboard
+  .bundles-tab
+  .products-list-container
+  .products-list
+  .product-item
+  .info {
+  @apply flex flex-col;
+}
+.store-dashboard
+  .bundles-tab
+  .products-list-container
+  .products-list
+  .product-item
+  .original-price {
+  @apply line-through text-gray-600;
+}
