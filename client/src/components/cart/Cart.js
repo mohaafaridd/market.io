@@ -27,8 +27,8 @@ const Carts = () => {
   }
 
   return (
-    <section className="cart m-auto w-1/2 my-10 secondary-tile">
-      <div className="tile flex">
+    <section className="secondary-tile cart">
+      <div className="tile clear-btn">
         <button
           className={
             carts.length === 0 || carts[2] === 0

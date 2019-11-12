@@ -1,9 +1,9 @@
-import React, { Fragment, useContext } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import React, { Fragment, useContext } from "react";
+import { Route, useHistory } from "react-router-dom";
 
-import AuthContext from '../../context/auth/authContext';
-import Cart from '../cart/Cart';
-import Orders from '../order/Orders';
+import AuthContext from "../../context/auth/authContext";
+import Cart from "../cart/Cart";
+import Orders from "../order/Orders";
 
 const UserDashboard = ({ match }) => {
   const { client, loading } = useContext(AuthContext);
@@ -11,15 +11,17 @@ const UserDashboard = ({ match }) => {
 
   if (loading) {
     return <h4>Loading Dashboard...</h4>;
-  } else if (!client || client.role !== 'User') {
-    history.push('/');
+  } else if (!client || client.role !== "User") {
+    history.push("/");
   }
 
   return (
-    <Fragment>
-      <Route path={`${match.url}/cart`} exact component={Cart} />
-      <Route path={`${match.url}/orders`} exact component={Orders} />
-    </Fragment>
+    <section className="user-dashboard">
+      <div className="body">
+        <Route path={`${match.url}/cart`} exact component={Cart} />
+        <Route path={`${match.url}/orders`} exact component={Orders} />
+      </div>
+    </section>
   );
 };
 

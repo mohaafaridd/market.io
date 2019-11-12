@@ -15,37 +15,62 @@ const CartItem = ({ cart }) => {
     deleteCart(cart);
   };
 
+  console.log("product", product);
+
   return (
-    <li className="tile my-2">
+    <li className="tile product-item">
       <img
         className="product-image"
         src={`data:image/jpeg;base64,${product.image}`}
         alt={`${product.name}`}
       />
-      <p>{product.name}</p>
-      <p>rate: {product.score ? product.score : "Not Rated"}</p>
-      <p>Unit Price: {product.price}</p>
-      <p>Total Price: {bill}</p>
-      <p>Store: {store.name}</p>
 
-      <label htmlFor="amount">Amount </label>
-      <select
-        className="input"
-        name="amount"
-        id="amount"
-        defaultValue={amount}
-        onChange={updateAmount}
-      >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <div className="info">
+        <p className="text-xl">{product.name}</p>
+        {product.discount > 0 && <p>{product.discount}%</p>}
+      </div>
 
-      <button className="btn btn-danger" onClick={deleteProductCart}>
-        Delete
-      </button>
+      <div className="meta">
+        <div className="store">
+          <div className="sub-info">
+            <p>Store</p>
+            <p>{store.name}</p>
+          </div>
+          <div className="sub-info">
+            <p>Unit Price</p>
+            <p>{product.price}</p>
+          </div>
+          <div className="sub-info">
+            <p>Total Price</p>
+            <p>{bill}</p>
+          </div>
+        </div>
+
+        <div className="user">
+          <div className="amount">
+            <select
+              className="input"
+              name="amount"
+              id="amount"
+              defaultValue={amount}
+              onChange={updateAmount}
+            >
+              <option value="default" disabled>
+                Amount
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <button className="btn btn-danger" onClick={deleteProductCart}>
+            Delete
+          </button>
+        </div>
+      </div>
     </li>
   );
 };
