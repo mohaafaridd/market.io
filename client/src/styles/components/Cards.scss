@@ -8,6 +8,10 @@
   @apply bg-primary rounded p-2 shadow;
 }
 
+.secondary-tile {
+  @apply bg-gray-600 rounded p-2 shadow-md;
+}
+
 .form {
   @apply m-auto w-1/5;
 }

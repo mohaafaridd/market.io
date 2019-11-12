@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import uuid from 'uuid';
-import CartBundleItem from './CartBundleItem';
-import CartProductItem from './CartProductItem';
-import CartContext from '../../context/cart/cartContext';
+import React, { useContext, useEffect } from "react";
+import uuid from "uuid";
+import CartBundleItem from "./CartBundleItem";
+import CartProductItem from "./CartProductItem";
+import CartContext from "../../context/cart/cartContext";
 const Carts = () => {
   const { getCarts, carts, clearCart, loading, createOrder } = useContext(
     CartContext
@@ -27,28 +27,37 @@ const Carts = () => {
   }
 
   return (
-    <div>
-      <h3>Carts</h3>
-      <button
-        onClick={onClearCart}
-        disabled={carts.length === 0 || carts[2] === 0}
-      >
-        Clear Cart
-      </button>
-      <p>Bill: {bill ? bill : 0}</p>
+    <section className="cart m-auto w-1/2 my-10 secondary-tile">
+      <div className="tile flex">
+        <button
+          className={
+            carts.length === 0 || carts[2] === 0
+              ? "btn btn-disabled"
+              : "btn btn-grayed"
+          }
+          onClick={onClearCart}
+          disabled={carts.length === 0 || carts[2] === 0}
+        >
+          Clear Cart
+        </button>
+      </div>
       <ul>
         {products &&
           products.map(cart => <CartProductItem key={uuid.v4()} cart={cart} />)}
         {bundles &&
           bundles.map(cart => <CartBundleItem key={uuid.v4()} cart={cart} />)}
       </ul>
-      <button
-        disabled={carts.length === 0 || carts[2] === 0}
-        onClick={createOrder}
-      >
-        Checkout
-      </button>
-    </div>
+      <div className="tile">
+        <p>Bill: {bill ? bill : 0}</p>
+        <button
+          className="btn btn-accent"
+          disabled={carts.length === 0 || carts[2] === 0}
+          onClick={createOrder}
+        >
+          Checkout
+        </button>
+      </div>
+    </section>
   );
 };
 
