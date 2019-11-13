@@ -29,9 +29,11 @@
 .user-dashboard .body .cart .product-item .meta .user {
   @apply flex justify-between;
 }
+
 .user-dashboard .body .cart .product-item .meta .user .amount {
   @apply flex-1 pr-2;
 }
+
 .user-dashboard .body .cart .product-item .meta .user .amount select {
   @apply w-full;
 }

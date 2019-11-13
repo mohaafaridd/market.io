@@ -22,9 +22,9 @@ const Carts = () => {
     return <h4>Loading</h4>;
   }
 
-  if (bill === 0) {
-    return <h4>Your cart is empty</h4>;
-  }
+  // if (bill === 0) {
+  //   return <h4>Your cart is empty</h4>;
+  // }
 
   return (
     <section className="secondary-tile cart">

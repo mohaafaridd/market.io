@@ -18,6 +18,7 @@
 
 @import "./cart/Cart.scss";
 @import "./cart/CartProductItem.scss";
+@import "./cart/CartBundleItem.scss";
 
 @import "./pages/Home.scss";
 @import "./pages/StoreDashboard.scss";

@@ -1,14 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import queryString from 'query-string';
-import uuid from 'uuid';
-import ProductContext from '../../context/product/productContext';
-import SearchItem from './SearchItem';
+import React, { useContext, useEffect } from "react";
+import queryString from "query-string";
+import uuid from "uuid";
+import ProductContext from "../../context/product/productContext";
+import SearchItem from "./SearchItem";
 const Search = ({ location }) => {
   const { searchProductByName, products, loading } = useContext(ProductContext);
 
   useEffect(() => {
     const { name } = queryString.parse(location.search);
-    console.log(name);
     searchProductByName(name);
     // eslint-disable-next-line
   }, [location.search]);

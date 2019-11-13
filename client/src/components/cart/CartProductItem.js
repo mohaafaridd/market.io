@@ -15,15 +15,14 @@ const CartItem = ({ cart }) => {
     deleteCart(cart);
   };
 
-  console.log("product", product);
-
   return (
     <li className="tile product-item">
-      <img
-        className="product-image"
-        src={`data:image/jpeg;base64,${product.image}`}
-        alt={`${product.name}`}
-      />
+      <div className="product-image">
+        <img
+          src={`data:image/jpeg;base64,${product.image}`}
+          alt={`${product.name}`}
+        />
+      </div>
 
       <div className="info">
         <p className="text-xl">{product.name}</p>
