@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const Cart = require('../models/cart.model');
-const Order = require('../models/order.model');
+const mongoose = require("mongoose");
+const Cart = require("../models/cart.model");
+const Order = require("../models/order.model");
 
 // @route       POST api/orders
 // @desc        Create an order
@@ -9,14 +9,14 @@ const postOrder = async (req, res) => {
   try {
     const { client: user } = req;
     const carts = await Cart.find({ user: user.id, ordered: false })
-      .populate('product')
+      .populate("product")
       .populate({
-        path: 'bundle',
-        model: 'Bundle',
+        path: "bundle",
+        model: "Bundle",
         populate: {
-          path: 'offers.product',
-          model: 'Product',
-        },
+          path: "offers.product",
+          model: "Product"
+        }
       });
 
     const orders = carts
@@ -35,7 +35,7 @@ const postOrder = async (req, res) => {
               discount: offer.discount,
               amount: cart.amount,
               cart: cart._id,
-              store: cart.store,
+              store: cart.store
             };
           });
 
@@ -49,7 +49,7 @@ const postOrder = async (req, res) => {
             discount: cart.product.discount,
             amount: cart.amount,
             cart: cart._id,
-            store: cart.store,
+            store: cart.store
           };
         }
       })
@@ -70,8 +70,8 @@ const postOrder = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'You order has been set',
-      orders,
+      message: "You order has been set",
+      orders
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -86,52 +86,53 @@ const getOrders = async (req, res) => {
       { $match: { user: user._id } },
       {
         $project: {
-          _id: '$cart',
+          _id: "$cart",
           type: {
             $cond: {
-              if: { $eq: ['$bundle', null] },
-              then: 'product',
-              else: 'bundle',
-            },
+              if: { $eq: ["$bundle", null] },
+              then: "product",
+              else: "bundle"
+            }
           },
-          amount: '$amount',
+          amount: "$amount",
           bill: {
             $sum: {
               $multiply: [
-                '$price',
-                '$amount',
+                "$price",
+                "$amount",
                 {
                   $subtract: [
                     1,
                     {
-                      $divide: ['$discount', 100],
-                    },
-                  ],
-                },
-              ],
-            },
+                      $divide: ["$discount", 100]
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          createdAt: '$createdAt',
-          updatedAt: '$updatedAt',
-        },
+          createdAt: "$createdAt",
+          updatedAt: "$updatedAt"
+        }
       },
 
       {
         $group: {
-          _id: '$_id',
-          type: { $first: '$type' },
-          amount: { $first: '$amount' },
-          bill: { $sum: '$bill' },
-          createdAt: { $first: '$createdAt' },
-          updatedAt: { $first: '$updatedAt' },
-        },
+          _id: "$_id",
+          type: { $first: "$type" },
+          amount: { $first: "$amount" },
+          bill: { $sum: "$bill" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" }
+        }
       },
+      { $sort: { createdAt: -1 } }
     ]);
 
     res.status(200).json({
       success: true,
-      message: 'Your orders has been fetched',
-      orders,
+      message: "Your orders has been fetched",
+      orders
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -140,5 +141,5 @@ const getOrders = async (req, res) => {
 
 module.exports = {
   postOrder,
-  getOrders,
+  getOrders
 };

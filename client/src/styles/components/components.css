@@ -24,5 +24,8 @@
 @import "./cart/CartBundleItem.css";
 @import "./cart/CartProductItem.css";
 
+@import "./orders/Orders.css";
+@import "./orders/OrderItem.css";
+
 @import "./pages/Home.css";
 @import "./pages/StoreDashboard.css";

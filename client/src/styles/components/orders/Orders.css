@@ -1,0 +1,3 @@
+.user-dashboard .body .orders {
+  @apply m-auto w-1/2 my-10;
+}

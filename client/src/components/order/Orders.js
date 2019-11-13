@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
-import OrderItem from './OrderItem';
-import OrderContext from '../../context/order/orderContext';
+import React, { useContext, useEffect } from "react";
+import OrderItem from "./OrderItem";
+import OrderContext from "../../context/order/orderContext";
 const Orders = () => {
   const { getOrders, orders, loading } = useContext(OrderContext);
 
@@ -14,8 +14,7 @@ const Orders = () => {
   }
 
   return (
-    <div>
-      <h1>User Orders</h1>
+    <div className="secondary-tile orders">
       <ul>
         {orders.map(order => (
           <OrderItem order={order} />

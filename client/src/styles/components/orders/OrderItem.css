@@ -1,0 +1,18 @@
+.user-dashboard .body .orders .order {
+  @apply flex flex-col m-2;
+
+  .info {
+    @apply flex justify-between mt-2;
+
+    .sub-info {
+      @apply w-2/12;
+      &:nth-of-type(4),
+      &:nth-of-type(5) {
+        @apply w-3/12;
+      }
+      p:first-child {
+        @apply text-gray-500;
+      }
+    }
+  }
+}
