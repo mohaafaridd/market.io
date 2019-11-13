@@ -1,24 +1,28 @@
-@import "./Buttons.scss";
-@import "./Inputs.scss";
-@import "./Cards.scss";
-@import "./Typography.scss";
-@import "./auth/Register.scss";
-@import "./layout/Navbar.scss";
-@import "./store/Statistics.scss";
+@import "./Buttons.css";
+@import "./Inputs.css";
+@import "./Cards.css";
+@import "./Typography.css";
 
-@import "./store/products-tab/ProductsTab.scss";
-@import "./store/products-tab/AddProduct.scss";
-@import "./store/products-tab/ProductsStatistics.scss";
-@import "./store/products-tab/ProductItem.scss";
+@import "./auth/Register.css";
+@import "./layout/Navbar.css";
 
-@import "./store/bundles-tab/BundlesTab.scss";
-@import "./store/bundles-tab/AddBundle.scss";
-@import "./store/bundles-tab/AddProduct.scss";
-@import "./store/bundles-tab/Products.scss";
+/* Store Styles */
 
-@import "./cart/Cart.scss";
-@import "./cart/CartProductItem.scss";
-@import "./cart/CartBundleItem.scss";
+@import "./store/Statistics.css";
 
-@import "./pages/Home.scss";
+@import "./store/products-tab/AddProduct.css";
+@import "./store/products-tab/ProductItem.css";
+@import "./store/products-tab/ProductsStatistics.css";
+@import "./store/products-tab/ProductsTab.css";
+
+@import "./store/bundles-tab/AddBundle.css";
+@import "./store/bundles-tab/AddProduct.css";
+@import "./store/bundles-tab/BundlesTab.css";
+@import "./store/bundles-tab/Products.css";
+
+@import "./cart/Cart.css";
+@import "./cart/CartBundleItem.css";
+@import "./cart/CartProductItem.css";
+
+@import "./pages/Home.css";
 @import "./pages/StoreDashboard.scss";

@@ -5,14 +5,8 @@
   .products-list
   .product-item {
   @apply flex mb-2;
-}
 
-.store-dashboard
-  .body
-  .products-tab
-  .products-statistics
-  .products-list
-  .product-item
   .field {
-  @apply flex w-1/12 self-center;
+    @apply flex w-1/12 self-center;
+  }
 }

@@ -1,0 +1,39 @@
+.user-dashboard .body .cart .product-item {
+  @apply flex my-2 justify-between;
+
+  .product-image {
+    @apply w-1/12 flex items-center;
+  }
+
+  .info {
+    @apply w-7/12 px-2;
+  }
+
+  .meta {
+    @apply w-4/12;
+
+    > div {
+      @apply p-1;
+    }
+
+    .store {
+      @apply flex justify-between;
+
+      .sub-info p:first-child {
+        @apply text-gray-500;
+      }
+    }
+
+    .user {
+      @apply flex justify-between;
+
+      .amount {
+        @apply flex-1 pr-2;
+
+        select {
+          @apply w-full;
+        }
+      }
+    }
+  }
+}

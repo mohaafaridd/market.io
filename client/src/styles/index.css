@@ -4,6 +4,7 @@
 @import './components/components.css';
 
 @import 'tailwindcss/utilities';
+@import 'tailwindcss/screens';
 * {
   font-family: 'Be Vietnam', sans-serif;
 }

@@ -15,70 +15,65 @@
 
 .btn-primary {
   @apply bg-green-500;
-}
-
-.btn-primary:hover {
-  @apply bg-green-600;
+  &:hover {
+    @apply bg-green-600;
+  }
 }
 
 .btn-primary-border {
   @apply border-green-500;
-}
-.btn-primary-border:hover {
-  @apply bg-green-500 border-green-500;
+  &:hover {
+    @apply bg-green-500 border-green-500;
+  }
 }
 
 /* Accent Button */
 
 .btn-accent {
   @apply bg-blue-500;
-}
-
-.btn-accent:hover {
-  @apply bg-blue-600;
+  &:hover {
+    @apply bg-blue-600;
+  }
 }
 
 .btn-accent-border {
   @apply border-blue-500;
-}
-.btn-accent-border:hover {
-  @apply bg-blue-500 border-blue-500;
+  &:hover {
+    @apply bg-blue-500 border-blue-500;
+  }
 }
 
 /* Danger Button */
 
 .btn-danger {
   @apply bg-red-500;
-}
-
-.btn-danger:hover {
-  @apply bg-red-600;
+  &:hover {
+    @apply bg-red-600;
+  }
 }
 
 .btn-danger-border {
   @apply border-red-500;
-}
-.btn-danger-border:hover {
-  @apply bg-red-500 border-red-500;
+  &:hover {
+    @apply bg-red-500 border-red-500;
+  }
 }
 
 /* Grayed Button */
 
 .btn-grayed {
   @apply bg-gray-500;
-}
-
-.btn-grayed:hover {
-  @apply bg-gray-600;
+  &:hover {
+    @apply bg-gray-600;
+  }
 }
 
 .btn-grayed-border {
   @apply border-gray-500;
+  &:hover {
+    @apply bg-gray-500 border-gray-500;
+  }
 }
-.btn-grayed-border:hover {
-  @apply bg-gray-500 border-gray-500;
-}
-
 /* Grayed Button */
 
 .btn-disabled {

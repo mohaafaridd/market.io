@@ -1,0 +1,11 @@
+.input {
+  @apply py-2 px-4 rounded text-black;
+
+  &:focus {
+    @apply bg-gray-100;
+  }
+
+  &:disabled {
+    @apply bg-gray-300 text-gray-500;
+  }
+}

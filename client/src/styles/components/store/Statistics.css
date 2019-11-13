@@ -1,0 +1,38 @@
+.store-dashboard .body {
+  @apply flex;
+
+  .state {
+    @apply flex justify-between;
+
+    .numeric {
+      @apply flex flex-col w-1/4;
+      .tile {
+        @apply m-2;
+      }
+    }
+
+    .graph {
+      @apply flex flex-col flex-1 w-3/4;
+      .tile {
+        @apply m-2 flex-1;
+      }
+    }
+  }
+}
+
+@screen sm {
+  .store-dashboard .body .state {
+    @apply flex-col;
+
+    .numeric {
+      @apply flex flex-col flex-1 w-screen;
+    }
+
+    .graph {
+      @apply flex flex-col flex-1 w-screen;
+      .tile {
+        @apply m-2 flex-1;
+      }
+    }
+  }
+}

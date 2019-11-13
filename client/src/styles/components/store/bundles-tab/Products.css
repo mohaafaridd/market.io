@@ -1,0 +1,19 @@
+.store-dashboard .bundles-tab .products-list-container {
+  @apply flex flex-col;
+
+  .products-list {
+    @apply flex flex-col;
+    .product-item {
+      @apply flex my-2 text-sm items-center justify-between px-5 py-2;
+      img {
+        @apply w-1/6;
+      }
+      .info {
+        @apply flex flex-col;
+      }
+      .original-price {
+        @apply line-through text-gray-600;
+      }
+    }
+  }
+}

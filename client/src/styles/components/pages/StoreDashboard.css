@@ -1,8 +1,8 @@
 .store-dashboard {
   @apply flex flex-1;
-}
-.store-dashboard .body {
-  @apply flex-1 flex flex-col;
+  .body {
+    @apply flex-1 flex flex-col;
+  }
 }
 
 @screen xl {
