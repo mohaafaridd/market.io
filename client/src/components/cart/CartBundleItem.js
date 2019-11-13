@@ -71,12 +71,18 @@ const CartItem = ({ cart }) => {
       <div className="products">
         <ul>
           {products.map(product => (
-            <li className="tile" key={uuid.v4()}>
-              <p>{product.name}</p>
-              <p>rate: {product.score ? product.score : "Not Rated"}</p>
-              <p>Discount: {product.discount}%</p>
-              <p>Unit Price: {product.price}</p>
-              <p>After: {product.price * ((100 - product.discount) / 100)}</p>
+            <li className="tile product-item" key={uuid.v4()}>
+              <p className="name">{product.name}</p>
+              <p>{product.score ? product.score : "Not Rated"}</p>
+              <p>{product.discount}%</p>
+              <p className="original-price">
+                {numeral(product.price).format("$0,0.00")}
+              </p>
+              <p>
+                {numeral(
+                  product.price * ((100 - product.discount) / 100)
+                ).format("$0,0.00")}
+              </p>
             </li>
           ))}
         </ul>

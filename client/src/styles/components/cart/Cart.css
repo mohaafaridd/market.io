@@ -1,7 +1,19 @@
 .user-dashboard .body .cart {
   @apply m-auto w-1/2 my-10;
 
-  .clear-btn{
+  .clear-btn {
     @apply flex justify-center;
+  }
+
+  .checkout {
+    @apply flex flex-col mt-2;
+
+    .bill {
+      @apply flex-1 text-center;
+    }
+
+    .btn {
+      @apply self-end text-lg mt-2;
+    }
   }
 }

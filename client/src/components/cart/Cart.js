@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import uuid from "uuid";
+import numeral from "numeral";
 import CartBundleItem from "./CartBundleItem";
 import CartProductItem from "./CartProductItem";
 import CartContext from "../../context/cart/cartContext";
@@ -47,10 +48,20 @@ const Carts = () => {
         {bundles &&
           bundles.map(cart => <CartBundleItem key={uuid.v4()} cart={cart} />)}
       </ul>
-      <div className="tile">
-        <p>Bill: {bill ? bill : 0}</p>
+      <div className="tile checkout">
+        <div className="alt-tile bill">
+          <p>
+            {bill
+              ? numeral(bill).format("$0,0.00")
+              : numeral(0).format("$0,0.00")}
+          </p>
+        </div>
         <button
-          className="btn btn-accent"
+          className={
+            carts.length === 0 || carts[2] === 0
+              ? "btn btn-disabled"
+              : "btn btn-accent"
+          }
           disabled={carts.length === 0 || carts[2] === 0}
           onClick={createOrder}
         >

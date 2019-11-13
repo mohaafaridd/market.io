@@ -10,7 +10,7 @@
   }
 
   .header {
-    @apply flex justify-between;
+    @apply flex justify-between items-center;
     .info {
       @apply w-6/12;
 
@@ -33,6 +33,21 @@
         select {
           @apply w-full;
         }
+      }
+    }
+  }
+
+  .products {
+    .product-item {
+      @apply flex justify-between;
+      > p {
+        @apply w-1/6;
+      }
+      .name {
+        @apply w-2/6;
+      }
+      .original-price {
+        @apply line-through text-gray-600;
       }
     }
   }
