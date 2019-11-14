@@ -1,3 +1,27 @@
 .user-dashboard .body .orders {
   @apply m-auto w-1/2 my-10;
 }
+
+@screen xl {
+  .user-dashboard .body .orders {
+    @apply m-auto w-full my-10;
+  }
+}
+
+@screen lg {
+  .user-dashboard .body .orders {
+    @apply m-auto w-full my-10;
+  }
+}
+
+@screen md {
+  .user-dashboard .body .orders {
+    @apply m-auto w-full my-10;
+  }
+}
+
+@screen sm {
+  .user-dashboard .body .orders {
+    @apply m-auto w-full my-10;
+  }
+}

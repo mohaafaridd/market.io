@@ -16,3 +16,45 @@
     }
   }
 }
+
+@screen md {
+  .user-dashboard .body .orders .order {
+    @apply flex m-2;
+
+    .info {
+      @apply flex flex-wrap mt-2;
+
+      .sub-info {
+        @apply w-1/3;
+        &:nth-of-type(4),
+        &:nth-of-type(5) {
+          @apply w-1/2;
+        }
+        p:first-child {
+          @apply text-gray-500;
+        }
+      }
+    }
+  }
+}
+
+@screen sm {
+  .user-dashboard .body .orders .order {
+    @apply flex m-2;
+
+    .info {
+      @apply flex flex-wrap mt-2;
+
+      .sub-info {
+        @apply w-1/2;
+        &:nth-of-type(4),
+        &:nth-of-type(5) {
+          @apply w-full;
+        }
+        p:first-child {
+          @apply text-gray-500;
+        }
+      }
+    }
+  }
+}

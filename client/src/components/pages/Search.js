@@ -12,7 +12,7 @@ const Search = ({ location }) => {
     // eslint-disable-next-line
   }, [location.search]);
 
-  if (loading) {
+  if (loading || !products) {
     return <h4>Loading</h4>;
   }
 

@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
+import numeral from "numeral";
 import CartContext from "../../context/cart/cartContext";
 
 const CartItem = ({ cart }) => {
   const { product, store, bill, amount } = cart;
   const { editCart, deleteCart } = useContext(CartContext);
+
+  setTimeout(() => {}, 2000);
 
   const updateAmount = e => {
     e.preventDefault();
@@ -37,11 +40,11 @@ const CartItem = ({ cart }) => {
           </div>
           <div className="sub-info">
             <p>Unit Price</p>
-            <p>{product.price}</p>
+            <p>{numeral(product.price).format("$0,0.00")}</p>
           </div>
           <div className="sub-info">
             <p>Total Price</p>
-            <p>{bill}</p>
+            <p>{numeral(bill).format("$0,0.00")}</p>
           </div>
         </div>
 
