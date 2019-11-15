@@ -1,5 +1,5 @@
 .store-dashboard .body .products-tab .products-statistics table {
-	@apply table-auto border rounded-lg;
+	@apply table-auto border rounded-lg w-full;
 
 	thead {
 		@apply text-white bg-main rounded-lg;
