@@ -37,3 +37,45 @@
     }
   }
 }
+
+@screen sm {
+  .user-dashboard .body .cart .product-item {
+    @apply flex flex-col flex-wrap my-2 justify-between;
+
+    .product-image {
+      @apply w-full flex justify-center;
+    }
+
+    .info {
+      @apply w-full px-2 text-center;
+    }
+
+    .meta {
+      @apply w-full;
+
+      > div {
+        @apply p-1;
+      }
+
+      .store {
+        @apply flex justify-between;
+
+        .sub-info p:first-child {
+          @apply text-gray-500;
+        }
+      }
+
+      .user {
+        @apply flex flex-col;
+
+        .amount {
+          @apply flex-1 p-0 py-2;
+
+          select {
+            @apply w-full;
+          }
+        }
+      }
+    }
+  }
+}

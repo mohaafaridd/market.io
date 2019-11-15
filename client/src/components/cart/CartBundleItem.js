@@ -27,21 +27,23 @@ const CartItem = ({ cart }) => {
         <div className="info">
           <div className="pricing">
             <div className="sub-info">
-              <p>Total Price</p>
-              <p>{bill}</p>
+              <p>Store</p>
+              <p>{store.name}</p>
             </div>
             <div className="sub-info">
               <p>Saved</p>
               <p>{saved}</p>
             </div>
-
             <div className="sub-info">
-              <p>Store</p>
-              <p>{store.name}</p>
+              <p>Total Price</p>
+              <p>{bill}</p>
             </div>
           </div>
 
           <div className="options">
+            <label htmlFor="amount" className="hidden sm:block">
+              Amount
+            </label>
             <div className="amount">
               <select
                 className="input"
@@ -73,12 +75,12 @@ const CartItem = ({ cart }) => {
           {products.map(product => (
             <li className="tile product-item" key={uuid.v4()}>
               <p className="name">{product.name}</p>
-              <p>{product.score ? product.score : "Not Rated"}</p>
               <p>{product.discount}%</p>
+              <p>{product.score ? product.score : "Not Rated"}</p>
               <p className="original-price">
                 {numeral(product.price).format("$0,0.00")}
               </p>
-              <p>
+              <p className="discount-price">
                 {numeral(
                   product.price * ((100 - product.discount) / 100)
                 ).format("$0,0.00")}

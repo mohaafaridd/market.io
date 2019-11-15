@@ -50,6 +50,9 @@ const CartItem = ({ cart }) => {
 
         <div className="user">
           <div className="amount">
+            <label htmlFor="amount" className="hidden sm:block">
+              Amount
+            </label>
             <select
               className="input"
               name="amount"

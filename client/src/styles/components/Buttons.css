@@ -11,6 +11,10 @@
   @apply rounded-full h-10 w-10 flex items-center justify-center;
 }
 
+.btn-circle-md {
+  @apply rounded-full h-16 w-16 flex items-center justify-center;
+}
+
 /* Primary Button */
 
 .btn-primary {

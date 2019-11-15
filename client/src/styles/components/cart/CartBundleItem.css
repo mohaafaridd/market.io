@@ -52,3 +52,64 @@
     }
   }
 }
+
+@screen sm {
+  .user-dashboard .body .cart .bundle-item {
+    @apply flex flex-col flex-wrap my-2;
+
+    > div {
+      @apply my-2;
+    }
+
+    li {
+      @apply flex my-2;
+    }
+
+    .header {
+      @apply flex flex-col my-2;
+      .info {
+        @apply w-full;
+
+        .pricing {
+          @apply flex justify-between;
+
+          .sub-info {
+            @apply w-auto;
+            p:first-child {
+              @apply text-gray-500;
+            }
+          }
+        }
+      }
+
+      .options {
+        @apply flex flex-col p-0 my-2;
+        .amount {
+          @apply flex-1 p-0 my-2;
+          select {
+            @apply w-full;
+          }
+        }
+      }
+    }
+
+    .products {
+      .product-item {
+        @apply flex flex-col;
+        > p {
+          @apply w-full;
+        }
+        .name {
+          @apply w-full;
+        }
+        .original-price {
+          @apply line-through text-gray-600 w-1/2;
+        }
+
+        .discount-price {
+          @apply w-1/2;
+        }
+      }
+    }
+  }
+}
