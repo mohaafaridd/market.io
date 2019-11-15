@@ -21,6 +21,7 @@
     "react-hook-form": "^3.26.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-table": "^7.0.0-beta.12",
     "tailwindcss": "^1.1.3",
     "uuid": "^3.3.3"
   },
@@ -49,6 +50,7 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
+    "prettier": "^1.19.1",
     "stylelint-config-recommended": "^3.0.0"
   }
 }
