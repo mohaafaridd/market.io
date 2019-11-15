@@ -1,8 +1,8 @@
 .store-dashboard .body .products-tab .products-statistics table {
-	@apply table-auto border rounded-lg w-full;
+	@apply table-auto text-left w-full;
 
 	thead {
-		@apply text-white bg-main rounded-lg;
+		@apply text-white bg-main;
 
 		tr {
 			@apply px-4 py-2;
@@ -16,7 +16,7 @@
 	tbody {
 		tr {
 			td {
-				@apply border-gray-100 border-t border-b py-2;
+				@apply border-gray-100 border-t border-b py-2 px-3;
 			}
 		}
 	}

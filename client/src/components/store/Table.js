@@ -17,7 +17,7 @@ const Table = ({ columns, data }) => {
 	);
 	return (
 		<Fragment>
-			<table {...getTableProps()}>
+			<table {...getTableProps()} className=''>
 				<thead>
 					{headerGroups.map(headerGroup => (
 						<tr {...headerGroup.getHeaderGroupProps()}>
@@ -36,7 +36,10 @@ const Table = ({ columns, data }) => {
 					{rows.map((row, i) => {
 						prepareRow(row);
 						return (
-							<tr className='bg-gray-200' {...row.getRowProps()}>
+							<tr
+								{...row.getRowProps()}
+								className='hover:bg-gray-900 cursor-default'
+							>
 								{row.cells.map(cell => {
 									return (
 										<td {...cell.getCellProps()}>

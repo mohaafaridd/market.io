@@ -213,7 +213,7 @@ const AddProduct = () => {
 					</button>
 				</form>
 			</div>
-			<div className='tile'>
+			<div className='tile secondary-tile'>
 				{!current ? (
 					<p>Please select a product to add an image</p>
 				) : (
@@ -226,7 +226,6 @@ const AddProduct = () => {
 							/>
 						)}
 						<form>
-							<h3>{current.image ? 'Edit' : 'Add'} Image</h3>
 							<div {...getRootProps()} className='dropzone'>
 								<input {...getInputProps()} />
 								{isDragActive ? (

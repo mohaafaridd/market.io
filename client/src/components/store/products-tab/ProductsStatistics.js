@@ -98,6 +98,7 @@ const Products = () => {
 
 	return (
 		<section className='tile products-statistics'>
+			<h3>Products</h3>
 			<Table columns={columns} data={products} />
 		</section>
 	);
