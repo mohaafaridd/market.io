@@ -1,31 +1,30 @@
-@import "./Buttons.css";
-@import "./Inputs.css";
-@import "./Cards.css";
-@import "./Typography.css";
+@import './Buttons.css';
+@import './Inputs.css';
+@import './Cards.css';
+@import './Typography.css';
 
-@import "./auth/Register.css";
-@import "./layout/Navbar.css";
+@import './auth/Register.css';
+@import './layout/Navbar.css';
 
 /* Store Styles */
 
-@import "./store/Statistics.css";
+@import './store/Statistics.css';
 
-@import "./store/products-tab/AddProduct.css";
-@import "./store/products-tab/ProductItem.css";
-@import "./store/products-tab/ProductsStatistics.css";
-@import "./store/products-tab/ProductsTab.css";
+@import './store/products-tab/AddProduct.css';
+@import './store/products-tab/ProductsStatistics.css';
+@import './store/products-tab/ProductsTab.css';
 
-@import "./store/bundles-tab/AddBundle.css";
-@import "./store/bundles-tab/AddProduct.css";
-@import "./store/bundles-tab/BundlesTab.css";
-@import "./store/bundles-tab/Products.css";
+@import './store/bundles-tab/AddBundle.css';
+@import './store/bundles-tab/AddProduct.css';
+@import './store/bundles-tab/BundlesTab.css';
+@import './store/bundles-tab/Products.css';
 
-@import "./cart/Cart.css";
-@import "./cart/CartBundleItem.css";
-@import "./cart/CartProductItem.css";
+@import './cart/Cart.css';
+@import './cart/CartBundleItem.css';
+@import './cart/CartProductItem.css';
 
-@import "./orders/Orders.css";
-@import "./orders/OrderItem.css";
+@import './orders/Orders.css';
+@import './orders/OrderItem.css';
 
-@import "./pages/Home.css";
-@import "./pages/StoreDashboard.css";
+@import './pages/Home.css';
+@import './pages/StoreDashboard.css';

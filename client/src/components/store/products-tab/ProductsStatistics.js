@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useContext } from 'react';
-import ProductItem from './ProductItem';
 import Table from '../Table';
 import ProductContext from '../../../context/product/productContext';
 import AuthContext from '../../../context/auth/authContext';
@@ -92,11 +91,6 @@ const Products = () => {
 	return (
 		<section className='products-statistics'>
 			<Table columns={columns} data={products} />
-			<ul className='products-list'>
-				{products.map(product => (
-					<ProductItem key={product._id} product={product} />
-				))}
-			</ul>
 		</section>
 	);
 };
