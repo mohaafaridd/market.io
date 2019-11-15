@@ -57,7 +57,11 @@ const Products = () => {
 			},
 			{
 				Header: 'Revenue',
-				accessor: 'color',
+				accessor: 'revenue',
+			},
+			{
+				Header: 'Sold Units',
+				accessor: 'sold',
 			},
 			{
 				Header: '',

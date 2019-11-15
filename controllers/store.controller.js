@@ -1,6 +1,6 @@
-const Product = require('../models/product.model');
-const Bundle = require('../models/bundle.model');
-const Order = require('../models/order.model');
+const Product = require("../models/product.model");
+const Bundle = require("../models/bundle.model");
+const Order = require("../models/order.model");
 
 // @route       POST api/stores/statistics
 // @desc        Get store statistics
@@ -23,159 +23,159 @@ const getStatistics = async (req, res) => {
           bundles: {
             $sum: {
               $cond: {
-                if: { $ne: ['$bundle', null] },
-                then: '$amount',
-                else: 0,
-              },
-            },
+                if: { $ne: ["$bundle", null] },
+                then: "$amount",
+                else: 0
+              }
+            }
           },
 
           sellingGraph: {
             $push: {
               type: {
                 $cond: {
-                  if: { $eq: ['$bundle', null] },
-                  then: 'product',
-                  else: 'bundle',
-                },
+                  if: { $eq: ["$bundle", null] },
+                  then: "product",
+                  else: "bundle"
+                }
               },
-              amount: '$amount',
-              date: '$createdAt',
-            },
+              amount: "$amount",
+              date: "$createdAt"
+            }
           },
 
           profitGraph: {
             $push: {
               type: {
                 $cond: {
-                  if: { $eq: ['$bundle', null] },
-                  then: 'product',
-                  else: 'bundle',
-                },
+                  if: { $eq: ["$bundle", null] },
+                  then: "product",
+                  else: "bundle"
+                }
               },
 
               profit: {
                 $multiply: [
-                  '$amount',
-                  '$price',
+                  "$amount",
+                  "$price",
                   {
                     $subtract: [
                       1,
                       {
-                        $divide: ['$discount', 100],
-                      },
-                    ],
-                  },
-                ],
+                        $divide: ["$discount", 100]
+                      }
+                    ]
+                  }
+                ]
               },
 
-              date: '$createdAt',
-            },
+              date: "$createdAt"
+            }
           },
 
           bundleProfit: {
             $sum: {
               $cond: {
-                if: { $ne: ['$bundle', null] },
+                if: { $ne: ["$bundle", null] },
                 then: {
                   $multiply: [
-                    '$amount',
-                    '$price',
+                    "$amount",
+                    "$price",
                     {
                       $subtract: [
                         1,
                         {
-                          $divide: ['$discount', 100],
-                        },
-                      ],
-                    },
-                  ],
+                          $divide: ["$discount", 100]
+                        }
+                      ]
+                    }
+                  ]
                 },
-                else: 0,
-              },
-            },
+                else: 0
+              }
+            }
           },
 
           products: {
             $sum: {
               $cond: {
-                if: { $eq: ['$bundle', null] },
-                then: '$amount',
-                else: 0,
-              },
-            },
+                if: { $eq: ["$bundle", null] },
+                then: "$amount",
+                else: 0
+              }
+            }
           },
 
           productProfit: {
             $sum: {
               $cond: {
-                if: { $eq: ['$bundle', null] },
+                if: { $eq: ["$bundle", null] },
                 then: {
                   $multiply: [
-                    '$amount',
-                    '$price',
+                    "$amount",
+                    "$price",
                     {
                       $subtract: [
                         1,
                         {
-                          $divide: ['$discount', 100],
-                        },
-                      ],
-                    },
-                  ],
+                          $divide: ["$discount", 100]
+                        }
+                      ]
+                    }
+                  ]
                 },
-                else: 0,
-              },
-            },
-          },
-        },
+                else: 0
+              }
+            }
+          }
+        }
       },
 
       {
         $project: {
-          bundles: '$bundles',
-          products: '$products',
+          bundles: "$bundles",
+          products: "$products",
           profit: {
-            products: '$productProfit',
-            bundles: '$bundleProfit',
-            total: { $sum: ['$productProfit', '$bundleProfit'] },
+            products: "$productProfit",
+            bundles: "$bundleProfit",
+            total: { $sum: ["$productProfit", "$bundleProfit"] }
           },
           graph: {
             amount: {
               product: {
                 $filter: {
-                  input: '$sellingGraph',
-                  as: 'trade',
-                  cond: { $eq: ['$$trade.type', 'product'] },
-                },
+                  input: "$sellingGraph",
+                  as: "trade",
+                  cond: { $eq: ["$$trade.type", "product"] }
+                }
               },
               bundle: {
                 $filter: {
-                  input: '$sellingGraph',
-                  as: 'trade',
-                  cond: { $eq: ['$$trade.type', 'bundle'] },
-                },
-              },
+                  input: "$sellingGraph",
+                  as: "trade",
+                  cond: { $eq: ["$$trade.type", "bundle"] }
+                }
+              }
             },
             profit: {
               product: {
                 $filter: {
-                  input: '$profitGraph',
-                  as: 'trade',
-                  cond: { $eq: ['$$trade.type', 'product'] },
-                },
+                  input: "$profitGraph",
+                  as: "trade",
+                  cond: { $eq: ["$$trade.type", "product"] }
+                }
               },
               bundle: {
                 $filter: {
-                  input: '$profitGraph',
-                  as: 'trade',
-                  cond: { $eq: ['$$trade.type', 'bundle'] },
-                },
-              },
-            },
-          },
-        },
-      },
+                  input: "$profitGraph",
+                  as: "trade",
+                  cond: { $eq: ["$$trade.type", "bundle"] }
+                }
+              }
+            }
+          }
+        }
+      }
     ]);
 
     if (statistics.length === 0) {
@@ -185,18 +185,18 @@ const getStatistics = async (req, res) => {
         profit: {
           products: 0,
           bundles: 0,
-          total: 0,
+          total: 0
         },
         graph: {
           amount: {
             product: [],
-            bundle: [],
+            bundle: []
           },
           profit: {
             product: [],
-            bundle: [],
-          },
-        },
+            bundle: []
+          }
+        }
       };
 
       statistics.push(response);
@@ -204,8 +204,8 @@ const getStatistics = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Statistics fetched successfully',
-      statistics,
+      message: "Statistics fetched successfully",
+      statistics
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message, error });
@@ -217,11 +217,58 @@ const getStatistics = async (req, res) => {
 // @access      Public
 const getProducts = async (req, res) => {
   try {
+    const { client: store } = req;
     const { id } = req.params;
-    const products = await Product.find({ store: id });
-    res.json({ success: true, message: 'Search complete', products });
+    const products = await Product.aggregate([
+      { $match: { store: store._id } },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "_id",
+          foreignField: "product",
+          as: "orders"
+        }
+      },
+      {
+        $addFields: {
+          revenue: {
+            $sum: {
+              $map: {
+                input: "$orders",
+                as: "order",
+                in: {
+                  $multiply: [
+                    "$$order.amount",
+                    "$$order.price",
+                    {
+                      $subtract: [
+                        1,
+                        {
+                          $divide: ["$$order.discount", 100]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $addFields: {
+          sold: {
+            $sum: "$orders.amount"
+          }
+        }
+      }
+    ]);
+
+    res.json({ success: true, message: "Search complete", products });
   } catch (error) {
-    res.status(400).json({ success: false, message: 'Search failed', error });
+    res
+      .status(400)
+      .json({ success: false, message: "Search failed", error: error.message });
   }
 };
 
@@ -232,14 +279,14 @@ const getBundles = async (req, res) => {
   try {
     const { id } = req.params;
     const bundles = await Bundle.find({ store: id });
-    res.json({ success: true, message: 'Search complete', bundles });
+    res.json({ success: true, message: "Search complete", bundles });
   } catch (error) {
-    res.status(400).json({ success: false, message: 'Search failed', error });
+    res.status(400).json({ success: false, message: "Search failed", error });
   }
 };
 
 module.exports = {
   getStatistics,
   getProducts,
-  getBundles,
+  getBundles
 };
