@@ -66,15 +66,23 @@ const Products = () => {
 				Header: '',
 				accessor: 'edit',
 				Cell: data => (
-					<button onClick={() => setCurrent(data.row.original)}>Edit</button>
+					<button
+						className='btn btn-primary btn-circle-sm'
+						onClick={() => setCurrent(data.row.original)}
+					>
+						<i class='fas fa-pen'></i>
+					</button>
 				),
 			},
 			{
 				Header: '',
 				accessor: 'delete',
 				Cell: data => (
-					<button onClick={() => deleteProduct(data.row.original)}>
-						Delete
+					<button
+						className='btn btn-outlined btn-danger-border btn-circle-sm'
+						onClick={() => deleteProduct(data.row.original)}
+					>
+						<i class='fas fa-trash'></i>
 					</button>
 				),
 			},
@@ -89,7 +97,7 @@ const Products = () => {
 	}
 
 	return (
-		<section className='products-statistics'>
+		<section className='tile products-statistics'>
 			<Table columns={columns} data={products} />
 		</section>
 	);

@@ -9,6 +9,7 @@
 /* Store Styles */
 
 @import './store/Statistics.css';
+@import './store/Table.css';
 
 @import './store/products-tab/AddProduct.css';
 @import './store/products-tab/ProductsStatistics.css';

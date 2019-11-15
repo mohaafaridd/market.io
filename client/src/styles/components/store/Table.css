@@ -1,0 +1,23 @@
+.store-dashboard .body .products-tab .products-statistics table {
+	@apply table-auto border rounded-lg;
+
+	thead {
+		@apply text-white bg-main rounded-lg;
+
+		tr {
+			@apply px-4 py-2;
+
+			th {
+				@apply p-3 text-left;
+			}
+		}
+	}
+
+	tbody {
+		tr {
+			td {
+				@apply border-gray-100 border-t border-b py-2;
+			}
+		}
+	}
+}
