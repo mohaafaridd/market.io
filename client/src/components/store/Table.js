@@ -36,10 +36,12 @@ const Table = ({ columns, data }) => {
 					{rows.map((row, i) => {
 						prepareRow(row);
 						return (
-							<tr {...row.getRowProps()}>
+							<tr className='bg-gray-200' {...row.getRowProps()}>
 								{row.cells.map(cell => {
 									return (
-										<td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+										<td {...cell.getCellProps()}>
+											<span className='select-all'>{cell.render('Cell')}</span>
+										</td>
 									);
 								})}
 							</tr>
