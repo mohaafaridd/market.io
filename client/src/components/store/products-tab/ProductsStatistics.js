@@ -70,7 +70,7 @@ const Products = () => {
 						className='btn btn-primary btn-circle-sm'
 						onClick={() => setCurrent(data.row.original)}
 					>
-						<i class='fas fa-pen'></i>
+						<i className='fas fa-pen'></i>
 					</button>
 				),
 			},
@@ -82,7 +82,7 @@ const Products = () => {
 						className='btn btn-outlined btn-danger-border btn-circle-sm'
 						onClick={() => deleteProduct(data.row.original)}
 					>
-						<i class='fas fa-trash'></i>
+						<i className='fas fa-trash'></i>
 					</button>
 				),
 			},

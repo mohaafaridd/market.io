@@ -1,19 +1,23 @@
 .store-dashboard .body .products-tab .add-product-partition {
-  @apply flex flex-col w-1/5 p-2;
+	@apply flex flex-col w-1/5 p-2;
 
-  .tile:first-child {
-    @apply mb-2;
-  }
+	.tile:first-child {
+		@apply mb-2 flex flex-col;
+	}
+	h3,
+	.product-image {
+		@apply self-center text-lg;
+	}
 
-  .form-group {
-    @apply flex flex-1 flex-col my-2;
-    small {
-      @apply text-red-500;
-    }
-  }
+	.form-group {
+		@apply flex flex-1 flex-col my-2;
+		small {
+			@apply text-red-500;
+		}
+	}
 
-  .dropzone {
-    @apply flex-1 flex flex-col items-center p-5 border-2 border-dashed;
-    @apply border-gray-100 bg-main outline-none text-gray-100 cursor-pointer rounded-full my-5;
-  }
+	.dropzone {
+		@apply flex-1 flex flex-col items-center p-5 border-2 border-dashed;
+		@apply border-gray-100 bg-main outline-none text-gray-100 cursor-pointer rounded-full my-5;
+	}
 }

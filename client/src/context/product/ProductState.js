@@ -51,6 +51,7 @@ const ProductState = props => {
 
 	const updateProduct = async product => {
 		try {
+			const { image } = product;
 			if (product.image) {
 				delete product.image;
 			}
@@ -58,7 +59,10 @@ const ProductState = props => {
 				`/api/products/${product._id}`,
 				product,
 			);
-			dispatch({ type: UPDATE_PRODUCT, payload: response.data.product });
+			dispatch({
+				type: UPDATE_PRODUCT,
+				payload: { ...response.data.product, image },
+			});
 		} catch (error) {
 			dispatch({ type: PRODUCT_ERROR, payload: error });
 		}
@@ -78,7 +82,15 @@ const ProductState = props => {
 					},
 				},
 			);
-			dispatch({ type: UPDATE_PRODUCT, payload: response.data.product });
+
+			const base64Image = Buffer.from(
+				response.data.product.image.data,
+			).toString('base64');
+
+			dispatch({
+				type: UPDATE_PRODUCT,
+				payload: { ...response.data.product, image: base64Image },
+			});
 		} catch (error) {
 			dispatch({ type: PRODUCT_ERROR, payload: error });
 		}

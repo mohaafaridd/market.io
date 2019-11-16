@@ -45,7 +45,14 @@ const AddProduct = () => {
 	return (
 		<section className='add-product-partition'>
 			<div className='tile'>
-				<h3>Add Product</h3>
+				<h3>{current ? 'Edit' : 'Add'} Product</h3>
+				{current && current.image && (
+					<img
+						className='product-image'
+						src={`data:image/jpeg;base64,${current.image}`}
+						alt={`${current.name}`}
+					/>
+				)}
 				<form onSubmit={handleSubmit(onSubmit)}>
 					{/* Category Start */}
 					<div className='form-group'>
@@ -218,13 +225,6 @@ const AddProduct = () => {
 					<p>Please select a product to add an image</p>
 				) : (
 					<Fragment>
-						{current.image && (
-							<img
-								className='product-image'
-								src={`data:image/jpeg;base64,${current.image}`}
-								alt={`${current.name}`}
-							/>
-						)}
 						<form>
 							<div {...getRootProps()} className='dropzone'>
 								<input {...getInputProps()} />

@@ -5,3 +5,10 @@
 		@apply text-3xl;
 	}
 }
+
+@screen sm {
+	.store-dashboard .body .products-tab .products-statistics {
+		/* @apply flex flex-col w-4/5 p-2 m-2; */
+		@apply hidden;
+	}
+}
