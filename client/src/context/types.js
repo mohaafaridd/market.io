@@ -47,4 +47,4 @@ export const ORDER_ERROR = 'ORDER_ERROR';
 
 // Store
 export const GET_STATISTICS = 'GET_STATISTICS';
-export const STATISTICS_ERROR = 'STATISTICS_ERROR';
+export const SET_ERROR = 'SET_ERROR';

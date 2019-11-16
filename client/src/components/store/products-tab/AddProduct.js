@@ -1,19 +1,16 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import useForm from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
-import ProductContext from '../../../context/product/productContext';
+import StoreContext from '../../../context/store/storeContext';
 
 const AddProduct = () => {
 	const { register, handleSubmit, errors, setValue } = useForm();
-	const {
-		addProduct,
-		updateProduct,
-		clearCurrent,
-		current,
-		postProductImage,
-	} = useContext(ProductContext);
 
-	const onDrop = files => postProductImage(current, files[0]);
+	const { addProduct, addProductImage, updateProduct, current } = useContext(
+		StoreContext,
+	);
+
+	const onDrop = files => addProductImage(current, files[0]);
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
