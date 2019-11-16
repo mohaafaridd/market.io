@@ -2,23 +2,24 @@ import React, { useMemo, useEffect, useContext } from 'react';
 import Table from '../Table';
 import ProductContext from '../../../context/product/productContext';
 import AuthContext from '../../../context/auth/authContext';
+import StoreContext from '../../../context/store/storeContext';
 
 const Products = () => {
 	const productContext = useContext(ProductContext);
 	const authContext = useContext(AuthContext);
-
 	const {
 		getProducts,
+		deleteProduct,
 		products,
 		loading,
 		setCurrent,
-		deleteProduct,
-	} = productContext;
+	} = useContext(StoreContext);
+
 	const { client } = authContext;
 
 	useEffect(() => {
 		if (client) {
-			getProducts(client._id);
+			getProducts();
 		}
 		// eslint-disable-next-line
 	}, [client]);

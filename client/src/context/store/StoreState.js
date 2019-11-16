@@ -6,11 +6,13 @@ import storeReducer from './storeReducer';
 import {
 	SET_ERROR,
 	SET_LOADING,
+	SET_CURRENT,
 	GET_STATISTICS,
 	GET_PRODUCTS,
 	GET_BUNDLES,
 	ADD_PRODUCT,
 	UPDATE_PRODUCT,
+	DELETE_PRODUCT,
 } from '../types';
 
 const StoreState = props => {
@@ -24,6 +26,11 @@ const StoreState = props => {
 	};
 
 	const [state, dispatch] = useReducer(storeReducer, initialState);
+
+	// Set current product to edit
+	const setCurrent = item => {
+		dispatch({ type: SET_CURRENT, payload: item });
+	};
 
 	// Gets products by store from database
 	const getStatistics = async () => {
@@ -71,6 +78,7 @@ const StoreState = props => {
 	 */
 	const addProductImage = async (product, image) => {
 		try {
+			dispatch({ type: SET_LOADING });
 			const formData = new FormData();
 			formData.append('image', image);
 
@@ -103,6 +111,7 @@ const StoreState = props => {
 	 */
 	const updateProduct = async product => {
 		try {
+			dispatch({ type: SET_LOADING });
 			const { image } = product;
 			if (product.image) {
 				delete product.image;
@@ -115,6 +124,20 @@ const StoreState = props => {
 				type: UPDATE_PRODUCT,
 				payload: { ...response.data.product, image },
 			});
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
+	/**
+	 * Deletes a product item from the database
+	 * Deletes product item from the state
+	 */
+	const deleteProduct = async product => {
+		try {
+			dispatch({ type: SET_LOADING });
+			await axios.delete(`/api/products/${product._id}`);
+			dispatch({ type: DELETE_PRODUCT, payload: product });
 		} catch (error) {
 			dispatch({ type: SET_ERROR, payload: error });
 		}
@@ -143,12 +166,15 @@ const StoreState = props => {
 				current: state.current,
 				products: state.products,
 				bundles: state.bundles,
+				setCurrent,
+
 				getStatistics,
 
 				getProducts,
 				addProduct,
 				addProductImage,
 				updateProduct,
+				deleteProduct,
 
 				getBundles,
 			}}

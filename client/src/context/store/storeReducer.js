@@ -1,10 +1,12 @@
 import {
+	SET_CURRENT,
+	SET_LOADING,
 	GET_STATISTICS,
 	GET_PRODUCTS,
 	GET_BUNDLES,
-	SET_LOADING,
 	ADD_PRODUCT,
 	UPDATE_PRODUCT,
+	DELETE_PRODUCT,
 } from '../types';
 
 export default (state, action) => {
@@ -13,6 +15,12 @@ export default (state, action) => {
 			return {
 				...state,
 				loading: true,
+			};
+
+		case SET_CURRENT:
+			return {
+				...state,
+				current: action.payload,
 			};
 
 		case GET_STATISTICS:
@@ -55,6 +63,17 @@ export default (state, action) => {
 					...action.payload,
 					image: action.payload.image,
 				},
+				error: null,
+				loading: false,
+			};
+
+		case DELETE_PRODUCT:
+			return {
+				...state,
+				products: state.products.filter(
+					product => product._id !== action.payload._id,
+				),
+				current: null,
 				error: null,
 				loading: false,
 			};
