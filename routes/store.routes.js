@@ -34,6 +34,11 @@ router.get(
 // @route       POST api/stores/b/:id
 // @desc        Get store bundles
 // @access      Public
-router.get("/b/:id", controller.getBundles);
+router.get(
+  "/b/:id",
+  authorization(Role.Store),
+  authentication,
+  controller.getBundles
+);
 
 module.exports = router;
