@@ -1,21 +1,29 @@
-import { GET_STATISTICS } from '../types';
+import { GET_STATISTICS, GET_PRODUCTS, GET_BUNDLES } from '../types';
 
 export default (state, action) => {
-  switch (action.type) {
-    case GET_STATISTICS:
-      return {
-        ...state,
-        statistics: action.payload.statistics[0],
-        loading: false,
-      };
+	switch (action.type) {
+		case GET_STATISTICS:
+			return {
+				...state,
+				statistics: action.payload.statistics[0],
+				loading: false,
+			};
 
-    case GET_STATISTICS:
-      return {
-        ...state,
-        loading: true,
-      };
+		case GET_PRODUCTS:
+			return {
+				...state,
+				products: action.payload.products,
+				loading: false,
+			};
 
-    default:
-      return state;
-  }
+		case GET_BUNDLES:
+			return {
+				...state,
+				bundles: action.payload.bundles,
+				loading: false,
+			};
+
+		default:
+			return state;
+	}
 };

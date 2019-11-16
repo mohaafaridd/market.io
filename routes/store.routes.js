@@ -1,44 +1,44 @@
-const express = require("express");
+const express = require('express');
 
 // Validate Form
-const validation = require("../middlewares/validationResult");
-const validator = require("../controllers/store.validator");
-const controller = require("../controllers/store.controller");
+const validation = require('../middlewares/validationResult');
+const validator = require('../controllers/store.validator');
+const controller = require('../controllers/store.controller');
 // Validate Role
-const authorization = require("../middlewares/authorization");
-const authentication = require("../middlewares/authentication");
-const Role = require("../middlewares/role");
+const authorization = require('../middlewares/authorization');
+const authentication = require('../middlewares/authentication');
+const Role = require('../middlewares/role');
 
 const router = express.Router();
 
-// @route       POST api/stores/statistics
+// @route       GET api/stores/statistics
 // @desc        Get store statistics
 // @access      Private
 router.get(
-  "/statistics",
-  authorization(Role.Store),
-  authentication,
-  controller.getStatistics
+	'/statistics',
+	authorization(Role.Store),
+	authentication,
+	controller.getStatistics,
 );
 
-// @route       POST api/stores/p/:id
-// @desc        Get store products
-// @access      Public
+// @route       GET api/stores/statistics/products
+// @desc        Get store products statistics
+// @access      Private
 router.get(
-  "/p/:id",
-  authorization(Role.Store),
-  authentication,
-  controller.getProducts
+	'/statistics/products',
+	authorization(Role.Store),
+	authentication,
+	controller.getProducts,
 );
 
-// @route       POST api/stores/b/:id
-// @desc        Get store bundles
-// @access      Public
+// @route       GET api/stores/statistics/bundles
+// @desc        Get store bundles statistics
+// @access      Private
 router.get(
-  "/b/:id",
-  authorization(Role.Store),
-  authentication,
-  controller.getBundles
+	'/statistics/bundles',
+	authorization(Role.Store),
+	authentication,
+	controller.getBundles,
 );
 
 module.exports = router;

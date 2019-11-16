@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "prettier": "^1.19.1"
   }
 }

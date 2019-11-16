@@ -1,11 +1,9 @@
 import React, { useMemo, useEffect, useContext } from 'react';
-import BundleItem from './BundleItem';
 import Table from '../Table';
 
-import BundleContext from '../../../context/bundle/bundleContext';
+import StoreContext from '../../../context/store/storeContext';
 const Bundles = () => {
-	const bundleContext = useContext(BundleContext);
-	const { bundles, getBundles } = bundleContext;
+	const { getBundles, bundles } = useContext(StoreContext);
 	useEffect(() => {
 		getBundles();
 		// eslint-disable-next-line
@@ -37,12 +35,6 @@ const Bundles = () => {
 			<h3>All your bundles</h3>
 			<h3>Count: {bundles.length}</h3>
 			<Table columns={columns} data={bundles} />
-
-			<ul>
-				{bundles.map(bundle => (
-					<BundleItem key={bundle._id} bundle={bundle} />
-				))}
-			</ul>
 		</div>
 	);
 };
