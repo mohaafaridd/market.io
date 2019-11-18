@@ -6,10 +6,16 @@ import StoreContext from '../../../context/store/storeContext';
 
 const AddProduct = () => {
 	const { client } = useContext(AuthContext);
-	const { bundle, product, offers, setProduct, addBundleProduct } = useContext(
-		BundleContext,
-	);
-	const { getProducts, products } = useContext(StoreContext);
+	const { addBundleProduct } = useContext(BundleContext);
+	const {
+		getProducts,
+		products,
+		bundle,
+		setProduct,
+		product,
+		offers,
+		putProduct,
+	} = useContext(StoreContext);
 
 	const [state, setState] = useState({
 		inBundle: false,
@@ -59,7 +65,7 @@ const AddProduct = () => {
 	// 5 - Submit product to bundle (Add or Edit)
 	const onSubmit = e => {
 		e.preventDefault();
-		addBundleProduct(bundle, product, discount);
+		putProduct(bundle, product, discount);
 	};
 
 	return (

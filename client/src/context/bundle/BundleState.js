@@ -63,42 +63,12 @@ const BundleState = props => {
 	//   }
 	// };
 
-	// const addBundleProduct = async (bundle, product, discount) => {
-	//   try {
-	//     const response = await axios.put(`/api/bundles/p/${bundle._id}`, {
-	//       product: product._id,
-	//       discount: discount,
-	//     });
-	//     dispatch({ type: PUT_BUNDLE_PRODUCT, payload: response.data });
-	//   } catch (error) {
-	//     dispatch({ type: BUNDLE_ERROR, payload: error });
-	//   }
-	// };
-
 	// const removeBundleProduct = async (bundle, product) => {
 	//   try {
 	//     const response = await axios.patch(`/api/bundles/p/${bundle._id}`, {
 	//       product: product._id,
 	//     });
 	//     dispatch({ type: REMOVE_BUNDLE_PRODUCT, payload: response.data });
-	//   } catch (error) {
-	//     dispatch({ type: BUNDLE_ERROR, payload: error });
-	//   }
-	// };
-
-	// const createBundle = async bundle => {
-	//   try {
-	//     const response = await axios.post('/api/bundles', bundle);
-	//     dispatch({ type: ADD_BUNDLE, payload: response.data });
-	//   } catch (error) {
-	//     dispatch({ type: BUNDLE_ERROR, payload: error });
-	//   }
-	// };
-
-	// const updateBundle = async bundle => {
-	//   try {
-	//     const response = await axios.patch(`/api/bundles/${bundle._id}`, bundle);
-	//     dispatch({ type: UPDATE_BUNDLE, payload: response.data });
 	//   } catch (error) {
 	//     dispatch({ type: BUNDLE_ERROR, payload: error });
 	//   }

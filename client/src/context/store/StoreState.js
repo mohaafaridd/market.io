@@ -204,6 +204,18 @@ const StoreState = props => {
 		}
 	};
 
+	const putProduct = async (bundle, product, discount) => {
+		try {
+			const response = await axios.put(`/api/bundles/p/${bundle._id}`, {
+				product: product._id,
+				discount: discount,
+			});
+			dispatch({ type: PUT_PRODUCT, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
 	return (
 		<StoreContext.Provider
 			value={{
@@ -230,6 +242,7 @@ const StoreState = props => {
 				getBundles,
 				addBundle,
 				updateBundle,
+				putProduct,
 			}}
 		>
 			{props.children}
