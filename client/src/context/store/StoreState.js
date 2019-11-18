@@ -24,6 +24,7 @@ import {
 	UPDATE_BUNDLE,
 	PUT_PRODUCT,
 	REMOVE_PRODUCT,
+	DELETE_BUNDLE,
 } from '../types';
 
 const StoreState = props => {
@@ -173,14 +174,10 @@ const StoreState = props => {
 		dispatch({ type: CLEAR_BUNDLE });
 	};
 
-	/**
-	 * Get All products of this store with statistics from the database
-	 */
-	const getBundles = async () => {
+	const addBundle = async bundle => {
 		try {
-			dispatch({ type: SET_LOADING });
-			const response = await axios.get(`/api/stores/statistics/bundles`);
-			dispatch({ type: GET_BUNDLES, payload: response.data });
+			const response = await axios.post('/api/bundles', bundle);
+			dispatch({ type: ADD_BUNDLE, payload: response.data });
 		} catch (error) {
 			dispatch({ type: SET_ERROR, payload: error });
 		}
@@ -195,10 +192,14 @@ const StoreState = props => {
 		}
 	};
 
-	const addBundle = async bundle => {
+	/**
+	 * Get All products of this store with statistics from the database
+	 */
+	const getBundles = async () => {
 		try {
-			const response = await axios.post('/api/bundles', bundle);
-			dispatch({ type: ADD_BUNDLE, payload: response.data });
+			dispatch({ type: SET_LOADING });
+			const response = await axios.get(`/api/stores/statistics/bundles`);
+			dispatch({ type: GET_BUNDLES, payload: response.data });
 		} catch (error) {
 			dispatch({ type: SET_ERROR, payload: error });
 		}
@@ -236,6 +237,15 @@ const StoreState = props => {
 		}
 	};
 
+	const deleteBundle = async bundle => {
+		try {
+			const response = await axios.delete(`/api/bundles/${bundle._id}`);
+			dispatch({ type: DELETE_BUNDLE, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
 	return (
 		<StoreContext.Provider
 			value={{
@@ -259,12 +269,13 @@ const StoreState = props => {
 
 				setBundle,
 				clearBundle,
-				getBundles,
-				getBundle,
 				addBundle,
+				getBundle,
+				getBundles,
 				updateBundle,
 				putProduct,
 				removeProduct,
+				deleteBundle,
 			}}
 		>
 			{props.children}

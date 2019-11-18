@@ -28,8 +28,6 @@ const Bundles = () => {
 		return <h3>You have no bundles</h3>;
 	}
 
-	console.log('bundles', bundles);
-
 	return (
 		<div>
 			<h3>All your bundles</h3>
