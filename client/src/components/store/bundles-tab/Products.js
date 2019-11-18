@@ -1,10 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import ProductItem from './ProductItem';
-import BundleContext from '../../../context/bundle/bundleContext';
 import StoreContext from '../../../context/store/storeContext';
 
 const Products = () => {
-	const bundleContext = useContext(BundleContext);
 	// const { offers, bundle, getBundle } = bundleContext;
 	const { offers, bundle, getBundle } = useContext(StoreContext);
 	useEffect(() => {
@@ -22,9 +20,7 @@ const Products = () => {
 					offers.length === 0 ? (
 						<li className='tile'>No offers</li>
 					) : (
-						offers.map(item => (
-							<ProductItem key={item.product._id} item={item} />
-						))
+						offers.map(item => <ProductItem key={item._id} item={item} />)
 					)
 				) : (
 					<li className='tile'>Please Select a bundle</li>

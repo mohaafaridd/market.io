@@ -1,23 +1,21 @@
 import React, { useContext } from 'react';
 import StoreContext from '../../../context/store/storeContext';
 
-const ProductItem = ({ item: { discount, product } }) => {
+const ProductItem = ({ item: product }) => {
 	const { setProduct, bundle, removeProduct } = useContext(StoreContext);
 	return (
 		<li className='tile product-item'>
 			<img
 				className='product-image'
-				src={`data:image/jpeg;base64,${Buffer.from(product.image.data).toString(
-					'base64',
-				)}`}
+				src={`data:image/jpeg;base64,${product.image}`}
 			/>
 			<div className='info'>
 				<span className='product-name'>
-					{product.name} ({discount}%)
+					{product.name} ({product.discount}%)
 				</span>
 				<span>
 					<span className='original-price'>${product.price}</span> $
-					{product.price * (1 - discount / 100)}
+					{product.price * (1 - product.discount / 100)}
 				</span>
 			</div>
 			<button

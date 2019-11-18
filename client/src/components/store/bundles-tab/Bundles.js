@@ -3,7 +3,9 @@ import Table from '../Table';
 
 import StoreContext from '../../../context/store/storeContext';
 const Bundles = () => {
-	const { getBundles, bundles } = useContext(StoreContext);
+	const { getBundles, bundles, setBundle, deleteBundle } = useContext(
+		StoreContext,
+	);
 	useEffect(() => {
 		getBundles();
 		// eslint-disable-next-line
@@ -19,6 +21,30 @@ const Bundles = () => {
 			{
 				Header: 'Name',
 				accessor: 'name',
+			},
+			{
+				Header: '',
+				accessor: 'edit',
+				Cell: data => (
+					<button
+						className='btn btn-primary btn-circle-sm'
+						onClick={() => setBundle(data.row.original)}
+					>
+						<i className='fas fa-pen'></i>
+					</button>
+				),
+			},
+			{
+				Header: '',
+				accessor: 'delete',
+				Cell: data => (
+					<button
+						className='btn btn-outlined btn-danger-border btn-circle-sm'
+						onClick={() => deleteBundle(data.row.original)}
+					>
+						<i className='fas fa-trash'></i>
+					</button>
+				),
 			},
 		],
 		[],

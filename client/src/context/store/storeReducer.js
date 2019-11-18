@@ -19,6 +19,7 @@ import {
 	UPDATE_BUNDLE,
 	PUT_PRODUCT,
 	REMOVE_PRODUCT,
+	DELETE_BUNDLE,
 } from '../types';
 
 export default (state, action) => {
@@ -104,6 +105,7 @@ export default (state, action) => {
 			return {
 				...state,
 				bundle: action.payload,
+				offers: action.payload.products,
 			};
 
 		case CLEAR_BUNDLE:
@@ -174,6 +176,18 @@ export default (state, action) => {
 				product: null,
 				error: null,
 				loading: false,
+			};
+
+		case DELETE_BUNDLE:
+			return {
+				...state,
+				loading: false,
+				bundle: null,
+				bundles: state.bundles.filter(
+					bundle => bundle._id !== action.payload.bundle._id,
+				),
+				offers: [],
+				product: null,
 			};
 
 		default:
