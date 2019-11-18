@@ -1,12 +1,9 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../context/auth/authContext';
-import BundleContext from '../../../context/bundle/bundleContext';
-import ProductContext from '../../../context/product/productContext';
 import StoreContext from '../../../context/store/storeContext';
 
 const AddProduct = () => {
 	const { client } = useContext(AuthContext);
-	const { addBundleProduct } = useContext(BundleContext);
 	const {
 		getProducts,
 		products,

@@ -87,35 +87,6 @@ export default (state, action) => {
 				product: null,
 			};
 
-		// case PUT_BUNDLE_PRODUCT:
-		//   return {
-		//     ...state,
-		//     bundle: action.payload.bundle,
-		//     bundles: state.bundles.map(bundle =>
-		//       bundle._id === action.payload.bundle._id
-		//         ? action.payload.bundle
-		//         : bundle
-		//     ),
-		//     offers: action.payload.bundle.offers,
-		//     error: null,
-		//     loading: false,
-		//   };
-
-		// case REMOVE_BUNDLE_PRODUCT:
-		//   return {
-		//     ...state,
-		//     bundle: action.payload.bundle,
-		//     bundles: state.bundles.map(bundle =>
-		//       bundle._id === action.payload.bundle._id
-		//         ? action.payload.bundle
-		//         : bundle
-		//     ),
-		//     offers: action.payload.bundle.offers,
-		//     product: null,
-		//     error: null,
-		//     loading: false,
-		//   };
-
 		default:
 			return state;
 	}

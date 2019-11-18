@@ -186,6 +186,15 @@ const StoreState = props => {
 		}
 	};
 
+	const getBundle = async bundle => {
+		try {
+			const response = await axios.get(`/api/bundles/${bundle._id}`);
+			dispatch({ type: GET_BUNDLE, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
 	const addBundle = async bundle => {
 		try {
 			const response = await axios.post('/api/bundles', bundle);
@@ -216,6 +225,17 @@ const StoreState = props => {
 		}
 	};
 
+	const removeProduct = async (bundle, product) => {
+		try {
+			const response = await axios.patch(`/api/bundles/p/${bundle._id}`, {
+				product: product._id,
+			});
+			dispatch({ type: REMOVE_PRODUCT, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
 	return (
 		<StoreContext.Provider
 			value={{
@@ -240,9 +260,11 @@ const StoreState = props => {
 				setBundle,
 				clearBundle,
 				getBundles,
+				getBundle,
 				addBundle,
 				updateBundle,
 				putProduct,
+				removeProduct,
 			}}
 		>
 			{props.children}

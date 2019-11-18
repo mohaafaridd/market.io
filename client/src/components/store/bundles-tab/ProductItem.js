@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import BundleContext from '../../../context/bundle/bundleContext';
+import StoreContext from '../../../context/store/storeContext';
 
 const ProductItem = ({ item: { discount, product } }) => {
-	const { setProduct, removeBundleProduct, bundle } = useContext(BundleContext);
-
+	const { setProduct, bundle, removeProduct } = useContext(StoreContext);
 	return (
 		<li className='tile product-item'>
 			<img
@@ -29,7 +28,7 @@ const ProductItem = ({ item: { discount, product } }) => {
 			</button>
 			<button
 				className='btn btn-outlined btn-danger-border btn-circle-sm'
-				onClick={e => removeBundleProduct(bundle, product)}
+				onClick={e => removeProduct(bundle, product)}
 			>
 				<i className='fas fa-trash fa-sm'></i>
 			</button>

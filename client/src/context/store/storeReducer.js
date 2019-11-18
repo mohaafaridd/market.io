@@ -119,6 +119,12 @@ export default (state, action) => {
 				loading: false,
 			};
 
+		case GET_BUNDLE:
+			return {
+				...state,
+				offers: action.payload.bundle.offers,
+			};
+
 		case ADD_BUNDLE:
 			return {
 				...state,
@@ -139,6 +145,35 @@ export default (state, action) => {
 						? action.payload.bundle
 						: bundle,
 				),
+			};
+
+		case PUT_PRODUCT:
+			return {
+				...state,
+				bundle: action.payload.bundle,
+				bundles: state.bundles.map(bundle =>
+					bundle._id === action.payload.bundle._id
+						? action.payload.bundle
+						: bundle,
+				),
+				offers: action.payload.bundle.offers,
+				error: null,
+				loading: false,
+			};
+
+		case REMOVE_PRODUCT:
+			return {
+				...state,
+				bundle: action.payload.bundle,
+				bundles: state.bundles.map(bundle =>
+					bundle._id === action.payload.bundle._id
+						? action.payload.bundle
+						: bundle,
+				),
+				offers: action.payload.bundle.offers,
+				product: null,
+				error: null,
+				loading: false,
 			};
 
 		default:
