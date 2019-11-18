@@ -99,11 +99,46 @@ export default (state, action) => {
 				loading: false,
 			};
 
+		// Bundles
+		case SET_BUNDLE:
+			return {
+				...state,
+				bundle: action.payload,
+			};
+
+		case CLEAR_BUNDLE:
+			return {
+				...state,
+				bundle: null,
+			};
+
 		case GET_BUNDLES:
 			return {
 				...state,
 				bundles: action.payload.bundles,
 				loading: false,
+			};
+
+		case ADD_BUNDLE:
+			return {
+				...state,
+				bundle: action.payload.bundle,
+				error: null,
+				loading: false,
+				product: null,
+				offers: [],
+				bundles: [...state.bundles, action.payload.bundle],
+			};
+
+		case UPDATE_BUNDLE:
+			return {
+				...state,
+				loading: false,
+				bundles: state.bundles.map(bundle =>
+					bundle._id === action.payload.bundle._id
+						? action.payload.bundle
+						: bundle,
+				),
 			};
 
 		default:

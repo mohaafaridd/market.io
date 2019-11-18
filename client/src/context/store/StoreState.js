@@ -35,6 +35,7 @@ const StoreState = props => {
 		bundle: null,
 		products: [],
 		bundles: [],
+		offers: [],
 	};
 
 	const [state, dispatch] = useReducer(storeReducer, initialState);
@@ -57,7 +58,7 @@ const StoreState = props => {
 		dispatch({ type: SET_PRODUCT, payload: product });
 	};
 
-	// Set current product to edit
+	// Clear current product
 	const clearProduct = () => {
 		dispatch({ type: CLEAR_PRODUCT });
 	};
@@ -162,6 +163,16 @@ const StoreState = props => {
 
 	/* Bundles Actions */
 
+	// Set current product to edit
+	const setBundle = bundle => {
+		dispatch({ type: SET_BUNDLE, payload: bundle });
+	};
+
+	// Clear current product
+	const clearBundle = () => {
+		dispatch({ type: CLEAR_BUNDLE });
+	};
+
 	/**
 	 * Get All products of this store with statistics from the database
 	 */
@@ -170,6 +181,24 @@ const StoreState = props => {
 			dispatch({ type: SET_LOADING });
 			const response = await axios.get(`/api/stores/statistics/bundles`);
 			dispatch({ type: GET_BUNDLES, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
+	const addBundle = async bundle => {
+		try {
+			const response = await axios.post('/api/bundles', bundle);
+			dispatch({ type: ADD_BUNDLE, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
+	const updateBundle = async bundle => {
+		try {
+			const response = await axios.patch(`/api/bundles/${bundle._id}`, bundle);
+			dispatch({ type: UPDATE_BUNDLE, payload: response.data });
 		} catch (error) {
 			dispatch({ type: SET_ERROR, payload: error });
 		}
@@ -184,6 +213,7 @@ const StoreState = props => {
 				bundle: state.bundle,
 				products: state.products,
 				bundles: state.bundles,
+				offers: state.offers,
 
 				getStatistics,
 
@@ -195,7 +225,11 @@ const StoreState = props => {
 				updateProduct,
 				deleteProduct,
 
+				setBundle,
+				clearBundle,
 				getBundles,
+				addBundle,
+				updateBundle,
 			}}
 		>
 			{props.children}
