@@ -10,28 +10,6 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
-// Products
-export const PRODUCT_ERROR = 'PRODUCT_ERROR';
-export const ADD_PRODUCT = 'ADD_PRODUCT';
-export const GET_PRODUCT = 'GET_PRODUCT';
-export const GET_PRODUCTS = 'GET_PRODUCTS';
-export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-
-// Bundles
-export const SET_BUNDLE = 'SET_BUNDLE';
-export const CLEAR_BUNDLE = 'CLEAR_BUNDLE';
-export const SET_PRODUCT = 'SET_PRODUCT';
-export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
-export const BUNDLE_ERROR = 'BUNDLE_ERROR';
-export const ADD_BUNDLE = 'ADD_BUNDLE';
-export const GET_BUNDLE = 'GET_BUNDLE';
-export const GET_BUNDLES = 'GET_BUNDLES';
-export const PUT_BUNDLE_PRODUCT = 'PUT_BUNDLE_PRODUCT';
-export const REMOVE_BUNDLE_PRODUCT = 'REMOVE_BUNDLE_PRODUCT';
-export const UPDATE_BUNDLE = 'UPDATE_BUNDLE';
-export const DELETE_BUNDLE = 'DELETE_BUNDLE';
-
 // Cart
 export const ADD_CART = 'ADD_CART';
 export const GET_CARTS = 'GET_CARTS';
@@ -45,6 +23,26 @@ export const CREATE_ORDER = 'CREATE_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const ORDER_ERROR = 'ORDER_ERROR';
 
-// Store
+// Store Context
 export const GET_STATISTICS = 'GET_STATISTICS';
 export const SET_ERROR = 'SET_ERROR';
+
+// Store Context - Products Actions
+export const SET_PRODUCT = 'SET_PRODUCT';
+export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const GET_PRODUCT = 'GET_PRODUCT';
+export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+
+// Store Context - Bundles Actions
+export const SET_BUNDLE = 'SET_BUNDLE';
+export const CLEAR_BUNDLE = 'CLEAR_BUNDLE';
+export const ADD_BUNDLE = 'ADD_BUNDLE';
+export const GET_BUNDLE = 'GET_BUNDLE';
+export const GET_BUNDLES = 'GET_BUNDLES';
+export const UPDATE_BUNDLE = 'UPDATE_BUNDLE';
+export const DELETE_BUNDLE = 'DELETE_BUNDLE';
+export const PUT_PRODUCT = 'PUT_PRODUCT';
+export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
