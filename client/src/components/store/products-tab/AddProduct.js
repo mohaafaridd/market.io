@@ -6,9 +6,12 @@ import StoreContext from '../../../context/store/storeContext';
 const AddProduct = () => {
 	const { register, handleSubmit, errors, setValue } = useForm();
 
-	const { addProduct, addProductImage, updateProduct, current } = useContext(
-		StoreContext,
-	);
+	const {
+		addProduct,
+		addProductImage,
+		updateProduct,
+		product: current,
+	} = useContext(StoreContext);
 
 	const onDrop = files => addProductImage(current, files[0]);
 

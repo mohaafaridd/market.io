@@ -1,33 +1,54 @@
 import {
-	SET_CURRENT,
+	SET_ERROR,
 	SET_LOADING,
 	GET_STATISTICS,
-	GET_PRODUCTS,
-	GET_BUNDLES,
+	// Products
+	SET_PRODUCT,
+	CLEAR_PRODUCT,
 	ADD_PRODUCT,
+	GET_PRODUCT,
+	GET_PRODUCTS,
 	UPDATE_PRODUCT,
 	DELETE_PRODUCT,
+	// Bundles
+	SET_BUNDLE,
+	CLEAR_BUNDLE,
+	ADD_BUNDLE,
+	GET_BUNDLE,
+	GET_BUNDLES,
+	UPDATE_BUNDLE,
+	PUT_PRODUCT,
+	REMOVE_PRODUCT,
 } from '../types';
 
 export default (state, action) => {
 	switch (action.type) {
+		// General
 		case SET_LOADING:
 			return {
 				...state,
 				loading: true,
 			};
 
-		case SET_CURRENT:
-			return {
-				...state,
-				current: action.payload,
-			};
-
+		// Main Statistics
 		case GET_STATISTICS:
 			return {
 				...state,
 				statistics: action.payload.statistics[0],
 				loading: false,
+			};
+
+		// Products
+		case SET_PRODUCT:
+			return {
+				...state,
+				product: action.payload,
+			};
+
+		case CLEAR_PRODUCT:
+			return {
+				...state,
+				product: null,
 			};
 
 		case GET_PRODUCTS:
@@ -40,7 +61,7 @@ export default (state, action) => {
 		case ADD_PRODUCT:
 			return {
 				...state,
-				current: action.payload.product,
+				product: action.payload.product,
 				products: [...state.products, action.payload.product],
 				error: null,
 				loading: false,
@@ -59,7 +80,7 @@ export default (state, action) => {
 						  }
 						: product,
 				),
-				current: {
+				product: {
 					...action.payload,
 					image: action.payload.image,
 				},
@@ -73,7 +94,7 @@ export default (state, action) => {
 				products: state.products.filter(
 					product => product._id !== action.payload._id,
 				),
-				current: null,
+				product: null,
 				error: null,
 				loading: false,
 			};

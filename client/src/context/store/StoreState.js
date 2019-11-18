@@ -6,31 +6,38 @@ import storeReducer from './storeReducer';
 import {
 	SET_ERROR,
 	SET_LOADING,
-	SET_CURRENT,
 	GET_STATISTICS,
-	GET_PRODUCTS,
-	GET_BUNDLES,
+	// Products
+	SET_PRODUCT,
+	CLEAR_PRODUCT,
 	ADD_PRODUCT,
+	GET_PRODUCT,
+	GET_PRODUCTS,
 	UPDATE_PRODUCT,
 	DELETE_PRODUCT,
+	// Bundles
+	SET_BUNDLE,
+	CLEAR_BUNDLE,
+	ADD_BUNDLE,
+	GET_BUNDLE,
+	GET_BUNDLES,
+	UPDATE_BUNDLE,
+	PUT_PRODUCT,
+	REMOVE_PRODUCT,
 } from '../types';
 
 const StoreState = props => {
 	const initialState = {
 		statistics: null,
 		loading: true,
-		current: null,
 		error: null,
+		product: null,
+		bundle: null,
 		products: [],
 		bundles: [],
 	};
 
 	const [state, dispatch] = useReducer(storeReducer, initialState);
-
-	// Set current product to edit
-	const setCurrent = item => {
-		dispatch({ type: SET_CURRENT, payload: item });
-	};
 
 	// Gets products by store from database
 	const getStatistics = async () => {
@@ -44,6 +51,16 @@ const StoreState = props => {
 	};
 
 	/* Products Actions */
+
+	// Set current product to edit
+	const setProduct = product => {
+		dispatch({ type: SET_PRODUCT, payload: product });
+	};
+
+	// Set current product to edit
+	const clearProduct = () => {
+		dispatch({ type: CLEAR_PRODUCT });
+	};
 
 	/**
 	 * Get All products of this store with statistics from the database
@@ -163,13 +180,15 @@ const StoreState = props => {
 			value={{
 				statistics: state.statistics,
 				loading: state.loading,
-				current: state.current,
+				product: state.product,
+				bundle: state.bundle,
 				products: state.products,
 				bundles: state.bundles,
-				setCurrent,
 
 				getStatistics,
 
+				setProduct,
+				clearProduct,
 				getProducts,
 				addProduct,
 				addProductImage,

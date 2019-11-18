@@ -1,18 +1,16 @@
 import React, { useMemo, useEffect, useContext } from 'react';
 import Table from '../Table';
-import ProductContext from '../../../context/product/productContext';
 import AuthContext from '../../../context/auth/authContext';
 import StoreContext from '../../../context/store/storeContext';
 
 const Products = () => {
-	const productContext = useContext(ProductContext);
 	const authContext = useContext(AuthContext);
 	const {
 		getProducts,
 		deleteProduct,
 		products,
 		loading,
-		setCurrent,
+		setProduct,
 	} = useContext(StoreContext);
 
 	const { client } = authContext;
@@ -69,7 +67,7 @@ const Products = () => {
 				Cell: data => (
 					<button
 						className='btn btn-primary btn-circle-sm'
-						onClick={() => setCurrent(data.row.original)}
+						onClick={() => setProduct(data.row.original)}
 					>
 						<i className='fas fa-pen'></i>
 					</button>

@@ -1,7 +1,7 @@
 import {
 	SET_CURRENT,
 	CLEAR_CURRENT,
-	PRODUCT_ERROR,
+	// PRODUCT_ERROR,
 	ADD_PRODUCT,
 	GET_PRODUCTS,
 	UPDATE_PRODUCT,
@@ -66,14 +66,14 @@ export default (state, action) => {
 				loading: false,
 			};
 
-		case PRODUCT_ERROR:
-			return {
-				...state,
-				products: null,
-				current: null,
-				error: action.payload.error,
-				loading: false,
-			};
+		// case PRODUCT_ERROR:
+		// 	return {
+		// 		...state,
+		// 		products: null,
+		// 		current: null,
+		// 		error: action.payload.error,
+		// 		loading: false,
+		// 	};
 
 		default:
 			return state;

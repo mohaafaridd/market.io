@@ -1,4 +1,4 @@
-// Loading
+// General
 export const SET_LOADING = 'SET_LOADING';
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
@@ -23,7 +23,14 @@ export const CREATE_ORDER = 'CREATE_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const ORDER_ERROR = 'ORDER_ERROR';
 
-// Store Context
+/*
+ *
+ *
+ * Store Context
+ *
+ *
+ *
+ */
 export const GET_STATISTICS = 'GET_STATISTICS';
 export const SET_ERROR = 'SET_ERROR';
 
@@ -43,6 +50,6 @@ export const ADD_BUNDLE = 'ADD_BUNDLE';
 export const GET_BUNDLE = 'GET_BUNDLE';
 export const GET_BUNDLES = 'GET_BUNDLES';
 export const UPDATE_BUNDLE = 'UPDATE_BUNDLE';
-export const DELETE_BUNDLE = 'DELETE_BUNDLE';
 export const PUT_PRODUCT = 'PUT_PRODUCT';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export const DELETE_BUNDLE = 'DELETE_BUNDLE';
