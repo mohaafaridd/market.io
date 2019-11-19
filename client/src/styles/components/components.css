@@ -19,6 +19,7 @@
 @import './store/bundles-tab/AddProduct.css';
 @import './store/bundles-tab/BundlesTab.css';
 @import './store/bundles-tab/Products.css';
+@import './store/bundles-tab/BundlesStatistics.css';
 
 @import './cart/Cart.css';
 @import './cart/CartBundleItem.css';

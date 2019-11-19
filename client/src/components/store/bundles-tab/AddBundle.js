@@ -29,6 +29,7 @@ const AddBundle = () => {
 
 	return (
 		<section className='tile add-bundle'>
+			<h3>Add Bundle</h3>
 			<button
 				className={`btn ${!!!bundle ? 'btn-disabled' : 'btn-accent'}`}
 				disabled={!!!bundle}

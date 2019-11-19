@@ -1,3 +1,4 @@
+.store-dashboard .body .bundles-tab .bundles-statistics table,
 .store-dashboard .body .products-tab .products-statistics table {
 	@apply table-auto text-left w-full;
 

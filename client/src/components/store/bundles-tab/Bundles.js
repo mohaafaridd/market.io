@@ -23,6 +23,18 @@ const Bundles = () => {
 				accessor: 'name',
 			},
 			{
+				Header: 'Cost',
+				accessor: 'cost',
+			},
+			{
+				Header: 'Saved',
+				accessor: 'saved',
+			},
+			{
+				Header: 'Revenue',
+				accessor: 'revenue',
+			},
+			{
 				Header: '',
 				accessor: 'edit',
 				Cell: data => (
@@ -55,11 +67,10 @@ const Bundles = () => {
 	}
 
 	return (
-		<div>
-			<h3>All your bundles</h3>
-			<h3>Count: {bundles.length}</h3>
+		<section className='tile bundles-statistics'>
+			<h3>Bundles</h3>
 			<Table columns={columns} data={bundles} />
-		</div>
+		</section>
 	);
 };
 

@@ -13,7 +13,7 @@ const BundlesTab = () => {
 				<AddOffer />
 				<Offers />
 			</div>
-			<div className='bundle-statistics'>
+			<div className='bundles-container'>
 				<Bundles />
 			</div>
 		</section>

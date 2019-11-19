@@ -66,6 +66,7 @@ const AddProduct = () => {
 
 	return (
 		<section className='tile add-product'>
+			<h3>Add Offer</h3>
 			<form onSubmit={onSubmit}>
 				<div className='form-group'>
 					<label htmlFor='products'>Select a product</label>

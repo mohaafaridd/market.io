@@ -1,13 +1,10 @@
 .store-dashboard .body .bundles-tab {
-  @apply flex;
-  .bundle-control {
-    @apply w-1/4;
-    section {
-      @apply m-2;
-    }
-  }
+	@apply flex;
+	.bundle-control {
+		@apply w-1/4 my-2 ml-2;
+	}
 
-  .bundle-statistics {
-    @apply w-3/4;
-  }
+	.bundles-container {
+		@apply w-4/5 m-2;
+	}
 }
