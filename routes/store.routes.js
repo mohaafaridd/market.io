@@ -41,4 +41,14 @@ router.get(
 	controller.getBundles,
 );
 
+// @route       GET api/stores/statistics/bundles/:id
+// @desc        Get store bundle statistics
+// @access      Private
+router.get(
+	'/statistics/bundles/:id',
+	authorization(Role.Store),
+	authentication,
+	controller.getBundle,
+);
+
 module.exports = router;

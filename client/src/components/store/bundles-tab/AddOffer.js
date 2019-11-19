@@ -23,8 +23,7 @@ const AddProduct = () => {
 	// 1 - Get all products that this store has
 	useEffect(() => {
 		if (client) {
-			const { _id } = client;
-			getProducts(_id);
+			getProducts();
 		}
 		// eslint-disable-next-line
 	}, []);
@@ -32,11 +31,11 @@ const AddProduct = () => {
 	// 2 - on product change
 	useEffect(() => {
 		if (product) {
-			const item = offers.find(p => p.product._id === product._id);
-			if (item) {
-				setState({ ...state, inBundle: true, discount: item.discount });
+			const offer = offers.find(current => current._id === product._id);
+			if (offer) {
+				setState({ inBundle: true, discount: offer.discount });
 			} else {
-				setState({ ...state, inBundle: false, discount: 0 });
+				setState({ inBundle: false, discount: 0 });
 			}
 		}
 		// eslint-disable-next-line

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StoreContext from '../../../context/store/storeContext';
 
-const ProductItem = ({ item: product }) => {
+const ProductItem = ({ product }) => {
 	const { setProduct, bundle, removeProduct } = useContext(StoreContext);
 	return (
 		<li className='tile product-item'>

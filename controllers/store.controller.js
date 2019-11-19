@@ -1,3 +1,4 @@
+const ObjectId = require('mongoose').Types.ObjectId;
 const Product = require('../models/product.model');
 const Bundle = require('../models/bundle.model');
 const Order = require('../models/order.model');
@@ -376,11 +377,10 @@ const getBundles = async (req, res) => {
 			{
 				$project: {
 					name: '$name',
-					products: '$products',
+					offers: '$products',
 					store: '$store',
 					saved: '$saved',
 					cost: '$cost',
-
 					revenue: {
 						$sum: {
 							$map: {
@@ -410,8 +410,148 @@ const getBundles = async (req, res) => {
 	}
 };
 
+// @route       GET api/stores/statistics/bundles/:id
+// @desc        Get store bundle statistics
+// @access      Private
+const getBundle = async (req, res) => {
+	try {
+		const { client: store } = req;
+		const { id } = req.params;
+
+		const bundle = await Bundle.aggregate([
+			{ $match: { store: store._id, _id: ObjectId(id) } },
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'offers.product',
+					foreignField: '_id',
+					as: 'products',
+				},
+			},
+
+			// Calculate Cost and Saved Amount
+			{
+				$addFields: {
+					products: {
+						// Maps the offers to get their product id and offer discount and merge it with the original product
+						$map: {
+							input: '$offers',
+							in: {
+								$mergeObjects: [
+									{
+										$arrayElemAt: [
+											'$products',
+											{
+												$indexOfArray: ['$products._id', '$$this.product'],
+											},
+										],
+									},
+									'$$this',
+								],
+							},
+						},
+					},
+				},
+			},
+
+			{
+				$project: {
+					name: '$name',
+					products: '$products',
+					store: '$store',
+					saved: {
+						$sum: {
+							$map: {
+								input: '$products',
+								as: 'product',
+								in: {
+									$multiply: [
+										'$$product.price',
+										// discount = 10%
+										// then it's 0.9 of the price
+										// ((100 - 10)/100)
+										{
+											$divide: ['$$product.discount', 100],
+										},
+									],
+								},
+							},
+						},
+					},
+					cost: {
+						$sum: {
+							$map: {
+								input: '$products',
+								as: 'product',
+								in: {
+									$multiply: [
+										'$$product.price',
+										// discount = 10%
+										// then it's 0.9 of the price
+										// ((100 - 10)/100)
+										{
+											$divide: [
+												{ $subtract: [100, '$$product.discount'] },
+												100,
+											],
+										},
+									],
+								},
+							},
+						},
+					},
+				},
+			},
+
+			// Calculate Revenue and sold units
+			{
+				$lookup: {
+					from: 'orders',
+					localField: '_id',
+					foreignField: 'bundle',
+					as: 'orders',
+				},
+			},
+
+			{
+				$project: {
+					name: '$name',
+					offers: '$products',
+					store: '$store',
+					saved: '$saved',
+					cost: '$cost',
+					revenue: {
+						$sum: {
+							$map: {
+								input: '$orders',
+								as: 'order',
+								in: {
+									$multiply: [
+										'$$order.price',
+										'$$order.amount',
+										// discount = 10%
+										// then it's 0.9 of the price
+										// ((100 - 10)/100)
+										{
+											$divide: [{ $subtract: [100, '$$order.discount'] }, 100],
+										},
+									],
+								},
+							},
+						},
+					},
+				},
+			},
+		]);
+		res.json({ success: true, message: 'Search complete', bundle: bundle[0] });
+	} catch (error) {
+		res.status(400).json({ success: false, message: 'Search failed', error });
+	}
+};
+
 module.exports = {
 	getStatistics,
 	getProducts,
 	getBundles,
+	getBundle,
 };

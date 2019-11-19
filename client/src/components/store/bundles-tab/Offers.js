@@ -1,26 +1,22 @@
 import React, { useContext, useEffect } from 'react';
-import ProductItem from './ProductItem';
+import uuid from 'uuid';
+import OfferItem from './OfferItem';
 import StoreContext from '../../../context/store/storeContext';
 
-const Products = () => {
-	// const { offers, bundle, getBundle } = bundleContext;
-	const { offers, bundle, getBundle } = useContext(StoreContext);
-	useEffect(() => {
-		if (bundle) {
-			getBundle(bundle);
-		}
-		// eslint-disable-next-line
-	}, []);
+const Offers = () => {
+	const { offers, bundle } = useContext(StoreContext);
 
 	return (
 		<section className='tile products-list-container'>
-			<h3>Products</h3>
+			<h3>Offers</h3>
 			<ul className='alt-tile products-list'>
 				{bundle ? (
 					offers.length === 0 ? (
 						<li className='tile'>No offers</li>
 					) : (
-						offers.map(item => <ProductItem key={item._id} item={item} />)
+						offers.map(offer => {
+							return <OfferItem key={uuid.v4()} product={offer} />;
+						})
 					)
 				) : (
 					<li className='tile'>Please Select a bundle</li>
@@ -30,4 +26,4 @@ const Products = () => {
 	);
 };
 
-export default Products;
+export default Offers;

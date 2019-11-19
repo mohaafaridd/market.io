@@ -105,64 +105,47 @@ export default (state, action) => {
 			return {
 				...state,
 				bundle: action.payload,
-				offers: action.payload.products,
+				offers: action.payload.offers,
 			};
 
 		case CLEAR_BUNDLE:
 			return {
 				...state,
 				bundle: null,
+				offers: [],
 			};
 
 		case GET_BUNDLES:
 			return {
 				...state,
 				bundles: action.payload.bundles,
-				loading: false,
-			};
-
-		case GET_BUNDLE:
-			return {
-				...state,
-				offers: action.payload.bundle.offers,
 			};
 
 		case ADD_BUNDLE:
 			return {
 				...state,
 				bundle: action.payload.bundle,
-				error: null,
-				loading: false,
-				product: null,
-				offers: [],
-				bundles: [...state.bundles, action.payload.bundle],
+				bundles: [
+					...state.bundles,
+					{ ...action.payload.bundle, saved: 0, cost: 0, revenue: 0 },
+				],
 			};
 
 		case UPDATE_BUNDLE:
+			const mergedBundle = {
+				...state.bundle,
+				...action.payload.bundle,
+			};
 			return {
 				...state,
-				loading: false,
+				bundle: mergedBundle,
+
 				bundles: state.bundles.map(bundle =>
-					bundle._id === action.payload.bundle._id
-						? action.payload.bundle
-						: bundle,
+					bundle._id === action.payload.bundle._id ? mergedBundle : bundle,
 				),
 			};
 
 		case PUT_PRODUCT:
-			return {
-				...state,
-				bundle: action.payload.bundle,
-				bundles: state.bundles.map(bundle =>
-					bundle._id === action.payload.bundle._id
-						? action.payload.bundle
-						: bundle,
-				),
-				offers: action.payload.bundle.offers,
-				error: null,
-				loading: false,
-			};
-
 		case REMOVE_PRODUCT:
 			return {
 				...state,
@@ -173,21 +156,14 @@ export default (state, action) => {
 						: bundle,
 				),
 				offers: action.payload.bundle.offers,
-				product: null,
-				error: null,
-				loading: false,
 			};
 
 		case DELETE_BUNDLE:
 			return {
 				...state,
-				loading: false,
 				bundle: null,
-				bundles: state.bundles.filter(
-					bundle => bundle._id !== action.payload.bundle._id,
-				),
+				bundles: state.bundles.filter(bundle => bundle._id !== action.payload),
 				offers: [],
-				product: null,
 			};
 
 		default:
