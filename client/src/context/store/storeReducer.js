@@ -135,6 +135,7 @@ export default (state, action) => {
 			const mergedBundle = {
 				...state.bundle,
 				...action.payload.bundle,
+				offers: state.bundle.offers,
 			};
 			return {
 				...state,
