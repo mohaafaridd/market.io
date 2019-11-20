@@ -27,9 +27,12 @@ const Bundles = () => {
 			{
 				Header: 'Products',
 				Cell: props => {
-					console.log('props', props);
 					return <span>{props.row.original.offers.length}</span>;
 				},
+			},
+			{
+				Header: 'Sold',
+				accessor: 'sold',
 			},
 			{
 				Header: 'Cost',

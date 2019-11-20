@@ -381,6 +381,7 @@ const getBundles = async (req, res) => {
 					store: '$store',
 					saved: '$saved',
 					cost: '$cost',
+					orders: '$orders',
 					revenue: {
 						$sum: {
 							$map: {
@@ -404,6 +405,17 @@ const getBundles = async (req, res) => {
 				},
 			},
 		]);
+
+		// const amount = await Order.aggregate([
+		// 	{ $match: { store: store._id, bundle: { $ne: null } } },
+		// 	{
+		// 		$group: {
+		// 			_id: '$cart',
+		// 			amount: { $first: '$amount' },
+		// 		},
+		// 	},
+		// ]);
+
 		res.json({ success: true, message: 'Search complete', bundles });
 	} catch (error) {
 		res.status(400).json({ success: false, message: 'Search failed', error });

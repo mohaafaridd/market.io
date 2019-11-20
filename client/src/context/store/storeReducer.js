@@ -118,7 +118,7 @@ export default (state, action) => {
 		case GET_BUNDLES:
 			return {
 				...state,
-				bundles: action.payload.bundles,
+				bundles: action.payload,
 			};
 
 		case ADD_BUNDLE:
@@ -127,7 +127,7 @@ export default (state, action) => {
 				bundle: action.payload.bundle,
 				bundles: [
 					...state.bundles,
-					{ ...action.payload.bundle, saved: 0, cost: 0, revenue: 0 },
+					{ ...action.payload.bundle, saved: 0, cost: 0, revenue: 0, sold: 0 },
 				],
 			};
 

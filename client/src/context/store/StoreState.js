@@ -202,7 +202,23 @@ const StoreState = props => {
 		try {
 			dispatch({ type: SET_LOADING });
 			const response = await axios.get(`/api/stores/statistics/bundles`);
-			dispatch({ type: GET_BUNDLES, payload: response.data });
+
+			const bundles = response.data.bundles.map(bundle => {
+				const orders = bundle.orders.reduce((acc, current) => {
+					const order = acc.find(o => o.cart === current.cart);
+					if (order) {
+						return acc;
+					}
+					acc.push(current);
+					return acc;
+				}, []);
+
+				const sold = orders.reduce((acc, order) => acc + order.amount, 0);
+
+				return { ...bundle, sold };
+			});
+
+			dispatch({ type: GET_BUNDLES, payload: bundles });
 		} catch (error) {
 			dispatch({ type: SET_ERROR, payload: error });
 		}
