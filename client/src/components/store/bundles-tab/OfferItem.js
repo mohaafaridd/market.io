@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import numeral from 'numeral';
 import StoreContext from '../../../context/store/storeContext';
 
 const ProductItem = ({ product }) => {
@@ -15,9 +16,15 @@ const ProductItem = ({ product }) => {
 				</span>
 				<span className='product-prices'>
 					<span className='original-price'>${product.price}</span>
-					<span>${product.price * (1 - product.discount / 100)}</span>
+					<span>
+						{numeral(product.price * (1 - product.discount / 100)).format(
+							'0,0[.]00 $',
+						)}
+					</span>
 					<span className='text-red-600'>
-						${product.price - product.price * (1 - product.discount / 100)}
+						{numeral(
+							product.price - product.price * (1 - product.discount / 100),
+						).format('0,0[.]00 $')}
 					</span>
 				</span>
 			</div>

@@ -1,4 +1,6 @@
 import React, { useMemo, useEffect, useContext } from 'react';
+import numeral from 'numeral';
+
 import Table from '../Table';
 
 import StoreContext from '../../../context/store/storeContext';
@@ -23,16 +25,32 @@ const Bundles = () => {
 				accessor: 'name',
 			},
 			{
+				Header: 'Products',
+				Cell: props => {
+					console.log('props', props);
+					return <span>{props.row.original.offers.length}</span>;
+				},
+			},
+			{
 				Header: 'Cost',
 				accessor: 'cost',
+				Cell: props => {
+					return <span>{numeral(props.cell.value).format('0,0[.]00 $')}</span>;
+				},
 			},
 			{
 				Header: 'Saved',
 				accessor: 'saved',
+				Cell: props => {
+					return <span>{numeral(props.cell.value).format('0,0[.]00 $')}</span>;
+				},
 			},
 			{
 				Header: 'Revenue',
 				accessor: 'revenue',
+				Cell: props => {
+					return <span>{numeral(props.cell.value).format('0,0[.]00 $')}</span>;
+				},
 			},
 			{
 				Header: '',

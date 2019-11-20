@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import { Line, Pie } from 'react-chartjs-2';
 import moment from 'moment';
+import numeral from 'numeral';
 import StoreContext from '../../context/store/storeContext';
 
 const Statistics = () => {
@@ -171,11 +172,11 @@ const Statistics = () => {
 				<div className='numeric'>
 					<div className='tile'>
 						<p>Total Sold Product Profit</p>
-						<p>{profit.products}</p>
+						<p>{numeral(profit.products).format('0,0[.]00 $')}</p>
 					</div>
 					<div className='tile'>
 						<p>Total Sold Bundles Profit</p>
-						<p>{profit.bundles}</p>
+						<p>{numeral(profit.bundles).format('0,0[.]00 $')}</p>
 					</div>
 				</div>
 
@@ -198,7 +199,7 @@ const Statistics = () => {
 				<div className='numeric'>
 					<div className='tile'>
 						<p>Total Profit</p>
-						<p>{profit.total}</p>
+						<p>{numeral(profit.total).format('0,0[.]00 $')}</p>
 					</div>
 				</div>
 

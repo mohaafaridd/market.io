@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useContext } from 'react';
+import numeral from 'numeral';
 import Table from '../Table';
 import AuthContext from '../../../context/auth/authContext';
 import StoreContext from '../../../context/store/storeContext';
@@ -48,6 +49,9 @@ const Products = () => {
 			{
 				Header: 'Price',
 				accessor: 'price',
+				Cell: props => {
+					return <span>{numeral(props.cell.value).format('0,0[.]00 $')}</span>;
+				},
 			},
 			{
 				Header: 'Discount',
@@ -56,6 +60,9 @@ const Products = () => {
 			{
 				Header: 'Revenue',
 				accessor: 'revenue',
+				Cell: props => {
+					return <span>{numeral(props.cell.value).format('0,0[.]00 $')}</span>;
+				},
 			},
 			{
 				Header: 'Sold Units',
