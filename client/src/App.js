@@ -6,8 +6,6 @@ import './App.css';
 
 /* Contexts */
 import AuthState from './context/auth/AuthState';
-import ProductState from './context/product/ProductState';
-import BundleState from './context/bundle/BundleState';
 import CartState from './context/cart/CartState';
 import OrderState from './context/order/OrderState';
 import StoreState from './context/store/StoreState';
@@ -17,26 +15,24 @@ import StoreState from './context/store/StoreState';
 /* Pages */
 import Home from './components/pages/Home';
 
+console.log('here');
+
 function App() {
-  return (
-    <CookiesProvider>
-      <AuthState>
-        <ProductState>
-          <BundleState>
-            <CartState>
-              <OrderState>
-                <StoreState>
-                  <Router>
-                    <Home />
-                  </Router>
-                </StoreState>
-              </OrderState>
-            </CartState>
-          </BundleState>
-        </ProductState>
-      </AuthState>
-    </CookiesProvider>
-  );
+	return (
+		<CookiesProvider>
+			<AuthState>
+				<CartState>
+					<OrderState>
+						<StoreState>
+							<Router>
+								<Home />
+							</Router>
+						</StoreState>
+					</OrderState>
+				</CartState>
+			</AuthState>
+		</CookiesProvider>
+	);
 }
 
 export default App;
