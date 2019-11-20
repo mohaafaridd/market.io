@@ -4,9 +4,8 @@
 	.tile:first-child {
 		@apply mb-2 flex flex-col;
 	}
-	h3,
 	.product-image {
-		@apply self-center text-lg;
+		@apply self-center bg-gray-600;
 	}
 
 	.form-group {

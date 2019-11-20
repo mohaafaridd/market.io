@@ -10,6 +10,7 @@ const AddProduct = () => {
 		addProduct,
 		addProductImage,
 		updateProduct,
+		clearProduct,
 		product: current,
 	} = useContext(StoreContext);
 
@@ -54,6 +55,15 @@ const AddProduct = () => {
 					/>
 				)}
 				<form onSubmit={handleSubmit(onSubmit)}>
+					<button
+						className={`w-full  btn ${
+							!!!current ? 'btn-disabled' : 'btn-accent'
+						}`}
+						disabled={!!!current}
+						onClick={clearProduct}
+					>
+						Clear
+					</button>
 					{/* Category Start */}
 					<div className='form-group'>
 						<input
@@ -215,7 +225,7 @@ const AddProduct = () => {
 					</div>
 					{/* Discount End */}
 
-					<button type='submit' className='btn btn-primary'>
+					<button type='submit' className='btn btn-primary w-full'>
 						Submit
 					</button>
 				</form>
