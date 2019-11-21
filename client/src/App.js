@@ -14,8 +14,6 @@ import UserState from './context/user/UserState';
 /* Pages */
 import Home from './components/pages/Home';
 
-console.log('here');
-
 function App() {
 	return (
 		<CookiesProvider>
