@@ -7,6 +7,17 @@ export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 /*
  *
  *
+ * General Context
+ *
+ *
+ *
+ */
+
+export const INITIAL_SEARCH = 'INITIAL_SEARCH';
+
+/*
+ *
+ *
  * Authentication Context
  *
  *
