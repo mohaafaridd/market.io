@@ -11,31 +11,31 @@ import Register from '../auth/Register';
 import AuthContext from '../../context/auth/authContext';
 
 const Home = () => {
-  const { loadClient, loading } = useContext(AuthContext);
+	const { loadClient, loading } = useContext(AuthContext);
 
-  // Loading Client when the use enters the website
-  useEffect(() => {
-    loadClient();
-    // eslint-disable-next-line
-  }, []);
+	// Loading Client when the use enters the website
+	useEffect(() => {
+		loadClient();
+		// eslint-disable-next-line
+	}, []);
 
-  if (loading) {
-    return <h4>Loading</h4>;
-  }
+	if (loading) {
+		return <h4>Loading User</h4>;
+	}
 
-  return (
-    <section className='home-grid'>
-      <Navbar />
+	return (
+		<section className='home-grid'>
+			<Navbar />
 
-      <Switch>
-        <Route exact path='/register' component={Register} />
-        <Route exact path='/login' component={Login} />
-        <Route path='/store' component={StoreDashboard} />
-        <Route path='/user' component={UserDashboard} />
-        <Route path='/search' component={Search} />
-      </Switch>
-    </section>
-  );
+			<Switch>
+				<Route exact path='/register' component={Register} />
+				<Route exact path='/login' component={Login} />
+				<Route path='/store' component={StoreDashboard} />
+				<Route path='/user' component={UserDashboard} />
+				<Route path='/search' component={Search} />
+			</Switch>
+		</section>
+	);
 };
 
 export default Home;

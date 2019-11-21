@@ -1,126 +1,151 @@
 .nav {
-  @apply flex bg-primary p-5 shadow;
+	@apply flex justify-between shadow-xl bg-main p-2;
 
-  .title {
-    @apply text-3xl w-4/12;
-  }
+	.title {
+		@apply flex items-center text-2xl w-2/12;
+	}
 
-  .search-input {
-    @apply flex flex-col w-4/12;
-    form {
-      @apply flex flex-1;
-      input {
-        @apply flex-1;
-      }
-    }
-  }
+	.search-input {
+		@apply flex justify-between w-7/12;
+		input {
+			@apply flex-1 mr-2;
+		}
+		button {
+			@apply;
+		}
+	}
 
-  ul {
-    @apply flex justify-end w-4/12 items-center;
-  }
+	ul {
+		@apply flex w-2/12 justify-end;
+		li {
+			@apply flex;
+
+			&:nth-of-type(2) {
+				@apply mx-2;
+			}
+		}
+	}
 }
 
 @screen xl {
-  .nav {
-    .title {
-      @apply w-3/12;
-    }
+	.nav {
+		@apply flex justify-between shadow-xl bg-main p-2;
 
-    .search-input {
-      @apply flex w-6/12;
-    }
+		.title {
+			@apply flex items-center text-xl w-1/12;
+		}
 
-    ul {
-      @apply flex justify-end w-3/12;
-    }
-  }
+		.search-input {
+			@apply flex justify-between w-7/12;
+			input {
+				@apply;
+			}
+			button {
+				@apply;
+			}
+		}
+
+		ul {
+			@apply flex w-3/12 justify-between;
+			li {
+				@apply flex;
+			}
+		}
+	}
 }
 
 @screen lg {
-  .nav {
-    @apply justify-between;
-    .title {
-      @apply w-2/12;
-    }
-    .search-input {
-      @apply flex w-6/12;
-    }
-    ul {
-      @apply flex justify-end w-4/12;
-    }
-  }
-}
+	.nav {
+		@apply flex justify-between shadow-xl bg-main p-2;
 
-@screen md {
-  .nav {
-    .title {
-      @apply w-2/12;
-    }
-    .search-input {
-      @apply flex w-6/12;
-    }
-    ul {
-      @apply flex justify-end w-4/12;
-    }
-  }
+		.title {
+			@apply flex items-center text-xl w-1/12;
+		}
+
+		.search-input {
+			@apply flex justify-between w-6/12;
+			input {
+				@apply;
+			}
+			button {
+				@apply;
+			}
+		}
+
+		ul {
+			@apply flex w-4/12 justify-between;
+			li {
+				@apply flex;
+			}
+		}
+	}
 }
 
 @screen sm {
-  .nav {
-    @apply flex-col items-center;
-    .title {
-      @apply w-auto;
-    }
-    .search-input {
-      @apply w-auto my-2;
-    }
-    ul {
-      @apply w-auto;
-    }
-  }
+	.nav {
+		@apply flex flex-col items-center;
+
+		.title {
+			@apply flex items-center text-2xl w-full;
+		}
+
+		.search-input {
+			@apply flex justify-between w-full my-2;
+			input {
+				@apply;
+			}
+		}
+
+		ul {
+			@apply flex w-full justify-between;
+			li {
+				@apply flex;
+			}
+		}
+	}
 }
 
 .side-nav {
-  @apply bg-primary p-5;
+	@apply bg-primary p-5;
 
-  li {
-    transition: ease-in 0.2s all;
-    @apply bg-gray-500 my-5 flex text-center rounded cursor-pointer;
+	li {
+		transition: ease-in 0.2s all;
+		@apply bg-gray-500 my-5 flex text-center rounded cursor-pointer;
 
-    .side-nav-item {
-      @apply flex-1 py-2 px-20;
-    }
+		.side-nav-item {
+			@apply flex-1 py-2 px-20;
+		}
 
-    .active {
-      @apply bg-gray-600 rounded font-bold;
-    }
-  }
+		.active {
+			@apply bg-gray-600 rounded font-bold;
+		}
+	}
 }
 
 @screen xl {
-  .side-nav {
-    @apply p-0 self-center mt-2;
-    @apply flex;
+	.side-nav {
+		@apply p-0 self-center mt-2;
+		@apply flex;
 
-    li {
-      @apply m-2;
-    }
-  }
+		li {
+			@apply m-2;
+		}
+	}
 }
 
 @screen lg {
-  .side-nav {
-    @apply p-0 self-center  mt-2;
-    @apply flex;
+	.side-nav {
+		@apply p-0 self-center  mt-2;
+		@apply flex;
 
-    li {
-      @apply m-2;
-    }
-  }
+		li {
+			@apply m-2;
+		}
+	}
 }
 
 @screen sm {
-  .side-nav {
-    @apply flex-col p-0 self-center mt-2;
-  }
+	.side-nav {
+		@apply flex-col p-0 self-center mt-2;
+	}
 }
