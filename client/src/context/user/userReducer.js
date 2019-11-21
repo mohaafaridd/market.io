@@ -6,6 +6,10 @@ import {
 	GET_CARTS,
 	EDIT_CART,
 	DELETE_CART,
+	CLEAR_CART,
+	// Orders
+	CREATE_ORDER,
+	GET_ORDERS,
 } from '../types';
 
 export default (state, action) => {
@@ -20,7 +24,28 @@ export default (state, action) => {
 				loading: false,
 			};
 
+		case EDIT_CART:
+		case DELETE_CART:
+			return {
+				...state,
+				carts: action.payload.cart,
+			};
+
+		case CLEAR_CART:
+		case CREATE_ORDER:
+			return {
+				...state,
+				carts: [],
+			};
+
+		case GET_ORDERS:
+			return {
+				...state,
+				orders: action.payload.orders,
+				loading: false,
+			};
+
 		default:
-			break;
+			return state;
 	}
 };

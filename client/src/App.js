@@ -6,8 +6,6 @@ import './App.css';
 
 /* Contexts */
 import AuthState from './context/auth/AuthState';
-import CartState from './context/cart/CartState';
-import OrderState from './context/order/OrderState';
 import StoreState from './context/store/StoreState';
 import UserState from './context/user/UserState';
 
@@ -22,17 +20,13 @@ function App() {
 	return (
 		<CookiesProvider>
 			<AuthState>
-				<CartState>
-					<OrderState>
-						<StoreState>
-							<UserState>
-								<Router>
-									<Home />
-								</Router>
-							</UserState>
-						</StoreState>
-					</OrderState>
-				</CartState>
+				<StoreState>
+					<UserState>
+						<Router>
+							<Home />
+						</Router>
+					</UserState>
+				</StoreState>
 			</AuthState>
 		</CookiesProvider>
 	);

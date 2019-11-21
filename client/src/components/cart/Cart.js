@@ -3,12 +3,11 @@ import uuid from 'uuid';
 import numeral from 'numeral';
 import CartBundleItem from './CartBundleItem';
 import CartProductItem from './CartProductItem';
-import CartContext from '../../context/cart/cartContext';
 import UserContext from '../../context/user/userContext';
 const Carts = () => {
-	const { createOrder } = useContext(CartContext);
-
-	const { loading, carts, getCarts, clearCart } = useContext(UserContext);
+	const { loading, carts, getCarts, clearCart, createOrder } = useContext(
+		UserContext,
+	);
 
 	useEffect(() => {
 		getCarts();

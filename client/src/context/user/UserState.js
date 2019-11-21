@@ -13,6 +13,9 @@ import {
 	EDIT_CART,
 	DELETE_CART,
 	CLEAR_CART,
+	// Orders
+	CREATE_ORDER,
+	GET_ORDERS,
 } from '../types';
 
 const UserState = props => {
@@ -93,6 +96,30 @@ const UserState = props => {
 		}
 	};
 
+	/**
+	 * Creates an order of all the items in user carts
+	 */
+	const createOrder = async () => {
+		try {
+			const response = await axios.post('/api/orders');
+			dispatch({ type: CREATE_ORDER, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error.response });
+		}
+	};
+
+	/**
+	 * Fetches all user carts from database
+	 */
+	const getOrders = async () => {
+		try {
+			const response = await axios.get('/api/orders');
+			dispatch({ type: GET_ORDERS, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error.response });
+		}
+	};
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -105,6 +132,9 @@ const UserState = props => {
 				editCart,
 				deleteCart,
 				clearCart,
+
+				createOrder,
+				getOrders,
 			}}
 		>
 			{props.children}
