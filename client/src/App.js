@@ -9,6 +9,7 @@ import AuthState from './context/auth/AuthState';
 import CartState from './context/cart/CartState';
 import OrderState from './context/order/OrderState';
 import StoreState from './context/store/StoreState';
+import UserState from './context/user/UserState';
 
 /* Components */
 
@@ -24,9 +25,11 @@ function App() {
 				<CartState>
 					<OrderState>
 						<StoreState>
-							<Router>
-								<Home />
-							</Router>
+							<UserState>
+								<Router>
+									<Home />
+								</Router>
+							</UserState>
 						</StoreState>
 					</OrderState>
 				</CartState>
