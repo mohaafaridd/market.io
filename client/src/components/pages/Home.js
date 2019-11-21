@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Navbar from '../layout/Navbar';
-import Search from './Search';
+import Search from '../search/Search';
 import StoreDashboard from './StoreDashboard';
 import UserDashboard from './UserDashboard';
 import Login from '../auth/Login';

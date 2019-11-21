@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import queryString from 'query-string';
 import uuid from 'uuid';
-import SearchItem from './SearchItem';
 import GeneralContext from '../../context/general/generalContext';
 const Search = ({ location }) => {
 	const { searchResults, initialSearch } = useContext(GeneralContext);
