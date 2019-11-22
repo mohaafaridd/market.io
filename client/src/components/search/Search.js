@@ -1,6 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import queryString from 'query-string';
 import uuid from 'uuid';
+
+import SearchFilters from './SearchFilters';
+
 import GeneralContext from '../../context/general/generalContext';
 const Search = ({ location }) => {
 	const { searchResults, initialSearch } = useContext(GeneralContext);
@@ -15,22 +18,26 @@ const Search = ({ location }) => {
 		return <h4>Loading</h4>;
 	}
 
-	// if (products.length === 0) {
-	//   return <h4>No match was found</h4>;
-	// }
-
-	console.log('searchResults', searchResults);
+	const [products, bundles] = searchResults;
 
 	return (
 		<div>
 			<h4>Search Results</h4>
 
-			<h5>Products</h5>
+			<SearchFilters bundles={bundles} products={products} />
 
+			<h5>Products</h5>
 			<ul>
-				{/* {products.map(product => (
-          <SearchItem product={product} key={uuid.v4()} />
-        ))} */}
+				{products.map(product => (
+					<li key={uuid.v4()}> {product.name} </li>
+				))}
+			</ul>
+
+			<h5>Bundles</h5>
+			<ul>
+				{bundles.map(bundle => (
+					<li key={uuid.v4()}> {bundle.name} </li>
+				))}
 			</ul>
 		</div>
 	);
