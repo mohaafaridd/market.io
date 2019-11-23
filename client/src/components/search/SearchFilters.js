@@ -1,27 +1,28 @@
 import React, { useState, useContext, useEffect } from 'react';
 import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import uuid from 'uuid';
 
 import GeneralContext from '../../context/general/generalContext';
-const SearchFilters = ({ bundles, products }) => {
-	const { filterResults } = useContext(GeneralContext);
+const SearchFilters = () => {
+	const { products, bundles, filtered, filterResults } = useContext(
+		GeneralContext,
+	);
 
 	/**
 	 * Page Location (query)
 	 */
-	const location = useLocation();
+	let location = useLocation();
 
 	/**
-	 * hold search value
-	 * @type {string}
+	 * Browser history to track filtering
 	 */
-	const { name } = queryString.parse(location.search);
+	let history = useHistory();
 
 	const prices = {
 		products: {
-			max: Math.max(...products.map(product => product.price)),
-			min: Math.min(...products.map(product => product.price)),
+			max: Math.max(...filtered.map(product => product.price)),
+			min: Math.min(...filtered.map(product => product.price)),
 		},
 		bundles: {
 			max: Math.max(...bundles.map(bundle => bundle.bill)),
@@ -63,6 +64,11 @@ const SearchFilters = ({ bundles, products }) => {
 		});
 	};
 
+	/**
+	 * hold search value
+	 * @type {string}
+	 */
+	const { name } = queryString.parse(location.search);
 	useEffect(() => {
 		setFilters({
 			categories: [],
@@ -75,6 +81,32 @@ const SearchFilters = ({ bundles, products }) => {
 		});
 		// eslint-disable-next-line
 	}, [name]);
+
+	const onFilter = e => {
+		filterResults(filters, name);
+		const categories =
+			filters.categories.length > 0
+				? encodeURIComponent(filters.categories.join(','))
+				: null;
+
+		const manufacturers =
+			filters.manufacturers.length > 0
+				? encodeURIComponent(filters.manufacturers.join(','))
+				: null;
+
+		const colors =
+			filters.colors.length > 0
+				? encodeURIComponent(filters.colors.join(','))
+				: null;
+
+		const url = `/search?name=${name}
+			${categories ? `&category=${categories}` : ''}
+			${manufacturers ? `&manufacturer=${manufacturers}` : ''}
+			${colors ? `&color=${colors}` : ''}
+			`;
+
+		history.replace(url);
+	};
 
 	return (
 		<section className='search-fitlers'>
@@ -189,10 +221,7 @@ const SearchFilters = ({ bundles, products }) => {
 				/>
 			</div>
 
-			<button
-				className='btn btn-accent'
-				onClick={e => filterResults(filters, name)}
-			>
+			<button className='btn btn-accent' onClick={onFilter}>
 				Filter
 			</button>
 		</section>

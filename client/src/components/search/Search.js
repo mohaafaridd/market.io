@@ -1,11 +1,17 @@
 import React, { useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import uuid from 'uuid';
 
 import SearchFilters from './SearchFilters';
 
 import GeneralContext from '../../context/general/generalContext';
-const Search = ({ location }) => {
+const Search = () => {
+	/**
+	 * Page Location (query)
+	 */
+	let location = useLocation();
+
 	const { products, bundles, filtered, initialSearch } = useContext(
 		GeneralContext,
 	);
@@ -14,17 +20,13 @@ const Search = ({ location }) => {
 		const { name } = queryString.parse(location.search);
 		initialSearch(name);
 		// eslint-disable-next-line
-	}, [location.search]);
-
-	// if (filtered.length < 1) {
-	// 	return <h4>Loading</h4>;
-	// }
+	}, []);
 
 	return (
 		<div>
 			<h4>Search Results</h4>
 
-			<SearchFilters bundles={bundles} products={products} />
+			<SearchFilters />
 
 			<h5>Products</h5>
 			<ul>
