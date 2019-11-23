@@ -12,45 +12,95 @@ const SearchFilters = () => {
 	/**
 	 * Page Location (query)
 	 */
-	let location = useLocation();
+	const location = useLocation();
 
 	/**
 	 * Browser history to track filtering
 	 */
-	let history = useHistory();
+	const history = useHistory();
 
-	const prices = {
-		products: {
-			max: Math.max(...filtered.map(product => product.price)),
-			min: Math.min(...filtered.map(product => product.price)),
-		},
-		bundles: {
-			max: Math.max(...bundles.map(bundle => bundle.bill)),
-			min: Math.min(...bundles.map(bundle => bundle.bill)),
-		},
-		total: {
-			max: 0,
-			min: 0,
-		},
-	};
+	/**
+	 * hold search value
+	 * @type {string}
+	 */
+	const { name } = queryString.parse(location.search);
 
-	const categories = [...new Set(products.map(product => product.category))];
-	const colors = [...new Set(products.map(product => product.color))];
-	const manufacturers = [
-		...new Set(products.map(product => product.manufacturer)),
-	];
-	prices.total.max = Math.max(prices.products.max, prices.bundles.max);
-	prices.total.min = Math.min(prices.products.min, prices.bundles.min);
+	const [properties, setProperties] = useState({
+		categories: [],
+		colors: [],
+		manufacturers: [],
+		prices: {
+			products: {
+				max: Infinity,
+				min: 0,
+			},
+			bundles: {
+				max: Infinity,
+				min: 0,
+			},
+			get total() {
+				const max = Math.max(this.products.max, this.bundles.max);
+				const min = Math.min(this.products.min, this.bundles.min);
+				return { max, min };
+			},
+		},
+	});
+
+	const { categories, colors, manufacturers, prices } = properties;
 
 	const [filters, setFilters] = useState({
 		categories: [],
-		manufacturers: [],
 		colors: [],
+		manufacturers: [],
 		price: {
 			min: prices.total.min || 0,
 			max: prices.total.max || Infinity,
 		},
 	});
+
+	// runs for the main search point
+	// contains all categories, colors, etc.
+	useEffect(() => {
+		setProperties({
+			...properties,
+			categories: [...new Set(products.map(product => product.category))],
+			colors: [...new Set(products.map(product => product.color))],
+			manufacturers: [
+				...new Set(products.map(product => product.manufacturer)),
+			],
+
+			prices: {
+				products: {
+					max: Math.max(...filtered.map(product => product.price)),
+					min: Math.min(...filtered.map(product => product.price)),
+				},
+				bundles: {
+					max: Math.max(...bundles.map(bundle => bundle.bill)),
+					min: Math.min(...bundles.map(bundle => bundle.bill)),
+				},
+				get total() {
+					const max = Math.max(this.products.max, this.bundles.max);
+					const min = Math.min(this.products.min, this.bundles.min);
+					return { max, min };
+				},
+			},
+		});
+	}, [products, filtered, bundles]);
+
+	// runs whenever filtered products change
+	useEffect(() => {
+		setFilters({
+			...filters,
+			price: {
+				max: prices.total.max,
+				min: prices.total.min,
+			},
+		});
+	}, [filtered]);
+
+	useEffect(() => {
+		console.log('properties', properties);
+	}, [properties]);
 
 	const onCheckboxCheck = e => {
 		const { name } = e.target;
@@ -63,24 +113,6 @@ const SearchFilters = () => {
 				: [...filters[name], value],
 		});
 	};
-
-	/**
-	 * hold search value
-	 * @type {string}
-	 */
-	const { name } = queryString.parse(location.search);
-	useEffect(() => {
-		setFilters({
-			categories: [],
-			manufacturers: [],
-			colors: [],
-			price: {
-				min: prices.total.min || 0,
-				max: prices.total.max || Infinity,
-			},
-		});
-		// eslint-disable-next-line
-	}, [name]);
 
 	const onFilter = e => {
 		filterResults(filters, name);
@@ -109,7 +141,7 @@ const SearchFilters = () => {
 	};
 
 	return (
-		<section className='search-fitlers'>
+		<section className='search-filters'>
 			<div className='filter-group'>
 				<p>Category</p>
 				{categories.map(category => (
@@ -180,7 +212,6 @@ const SearchFilters = () => {
 					max={filters.price.max}
 					min={prices.total.min}
 					step={1}
-					value={filters.price.min}
 					onChange={e =>
 						setFilters({
 							...filters,
@@ -190,6 +221,7 @@ const SearchFilters = () => {
 							},
 						})
 					}
+					value={filters.price.min}
 				/>
 			</div>
 
