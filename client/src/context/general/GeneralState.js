@@ -34,16 +34,17 @@ const GeneralState = props => {
 	 * @param {array} filters state from search filter component
 	 * @param {string} name product or bundle name
 	 */
-	const filterResults = (filters, name) => {
-		console.log('filters', filters);
-		console.log('name', name);
+	const filterResults = async (filters, name) => {
 		const categories =
 			filters.categories.length > 0
 				? encodeURIComponent(filters.categories.join(','))
 				: null;
-		console.log('categories', categories);
-		const url = `/api/search?name=${name}`;
-		console.log('url', url);
+		const url = `/api/search?name=${name}${
+			categories ? `&category=${categories}` : ''
+		}`;
+
+		const response = await axios.get(url);
+		console.log('response', response);
 	};
 
 	return (

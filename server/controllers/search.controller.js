@@ -22,7 +22,7 @@ const Bundle = require('../models/bundle.model');
 const search = async (req, res) => {
 	const {
 		name,
-		category,
+		// category,
 		color,
 		manufacturer,
 		maxPrice,
@@ -33,40 +33,46 @@ const search = async (req, res) => {
 		page = 1,
 	} = req.query;
 
-	try {
-		const products = await Product.aggregate([
-			{
-				$match: {
-					$and: [
-						name ? { $text: { $search: name } } : { name: { $exists: true } },
-						category
-							? { $in: ['$category', category] }
-							: { category: { $exists: true } },
-						color ? { color: color } : { color: { $exists: true } },
-						manufacturer
-							? { manufacturer: manufacturer }
-							: { manufacturer: { $exists: true } },
-						maxPrice
-							? { price: { $lte: parseInt(maxPrice) } }
-							: { price: { $exists: true } },
-						minPrice
-							? { price: { $gte: parseInt(minPrice) } }
-							: { price: { $exists: true } },
-						maxRating
-							? { score: { $lte: parseInt(maxRating) } }
-							: { score: { $exists: true } },
-						minRating
-							? { score: { $gte: parseInt(minRating) } }
-							: { score: { $exists: true } },
-					],
-				},
-			},
+	const category = req.query.category ? req.query.category.split(',') : [];
 
-			{
-				// -1 to get from page 1
-				$skip: 10 * (page - 1),
-			},
-		]);
+	try {
+		const products = await Product.find({
+			$text: { $search: name },
+			category: category.length > 0 ? { $in: category } : { $exists: true },
+		});
+		// const products = await Product.aggregate([
+		// 	{
+		// 		$match: {
+		// 			$and: [
+		// 				name ? { $text: { $search: name } } : { name: { $exists: true } },
+		// 				category.length > 0
+		// 					? { $in: ['$category', category] }
+		// 					: { category: { $exists: true } },
+		// 				color ? { color: color } : { color: { $exists: true } },
+		// 				manufacturer
+		// 					? { manufacturer: manufacturer }
+		// 					: { manufacturer: { $exists: true } },
+		// 				maxPrice
+		// 					? { price: { $lte: parseInt(maxPrice) } }
+		// 					: { price: { $exists: true } },
+		// 				minPrice
+		// 					? { price: { $gte: parseInt(minPrice) } }
+		// 					: { price: { $exists: true } },
+		// 				maxRating
+		// 					? { score: { $lte: parseInt(maxRating) } }
+		// 					: { score: { $exists: true } },
+		// 				minRating
+		// 					? { score: { $gte: parseInt(minRating) } }
+		// 					: { score: { $exists: true } },
+		// 			],
+		// 		},
+		// 	},
+
+		// 	{
+		// 		// -1 to get from page 1
+		// 		$skip: 10 * (page - 1),
+		// 	},
+		// ]);
 
 		const bundles = await Bundle.aggregate([
 			{

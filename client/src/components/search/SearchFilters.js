@@ -6,7 +6,17 @@ import uuid from 'uuid';
 import GeneralContext from '../../context/general/generalContext';
 const SearchFilters = ({ bundles, products }) => {
 	const { filterResults } = useContext(GeneralContext);
-	let location = useLocation();
+
+	/**
+	 * Page Location (query)
+	 */
+	const location = useLocation();
+
+	/**
+	 * hold search value
+	 * @type {string}
+	 */
+	const { name } = queryString.parse(location.search);
 
 	const prices = {
 		products: {
@@ -52,12 +62,6 @@ const SearchFilters = ({ bundles, products }) => {
 				: [...filters[name], value],
 		});
 	};
-
-	/**
-	 * hold search value
-	 * @type {string}
-	 */
-	const { name } = queryString.parse(location.search);
 
 	useEffect(() => {
 		setFilters({
