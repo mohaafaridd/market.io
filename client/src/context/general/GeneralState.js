@@ -41,9 +41,22 @@ const GeneralState = props => {
 				filters.categories.length > 0
 					? encodeURIComponent(filters.categories.join(','))
 					: null;
-			const url = `/api/search?name=${name}${
-				categories ? `&category=${categories}` : ''
-			}`;
+
+			const manufacturers =
+				filters.manufacturers.length > 0
+					? encodeURIComponent(filters.manufacturers.join(','))
+					: null;
+
+			const colors =
+				filters.colors.length > 0
+					? encodeURIComponent(filters.colors.join(','))
+					: null;
+
+			const url = `/api/search?name=${name}
+			${categories ? `&category=${categories}` : ''}
+			${manufacturers ? `&manufacturer=${manufacturers}` : ''}
+			${colors ? `&color=${colors}` : ''}
+			`;
 
 			const response = await axios.get(url);
 			dispatch({ type: FILTER_RESULTS, payload: response.data });

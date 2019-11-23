@@ -23,8 +23,8 @@ const search = async (req, res) => {
 	const {
 		name,
 		// category,
-		color,
-		manufacturer,
+		// manufacturer,
+		// color,
 		maxPrice,
 		minPrice,
 		maxRating,
@@ -34,11 +34,18 @@ const search = async (req, res) => {
 	} = req.query;
 
 	const category = req.query.category ? req.query.category.split(',') : [];
+	const manufacturer = req.query.manufacturer
+		? req.query.manufacturer.split(',')
+		: [];
+	const color = req.query.color ? req.query.color.split(',') : [];
 
 	try {
 		const products = await Product.find({
 			$text: { $search: name },
 			category: category.length > 0 ? { $in: category } : { $exists: true },
+			manufacturer:
+				manufacturer.length > 0 ? { $in: manufacturer } : { $exists: true },
+			color: color.length > 0 ? { $in: color } : { $exists: true },
 		});
 		// const products = await Product.aggregate([
 		// 	{

@@ -16,9 +16,9 @@ const Search = ({ location }) => {
 		// eslint-disable-next-line
 	}, [location.search]);
 
-	if (filtered.length < 1) {
-		return <h4>Loading</h4>;
-	}
+	// if (filtered.length < 1) {
+	// 	return <h4>Loading</h4>;
+	// }
 
 	return (
 		<div>
@@ -28,6 +28,7 @@ const Search = ({ location }) => {
 
 			<h5>Products</h5>
 			<ul>
+				{filtered.length < 1 && <li>No products were found</li>}
 				{filtered.map(product => (
 					<li key={uuid.v4()}> {product.name} </li>
 				))}
