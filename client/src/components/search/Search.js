@@ -20,7 +20,7 @@ const Search = () => {
 		const { name } = queryString.parse(location.search);
 		initialSearch(name);
 		// eslint-disable-next-line
-	}, []);
+	}, [name]);
 
 	return (
 		<div>

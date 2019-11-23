@@ -96,11 +96,30 @@ const SearchFilters = () => {
 				min: prices.total.min,
 			},
 		});
-	}, [filtered]);
+	}, [filtered, prices]);
 
 	useEffect(() => {
 		console.log('properties', properties);
-	}, [properties]);
+		console.log('filters', filters);
+	}, [properties, filters]);
+
+	// Sets the filters checks
+	useEffect(() => {
+		// const { category, manufacturer } = queryString.parse(location.search);
+		const categories = queryString.parse(location.search).category
+			? queryString.parse(location.search).category.split(',')
+			: [];
+
+		const manufacturers = queryString.parse(location.search).manufacturer
+			? queryString.parse(location.search).manufacturer.split(',')
+			: [];
+
+		setFilters({
+			...filters,
+			categories,
+			manufacturers,
+		});
+	}, []);
 
 	const onCheckboxCheck = e => {
 		const { name } = e.target;
@@ -116,6 +135,7 @@ const SearchFilters = () => {
 
 	const onFilter = e => {
 		filterResults(filters, name);
+
 		const categories =
 			filters.categories.length > 0
 				? encodeURIComponent(filters.categories.join(','))
@@ -211,6 +231,7 @@ const SearchFilters = () => {
 					id='min-price'
 					max={filters.price.max}
 					min={prices.total.min}
+					value={filters.price.min}
 					step={1}
 					onChange={e =>
 						setFilters({
@@ -221,7 +242,6 @@ const SearchFilters = () => {
 							},
 						})
 					}
-					value={filters.price.min}
 				/>
 			</div>
 
