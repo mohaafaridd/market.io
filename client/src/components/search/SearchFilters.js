@@ -99,13 +99,12 @@ const SearchFilters = () => {
 	}, [filtered, prices]);
 
 	useEffect(() => {
-		console.log('properties', properties);
-		console.log('filters', filters);
+		// console.log('properties', properties);
+		// console.log('filters', filters);
 	}, [properties, filters]);
 
 	// Sets the filters checks
 	useEffect(() => {
-		// const { category, manufacturer } = queryString.parse(location.search);
 		const categories = queryString.parse(location.search).category
 			? queryString.parse(location.search).category.split(',')
 			: [];

@@ -12,15 +12,44 @@ const Search = () => {
 	 */
 	let location = useLocation();
 
-	const { products, bundles, filtered, initialSearch } = useContext(
-		GeneralContext,
-	);
+	const {
+		products,
+		bundles,
+		filtered,
+		initialSearch,
+		filterResults,
+	} = useContext(GeneralContext);
 
 	useEffect(() => {
-		const { name } = queryString.parse(location.search);
+		const { name, category, manufacturer, color } = queryString.parse(
+			location.search,
+		);
+
+		const filters = {
+			categories: category ? category : [],
+			manufacturers: manufacturer ? manufacturer : [],
+			colors: color ? color : [],
+		};
+
 		initialSearch(name);
 		// eslint-disable-next-line
 	}, [name]);
+
+	useEffect(() => {
+		const { name, category, manufacturer, color } = queryString.parse(
+			location.search,
+		);
+
+		const filters = {
+			categories: category ? decodeURIComponent(category).split(',') : [],
+			manufacturers: manufacturer
+				? decodeURIComponent(manufacturer).split(',')
+				: [],
+			colors: color ? decodeURIComponent(color).split(',') : [],
+		};
+
+		filterResults(filters, name);
+	}, []);
 
 	return (
 		<div>
