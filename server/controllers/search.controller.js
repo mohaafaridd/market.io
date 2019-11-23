@@ -39,7 +39,9 @@ const search = async (req, res) => {
 				$match: {
 					$and: [
 						name ? { $text: { $search: name } } : { name: { $exists: true } },
-						category ? { category: category } : { category: { $exists: true } },
+						category
+							? { $in: ['$category', category] }
+							: { category: { $exists: true } },
 						color ? { color: color } : { color: { $exists: true } },
 						manufacturer
 							? { manufacturer: manufacturer }

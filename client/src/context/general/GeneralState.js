@@ -29,6 +29,23 @@ const GeneralState = props => {
 		}
 	};
 
+	/**
+	 *
+	 * @param {array} filters state from search filter component
+	 * @param {string} name product or bundle name
+	 */
+	const filterResults = (filters, name) => {
+		console.log('filters', filters);
+		console.log('name', name);
+		const categories =
+			filters.categories.length > 0
+				? encodeURIComponent(filters.categories.join(','))
+				: null;
+		console.log('categories', categories);
+		const url = `/api/search?name=${name}`;
+		console.log('url', url);
+	};
+
 	return (
 		<GeneralContext.Provider
 			value={{
@@ -38,6 +55,7 @@ const GeneralState = props => {
 				bundle: state.bundle,
 
 				initialSearch,
+				filterResults,
 			}}
 		>
 			{props.children}

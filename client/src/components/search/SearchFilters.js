@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import queryString from 'query-string';
+import { useLocation } from 'react-router-dom';
 import uuid from 'uuid';
+
+import GeneralContext from '../../context/general/generalContext';
 const SearchFilters = ({ bundles, products }) => {
+	const { filterResults } = useContext(GeneralContext);
+	let location = useLocation();
+
 	const prices = {
 		products: {
 			max: Math.max(...products.map(product => product.price)),
@@ -45,6 +52,25 @@ const SearchFilters = ({ bundles, products }) => {
 				: [...filters[name], value],
 		});
 	};
+
+	/**
+	 * hold search value
+	 * @type {string}
+	 */
+	const { name } = queryString.parse(location.search);
+
+	useEffect(() => {
+		setFilters({
+			categories: [],
+			manufacturers: [],
+			colors: [],
+			price: {
+				min: prices.total.min || 0,
+				max: prices.total.max || Infinity,
+			},
+		});
+		// eslint-disable-next-line
+	}, [name]);
 
 	return (
 		<section className='search-fitlers'>
@@ -105,7 +131,12 @@ const SearchFilters = ({ bundles, products }) => {
 			<div className='filter-group'>
 				<p>Price Range</p>
 				<label htmlFor='min-price'>Minimum Price</label>
-				<input type='text' disabled value={filters.price.min} />
+				<input
+					className='input'
+					type='text'
+					disabled
+					value={filters.price.min}
+				/>
 				<input
 					type='range'
 					name='min-price'
@@ -128,7 +159,12 @@ const SearchFilters = ({ bundles, products }) => {
 
 			<div className='filter-group'>
 				<label htmlFor='min-price'>Maximum Price</label>
-				<input type='text' disabled value={filters.price.max} />
+				<input
+					className='input'
+					type='text'
+					disabled
+					value={filters.price.max}
+				/>
 				<input
 					type='range'
 					name='min-price'
@@ -148,6 +184,13 @@ const SearchFilters = ({ bundles, products }) => {
 					}
 				/>
 			</div>
+
+			<button
+				className='btn btn-accent'
+				onClick={e => filterResults(filters, name)}
+			>
+				Filter
+			</button>
 		</section>
 	);
 };
