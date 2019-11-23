@@ -14,6 +14,7 @@ export const CLEAR_CURRENT = 'CLEAR_CURRENT';
  */
 
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
+export const FILTER_RESULTS = 'FILTER_RESULTS';
 
 /*
  *

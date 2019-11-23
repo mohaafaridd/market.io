@@ -6,7 +6,9 @@ import SearchFilters from './SearchFilters';
 
 import GeneralContext from '../../context/general/generalContext';
 const Search = ({ location }) => {
-	const { searchResults, initialSearch } = useContext(GeneralContext);
+	const { products, bundles, filtered, initialSearch } = useContext(
+		GeneralContext,
+	);
 
 	useEffect(() => {
 		const { name } = queryString.parse(location.search);
@@ -14,11 +16,9 @@ const Search = ({ location }) => {
 		// eslint-disable-next-line
 	}, [location.search]);
 
-	if (searchResults.length < 1) {
+	if (filtered.length < 1) {
 		return <h4>Loading</h4>;
 	}
-
-	const [products, bundles] = searchResults;
 
 	return (
 		<div>
@@ -28,7 +28,7 @@ const Search = ({ location }) => {
 
 			<h5>Products</h5>
 			<ul>
-				{products.map(product => (
+				{filtered.map(product => (
 					<li key={uuid.v4()}> {product.name} </li>
 				))}
 			</ul>
