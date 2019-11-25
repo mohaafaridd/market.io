@@ -1,11 +1,13 @@
 import React, { Fragment, useContext, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import GeneralContext from '../../context/general/generalContext';
 
 const Navbar = () => {
 	const authContext = useContext(AuthContext);
-	const text = useRef('');
 	const { isAuthenticated, client, logout } = authContext;
+	const { initialSearch } = useContext(GeneralContext);
+	const text = useRef('');
 	let history = useHistory();
 
 	const onLogout = e => {
@@ -61,10 +63,21 @@ const Navbar = () => {
 		</Fragment>
 	);
 
-	const onSubmit = e => {
-		e.preventDefault();
+	const search = () => {
 		if (text.current.value.trim() !== '') {
 			history.push(`/search?name=${text.current.value}`);
+			initialSearch(text.current.value);
+		}
+	};
+
+	const onSubmit = e => {
+		e.preventDefault();
+		search();
+	};
+
+	const onInputSubmit = e => {
+		if (e.key === 'Enter') {
+			search();
 		}
 	};
 
@@ -79,6 +92,7 @@ const Navbar = () => {
 					type='text'
 					placeholder='Search products...'
 					ref={text}
+					onKeyPress={onInputSubmit}
 				/>
 				<button onClick={onSubmit} className='btn btn-accent'>
 					<i className='fas fa-search'></i>
