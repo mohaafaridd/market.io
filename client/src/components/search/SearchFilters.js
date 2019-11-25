@@ -120,6 +120,10 @@ const SearchFilters = () => {
 		});
 	}, []);
 
+	/**
+	 * Changes filter state according to user action
+	 * @param {event} e user action
+	 */
 	const onCheckboxCheck = e => {
 		const { name } = e.target;
 		const value = e.target.id;
@@ -132,6 +136,10 @@ const SearchFilters = () => {
 		});
 	};
 
+	/**
+	 * Filters submission
+	 * @param {event} e user click
+	 */
 	const onFilter = e => {
 		filterResults(filters, name);
 
@@ -150,10 +158,22 @@ const SearchFilters = () => {
 				? encodeURIComponent(filters.colors.join(','))
 				: null;
 
+		const maxPrice =
+			properties.prices.total.max !== filters.price.max
+				? filters.price.max
+				: null;
+
+		const minPrice =
+			properties.prices.total.min !== filters.price.min
+				? filters.price.min
+				: null;
+
 		const url = `/search?name=${name}
 			${categories ? `&category=${categories}` : ''}
 			${manufacturers ? `&manufacturer=${manufacturers}` : ''}
 			${colors ? `&color=${colors}` : ''}
+			${maxPrice ? `&maxPrice=${maxPrice}` : ''}
+			${minPrice ? `&minPrice=${minPrice}` : ''}
 			`;
 
 		history.replace(url);
