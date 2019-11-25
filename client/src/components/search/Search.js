@@ -4,7 +4,8 @@ import queryString from 'query-string';
 import uuid from 'uuid';
 
 import SearchFilters from './SearchFilters';
-import ProductCard from './ProductCard';
+import Products from './Products';
+
 import GeneralContext from '../../context/general/generalContext';
 const Search = () => {
 	/**
@@ -21,10 +22,7 @@ const Search = () => {
 	} = useContext(GeneralContext);
 
 	useEffect(() => {
-		const { name, category, manufacturer, color } = queryString.parse(
-			location.search,
-		);
-
+		const { name } = queryString.parse(location.search);
 		initialSearch(name);
 		// eslint-disable-next-line
 	}, [name]);
@@ -55,18 +53,12 @@ const Search = () => {
 	}, []);
 
 	return (
-		<div>
+		<section className='search-results'>
 			<h4>Search Results</h4>
 
 			<SearchFilters />
 
-			<h5>Products</h5>
-			<ul>
-				{filtered.length < 1 && <li>No products were found</li>}
-				{filtered.map(product => (
-					<ProductCard key={uuid.v4()} product={product} />
-				))}
-			</ul>
+			<Products />
 
 			<h5>Bundles</h5>
 			<ul>
@@ -74,7 +66,7 @@ const Search = () => {
 					<li key={uuid.v4()}> {bundle.name} </li>
 				))}
 			</ul>
-		</div>
+		</section>
 	);
 };
 

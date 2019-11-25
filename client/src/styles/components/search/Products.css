@@ -1,0 +1,26 @@
+.search-results .products-results {
+	.products-list {
+		@apply flex;
+
+		.product {
+			@apply flex flex-col w-2/12;
+			.description {
+				@apply text-justify;
+			}
+
+			img {
+				@apply self-center;
+			}
+
+			&:nth-of-type(even) {
+				@apply mx-2;
+			}
+
+			.user-action {
+				@apply mt-2;
+				@apply flex justify-between;
+				@apply flex-1;
+			}
+		}
+	}
+}

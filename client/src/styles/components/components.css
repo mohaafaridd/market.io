@@ -30,3 +30,5 @@
 
 @import './pages/Home.css';
 @import './pages/StoreDashboard.css';
+
+@import './search/Products.css';
