@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import uuid from 'uuid';
 
 import SearchFilters from './SearchFilters';
-
+import ProductCard from './ProductCard';
 import GeneralContext from '../../context/general/generalContext';
 const Search = () => {
 	/**
@@ -64,7 +64,7 @@ const Search = () => {
 			<ul>
 				{filtered.length < 1 && <li>No products were found</li>}
 				{filtered.map(product => (
-					<li key={uuid.v4()}> {product.name} </li>
+					<ProductCard key={uuid.v4()} product={product} />
 				))}
 			</ul>
 
