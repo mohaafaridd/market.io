@@ -25,20 +25,19 @@ const Search = () => {
 			location.search,
 		);
 
-		const filters = {
-			categories: category ? category : [],
-			manufacturers: manufacturer ? manufacturer : [],
-			colors: color ? color : [],
-		};
-
 		initialSearch(name);
 		// eslint-disable-next-line
 	}, [name]);
 
 	useEffect(() => {
-		const { name, category, manufacturer, color } = queryString.parse(
-			location.search,
-		);
+		const {
+			name,
+			category,
+			manufacturer,
+			color,
+			maxPrice = Infinity,
+			minPrice = 0,
+		} = queryString.parse(location.search);
 
 		const filters = {
 			categories: category ? decodeURIComponent(category).split(',') : [],
@@ -46,6 +45,10 @@ const Search = () => {
 				? decodeURIComponent(manufacturer).split(',')
 				: [],
 			colors: color ? decodeURIComponent(color).split(',') : [],
+			price: {
+				max: maxPrice,
+				min: minPrice,
+			},
 		};
 
 		filterResults(filters, name);

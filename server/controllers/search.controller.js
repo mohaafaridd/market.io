@@ -46,7 +46,12 @@ const search = async (req, res) => {
 			manufacturer:
 				manufacturer.length > 0 ? { $in: manufacturer } : { $exists: true },
 			color: color.length > 0 ? { $in: color } : { $exists: true },
+			price:
+				maxPrice || minPrice
+					? { $gte: minPrice, $lte: maxPrice }
+					: { $exists: true },
 		});
+
 		// const products = await Product.aggregate([
 		// 	{
 		// 		$match: {

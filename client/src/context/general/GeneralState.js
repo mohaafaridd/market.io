@@ -56,6 +56,8 @@ const GeneralState = props => {
 			${categories ? `&category=${categories}` : ''}
 			${manufacturers ? `&manufacturer=${manufacturers}` : ''}
 			${colors ? `&color=${colors}` : ''}
+			&maxPrice=${filters.price.max}
+			&minPrice=${filters.price.min}
 			`;
 
 			const response = await axios.get(url);
