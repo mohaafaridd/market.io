@@ -53,13 +53,9 @@ const SearchFilters = () => {
 		categories: [],
 		colors: [],
 		manufacturers: [],
-		price: {
-			min: prices.total.min || 0,
-			max: prices.total.max || Infinity,
-		},
+		price: [prices.total.min || 0, prices.total.max || Infinity],
 	});
 
-	const [range, setRange] = useState([prices.total.min, prices.total.max]);
 	const STEP = 1;
 	const MIN = prices.total.min;
 	const MAX = prices.total.max;
@@ -97,13 +93,8 @@ const SearchFilters = () => {
 	useEffect(() => {
 		setFilters({
 			...filters,
-			price: {
-				min: prices.total.min,
-				max: prices.total.max,
-			},
+			price: [prices.total.min, prices.total.max],
 		});
-
-		setRange([prices.total.min, prices.total.max]);
 	}, [filtered, prices]);
 
 	useEffect(() => {
@@ -254,13 +245,14 @@ const SearchFilters = () => {
 					}}
 				>
 					<Range
-						values={range}
+						values={filters.price}
 						step={STEP}
 						min={MIN}
 						max={MAX}
 						onChange={values => {
-							setRange(values);
-							console.log('values', values);
+							// setRange(values);
+							setFilters({ ...filters, price: values });
+							// console.log('values', values);
 						}}
 						renderTrack={({ props, children }) => (
 							<div
@@ -280,7 +272,7 @@ const SearchFilters = () => {
 										width: '100%',
 										borderRadius: '4px',
 										background: getTrackBackground({
-											values: range,
+											values: filters.price,
 											colors: ['#ccc', '#548BF4', '#ccc'],
 											min: MIN,
 											max: MAX,

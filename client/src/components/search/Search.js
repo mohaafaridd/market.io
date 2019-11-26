@@ -43,10 +43,7 @@ const Search = () => {
 				? decodeURIComponent(manufacturer).split(',')
 				: [],
 			colors: color ? decodeURIComponent(color).split(',') : [],
-			price: {
-				max: maxPrice,
-				min: minPrice,
-			},
+			price: [minPrice, maxPrice],
 		};
 
 		filterResults(filters, name);
