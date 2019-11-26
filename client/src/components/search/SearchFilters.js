@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import queryString from 'query-string';
 import { useLocation, useHistory } from 'react-router-dom';
+import { Range, getTrackBackground } from 'react-range';
 import uuid from 'uuid';
 
 import GeneralContext from '../../context/general/generalContext';
@@ -58,6 +59,11 @@ const SearchFilters = () => {
 		},
 	});
 
+	const [range, setRange] = useState([prices.total.min, prices.total.max]);
+	const STEP = 1;
+	const MIN = prices.total.min;
+	const MAX = prices.total.max;
+
 	// runs for the main search point
 	// contains all categories, colors, etc.
 	useEffect(() => {
@@ -92,10 +98,12 @@ const SearchFilters = () => {
 		setFilters({
 			...filters,
 			price: {
-				max: prices.total.max,
 				min: prices.total.min,
+				max: prices.total.max,
 			},
 		});
+
+		setRange([prices.total.min, prices.total.max]);
 	}, [filtered, prices]);
 
 	useEffect(() => {
@@ -237,6 +245,75 @@ const SearchFilters = () => {
 
 			<div className='filter-group'>
 				<p>Price Range</p>
+
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						flexWrap: 'wrap',
+					}}
+				>
+					<Range
+						values={range}
+						step={STEP}
+						min={MIN}
+						max={MAX}
+						onChange={values => {
+							setRange(values);
+							console.log('values', values);
+						}}
+						renderTrack={({ props, children }) => (
+							<div
+								onMouseDown={props.onMouseDown}
+								onTouchStart={props.onTouchStart}
+								style={{
+									...props.style,
+									height: '36px',
+									display: 'flex',
+									width: '100%',
+								}}
+							>
+								<div
+									ref={props.ref}
+									style={{
+										height: '5px',
+										width: '100%',
+										borderRadius: '4px',
+										background: getTrackBackground({
+											values: range,
+											colors: ['#ccc', '#548BF4', '#ccc'],
+											min: MIN,
+											max: MAX,
+										}),
+										alignSelf: 'center',
+									}}
+								>
+									{children}
+								</div>
+							</div>
+						)}
+						renderThumb={({ props, isDragged }) => (
+							<div
+								{...props}
+								style={{
+									...props.style,
+									height: '15px',
+									width: '15px',
+									borderRadius: '4px',
+									backgroundColor: '#FFF',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									boxShadow: '0px 2px 6px #AAA',
+								}}
+							></div>
+						)}
+					/>
+				</div>
+			</div>
+			{/* 
+			<div className='filter-group'>
+				<p>Price Range</p>
 				<label htmlFor='min-price'>Minimum Price</label>
 				<input
 					className='input'
@@ -290,7 +367,7 @@ const SearchFilters = () => {
 						})
 					}
 				/>
-			</div>
+			</div> */}
 
 			<button className='btn btn-accent' onClick={onFilter}>
 				Filter
