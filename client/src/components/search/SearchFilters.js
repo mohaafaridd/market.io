@@ -59,16 +59,15 @@ const SearchFilters = () => {
 	const STEP = 1;
 	const MIN = prices.total.min;
 	const MAX = prices.total.max;
-
 	// runs for the main search point
 	// contains all categories, colors, etc.
 	useEffect(() => {
 		setProperties({
 			...properties,
-			categories: [...new Set(products.map(product => product.category))],
-			colors: [...new Set(products.map(product => product.color))],
+			categories: [...new Set(filtered.map(product => product.category))],
+			colors: [...new Set(filtered.map(product => product.color))],
 			manufacturers: [
-				...new Set(products.map(product => product.manufacturer)),
+				...new Set(filtered.map(product => product.manufacturer)),
 			],
 
 			prices: {
@@ -159,12 +158,12 @@ const SearchFilters = () => {
 
 		const maxPrice =
 			properties.prices.total.max !== filters.price.max
-				? filters.price.max
+				? filters.price[1]
 				: null;
 
 		const minPrice =
 			properties.prices.total.min !== filters.price.min
-				? filters.price.min
+				? filters.price[0]
 				: null;
 
 		const url = `/search?name=${name}
@@ -179,7 +178,7 @@ const SearchFilters = () => {
 	};
 
 	return (
-		<section className='search-filters'>
+		<section className='tile search-filters'>
 			<div className='filter-group'>
 				<p>Category</p>
 				{categories.map(category => (
@@ -236,6 +235,21 @@ const SearchFilters = () => {
 
 			<div className='filter-group'>
 				<p>Price Range</p>
+
+				<div className='range-container'>
+					<input
+						type='number'
+						className='input'
+						value={filters.price[0]}
+						disabled
+					/>
+					<input
+						type='number'
+						className='input'
+						value={filters.price[1]}
+						disabled
+					/>
+				</div>
 
 				<div
 					style={{
