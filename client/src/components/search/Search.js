@@ -53,19 +53,19 @@ const Search = () => {
 	}, []);
 
 	return (
-		<section className='search-results'>
-			<h4>Search Results</h4>
-
+		<section className='search-content'>
 			<SearchFilters />
 
-			<Products />
+			<div className='search-results'>
+				<Products />
 
-			<h5>Bundles</h5>
-			<ul>
-				{bundles.map(bundle => (
-					<li key={uuid.v4()}> {bundle.name} </li>
-				))}
-			</ul>
+				<h5>Bundles</h5>
+				<ul>
+					{bundles.map(bundle => (
+						<li key={uuid.v4()}> {bundle.name} </li>
+					))}
+				</ul>
+			</div>
 		</section>
 	);
 };

@@ -1,0 +1,7 @@
+.search-content {
+	@apply flex;
+
+	.search-results {
+		@apply flex-1;
+	}
+}

@@ -3,7 +3,7 @@
 		@apply flex;
 
 		.product {
-			@apply flex flex-col w-2/12;
+			@apply flex flex-col w-3/12;
 			.description {
 				@apply text-justify;
 			}

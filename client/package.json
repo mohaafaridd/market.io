@@ -19,6 +19,7 @@
     "react-dom": "^16.10.2",
     "react-dropzone": "^10.1.10",
     "react-hook-form": "^3.26.5",
+    "react-range": "^1.4.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-table": "^7.0.0-beta.12",

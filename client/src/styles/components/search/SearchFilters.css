@@ -1,0 +1,10 @@
+.search-filters {
+	@apply w-2/12 h-full;
+
+	.filter-group {
+		@apply my-2;
+		p {
+			@apply text-gray-500;
+		}
+	}
+}
