@@ -32,5 +32,6 @@
 @import './pages/StoreDashboard.css';
 
 @import './search/Products.css';
+@import './search/Bundles.css';
 @import './search/Search.css';
 @import './search/SearchFilters.css';

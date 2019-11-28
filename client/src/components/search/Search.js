@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import uuid from 'uuid';
 
 import SearchFilters from './SearchFilters';
 import Products from './Products';
+import Bundles from './Bundles';
 
 import GeneralContext from '../../context/general/generalContext';
 const Search = () => {
@@ -56,12 +56,7 @@ const Search = () => {
 			<div className='search-results'>
 				<Products />
 
-				<h5>Bundles</h5>
-				<ul>
-					{bundles.map(bundle => (
-						<li key={uuid.v4()}> {bundle.name} </li>
-					))}
-				</ul>
+				<Bundles />
 			</div>
 		</section>
 	);
