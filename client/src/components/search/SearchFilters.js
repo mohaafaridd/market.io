@@ -116,7 +116,7 @@ const SearchFilters = () => {
 			categories,
 			manufacturers,
 		});
-	}, []);
+	}, [history.length]);
 
 	/**
 	 * Changes filter state according to user action
