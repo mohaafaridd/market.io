@@ -2,7 +2,7 @@
 	@apply flex justify-between shadow-xl bg-main p-2;
 
 	.title {
-		@apply flex items-center text-2xl w-2/12;
+		@apply flex items-center text-2xl w-2/12 select-none cursor-pointer;
 	}
 
 	.search-input {

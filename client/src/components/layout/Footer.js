@@ -31,7 +31,7 @@ const Footer = () => {
 				{contacts.map(contact => (
 					<li key={contact.id} className={contact.class}>
 						<a target='_blank' href={contact.url}>
-							<i class={contact.icon}></i>
+							<i className={contact.icon}></i>
 							{contact.name}
 						</a>
 					</li>

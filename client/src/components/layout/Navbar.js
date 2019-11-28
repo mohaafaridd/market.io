@@ -83,7 +83,11 @@ const Navbar = () => {
 
 	return (
 		<nav className='nav'>
-			<span className='title secondary-text'>Market</span>
+			<span>
+				<Link className='title secondary-text' to='/'>
+					Market
+				</Link>
+			</span>
 
 			<div className='search-input'>
 				{/* <form onSubmit={onSubmit}> */}
