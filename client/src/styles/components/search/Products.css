@@ -1,26 +1,36 @@
 .search-results .products-results {
+	@apply w-2/3;
 	.products-list {
-		@apply flex;
+		@apply flex flex-wrap w-full;
+	}
 
-		.product {
-			@apply flex flex-col w-3/12;
-			.description {
-				@apply text-justify;
+	.product-container {
+		@apply flex w-1/3 p-2;
+	}
+
+	.product {
+		@apply flex flex-col flex-1;
+
+		img {
+			@apply self-center;
+		}
+
+		.title {
+			@apply text-xs self-center text-center;
+		}
+		.prices {
+			@apply flex flex-1 justify-around py-3 bg-gray-700 rounded-lg my-2;
+			.price {
+				@apply text-lg text-yellow-500 font-bold;
 			}
 
-			img {
-				@apply self-center;
-			}
-
-			&:nth-of-type(even) {
-				@apply mx-2;
-			}
-
-			.user-action {
-				@apply mt-2;
-				@apply flex justify-between;
-				@apply flex-1;
+			.discounted-price {
+				@apply text-lg text-gray-500 font-bold line-through;
 			}
 		}
+	}
+
+	.user-action {
+		@apply flex justify-around;
 	}
 }
