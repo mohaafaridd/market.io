@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Navbar from '../layout/Navbar';
+import Footer from '../layout/Footer';
 import Search from '../search/Search';
 import StoreDashboard from './StoreDashboard';
 import UserDashboard from './UserDashboard';
@@ -27,13 +28,17 @@ const Home = () => {
 		<section className='home-grid'>
 			<Navbar />
 
-			<Switch>
-				<Route exact path='/register' component={Register} />
-				<Route exact path='/login' component={Login} />
-				<Route path='/store' component={StoreDashboard} />
-				<Route path='/user' component={UserDashboard} />
-				<Route path='/search' component={Search} />
-			</Switch>
+			<main>
+				<Switch>
+					<Route exact path='/register' component={Register} />
+					<Route exact path='/login' component={Login} />
+					<Route path='/store' component={StoreDashboard} />
+					<Route path='/user' component={UserDashboard} />
+					<Route path='/search' component={Search} />
+				</Switch>
+			</main>
+
+			<Footer />
 		</section>
 	);
 };

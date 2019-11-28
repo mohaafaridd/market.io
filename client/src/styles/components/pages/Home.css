@@ -1,3 +1,45 @@
 .home-grid {
-  @apply flex flex-col min-h-screen;
+	@apply flex flex-col min-h-screen;
+
+	main {
+		@apply flex-grow;
+	}
+}
+
+#app-footer {
+	@apply bg-primary p-5 shadow-md;
+	h5 {
+		@apply text-gray-500 text-center;
+		animation: waving infinite 2s;
+	}
+	ul {
+		@apply flex justify-center;
+	}
+	li {
+		@apply flex justify-center m-2 font-bold bg-gray-500 text-gray-900 rounded-full text-center w-1/12;
+		a {
+			@apply flex-1 rounded-full p-2;
+		}
+		i {
+			@apply mr-2;
+		}
+
+		transition: all 0.2s ease-in;
+	}
+
+	.github:hover {
+		@apply bg-gray-900 text-gray-100;
+	}
+	.twitter:hover {
+		@apply bg-blue-500 text-gray-100;
+	}
+	.facebook:hover {
+		@apply bg-blue-900 text-gray-100;
+	}
+}
+
+@keyframes waving {
+	50% {
+		@apply text-white;
+	}
 }
