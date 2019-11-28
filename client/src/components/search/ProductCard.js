@@ -5,7 +5,6 @@ const ProductCard = ({ product }) => {
 	const { name, description, price, discount } = product;
 	const discounted = (1 - discount / 100) * price;
 	const image = Buffer.from(product.image.data).toString('base64');
-	console.log('product', product);
 
 	return (
 		<li className='product-container'>

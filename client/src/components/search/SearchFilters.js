@@ -184,6 +184,7 @@ const SearchFilters = () => {
 				{categories.map(category => (
 					<div key={uuid.v4()} className='filter-option'>
 						<input
+							className='inp-checkbox'
 							type='checkbox'
 							name='categories'
 							id={category}
@@ -192,7 +193,14 @@ const SearchFilters = () => {
 								filters.categories.find(cat => cat === category) ? true : false
 							}
 						/>{' '}
-						<label htmlFor={category}>{category}</label>
+						<label className='checkbox' htmlFor={category}>
+							<span>
+								<svg width='12px' height='10px' viewBox='0 0 12 10'>
+									<polyline points='1.5 6 4.5 9 10.5 1' />
+								</svg>
+							</span>
+							<span>{category}</span>
+						</label>
 					</div>
 				))}
 			</div>
@@ -202,6 +210,7 @@ const SearchFilters = () => {
 				{manufacturers.map(manufacturer => (
 					<div key={uuid.v4()} className='filter-option'>
 						<input
+							className='inp-checkbox'
 							type='checkbox'
 							name='manufacturers'
 							id={manufacturer}
@@ -212,7 +221,14 @@ const SearchFilters = () => {
 									: false
 							}
 						/>{' '}
-						<label htmlFor={manufacturer}>{manufacturer}</label>
+						<label className='checkbox' htmlFor={manufacturer}>
+							<span>
+								<svg width='12px' height='10px' viewBox='0 0 12 10'>
+									<polyline points='1.5 6 4.5 9 10.5 1' />
+								</svg>
+							</span>
+							<span>{manufacturer}</span>
+						</label>
 					</div>
 				))}
 			</div>
@@ -222,13 +238,21 @@ const SearchFilters = () => {
 				{colors.map(color => (
 					<div key={uuid.v4()} className='filter-option'>
 						<input
+							className='inp-checkbox'
 							type='checkbox'
 							name='colors'
 							id={color}
 							onChange={onCheckboxCheck}
 							checked={filters.colors.find(col => col === color) ? true : false}
 						/>{' '}
-						<label htmlFor={color}>{color}</label>
+						<label className='checkbox' htmlFor={color}>
+							<span>
+								<svg width='12px' height='10px' viewBox='0 0 12 10'>
+									<polyline points='1.5 6 4.5 9 10.5 1' />
+								</svg>
+							</span>
+							<span>{color}</span>
+						</label>
 					</div>
 				))}
 			</div>

@@ -31,6 +31,6 @@
 	}
 
 	.user-action {
-		@apply flex justify-around;
+		@apply flex justify-between;
 	}
 }
