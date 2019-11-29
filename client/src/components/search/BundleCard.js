@@ -9,7 +9,6 @@ const BundleCard = ({ bundle }) => {
 	const { client } = useContext(AuthContext);
 	const { addCart } = useContext(UserContext);
 	const { name, products, bill } = bundle;
-	console.log('bundle', bundle);
 	return (
 		<li className='bundle-container'>
 			<div className='tile bundle'>

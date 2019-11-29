@@ -17,10 +17,6 @@ const Bundles = () => {
 	const columns = useMemo(
 		() => [
 			{
-				Header: 'ID',
-				accessor: '_id',
-			},
-			{
 				Header: 'Name',
 				accessor: 'name',
 			},

@@ -26,7 +26,7 @@ const Footer = () => {
 	];
 	return (
 		<footer id='app-footer'>
-			<h5>This application was designed and developer by Mohammed Farid</h5>
+			<h5>This application was designed and developed by Mohammed Farid</h5>
 			<ul>
 				{contacts.map(contact => (
 					<li key={contact.id} className={contact.class}>

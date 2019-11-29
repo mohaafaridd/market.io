@@ -27,10 +27,6 @@ const Products = () => {
 	const columns = useMemo(
 		() => [
 			{
-				Header: 'ID',
-				accessor: '_id',
-			},
-			{
 				Header: 'Category',
 				accessor: 'category',
 			},

@@ -1,30 +1,30 @@
 .store-dashboard {
-  @apply flex flex-1;
-  .body {
-    @apply flex-1 flex flex-col;
-  }
+	@apply flex flex-1 flex-col;
+	.body {
+		@apply flex-1 flex flex-col;
+	}
 }
 
 @screen xl {
-  .store-dashboard {
-    @apply flex-col;
-  }
+	.store-dashboard {
+		@apply flex-col;
+	}
 }
 
 @screen lg {
-  .store-dashboard {
-    @apply flex-col;
-  }
+	.store-dashboard {
+		@apply flex-col;
+	}
 }
 
 @screen md {
-  .store-dashboard {
-    @apply flex-col;
-  }
+	.store-dashboard {
+		@apply flex-col;
+	}
 }
 
 @screen sm {
-  .store-dashboard {
-    @apply flex-col;
-  }
+	.store-dashboard {
+		@apply flex-col;
+	}
 }

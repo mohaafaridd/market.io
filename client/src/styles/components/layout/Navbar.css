@@ -106,12 +106,14 @@
 }
 
 .side-nav {
-	@apply bg-primary p-5;
+	@apply bg-primary;
+	@apply p-0 self-center mt-2;
+	@apply flex;
 
 	li {
 		transition: ease-in 0.2s all;
 		@apply bg-gray-500 my-5 flex text-center rounded cursor-pointer;
-
+		@apply m-2;
 		.side-nav-item {
 			@apply flex-1 py-2 px-20;
 		}

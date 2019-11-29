@@ -5,7 +5,7 @@
 		@apply mb-2 flex flex-col;
 	}
 	.product-image {
-		@apply self-center bg-gray-600;
+		@apply self-center;
 	}
 
 	.form-group {
