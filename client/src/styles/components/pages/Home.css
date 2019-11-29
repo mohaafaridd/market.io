@@ -38,6 +38,50 @@
 	}
 }
 
+@screen xl {
+	#app-footer {
+		ul {
+			@apply flex;
+		}
+		li {
+			@apply flex justify-center m-2 font-bold bg-gray-500 text-gray-900 rounded-full text-center w-2/3;
+		}
+	}
+}
+
+@screen lg {
+	#app-footer {
+		ul {
+			@apply flex;
+		}
+		li {
+			@apply flex justify-center m-2 font-bold bg-gray-500 text-gray-900 rounded-full text-center w-2/3;
+		}
+	}
+}
+
+@screen md {
+	#app-footer {
+		ul {
+			@apply flex;
+		}
+		li {
+			@apply flex justify-center m-2 font-bold bg-gray-500 text-gray-900 rounded-full text-center w-2/3;
+		}
+	}
+}
+
+@screen sm {
+	#app-footer {
+		ul {
+			@apply flex flex-col items-center;
+		}
+		li {
+			@apply flex justify-center m-2 font-bold bg-gray-500 text-gray-900 rounded-full text-center w-2/3;
+		}
+	}
+}
+
 @keyframes waving {
 	50% {
 		@apply text-white;
