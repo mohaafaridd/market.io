@@ -5,3 +5,43 @@
 		@apply flex flex-1 items-center flex-col;
 	}
 }
+
+@screen xl {
+	.search-content {
+		@apply flex flex-col;
+
+		.search-results {
+			@apply flex flex-1 items-center flex-col;
+		}
+	}
+}
+
+@screen lg {
+	.search-content {
+		@apply flex flex-col;
+
+		.search-results {
+			@apply flex flex-1 items-center flex-col;
+		}
+	}
+}
+
+@screen md {
+	.search-content {
+		@apply flex flex-col;
+
+		.search-results {
+			@apply flex flex-1 items-center flex-col;
+		}
+	}
+}
+
+@screen sm {
+	.search-content {
+		@apply flex flex-col;
+
+		.search-results {
+			@apply flex flex-1 items-center flex-col;
+		}
+	}
+}
