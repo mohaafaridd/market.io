@@ -28,7 +28,7 @@ const Home = () => {
 		<section className='home-grid'>
 			<Navbar />
 
-			<main>
+			<main className='flex flex-col'>
 				<Switch>
 					<Route exact path='/register' component={Register} />
 					<Route exact path='/login' component={Login} />
