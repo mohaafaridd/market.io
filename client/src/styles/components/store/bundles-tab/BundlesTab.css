@@ -5,6 +5,30 @@
 	}
 
 	.bundles-container {
-		@apply w-4/5 m-2;
+		@apply flex-grow m-2;
+	}
+}
+
+@screen xl {
+	.store-dashboard .body .bundles-tab {
+		@apply flex-col m-2;
+
+		.bundle-control {
+			@apply w-1/2 self-center m-0;
+		}
+
+		.bundles-container {
+			@apply m-0 mt-2;
+		}
+	}
+}
+
+@screen sm {
+	.store-dashboard .body .bundles-tab {
+		@apply flex-col;
+
+		.bundle-control {
+			@apply w-full;
+		}
 	}
 }

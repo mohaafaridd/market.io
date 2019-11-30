@@ -47,13 +47,7 @@ const AddProduct = () => {
 		<section className='add-product-partition'>
 			<div className='tile'>
 				<h3>{current ? 'Edit' : 'Add'} Product</h3>
-				{current && current.image && (
-					<img
-						className='product-image'
-						src={`data:image/jpeg;base64,${current.image}`}
-						alt={`${current.name}`}
-					/>
-				)}
+
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<button
 						className={`w-full  btn ${
@@ -64,6 +58,17 @@ const AddProduct = () => {
 					>
 						Clear
 					</button>
+
+					<div className='form-group'>
+						{current && current.image && (
+							<img
+								className='product-image'
+								src={`data:image/jpeg;base64,${current.image}`}
+								alt={`${current.name}`}
+							/>
+						)}
+					</div>
+
 					{/* Category Start */}
 					<div className='form-group'>
 						<input

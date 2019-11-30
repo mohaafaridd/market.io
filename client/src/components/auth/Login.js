@@ -58,9 +58,9 @@ const Login = () => {
 				<button type='submit' className='btn btn-primary'>
 					Submit
 				</button>
-				<a className='self-center mt-4'>
+				<p className='self-center mt-4'>
 					<Link to='/register'>Don't have an account?</Link>
-				</a>
+				</p>
 			</div>
 		</form>
 	);

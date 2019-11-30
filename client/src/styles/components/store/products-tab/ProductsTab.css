@@ -1,3 +1,27 @@
 .store-dashboard .body .products-tab {
-  @apply flex;
+	@apply flex;
+}
+
+@screen xl {
+	.store-dashboard .body .products-tab {
+		@apply flex-col;
+	}
+}
+
+@screen lg {
+	.store-dashboard .body .products-tab {
+		@apply flex-col;
+	}
+}
+
+@screen md {
+	.store-dashboard .body .products-tab {
+		@apply flex-col;
+	}
+}
+
+@screen sm {
+	.store-dashboard .body .products-tab {
+		@apply flex-col;
+	}
 }

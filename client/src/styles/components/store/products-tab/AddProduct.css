@@ -20,3 +20,27 @@
 		@apply border-gray-100 bg-main outline-none text-gray-100 cursor-pointer rounded-full my-5;
 	}
 }
+
+@screen xl {
+	.store-dashboard .body .products-tab .add-product-partition {
+		@apply w-1/2 self-center;
+	}
+}
+
+@screen lg {
+	.store-dashboard .body .products-tab .add-product-partition {
+		@apply w-1/2 self-center;
+	}
+}
+
+@screen md {
+	.store-dashboard .body .products-tab .add-product-partition {
+		@apply w-1/2 self-center;
+	}
+}
+
+@screen sm {
+	.store-dashboard .body .products-tab .add-product-partition {
+		@apply w-full;
+	}
+}
