@@ -1,10 +1,12 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import BundleCard from '../search/BundleCard';
+
 import GeneralContext from '../../context/general/generalContext';
 
 const Product = () => {
-	const { loading, product, getProduct, setLoading } = useContext(
+	const { loading, product: result, getProduct, setLoading } = useContext(
 		GeneralContext,
 	);
 	/**
@@ -18,9 +20,11 @@ const Product = () => {
 		getProduct(params.id);
 	}, [params.id]);
 
-	if (loading || !product) {
+	if (loading) {
 		return <h4>loading product</h4>;
 	}
+
+	const [product, bundles, ratings] = result;
 
 	/**
 	 * Hold product image in an easy to show format
@@ -28,12 +32,23 @@ const Product = () => {
 	const image = Buffer.from(product.image.data).toString('base64');
 	const { name, description } = product;
 	return (
-		<div>
-			<img src={`data:image/jpeg;base64,${image}`} alt={`${name}`} />
-			<h4>{name}</h4>
-			<p>{description}</p>
+		<section className='product-container'>
+			{/* Product */}
+			<div className='tile'>
+				<img src={`data:image/jpeg;base64,${image}`} alt={`${name}`} />
+				<h4>{name}</h4>
+				<p>{description}</p>
+			</div>
+
+			{/* Bundles */}
+			<div>
+				{bundles.map(bundle => (
+					<BundleCard bundle={bundle} />
+				))}
+			</div>
+
 			<pre>{JSON.stringify(product, null, 2)}</pre>
-		</div>
+		</section>
 	);
 };
 

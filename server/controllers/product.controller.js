@@ -3,6 +3,7 @@ const sharp = require('sharp');
 const Product = require('../models/product.model');
 const Bundle = require('../models/bundle.model');
 const Rating = require('../models/rating.model');
+const { ObjectId } = require('mongoose').Types;
 
 // @route       POST api/products
 // @desc        Create a product
@@ -29,13 +30,105 @@ const getProduct = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const product = await Product.findById(id);
-		const bundles = await Bundle.find({ 'offers.product': id });
+		// const bundles = await Bundle.find({ 'offers.product': id });
+		const bundles = await Bundle.aggregate([
+			{
+				$match: {
+					offers: { $elemMatch: { product: ObjectId(id) } },
+				},
+			},
+
+			{
+				$lookup: {
+					from: 'products',
+					localField: 'offers.product',
+					foreignField: '_id',
+					as: 'products',
+				},
+			},
+
+			{
+				$addFields: {
+					products: {
+						// Maps the offers to get their product id and offer discount and merge it with the original product
+						$map: {
+							input: '$offers',
+							in: {
+								$mergeObjects: [
+									{
+										$arrayElemAt: [
+											'$products',
+											{
+												$indexOfArray: ['$products._id', '$$this.product'],
+											},
+										],
+									},
+									'$$this',
+								],
+							},
+						},
+					},
+				},
+			},
+
+			{
+				$project: {
+					name: '$name',
+					products: '$products',
+					amount: '$amount',
+					store: '$store',
+					saved: {
+						$sum: {
+							$map: {
+								input: '$products',
+								as: 'product',
+								in: {
+									$multiply: [
+										'$$product.price',
+										'$amount',
+										// discount = 10%
+										// then it's 0.9 of the price
+										// ((100 - 10)/100)
+										{
+											$divide: ['$$product.discount', 100],
+										},
+									],
+								},
+							},
+						},
+					},
+					bill: {
+						$sum: {
+							$map: {
+								input: '$products',
+								as: 'product',
+								in: {
+									$multiply: [
+										'$$product.price',
+										'$amount',
+										// discount = 10%
+										// then it's 0.9 of the price
+										// ((100 - 10)/100)
+										{
+											$divide: [
+												{ $subtract: [100, '$$product.discount'] },
+												100,
+											],
+										},
+									],
+								},
+							},
+						},
+					},
+				},
+			},
+		]);
 		const ratings = await Rating.find({ product: id }).populate('user');
 		res.status(200).json({
 			success: true,
 			message: 'Product found',
-			product,
 			bundles,
+			product,
 			ratings,
 		});
 	} catch (error) {

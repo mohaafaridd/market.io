@@ -37,10 +37,10 @@ export default (state, action) => {
 		}
 
 		case GET_PRODUCT: {
-			const { product } = action.payload;
+			const { product, bundles, ratings } = action.payload;
 			return {
 				...state,
-				product,
+				product: [product, bundles, ratings],
 				loading: false,
 			};
 		}
