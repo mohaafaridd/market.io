@@ -42,12 +42,43 @@ const Product = () => {
 
 			{/* Bundles */}
 			<div>
-				{bundles.map(bundle => (
-					<BundleCard bundle={bundle} />
-				))}
+				<ul className='flex'>
+					{bundles.map(bundle => (
+						<BundleCard bundle={bundle} />
+					))}
+				</ul>
 			</div>
 
-			<pre>{JSON.stringify(product, null, 2)}</pre>
+			{/* Ratings */}
+			<div>
+				{/* User */}
+				{/* Comments */}
+				<ul>
+					{ratings.map(rate => (
+						<li className='tile my-2 container mx-auto w-1/3'>
+							<h5 className='flex justify-between'>
+								{rate.user.name}
+								<span>
+									{[...Array(rate.score)].map(e => (
+										<span className='text-blue-600'>★</span>
+									))}
+									{[...Array(5 - rate.score)].map(e => (
+										<span className='text-blue-100'>★</span>
+									))}
+								</span>
+							</h5>
+
+							{rate.comment && (
+								<p className='text-gray-100 bg-gray-700 rounded-lg p-3'>
+									{rate.comment}
+								</p>
+							)}
+						</li>
+					))}
+				</ul>
+			</div>
+
+			{/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
 		</section>
 	);
 };

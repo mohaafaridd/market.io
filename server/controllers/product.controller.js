@@ -75,7 +75,7 @@ const getProduct = async (req, res) => {
 				$project: {
 					name: '$name',
 					products: '$products',
-					amount: '$amount',
+
 					store: '$store',
 					saved: {
 						$sum: {
@@ -85,7 +85,7 @@ const getProduct = async (req, res) => {
 								in: {
 									$multiply: [
 										'$$product.price',
-										'$amount',
+										1,
 										// discount = 10%
 										// then it's 0.9 of the price
 										// ((100 - 10)/100)
@@ -105,7 +105,7 @@ const getProduct = async (req, res) => {
 								in: {
 									$multiply: [
 										'$$product.price',
-										'$amount',
+										1,
 										// discount = 10%
 										// then it's 0.9 of the price
 										// ((100 - 10)/100)
