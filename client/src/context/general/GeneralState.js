@@ -8,6 +8,7 @@ import {
 	SET_ERROR,
 	INITIAL_SEARCH,
 	FILTER_RESULTS,
+	GET_PRODUCT,
 } from '../types';
 
 const GeneralState = props => {
@@ -17,6 +18,8 @@ const GeneralState = props => {
 		products: [],
 		bundles: [],
 		filtered: [],
+		product: null,
+		bundle: null,
 		error: null,
 		loading: true,
 	};
@@ -80,6 +83,20 @@ const GeneralState = props => {
 		}
 	};
 
+	/**
+	 * Gets product by id
+	 *
+	 * @param {string} id
+	 */
+	const getProduct = async id => {
+		try {
+			const response = await axios.get(`/api/products/${id}`);
+			dispatch({ type: GET_PRODUCT, payload: response.data });
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error });
+		}
+	};
+
 	return (
 		<GeneralContext.Provider
 			value={{
@@ -89,10 +106,13 @@ const GeneralState = props => {
 				bundles: state.bundles,
 				filtered: state.filtered,
 				loading: state.loading,
+				product: state.product,
+				bundle: state.bundle,
 
 				setLoading,
 				initialSearch,
 				filterResults,
+				getProduct,
 			}}
 		>
 			{props.children}

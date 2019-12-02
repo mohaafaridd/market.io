@@ -15,6 +15,7 @@ export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FILTER_RESULTS = 'FILTER_RESULTS';
+export const GET_PRODUCT = 'GET_PRODUCT';
 
 /*
  *
@@ -69,7 +70,6 @@ export const GET_STATISTICS = 'GET_STATISTICS';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
-export const GET_PRODUCT = 'GET_PRODUCT';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';

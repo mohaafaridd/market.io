@@ -8,6 +8,7 @@ import StoreDashboard from './StoreDashboard';
 import UserDashboard from './UserDashboard';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
+import Product from './Product';
 
 import AuthContext from '../../context/auth/authContext';
 
@@ -35,6 +36,7 @@ const Home = () => {
 					<Route path='/store' component={StoreDashboard} />
 					<Route path='/user' component={UserDashboard} />
 					<Route path='/search' component={Search} />
+					<Route path='/products/:id' component={Product} />
 				</Switch>
 			</main>
 
