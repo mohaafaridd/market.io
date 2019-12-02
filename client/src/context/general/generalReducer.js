@@ -1,7 +1,14 @@
-import { INITIAL_SEARCH, FILTER_RESULTS } from '../types';
+import { SET_LOADING, INITIAL_SEARCH, FILTER_RESULTS } from '../types';
 
 export default (state, action) => {
 	switch (action.type) {
+		case SET_LOADING: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
 		case INITIAL_SEARCH: {
 			const { products, bundles } = action.payload;
 			return {
@@ -10,6 +17,7 @@ export default (state, action) => {
 				products,
 				bundles,
 				filtered: products,
+				loading: false,
 			};
 		}
 		case FILTER_RESULTS: {
@@ -19,6 +27,7 @@ export default (state, action) => {
 				filteredSearchResults: [products, bundles],
 				filtered: products,
 				bundles,
+				loading: false,
 			};
 		}
 

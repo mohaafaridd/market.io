@@ -6,7 +6,7 @@ import GeneralContext from '../../context/general/generalContext';
 const Navbar = () => {
 	const authContext = useContext(AuthContext);
 	const { isAuthenticated, client, logout } = authContext;
-	const { initialSearch } = useContext(GeneralContext);
+	const { setLoading, initialSearch } = useContext(GeneralContext);
 	const text = useRef('');
 	let history = useHistory();
 
@@ -65,6 +65,7 @@ const Navbar = () => {
 
 	const search = () => {
 		if (text.current.value.trim() !== '') {
+			setLoading();
 			history.push(`/search?name=${text.current.value}`);
 			initialSearch(text.current.value);
 		}

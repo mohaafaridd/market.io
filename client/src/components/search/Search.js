@@ -13,13 +13,7 @@ const Search = () => {
 	 */
 	let location = useLocation();
 
-	const {
-		products,
-		bundles,
-		filtered,
-		initialSearch,
-		filterResults,
-	} = useContext(GeneralContext);
+	const { loading, initialSearch, filterResults } = useContext(GeneralContext);
 
 	useEffect(() => {
 		const { name } = queryString.parse(location.search);
@@ -48,6 +42,10 @@ const Search = () => {
 
 		filterResults(filters, name);
 	}, []);
+
+	if (loading) {
+		return <h4>Searching...</h4>;
+	}
 
 	return (
 		<section className='search-content'>

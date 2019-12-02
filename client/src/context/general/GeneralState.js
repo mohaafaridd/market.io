@@ -3,7 +3,12 @@ import axios from 'axios';
 
 import GeneralContext from './generalContext';
 import generalReducer from './generalReducer';
-import { SET_ERROR, INITIAL_SEARCH, FILTER_RESULTS } from '../types';
+import {
+	SET_LOADING,
+	SET_ERROR,
+	INITIAL_SEARCH,
+	FILTER_RESULTS,
+} from '../types';
 
 const GeneralState = props => {
 	const initialState = {
@@ -13,9 +18,17 @@ const GeneralState = props => {
 		bundles: [],
 		filtered: [],
 		error: null,
+		loading: true,
 	};
 
 	const [state, dispatch] = useReducer(generalReducer, initialState);
+
+	/**
+	 * Enables loading flag
+	 */
+	const setLoading = () => {
+		dispatch({ type: SET_LOADING });
+	};
 
 	/**
 	 * Initial search using product or bundle name
@@ -75,7 +88,9 @@ const GeneralState = props => {
 				products: state.products,
 				bundles: state.bundles,
 				filtered: state.filtered,
+				loading: state.loading,
 
+				setLoading,
 				initialSearch,
 				filterResults,
 			}}
