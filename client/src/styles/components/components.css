@@ -30,6 +30,7 @@
 
 @import './pages/Home.css';
 @import './pages/StoreDashboard.css';
+@import './pages/Product.css';
 
 @import './search/Products.css';
 @import './search/Bundles.css';

@@ -1,14 +1,15 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-
-import BundleCard from '../search/BundleCard';
+import numeral from 'numeral';
 
 import GeneralContext from '../../context/general/generalContext';
+import UserContext from '../../context/user/userContext';
 
 const Product = () => {
 	const { loading, product: result, getProduct, setLoading } = useContext(
 		GeneralContext,
 	);
+	const { addCart } = useContext(UserContext);
 	/**
 	 * Holds product id
 	 * @type {{id: string}}
@@ -30,23 +31,42 @@ const Product = () => {
 	 * Hold product image in an easy to show format
 	 */
 	const image = Buffer.from(product.image.data).toString('base64');
-	const { name, description } = product;
+	const { name, description, price, discount } = product;
+	const discounted = (1 - discount / 100) * price;
 	return (
 		<section className='product-container'>
 			{/* Product */}
-			<div className='tile'>
-				<img src={`data:image/jpeg;base64,${image}`} alt={`${name}`} />
-				<h4>{name}</h4>
-				<p>{description}</p>
-			</div>
+			<div className='tile info'>
+				<h4 className='title'>{name}</h4>
+				<section className='flex'>
+					<img src={`data:image/jpeg;base64,${image}`} alt={`${name}`} />
+					<section className='depth'>
+						<section className='prices'>
+							<p className={`${discount > 0 ? 'discounted-price' : 'price'}`}>
+								{numeral(price).format('$0,0.00')}
+							</p>
 
-			{/* Bundles */}
-			<div>
-				<ul className='flex'>
-					{bundles.map(bundle => (
-						<BundleCard bundle={bundle} />
-					))}
-				</ul>
+							{discount > 0 && (
+								<p className='price'>{numeral(discounted).format('$0,0.00')}</p>
+							)}
+						</section>
+						<p className='description'>{description}</p>
+						<section className='user-actions'>
+							<button
+								className='btn btn-primary mb-2'
+								onClick={e => addCart(product, 'product')}
+							>
+								<i className='fas fa-shopping-cart mr-2'></i>
+								Cart
+							</button>
+
+							<button className='btn btn-danger'>
+								<i className='fas fa-heart mr-2'></i>
+								Wishlist
+							</button>
+						</section>{' '}
+					</section>
+				</section>
 			</div>
 
 			{/* Ratings */}

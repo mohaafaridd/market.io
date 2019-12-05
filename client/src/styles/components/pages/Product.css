@@ -1,0 +1,32 @@
+.product-container {
+	.info {
+		@apply flex flex-col w-1/2 mx-auto p-0 my-2;
+
+		.title {
+			@apply bg-blue-500 m-0 rounded-t text-center py-2;
+		}
+
+		.depth {
+			@apply flex flex-col justify-between;
+
+			.description {
+				@apply m-2 text-justify w-3/4;
+			}
+
+			.user-actions {
+				@apply flex flex-col p-2 w-1/4 self-end;
+			}
+		}
+
+		.prices {
+			@apply flex flex-1 justify-around py-3 bg-gray-700 rounded-l-lg my-2;
+			.price {
+				@apply text-lg text-yellow-500 font-bold;
+			}
+
+			.discounted-price {
+				@apply text-lg text-gray-500 font-bold line-through;
+			}
+		}
+	}
+}
