@@ -7,7 +7,7 @@ import UserContext from '../../context/user/userContext';
 
 const Product = () => {
 	const { loading, product: result, getProduct, setLoading } = useContext(
-		GeneralContext,
+		GeneralContext
 	);
 	const { addCart } = useContext(UserContext);
 	/**

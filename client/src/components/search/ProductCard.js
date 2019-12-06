@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import numeral from 'numeral';
 
 import AuthContext from '../../context/auth/authContext';
@@ -7,7 +8,7 @@ import UserContext from '../../context/user/userContext';
 const ProductCard = ({ product }) => {
 	const { client } = useContext(AuthContext);
 	const { addCart } = useContext(UserContext);
-	const { name, description, price, discount } = product;
+	const { name, description, price, discount, _id } = product;
 	const discounted = (1 - discount / 100) * price;
 	const image = Buffer.from(product.image.data).toString('base64');
 
@@ -15,8 +16,10 @@ const ProductCard = ({ product }) => {
 		<li className='product-container'>
 			<figure className='tile product'>
 				<img src={`data:image/jpeg;base64,${image}`} alt={`${name}`} />
-				<h5 className='title'>{name}</h5>
 
+				<Link to={`/products/${_id}`}>
+					<h5 className='title'>{name}</h5>
+				</Link>
 				<section className='prices'>
 					<p className={`${discount > 0 ? 'discounted-price' : 'price'}`}>
 						{numeral(price).format('$0,0.00')}

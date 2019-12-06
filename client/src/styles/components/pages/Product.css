@@ -7,7 +7,7 @@
 		}
 
 		.depth {
-			@apply flex flex-col justify-between;
+			@apply flex flex-col justify-between flex-grow;
 
 			.description {
 				@apply m-2 text-justify w-3/4;
@@ -16,16 +16,16 @@
 			.user-actions {
 				@apply flex flex-col p-2 w-1/4 self-end;
 			}
-		}
 
-		.prices {
-			@apply flex flex-1 justify-around py-3 bg-gray-700 rounded-l-lg my-2;
-			.price {
-				@apply text-lg text-yellow-500 font-bold;
-			}
+			.prices {
+				@apply flex justify-around py-3 bg-gray-700 rounded-l-lg my-2;
+				.price {
+					@apply text-lg text-yellow-500 font-bold;
+				}
 
-			.discounted-price {
-				@apply text-lg text-gray-500 font-bold line-through;
+				.discounted-price {
+					@apply text-lg text-gray-500 font-bold line-through;
+				}
 			}
 		}
 	}
