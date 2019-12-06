@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import numeral from 'numeral';
 
+import AuthContext from '../../context/auth/authContext';
 import GeneralContext from '../../context/general/generalContext';
 import UserContext from '../../context/user/userContext';
 
@@ -9,7 +10,11 @@ const Product = () => {
 	const { loading, product: result, getProduct, setLoading } = useContext(
 		GeneralContext
 	);
-	const { addCart } = useContext(UserContext);
+	const { client } = useContext(AuthContext);
+	const { addCart, checkRating, ratingAuth, rating, comment } = useContext(
+		UserContext
+	);
+
 	/**
 	 * Holds product id
 	 * @type {{id: string}}
@@ -33,6 +38,11 @@ const Product = () => {
 	const image = Buffer.from(product.image.data).toString('base64');
 	const { name, description, price, discount } = product;
 	const discounted = (1 - discount / 100) * price;
+
+	const onRatingClick = e => {
+		checkRating(product);
+	};
+
 	return (
 		<section className='product-container'>
 			{/* Product */}
@@ -51,29 +61,46 @@ const Product = () => {
 							)}
 						</section>
 						<p className='description'>{description}</p>
-						<section className='user-actions'>
-							<button
-								className='btn btn-primary mb-2'
-								onClick={e => addCart(product, 'product')}
-							>
-								<i className='fas fa-shopping-cart mr-2'></i>
-								Cart
-							</button>
+						{client && client.role === 'User' && (
+							<section className='user-actions'>
+								<button
+									className='btn btn-primary mb-2'
+									onClick={e => addCart(product, 'product')}
+								>
+									<i className='fas fa-shopping-cart mr-2'></i>
+									Cart
+								</button>
 
-							<button className='btn btn-danger'>
-								<i className='fas fa-heart mr-2'></i>
-								Wishlist
-							</button>
-						</section>{' '}
+								<button className='btn btn-danger'>
+									<i className='fas fa-heart mr-2'></i>
+									Wishlist
+								</button>
+							</section>
+						)}
 					</section>
 				</section>
 			</div>
 
-			{/* Ratings */}
+			{client && client.role === 'User' && (
+				<section className='w-1/12 mx-auto'>
+					<button
+						className='btn btn-outlined btn-primary-border'
+						onClick={onRatingClick}
+					>
+						+ Rate
+					</button>
+				</section>
+			)}
+			{/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
 			<div>
-				{/* User */}
-				{/* Comments */}
 				<ul>
+					{ratings.length === 0 && (
+						<li className='tile my-2 container mx-auto w-1/3'>
+							<p className='text-gray-100 bg-gray-700 rounded-lg p-3'>
+								No Comments yet
+							</p>
+						</li>
+					)}
 					{ratings.map(rate => (
 						<li className='tile my-2 container mx-auto w-1/3'>
 							<h5 className='flex justify-between'>
@@ -97,8 +124,6 @@ const Product = () => {
 					))}
 				</ul>
 			</div>
-
-			{/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
 		</section>
 	);
 };

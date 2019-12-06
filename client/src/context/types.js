@@ -54,6 +54,9 @@ export const CREATE_ORDER = 'CREATE_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const ORDER_ERROR = 'ORDER_ERROR';
 
+// User Context - Rating
+export const CHECK_RATING = 'CHECK_RATING';
+
 /*
  *
  *

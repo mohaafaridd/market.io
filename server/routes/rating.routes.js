@@ -13,7 +13,7 @@ const Role = require('../middlewares/role');
 
 const router = express.Router();
 
-// @route       GET api/rating/check/:id
+// @route       GET api/ratings/check/:id
 // @desc        Checks if user is allowed to post rating about this product
 // @access      Private
 router.get(
@@ -24,7 +24,7 @@ router.get(
 		try {
 			const { client: user } = req;
 			const { id: product } = req.params;
-			const order = await Order.findOne({ user, product, delivered: true });
+			const order = await Order.findOne({ user, product });
 			if (!order) {
 				return res.json({ success: true, privilege: false });
 			}
@@ -47,8 +47,14 @@ router.get(
 		try {
 			const { client: user } = req;
 			const { id: product } = req.params;
-			const rating = await Rating.findOne({ user, product, store });
-			if (!rating) throw new Error("You didn't rate this product yet");
+			const rating = await Rating.findOne({ user, product });
+			if (!rating) {
+				return res.json({
+					success: true,
+					message: 'No rating was found',
+					rating: { score: 0, comment: '' },
+				});
+			}
 			res.json({ success: true, message: 'Rating found', rating });
 		} catch (error) {
 			res.json({ success: false, message: error.message, error });

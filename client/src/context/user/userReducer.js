@@ -10,6 +10,7 @@ import {
 	// Orders
 	CREATE_ORDER,
 	GET_ORDERS,
+	CHECK_RATING,
 } from '../types';
 
 export default (state, action) => {
@@ -44,6 +45,23 @@ export default (state, action) => {
 				orders: action.payload.orders,
 				loading: false,
 			};
+
+		case CHECK_RATING:
+			if (action.payload) {
+				return {
+					...state,
+					ratingAuth: true,
+					rating: action.payload.rating.score,
+					comment: action.payload.rating.comment,
+				};
+			} else {
+				return {
+					...state,
+					ratingAuth: false,
+					rating: 0,
+					comment: '',
+				};
+			}
 
 		default:
 			return state;

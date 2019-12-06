@@ -16,6 +16,8 @@ import {
 	// Orders
 	CREATE_ORDER,
 	GET_ORDERS,
+	// Ratings
+	CHECK_RATING,
 } from '../types';
 
 const UserState = props => {
@@ -23,6 +25,9 @@ const UserState = props => {
 		loading: true,
 		carts: [],
 		orders: [],
+		ratingAuth: false,
+		rating: 0,
+		comment: '',
 	};
 
 	const [state, dispatch] = useReducer(userReducer, initialState);
@@ -120,12 +125,29 @@ const UserState = props => {
 		}
 	};
 
+	const checkRating = async product => {
+		try {
+			const response = await axios.get(`/api/ratings/check/${product._id}`);
+			if (response.data.privilege) {
+				const rate = await axios.get(`/api/ratings/user/${product._id}`);
+				dispatch({ type: CHECK_RATING, payload: rate.data });
+			} else {
+				dispatch({ type: CHECK_RATING });
+			}
+		} catch (error) {
+			dispatch({ type: SET_ERROR, payload: error.response });
+		}
+	};
+
 	return (
 		<UserContext.Provider
 			value={{
 				loading: state.loading,
 				carts: state.carts,
 				orders: state.orders,
+				ratingAuth: state.ratingAuth,
+				rating: state.rating,
+				comment: state.comment,
 
 				addCart,
 				getCarts,
@@ -135,6 +157,8 @@ const UserState = props => {
 
 				createOrder,
 				getOrders,
+
+				checkRating,
 			}}
 		>
 			{props.children}
