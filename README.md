@@ -1,12 +1,20 @@
 # Market.io Application
 
-Market.io is an e-commerce website that is built on Node.js, simple yet powerful.
+Market.io is an e-commerce website that is built on Node.js and React.
 
 ## Motivation
 
-I build this app after a long time spent on confusing websites. Market.io is easy, fast and efficient. Now the application is in development so if you're not a developer you can wait us, but if you are one you can pull and play with the project, use our API or try to have fun with us come on it's an open source!
+I built this web application while learning Node.js and React as a junior MERN stack developer, I've had a lot of issues which were finally solved.
+
+Version one was my first try until I knew some of my planned ideas couldn't be done easily with Handlebars so I hit React route to do those ideas in version 2.
+
+The app isn't finished yet, it lacks some many features I already planned for before this release. They're all coming to shape up on the next minor update.
+
+# 
 
 ## Tech/Frameworks used
+
+##### v1
 
 - Node.js
 - Express
@@ -14,16 +22,19 @@ I build this app after a long time spent on confusing websites. Market.io is eas
 - Mongoose
 - Handlebars
 
+##### v2
+
+- React ( functional components with hooks )
+
 ## Installation
 
 - `git clone https://github.com/Mohammed-Farid/market.io.git`
-- run in root folder `npm install`
+- run in root folder and client folder `npm install`
 - Add the following environment variable using dotenv
   - `PORT`
   - `MONGODB_URL`
   - `SECRET_KEY`
   - `MAX_AGE`
-  - more to add later
 - run in root folder `npm start` or `npm run dev` using [nodemon](https://github.com/remy/nodemon)
 
 ## Credits
