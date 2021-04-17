@@ -3,10 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'production'){
-	require('dotenv').config();
-}
+require('dotenv').config();
 
 const connectDB = require('./server/db/mongoose');
 const { connectRoutes } = require('./server/routes/routes');
