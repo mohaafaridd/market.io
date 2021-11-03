@@ -42,7 +42,7 @@
 		"numeral": "^2.0.6",
 		"sharp": "^0.23.0",
 		"supertest": "^4.0.2",
-		"validator": "^11.1.0"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"concurrently": "^5.0.0",
